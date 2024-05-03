@@ -1,0 +1,6 @@
+scotland_gps.json contains spatial data for GP practices in Scotland as of 2021.
+If was created as follows:
+
+- .shp files obtained from spatial hub scotland https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd
+- ogr2ogr -progress -t_srs WGS84 -simplify 300 scotland_gps.shp pub_gpprac.shp
+- topojson -o scotland_gps.json scotland_gps.shp -p
