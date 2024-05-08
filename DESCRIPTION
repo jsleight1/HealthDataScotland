@@ -1,4 +1,4 @@
-Package: gpScotland
+Package: gpscotland
 Title: Shiny app for visualisation of GP statistics in Scotland.
 Version: 0.0.0.9000
 Authors@R: 
@@ -11,6 +11,7 @@ Depends:
     R (>= 4.0.2)
 Imports:
     leaflet,
+    magrittr,
     rgdal,
     shiny, 
     shinydashboard

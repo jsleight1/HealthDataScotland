@@ -1,2 +1,2 @@
 ARG RVERSION
-FROM rocker/tidyverse:$RVERSION
+FROM rocker/r-ver:$RVERSION
