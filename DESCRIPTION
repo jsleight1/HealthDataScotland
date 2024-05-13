@@ -10,8 +10,13 @@ RoxygenNote: 7.2.0
 Depends:
     R (>= 4.0.2)
 Imports:
+    dplyr,
+    ggplot2,
     leaflet,
     magrittr,
+    plotly,
+    R6,
     rgdal,
     shiny, 
-    shinydashboard
+    shinydashboard,
+    tidyr
