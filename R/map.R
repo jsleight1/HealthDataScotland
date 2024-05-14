@@ -2,7 +2,11 @@ mapUI <- function(id) {
     ns <- NS(id)
     tabPanel(
         "Map",
-        leafletOutput(ns(id), height = 700),
+        shinyWidgets::addSpinner(
+            leafletOutput(ns(id), height = 700),
+            spin = "bounce", 
+            color = "#377EB8"
+        )
     )
 }
 
@@ -36,8 +40,7 @@ mapServer <- function(id, json, meta, data) {
                 leaflet(json) %>% 
                     addTiles() %>% 
                     addAwesomeMarkers(
-                        layerId = ~as.character(prac_code),
-                        icon = icon("tags")
+                        layerId = ~as.character(prac_code)
                     )
             })
         }
