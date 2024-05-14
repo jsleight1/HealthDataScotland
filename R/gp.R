@@ -40,8 +40,20 @@ gp <- R6Class("gp",
                 ) + 
                 coord_flip() + 
                 theme_bw() +
-                ylab(NULL)
+                ylab(NULL) + 
+                xlab(NULL)
             plotly::ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
+        }, 
+        population_trend = function(gender = "All") {
+            plot <- self[["data"]] %>% 
+                select("Time", "Date", "Gender" = "Sex", "Population" = "AllAges") %>% 
+                distinct() %>% 
+                filter(Gender == gender) %>%
+                ggplot(aes(x = Time, y = Population, group = Gender)) + 
+                    geom_line() + 
+                    theme_bw() + 
+                    theme(axis.text.x = element_text(angle = 90))
+            plotly::ggplotly(plot, tooltip = c("Time", "Gender", "Population"))
         }
     ),
     public = list(
@@ -70,12 +82,13 @@ gp <- R6Class("gp",
                 pull("x")
         }, 
         available_plots = function() {
-            c("population_pyramid")
+            c("population_pyramid", "population_trend")
         },
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 
-                "population_pyramid" = private[["population_pyramid"]](...)
+                "population_pyramid" = private[["population_pyramid"]](...), 
+                "population_trend" = private[["population_trend"]](...)
             )
         }
     )
@@ -94,12 +107,23 @@ gpUI <- function(x, ns) {
                 box(
                     title = "Population pyramid",
                     selectInput(
-                        ns("pyramid_select"), 
+                        ns("pop_pyramid_select"), 
                         label = "Select time frame",
                         choices = unique(x[["data"]][["Time"]])
                     ),
-                    plotlyOutput(ns("pyramid"), height = "700px"),
-                    width = 12
+                    plotlyOutput(ns("pop_pyramid")),
+                    width = 6
+                ), 
+                box(
+                    title = "Population trend",
+                    selectInput(
+                        ns("pop_trend_select"), 
+                        label = "Select gender", 
+                        choices = unique(x[["data"]][["Sex"]]), 
+                        selected = "All"
+                    ),
+                    plotlyOutput(ns("pop_trend")),
+                    width = 6 
                 )
             )
         )
@@ -113,12 +137,19 @@ gpServer <- function(x) {
         function(input, output, session) {
             ns <- session[["ns"]]
 
-            output[["pyramid"]] <- renderPlotly({
+            output[["pop_pyramid"]] <- renderPlotly(
                 x[["plot"]](
                     type = "population_pyramid", 
-                    time = req(input[["pyramid_select"]])
+                    time = req(input[["pop_pyramid_select"]])
                 )
-            })
+            )
+
+            output[["pop_trend"]] <- renderPlotly(
+                x[["plot"]](
+                    type = "population_trend", 
+                    gender = req(input[["pop_trend_select"]])
+                )
+            )
 
         }
     )
