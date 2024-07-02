@@ -1,10 +1,10 @@
 #' Launch shiny application
 #' @param ... Passed to shiny::shinyApp.
 #' @export
-gpscotland <- function(...) {
+health_data_scotland <- function(...) {
     ui <- dashboardPage(
         dashboardHeader(
-            title = "GP Practices Scotland"
+            title = "Health data Scotland"
         ),
         dashboardSidebar(
             sidebarMenu(
@@ -15,7 +15,7 @@ gpscotland <- function(...) {
             tabItems(
                 tabItem(tabName = "intro",
                     fluidRow(
-                        mapUI(id = "map")
+                        gp_map_UI(id = "gp_map")
                     )
                 )
             )
@@ -33,12 +33,11 @@ gpscotland <- function(...) {
             filter(.data[["PracticeCode"]] %in% json[["prac_code"]])
 
 
-        mapServer(
-            id = "map", 
+        gp_map_server(
+            id = "gp_map", 
             json = json,
             meta = gp_meta, 
             data = gp_data
-
         )
     }
 

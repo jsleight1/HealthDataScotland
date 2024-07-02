@@ -1,5 +1,5 @@
-Package: gpscotland
-Title: Shiny app for visualisation of GP statistics in Scotland
+Package: health_data_scotland
+Title: Shiny app for visualisation of health statistics in Scotland
 Description: This package downloads and analyses public health data for Scotland.
 Version: 0.0.0.9000
 Authors@R: 

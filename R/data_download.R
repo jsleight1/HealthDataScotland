@@ -40,6 +40,6 @@ get_data <- function(x, nm) {
 
 get_geojson <- function() {
     rgdal::readOGR(
-        system.file("extdata", "scotland_gps.json", package = "gpscotland")
+        system.file("extdata", "scotland_gps.json", package = "health_data_scotland")
     )
 }

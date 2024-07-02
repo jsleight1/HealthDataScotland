@@ -1,4 +1,4 @@
-mapUI <- function(id) {
+gp_map_UI <- function(id) {
     ns <- NS(id)
     tabPanel(
         "Map",
@@ -10,15 +10,15 @@ mapUI <- function(id) {
     )
 }
 
-mapServer <- function(id, json, meta, data) {
+gp_map_server <- function(id, json, meta, data) {
     moduleServer(
         id,
         function(input, output, session) {
             ns <- session[["ns"]]
 
             observe({
-                leafletProxy("map") %>% clearPopups()
-                event <- input[["map_marker_click"]]
+                leafletProxy(id) %>% clearPopups()
+                event <- input[[paste0(id, "_marker_click")]]
                 if (is.null(event)) return()
                 isolate({
                     gp_obj <- meta %>% 
@@ -36,7 +36,7 @@ mapServer <- function(id, json, meta, data) {
                 })
             })
 
-            output[["map"]] <- renderLeaflet({
+            output[[id]] <- renderLeaflet({
                 leaflet(json) %>% 
                     addTiles() %>% 
                     addAwesomeMarkers(
