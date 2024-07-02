@@ -1,3 +1,5 @@
+#' Launch shiny application
+#' @param ... Passed to shiny::shinyApp.
 #' @export
 gpscotland <- function(...) {
     ui <- dashboardPage(
@@ -25,10 +27,10 @@ gpscotland <- function(...) {
         json <- get_geojson()
 
         gp_meta <- suppressMessages(get_gp_meta()) %>% 
-            filter(PracticeCode %in% json[["prac_code"]])
+            filter(.data[["PracticeCode"]] %in% json[["prac_code"]])
         
         gp_data <- suppressMessages(get_gp_data()) %>% 
-            filter(PracticeCode %in% json[["prac_code"]])
+            filter(.data[["PracticeCode"]] %in% json[["prac_code"]])
 
 
         mapServer(

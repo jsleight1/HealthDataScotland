@@ -1,2 +1,0 @@
-ARG RVERSION
-FROM rocker/r-ver:$RVERSION

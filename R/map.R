@@ -18,14 +18,14 @@ mapServer <- function(id, json, meta, data) {
 
             observe({
                 leafletProxy("map") %>% clearPopups()
-                event <- input$map_marker_click
+                event <- input[["map_marker_click"]]
                 if (is.null(event)) return()
                 isolate({
                     gp_obj <- meta %>% 
-                        filter(PracticeCode == event[["id"]]) %>% 
+                        filter(.data[["PracticeCode"]] == event[["id"]]) %>% 
                         select(-c("HB", "HSCP", "Time")) %>% 
                         inner_join(data, by = "PracticeCode") %>% 
-                        gp[["new"]](data = .)
+                        gp[["new"]]()
 
                     showModal(modalDialog(
                         gpUI(gp_obj, ns),

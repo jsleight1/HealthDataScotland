@@ -63,9 +63,17 @@ gp <- R6Class("gp",
             self[["validate"]]()
         }, 
         validate = function() {
-            assert_that(inherits(self[["data"]], "data.frame"))
-            assert_that(all(private[["required_cols"]]() %in% colnames(self[["data"]])))
-            assert_that(length(unique(self[["data"]][["PracticeCode"]])) == 1)
+            assert_that(inherits(self[["data"]], "data.frame"), 
+                msg = "Data set must be in data.frame")
+            col_check <- private[["required_cols"]]() %in% colnames(self[["data"]])
+            assert_that(all(col_check), 
+                msg = paste(
+                    paste(private[["required_cols"]]()[!col_check], collapse = ", "), 
+                    "column missing from data"
+                )
+            )
+            assert_that(length(unique(self[["data"]][["PracticeCode"]])) == 1, 
+                msg = "Data set must contain only one unique PracticeCode")
             self
         },
         id = function() {
