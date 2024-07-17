@@ -102,7 +102,7 @@ gp <- R6Class("gp",
     )
 )
 
-gpUI <- function(x, ns) {
+gp_UI <- function(x, ns) {
     ns <- NS(ns(x[["id"]]()))
     fluidRow(
         box(
@@ -139,7 +139,7 @@ gpUI <- function(x, ns) {
 
 }
 
-gpServer <- function(x) {
+gp_server <- function(x) {
     moduleServer(
         x[["id"]](),
         function(input, output, session) {

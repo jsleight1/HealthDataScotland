@@ -28,6 +28,16 @@ get_gp_meta <- function() {
     imap_dfr(gp_meta_urls(), get_data)
 }
 
+get_hosp_meta <- function() {
+    imap_dfr(hosp_meta_urls(), get_data)
+}
+
+hosp_meta_urls <- function() {
+    list(
+        "jul 2024" = "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/hospitals.csv"
+    )
+}
+
 get_data <- function(x, nm) {
     httr::GET(
         x, 
@@ -38,8 +48,17 @@ get_data <- function(x, nm) {
     out
 }
 
-get_geojson <- function() {
-    rgdal::readOGR(
-        system.file("extdata", "scotland_gps.json", package = "health_data_scotland")
+get_geojson <- function(type = c("gp", "hospital")) {
+    switch(rlang::arg_match(type), 
+        "gp" = rgdal::readOGR(
+            system.file("extdata", "scotland_gps.json", package = "health_data_scotland")
+        ) %>% 
+        (function(x) {
+            x[["id"]] <- x[["prac_code"]]
+            x
+        }), 
+        "hospital" = rgdal::readOGR(
+            system.file("extdata", "scotland_hosp.json", package = "health_data_scotland")
+        )    
     )
 }
