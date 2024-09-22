@@ -26,23 +26,11 @@ pin_map_server <- function(id, json, meta, data, initialise_popup) {
             output[[id]] <- renderLeaflet({
                 leaflet(json) %>% 
                     addTiles() %>% 
-                    addAwesomeMarkers(layerId = ~as.character(id))
+                    addAwesomeMarkers(
+                        layerId = ~as.character(id),
+                        clusterOptions = markerClusterOptions()
+                    )
             })
         }
     )
-}
-
-initialise_gp_popup <- function(meta, data, event, ns) {
-    obj <- meta %>% 
-        filter(.data[["PracticeCode"]] == event[["id"]]) %>% 
-        select(-c("HB", "HSCP", "Time")) %>% 
-        inner_join(data, by = "PracticeCode") %>% 
-        gp[["new"]]()
-
-    showModal(modalDialog(
-        gp_UI(obj, ns),
-        size = "l",
-        easyClose = TRUE
-    ))
-    gp_server(obj)
 }

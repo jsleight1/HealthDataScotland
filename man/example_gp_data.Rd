@@ -3,14 +3,16 @@
 \docType{data}
 \name{example_gp_data}
 \alias{example_gp_data}
-\title{Example GP dataset}
+\title{Example GP dataset.}
 \description{
-Data.frame object containing demography data for Scottish GP Practices
+Data.frame object containing demography data for scottish GP practices
 from October 2023 to April 2024.
 }
 \seealso{
-Other gp scotland examples: 
-\code{\link{example_gp_metadata}}
+Other health data scotland examples: 
+\code{\link{example_gp_metadata}},
+\code{\link{example_hospital_data}},
+\code{\link{example_hospital_metadata}}
 }
-\concept{gp scotland examples}
+\concept{health data scotland examples}
 \keyword{data}

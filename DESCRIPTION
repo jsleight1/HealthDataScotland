@@ -1,4 +1,4 @@
-Package: health_data_scotland
+Package: HealthDataScotland
 Title: Shiny app for visualisation of health statistics in Scotland
 Description: This package downloads and analyses public health data for Scotland.
 Version: 0.0.0.9000

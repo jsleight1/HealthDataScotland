@@ -1,11 +1,8 @@
-
-
-gp_data <- gpscotland::example_gp_metadata %>% 
+gp_data <- HealthDataScotland::example_gp_metadata %>% 
     select(-c("HB", "HSCP", "Time")) %>%
-    inner_join(gpscotland::example_gp_data, by = "PracticeCode") 
+    inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") 
 
-
-test_that("gp class constructor works", {
+test_that("gp class works", {
     "gp_data" %>% 
         gp[["new"]]() %>% 
         expect_error("Data set must be in data.frame")
@@ -28,7 +25,7 @@ test_that("gp class constructor works", {
     expect_identical(out[["id"]](), 10002)
     expect_identical(out[["title"]](), "Muirhead Medical Centre")
     expect_identical(out[["address"]](), 
-        "Muirhead Medical Centre, Liff Road, Muirhead, NA, DD2 5NH")
+        "Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH")
     expect_identical(out[["available_plots"]](), 
         c("population_pyramid", "population_trend"))
 })

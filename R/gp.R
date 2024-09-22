@@ -1,7 +1,14 @@
 
 
 gp <- R6Class("gp", 
+    inherit = health_unit,
     private = list(
+        id_col = function() {
+            "PracticeCode"
+        },
+        title_col = function() {
+            "GPPracticeName"
+        },
         required_cols = function() {
             c("PracticeCode", "GPPracticeName", "PracticeListSize", 
                 "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", 
@@ -42,7 +49,7 @@ gp <- R6Class("gp",
                 theme_bw() +
                 ylab(NULL) + 
                 xlab(NULL)
-            plotly::ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
+            ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
         }, 
         population_trend = function(gender = "All") {
             plot <- self[["data"]] %>% 
@@ -53,42 +60,10 @@ gp <- R6Class("gp",
                     geom_line() + 
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90))
-            plotly::ggplotly(plot, tooltip = c("Time", "Gender", "Population"))
+            ggplotly(plot, tooltip = c("Time", "Gender", "Population"))
         }
     ),
     public = list(
-        data = NA,
-        initialize = function(data) {
-            self[["data"]] = data
-            self[["validate"]]()
-        }, 
-        validate = function() {
-            assert_that(inherits(self[["data"]], "data.frame"), 
-                msg = "Data set must be in data.frame")
-            col_check <- private[["required_cols"]]() %in% colnames(self[["data"]])
-            assert_that(all(col_check), 
-                msg = paste(
-                    paste(private[["required_cols"]]()[!col_check], collapse = ", "), 
-                    "column missing from data"
-                )
-            )
-            assert_that(length(unique(self[["data"]][["PracticeCode"]])) == 1, 
-                msg = "Data set must contain only one unique PracticeCode")
-            self
-        },
-        id = function() {
-            unique(self[["data"]][["PracticeCode"]])
-        },
-        title = function() {
-            unique(self[["data"]][["GPPracticeName"]])
-        },
-        address = function() {
-            self[["data"]] %>% 
-                select(contains("Address"), "Postcode") %>% 
-                distinct() %>% 
-                tidyr::unite(col = "x", sep = ", ") %>% 
-                pull("x")
-        }, 
         available_plots = function() {
             c("population_pyramid", "population_trend")
         },
@@ -161,4 +136,19 @@ gp_server <- function(x) {
 
         }
     )
+}
+
+initialise_gp_popup <- function(meta, data, event, ns) {
+    obj <- meta %>% 
+        filter(.data[["PracticeCode"]] == event[["id"]]) %>% 
+        select(-c("HB", "HSCP", "Time")) %>% 
+        inner_join(data, by = "PracticeCode") %>% 
+        gp[["new"]]()
+
+    showModal(modalDialog(
+        gp_UI(obj, ns),
+        size = "l",
+        easyClose = TRUE
+    ))
+    gp_server(obj)
 }
