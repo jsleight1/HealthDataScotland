@@ -35,7 +35,7 @@ health_unit <- R6Class("health_unit",
                 select(contains("Address"), -contains("QF"), "Postcode") %>% 
                 select_if(~ !any(is.na(.))) %>%
                 distinct() %>% 
-                tidyr::unite(col = "x", sep = ", ") %>% 
+                unite(col = "x", sep = ", ") %>% 
                 pull("x")
         }
     )

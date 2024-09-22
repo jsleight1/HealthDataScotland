@@ -19,7 +19,7 @@ gp <- R6Class("gp",
             dat <- self[["data"]] %>% 
                 filter(Time == time, Sex != "All") %>% 
                 select("Gender" = "Sex", matches("Ages"), -matches("QF")) %>% 
-                tidyr::pivot_longer(-"Gender", names_to = "Age", values_to = "Population") %>% 
+                pivot_longer(-"Gender", names_to = "Age", values_to = "Population") %>% 
                 filter(Age != "AllAges") %>% 
                 mutate(Age = factor(Age, levels = c(
                     "Ages85plus",

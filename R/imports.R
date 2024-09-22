@@ -8,4 +8,5 @@ NULL
 #' @importFrom purrr imap_dfr map_dfr
 #' @importFrom plotly ggplotly plotlyOutput renderPlotly
 #' @importFrom rlang arg_match
+#' @importFrom tidyr pivot_longer unite
 NULL
