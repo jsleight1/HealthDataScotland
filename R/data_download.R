@@ -61,11 +61,11 @@ get_data <- function(x, time = NULL) {
 get_geojson <- function(type = c("gp", "hospital")) {
     switch(rlang::arg_match(type), 
         "gp" = rgdal::readOGR(
-            system.file("extdata", "scotland_gps.json", package = "health_data_scotland")
+            system.file("extdata", "scotland_gps.json", package = "HealthDataScotland")
         ) %>% 
         set_id("prac_code"),
         "hospital" = rgdal::readOGR(
-            system.file("extdata", "scotland_hosp.json", package = "health_data_scotland")
+            system.file("extdata", "scotland_hosp.json", package = "HealthDataScotland")
         ) %>% 
         set_id("sitecode")
     )
