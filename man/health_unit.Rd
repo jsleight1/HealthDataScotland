@@ -38,7 +38,8 @@ Create instance of health unit.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{data}}{A data.frame storing health statistics.}
+\item{\code{data}}{(\code{data.frame})\cr
+A data.frame storing health statistics.}
 }
 \if{html}{\out{</div>}}
 }

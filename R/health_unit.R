@@ -6,7 +6,8 @@ health_unit <- R6Class("health_unit",
         data = NA, 
         #' @description
         #' Create instance of health unit.
-        #' @param data A data.frame storing health statistics.
+        #' @param data (`data.frame`)\cr
+        #'     A data.frame storing health statistics.
         initialize = function(data) {
             self[["data"]] = data
             self[["validate"]]()

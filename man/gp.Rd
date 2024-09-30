@@ -34,36 +34,12 @@ R6 class storing health statistics for a GP practice.
 \if{html}{\out{<a id="method-gp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-gp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get id column for gp unit.
-
-
-Get title column for gp title.
-
-
-Get character vector for required columns in gp unit data set.
-
-
-Generate population pyramid for gp unit at given time point.
-
-
-Generate population trend line plot for gp unit dataset at
-for given gender.
-
-
-Get character vector of available plots for gp unit.
+Get character vector of available plots for gp unit. Options
+are either "population_pyramid" plot or "population_trend" plot.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp$available_plots()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{time}}{Character specifying time point.}
-
-\item{\code{gender}}{Character specifying gender. Default is "All".}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-plot"></a>}}
@@ -77,7 +53,8 @@ Plot gp unit.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{type}}{Character specifying plot type. See \code{available_plots}
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots}
 for options.}
 
 \item{\code{...}}{Passed to plot functions.}

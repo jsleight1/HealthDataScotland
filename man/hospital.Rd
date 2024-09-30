@@ -34,32 +34,12 @@ R6 class storing health statistics for a Hospital.
 \if{html}{\out{<a id="method-hospital-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-hospital-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get id column for hospital unit.
-
-
-Get title column for hospital title.
-
-
-Get character vector for required columns in hospital unit data set.
-
-
-Generate stacked bar plot of number of beds for a single (or multiple)
-specialities in different financial years.
-
-
-Get character vector of available plots for hospital unit.
+Get character vector of available plots for hospital unit. Options
+are either "specialty_bar" plot.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital$available_plots()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{specialties}}{Character vector specifying specialties to present.
-Default is "All Specialties".}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-plot"></a>}}
@@ -73,8 +53,8 @@ Plot hospital unit.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{type}}{Character specifying plot type. See \code{available_plots}
-for options.}
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots} for options.}
 
 \item{\code{...}}{Passed to plot functions.}
 }
