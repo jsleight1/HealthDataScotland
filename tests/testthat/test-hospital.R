@@ -4,6 +4,10 @@ hospital_data <- HealthDataScotland::example_hospital_data %>%
         by = c("Location" = "HospitalCode")
     )
 
+hosp_unit <- hospital_data %>% 
+    filter(.data[["Location"]] == "A101H") %>%
+    hospital[["new"]]()
+
 test_that("hospital class works", {
     "hospital_data" %>% 
         hospital[["new"]]() %>% 
@@ -29,4 +33,8 @@ test_that("hospital class works", {
     expect_identical(out[["address"]](), 
         "Lamlash, Isle of Arran, KA278LF")
     expect_identical(out[["available_plots"]](), "specialty_bar")
+})
+
+test_that("hospital class can be plotted", {
+    expect_s3_class(hosp_unit[["plot"]](type = "specialty_bar"), "plotly")
 })

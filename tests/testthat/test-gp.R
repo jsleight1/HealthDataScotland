@@ -2,6 +2,10 @@ gp_data <- HealthDataScotland::example_gp_metadata %>%
     select(-c("HB", "HSCP", "Time")) %>%
     inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") 
 
+gp_unit <- gp_data %>% 
+    filter(.data[["PracticeCode"]] == 10002) %>%
+    gp[["new"]]() 
+
 test_that("gp class works", {
     "gp_data" %>% 
         gp[["new"]]() %>% 
@@ -28,4 +32,11 @@ test_that("gp class works", {
         "Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH")
     expect_identical(out[["available_plots"]](), 
         c("population_pyramid", "population_trend"))
+})
+
+test_that("gp class can be plotted", {
+    gp_unit[["plot"]](type = "population_pyramid", time = 20240401) %>% 
+        suppressWarnings() %>% 
+        expect_s3_class("plotly")
+    expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "plotly")
 })

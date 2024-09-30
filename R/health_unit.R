@@ -4,10 +4,15 @@ health_unit <- R6Class("health_unit",
     public = list(
         #' @field data A data.frame storing health statistics.
         data = NA, 
+        #' @description
+        #' Create instance of health unit.
+        #' @param data A data.frame storing health statistics.
         initialize = function(data) {
             self[["data"]] = data
             self[["validate"]]()
         }, 
+        #' @description
+        #' Validate structure of health unit.
         validate = function() {
             assert_that(inherits(self[["data"]], "data.frame"), 
                 msg = "Data set must be in data.frame")
@@ -24,12 +29,18 @@ health_unit <- R6Class("health_unit",
             )   
             self
         },
+        #' @description
+        #' Get ID of health unit.
         id = function() {
             unique(self[["data"]][[private[["id_col"]]()]])
         },
+        #' @description
+        #' Get title of health unit.
         title = function() {
             paste(unique(self[["data"]][[private[["title_col"]]()]]))
         },
+        #' @description
+        #' Get address of health unit.
         address = function() {
             self[["data"]] %>% 
                 select(contains("Address"), -contains("QF"), "Postcode") %>% 

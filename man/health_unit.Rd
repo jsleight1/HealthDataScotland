@@ -30,15 +30,24 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \if{html}{\out{<a id="method-health_unit-new"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-new}{}}}
 \subsection{Method \code{new()}}{
+Create instance of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$new(data)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data}}{A data.frame storing health statistics.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unit-validate"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-validate}{}}}
 \subsection{Method \code{validate()}}{
+Validate structure of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$validate()}\if{html}{\out{</div>}}
 }
@@ -48,6 +57,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \if{html}{\out{<a id="method-health_unit-id"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-id}{}}}
 \subsection{Method \code{id()}}{
+Get ID of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$id()}\if{html}{\out{</div>}}
 }
@@ -57,6 +67,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \if{html}{\out{<a id="method-health_unit-title"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-title}{}}}
 \subsection{Method \code{title()}}{
+Get title of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$title()}\if{html}{\out{</div>}}
 }
@@ -66,6 +77,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \if{html}{\out{<a id="method-health_unit-address"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-address}{}}}
 \subsection{Method \code{address()}}{
+Get address of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$address()}\if{html}{\out{</div>}}
 }

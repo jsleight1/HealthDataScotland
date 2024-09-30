@@ -1,20 +1,29 @@
 
-
+#' R6 class storing health statistics for a GP practice.
 gp <- R6Class("gp", 
     inherit = health_unit,
     private = list(
+        #' @description
+        #' Get id column for gp unit.
         id_col = function() {
             "PracticeCode"
         },
+        #' @description
+        #' Get title column for gp title.
         title_col = function() {
             "GPPracticeName"
         },
+        #' @description
+        #' Get character vector for required columns in gp unit data set.
         required_cols = function() {
             c("PracticeCode", "GPPracticeName", "PracticeListSize", 
                 "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", 
                 "Postcode", "TelephoneNumber", "PracticeType", "GPCluster", 
                 "Time")
         },
+        #' @description
+        #' Generate population pyramid for gp unit at given time point.
+        #' @param time Character specifying time point.
         population_pyramid = function(time) {
             dat <- self[["data"]] %>% 
                 filter(Time == time, Sex != "All") %>% 
@@ -51,6 +60,10 @@ gp <- R6Class("gp",
                 xlab(NULL)
             ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
         }, 
+        #' @description
+        #' Generate population trend line plot for gp unit dataset at 
+        #'   for given gender.
+        #' @param gender Character specifying gender. Default is "All".
         population_trend = function(gender = "All") {
             plot <- self[["data"]] %>% 
                 select("Time", "Date", "Gender" = "Sex", "Population" = "AllAges") %>% 
@@ -64,9 +77,16 @@ gp <- R6Class("gp",
         }
     ),
     public = list(
+        #' @description
+        #' Get character vector of available plots for gp unit.
         available_plots = function() {
             c("population_pyramid", "population_trend")
         },
+        #' @description
+        #' Plot gp unit.
+        #' @param type Character specifying plot type. See `available_plots` 
+        #'   for options.
+        #' @param ... Passed to plot functions.
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 

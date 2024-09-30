@@ -1,15 +1,27 @@
+#' R6 class storing health statistics for a Hospital.
 hospital <- R6Class("hospital", 
     inherit = health_unit,
     private = list(
+        #' @description
+        #' Get id column for hospital unit.
         id_col = function() {
             "Location"
         },
+        #' @description
+        #' Get title column for hospital title.
         title_col = function() {
             "HospitalName"
         },
+        #' @description
+        #' Get character vector for required columns in hospital unit data set.
         required_cols = function() {
             c("Location", "FinancialYear", "SpecialtyName", "AllStaffedBeds")
         },
+        #' @description
+        #' Generate stacked bar plot of number of beds for a single (or multiple) 
+        #'    specialities in different financial years.
+        #' @param specialties Character vector specifying specialties to present.
+        #'   Default is "All Specialties".
         specialty_bar = function(specialties = "All Specialties") {
             plot <- self[["data"]] %>% 
                 filter(.data[["SpecialtyName"]] %in% specialties) %>% 
@@ -27,9 +39,16 @@ hospital <- R6Class("hospital",
         }
     ),
     public = list(
+        #' @description
+        #' Get character vector of available plots for hospital unit.
         available_plots = function() {
             c("specialty_bar")
         },
+        #' @description
+        #' Plot hospital unit.
+        #' @param type Character specifying plot type. See `available_plots` 
+        #'   for options.
+        #' @param ... Passed to plot functions.
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 
