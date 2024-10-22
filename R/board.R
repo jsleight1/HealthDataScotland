@@ -75,10 +75,10 @@ board_UI <- function(x, ns) {
                 selectInput(
                     ns("specialty_select"), 
                     label = "Select specialty", 
-                    choices = setdiff(unique(x[["SpecialtyName"]]), 
+                    choices = setdiff(unique(x[["data"]][["SpecialtyName"]]), 
                         "All Specialties"), 
                     multiple = TRUE, 
-                    selected = setdiff(unique(x[["SpecialtyName"]]),
+                    selected = setdiff(unique(x[["data"]][["SpecialtyName"]]),
                         "All Specialties")[[1]]
                 ),
                 plotlyOutput(ns("selected_specialties")),
@@ -90,7 +90,7 @@ board_UI <- function(x, ns) {
 
 board_server <- function(x) {
     moduleServer(
-        unique(x[["HB"]]),
+        x[["id"]](),
         function(input, output, session) {
             ns <- session[["ns"]]
 
