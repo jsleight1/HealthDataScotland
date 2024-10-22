@@ -5,11 +5,13 @@
 \alias{example_hospital_data}
 \title{Example hospital dataset.}
 \description{
-Data.frame object containing specialty bed data for Scottish Hospitals up to
-2023.
+Data.frame object containing specialty bed data for Scottish Hospitals for
+2022/24.
 }
 \seealso{
 Other health data scotland examples: 
+\code{\link{example_board_data}},
+\code{\link{example_board_metadata}},
 \code{\link{example_gp_data}},
 \code{\link{example_gp_metadata}},
 \code{\link{example_hospital_metadata}}

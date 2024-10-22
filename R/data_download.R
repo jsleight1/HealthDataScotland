@@ -28,24 +28,28 @@ get_gp_meta <- function() {
     imap_dfr(gp_meta_urls(), get_data)
 }
 
-hosp_meta_urls <- function() {
-    list(
-        "jul 2024" = "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/hospitals.csv"
-    )
+hosp_meta_url <- function() {
+    "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/hospitals.csv"
 }
 
-hosp_data_urls <- function() {
-    list(
-        "2023" = "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d/resource/d719af13-5fb3-430f-810e-ab3360961107/download/beds_by_location_of-treatment_specialty.csv"
-    )
+hosp_data_url <- function() {
+    "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d/resource/d719af13-5fb3-430f-810e-ab3360961107/download/beds_by_location_of-treatment_specialty.csv"
 }
 
 get_hosp_meta <- function() {
-    imap_dfr(hosp_meta_urls(), get_data)
+    get_data(hosp_meta_url())
 }
 
 get_hosp_data <- function() {
-    map_dfr(hosp_data_urls(), get_data)
+    get_data(hosp_data_url())
+}
+
+board_data_url <- function() {
+    "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d/resource/5d55964b-8e45-4c49-bfdd-9ea3e1fb962d/download/beds_by_nhs_board-of-treatment_specialty.csv"
+}
+
+get_board_data <- function() {
+    get_data(board_data_url())
 }
 
 get_data <- function(x, time = NULL) {
@@ -58,7 +62,7 @@ get_data <- function(x, time = NULL) {
     out
 }
 
-get_geojson <- function(type = c("gp", "hospital")) {
+get_geojson <- function(type = c("gp", "hospital", "board")) {
     switch(rlang::arg_match(type), 
         "gp" = rgdal::readOGR(
             system.file("extdata", "scotland_gps.json", package = "HealthDataScotland")
@@ -67,7 +71,11 @@ get_geojson <- function(type = c("gp", "hospital")) {
         "hospital" = rgdal::readOGR(
             system.file("extdata", "scotland_hosp.json", package = "HealthDataScotland")
         ) %>% 
-        set_id("sitecode")
+        set_id("sitecode"),
+        "board" = rgdal::readOGR(
+            system.file("extdata", "scotland_boards.json", package = "HealthDataScotland")
+        ) %>% 
+        set_id("HBCode")
     )
 }
 

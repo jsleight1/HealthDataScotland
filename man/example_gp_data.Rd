@@ -10,6 +10,8 @@ from October 2023 to April 2024.
 }
 \seealso{
 Other health data scotland examples: 
+\code{\link{example_board_data}},
+\code{\link{example_board_metadata}},
 \code{\link{example_gp_metadata}},
 \code{\link{example_hospital_data}},
 \code{\link{example_hospital_metadata}}

@@ -1,16 +1,15 @@
-#' R6 class storing health statistics for a Hospital.
-hospital <- R6Class("hospital", 
+#' R6 class storing health statistics for a health board.
+board <- R6Class("board", 
     inherit = health_unit,
     private = list(
         id_col = function() {
-            "Location"
+            "HB"
         },
         title_col = function() {
-            "HospitalName"
+            "HBName"
         },
         required_cols = function() {
-            c("Location", "HospitalName", "FinancialYear", "SpecialtyName", 
-                "AllStaffedBeds")
+            c("HB", "HBName", "FinancialYear", "SpecialtyName", "AllStaffedBeds")
         },
         specialty_bar = function(specialties = "All Specialties") {
             plot <- self[["data"]] %>% 
@@ -30,13 +29,13 @@ hospital <- R6Class("hospital",
     ),
     public = list(
         #' @description
-        #' Get character vector of available plots for hospital unit. Options 
+        #' Get character vector of available plots for board unit. Options 
         #'   are either "specialty_bar" plot.
         available_plots = function() {
             c("specialty_bar")
         },
         #' @description
-        #' Plot hospital unit.
+        #' Plot board unit.
         #' @param type (character(1))\cr
         #'     Character specifying plot type. See `available_plots` for options.
         #' @param ... Passed to plot functions.
@@ -45,19 +44,23 @@ hospital <- R6Class("hospital",
             switch(type, 
                 "specialty_bar" = private[["specialty_bar"]](...)
             )
+        },
+        address = function() {
+            NULL
         }
     )
 )
 
-hosp_UI <- function(x, ns) {
+
+
+board_UI <- function(x, ns) {
     ns <- NS(ns(x[["id"]]()))
     fluidRow(
         box(
             title = x[["title"]](), 
             width = 12, 
             status = "primary",
-            solidHeader = TRUE,
-            fluidRow(box(title = "Address", x[["address"]](), width = 12))
+            solidHeader = TRUE
         ),
         fluidRow(
             box(
@@ -72,10 +75,10 @@ hosp_UI <- function(x, ns) {
                 selectInput(
                     ns("specialty_select"), 
                     label = "Select specialty", 
-                    choices = setdiff(unique(x[["data"]][["SpecialtyName"]]), 
+                    choices = setdiff(unique(x[["SpecialtyName"]]), 
                         "All Specialties"), 
                     multiple = TRUE, 
-                    selected = setdiff(unique(x[["data"]][["SpecialtyName"]]),
+                    selected = setdiff(unique(x[["SpecialtyName"]]),
                         "All Specialties")[[1]]
                 ),
                 plotlyOutput(ns("selected_specialties")),
@@ -85,9 +88,9 @@ hosp_UI <- function(x, ns) {
     )
 }
 
-hosp_server <- function(x) {
+board_server <- function(x) {
     moduleServer(
-        x[["id"]](),
+        unique(x[["HB"]]),
         function(input, output, session) {
             ns <- session[["ns"]]
 
@@ -105,16 +108,16 @@ hosp_server <- function(x) {
     )
 }
 
-initialise_hosp_popup <- function(meta, data, event, ns) {
+initialise_board_popup <- function(meta, data, event, ns) {
     obj <- data %>% 
-        filter(.data[["Location"]] == event[["id"]]) %>% 
-        inner_join(meta, by = c("Location" = "HospitalCode")) %>% 
-        hospital[["new"]]()
+        filter(.data[["HB"]] == event[["id"]]) %>% 
+        inner_join(meta, by = c("HB" = "id")) %>%
+        board[["new"]]()
 
     showModal(modalDialog(
-        hosp_UI(obj, ns),
+        board_UI(obj, ns),
         size = "l",
         easyClose = TRUE
     ))
-    hosp_server(obj)
+    board_server(obj)
 }

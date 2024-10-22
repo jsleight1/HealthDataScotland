@@ -10,14 +10,16 @@ health_data_scotland <- function(...) {
             sidebarMenu(
                 menuItem("Introduction", tabName = "intro", icon = icon("home")), 
                 menuItem("GP practices", tabName = "gp"),
-                menuItem("Hospitals", tabName = "hosp")
+                menuItem("Hospitals", tabName = "hosp"),
+                menuItem("Health boards", tabName = "board")
             )
         ),
         dashboardBody(
             tabItems(
                 tabItem(tabName = "intro"), 
                 tabItem(tabName = "gp", fluidRow(pin_map_UI(id = "gp_map"))),
-                tabItem(tabName = "hosp", fluidRow(pin_map_UI(id = "hosp_map")))
+                tabItem(tabName = "hosp", fluidRow(pin_map_UI(id = "hosp_map"))),
+                tabItem(tabName = "board", fluidRow(grid_map_UI(id = "board_map")))
             )
         )
     )
@@ -56,6 +58,20 @@ health_data_scotland <- function(...) {
             initialise_popup = initialise_hosp_popup
         )
 
+
+        board_json <- get_geojson("board")
+        board_meta <- as_tibble(board_json) %>%
+            select("id", "HBName")
+        board_data <- get_board_data() %>% 
+            filter(.data[["HB"]] %in% board_json[["id"]])
+
+        grid_map_server(
+            id = "board_map",
+            json = board_json,
+            meta = board_meta,
+            data = board_data,
+            initialise_popup = initialise_board_popup
+        )
 
     }
 

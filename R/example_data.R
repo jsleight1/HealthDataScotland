@@ -22,8 +22,8 @@ NULL
 
 #' Example hospital dataset.
 #' 
-#' Data.frame object containing specialty bed data for Scottish Hospitals up to
-#' 2023.
+#' Data.frame object containing specialty bed data for Scottish Hospitals for
+#' 2022/24.
 #' 
 #' @name example_hospital_data
 #' @family health data scotland examples
@@ -33,10 +33,31 @@ NULL
 
 #' Example hospital metadata.
 #' 
-#' Data.frame object containing  metadata for scottish hospitals up to July 
+#' Data.frame object containing metadata for scottish hospitals up to July 
 #' 2024.
 #' 
 #' @name example_hospital_metadata
+#' @family health data scotland examples
+#' @docType data
+#' @keywords data
+NULL
+
+#' Example health board dataset.
+#' 
+#' Data.frame object containing specialty bed data for Scottish health boards
+#' for 2022/24.
+#' 
+#' @name example_board_data 
+#' @family health data scotland examples 
+#' @docType data 
+#' @keywords data
+NULL
+
+#' Example health board metadata.
+#' 
+#' Data.frame object containing metadata for scottish health boards.
+#' 
+#' @name example_board_metadata
 #' @family health data scotland examples
 #' @docType data
 #' @keywords data
