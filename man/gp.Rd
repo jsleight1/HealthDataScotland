@@ -16,15 +16,19 @@ R6 class storing health statistics for a GP practice.
 \itemize{
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
+\item \href{#method-gp-ui}{\code{gp$ui()}}
+\item \href{#method-gp-server}{\code{gp$server()}}
 \item \href{#method-gp-clone}{\code{gp$clone()}}
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="id"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-id'><code>HealthDataScotland::health_unit$id()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="title"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-title'><code>HealthDataScotland::health_unit$title()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="validate"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-validate'><code>HealthDataScotland::health_unit$validate()</code></a></li>
 </ul>
@@ -61,6 +65,33 @@ for options.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-ui"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-ui}{}}}
+\subsection{Method \code{ui()}}{
+Create UI for general practice object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$ui(ns)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ns}}{Namespace of shiny application page.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-server"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-server}{}}}
+\subsection{Method \code{server()}}{
+Create server for general practice object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$server()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-clone"></a>}}

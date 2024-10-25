@@ -8,71 +8,65 @@ health_data_scotland <- function(...) {
         ),
         dashboardSidebar(
             sidebarMenu(
-                menuItem("Introduction", tabName = "intro", icon = icon("home")), 
-                menuItem("GP practices", tabName = "gp"),
-                menuItem("Hospitals", tabName = "hosp"),
-                menuItem("Health boards", tabName = "board")
+                menuItem("Map", tabName = "map")
             )
         ),
         dashboardBody(
             tabItems(
-                tabItem(tabName = "intro"), 
-                tabItem(tabName = "gp", fluidRow(pin_map_UI(id = "gp_map"))),
-                tabItem(tabName = "hosp", fluidRow(pin_map_UI(id = "hosp_map"))),
-                tabItem(tabName = "board", fluidRow(grid_map_UI(id = "board_map")))
+                tabItem(
+                    tabName = "map",
+                    fluidRow(map_UI(id = "map"))
+                )
             )
         )
     )
 
     server <- function(input, output) {
 
-        gp_json <- get_geojson()
-        gp_meta <- get_gp_meta() %>% 
-            filter(.data[["PracticeCode"]] %in% gp_json[["prac_code"]]) %>% 
-            suppressMessages()
-        gp_data <- get_gp_data() %>% 
-            filter(.data[["PracticeCode"]] %in% gp_json[["prac_code"]]) %>% 
-            suppressMessages()
-
-        pin_map_server(
-            id = "gp_map", 
-            json = gp_json,
-            meta = gp_meta, 
-            data = gp_data, 
-            initialise_popup = initialise_gp_popup
-        )
-
-        hosp_meta <- get_hosp_meta()
-        hosp_data <- get_hosp_data()
-        hosp_json <- get_geojson("hospital")
-        hosp_json <- hosp_json[hosp_json[["id"]] %in% hosp_meta[["HospitalCode"]], ]
-        hosp_json <- hosp_json[hosp_json[["id"]] %in% hosp_data[["Location"]], ]
-        hosp_meta <- hosp_meta %>% 
-            filter(.data[["HospitalCode"]] %in% hosp_json[["id"]])
-
-        pin_map_server(
-            id = "hosp_map",
-            json = hosp_json, 
-            meta = hosp_meta,
-            data = hosp_data, 
-            initialise_popup = initialise_hosp_popup
-        )
-
-
         board_json <- get_geojson("board")
         board_meta <- as_tibble(board_json) %>%
             select("id", "HBName")
-        board_data <- get_board_data() %>% 
-            filter(.data[["HB"]] %in% board_json[["id"]])
 
-        grid_map_server(
-            id = "board_map",
-            json = board_json,
-            meta = board_meta,
-            data = board_data,
-            initialise_popup = initialise_board_popup
+        gp_json <- get_geojson()
+        gp_meta <- get_gp_meta() %>% 
+            filter(.data[["PracticeCode"]] %in% gp_json[["prac_code"]]) %>% 
+            rename("ID" = "PracticeCode") %>%
+            suppressMessages()
+        gp_data <- get_gp_data() %>% 
+            filter(.data[["PracticeCode"]] %in% gp_json[["prac_code"]]) %>% 
+            select(-matches("QF$")) %>%
+            filter(.data[["HB"]] %in% board_meta[["id"]]) %>%
+            rename("ID" = "PracticeCode") %>%
+            mutate(Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d")) %>%
+            suppressMessages()
+
+        hosp_json <- get_geojson("hospital")
+        hosp_meta <- get_hosp_meta() %>% 
+            rename("ID" = "HospitalCode") %>%
+            suppressMessages()
+        hosp_data <- get_hosp_data() %>% 
+            rename("ID" = "Location") %>%
+            filter(.data[["HB"]] %in% board_meta[["id"]]) %>%
+            filter(.data[["ID"]] %in% hosp_json[["id"]]) %>%
+            suppressMessages()
+        hosp_json <- hosp_json[hosp_json[["id"]] %in% hosp_meta[["ID"]], ]
+        hosp_json <- hosp_json[hosp_json[["id"]] %in% hosp_data[["ID"]], ]
+
+        all_data <- list(
+            "gp" = list(
+                "json" = gp_json, 
+                "meta" = gp_meta, 
+                "data" = gp_data
+            ),
+            "hosp" = list(
+                "json" = hosp_json, 
+                "meta" = hosp_meta, 
+                "data" = hosp_data
+            ), 
+            "board" = board_json
         )
 
+        map_server("map", all_data)
     }
 
     shinyApp(ui, server, ...)

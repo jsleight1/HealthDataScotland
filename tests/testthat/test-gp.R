@@ -1,9 +1,10 @@
 gp_data <- HealthDataScotland::example_gp_metadata %>% 
     select(-c("HB", "HSCP", "Time")) %>%
-    inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") 
+    inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") %>% 
+    rename("ID" = "PracticeCode")
 
 gp_unit <- gp_data %>% 
-    filter(.data[["PracticeCode"]] == 10002) %>%
+    filter(.data[["ID"]] == 10002) %>%
     gp[["new"]]() 
 
 test_that("gp class works", {
@@ -13,7 +14,7 @@ test_that("gp class works", {
       
     gp_data %>%
         gp[["new"]]() %>% 
-        expect_error("Data set must contain only one unique PracticeCode")
+        expect_error("Data set must contain only one unique ID")
 
     gp_data %>% 
         select(-"GPPracticeName") %>% 
@@ -21,7 +22,7 @@ test_that("gp class works", {
         expect_error("GPPracticeName column missing from data")
 
     out <- gp_data %>% 
-        filter(.data[["PracticeCode"]] == 10002) %>%
+        filter(.data[["ID"]] == 10002) %>%
         gp[["new"]]() %>% 
         expect_error(NA)
 
@@ -35,8 +36,14 @@ test_that("gp class works", {
 })
 
 test_that("gp class can be plotted", {
-    gp_unit[["plot"]](type = "population_pyramid", time = 20240401) %>% 
+    gp_unit[["plot"]](type = "population_pyramid", date = 20240401) %>% 
         suppressWarnings() %>% 
         expect_s3_class("plotly")
     expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "plotly")
+})
+
+test_that("gp ui works", {
+    out <- gp_unit[["ui"]](function(i) "ns") %>% 
+        expect_error(NA)
+    expect_s3_class(out, "shiny.tag")
 })

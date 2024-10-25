@@ -15,14 +15,23 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 }
 \if{html}{\out{</div>}}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{data}}{A data.frame storing health statistics.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-health_unit-new}{\code{health_unit$new()}}
 \item \href{#method-health_unit-validate}{\code{health_unit$validate()}}
+\item \href{#method-health_unit-data}{\code{health_unit$data()}}
 \item \href{#method-health_unit-id}{\code{health_unit$id()}}
 \item \href{#method-health_unit-title}{\code{health_unit$title()}}
 \item \href{#method-health_unit-address}{\code{health_unit$address()}}
+\item \href{#method-health_unit-popup_modal}{\code{health_unit$popup_modal()}}
 \item \href{#method-health_unit-clone}{\code{health_unit$clone()}}
 }
 }
@@ -32,13 +41,13 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \subsection{Method \code{new()}}{
 Create instance of health unit.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unit$new(data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$new(.data)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{data}}{(\code{data.frame})\cr
+\item{\code{.data}}{(\code{data.frame})\cr
 A data.frame storing health statistics.}
 }
 \if{html}{\out{</div>}}
@@ -51,6 +60,16 @@ A data.frame storing health statistics.}
 Validate structure of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$validate()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unit-data"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-data}{}}}
+\subsection{Method \code{data()}}{
+Get data of health unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$data()}\if{html}{\out{</div>}}
 }
 
 }
@@ -81,6 +100,16 @@ Get title of health unit.
 Get address of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$address()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unit-popup_modal"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-popup_modal}{}}}
+\subsection{Method \code{popup_modal()}}{
+Initialise model popup of health unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$popup_modal(ns)}\if{html}{\out{</div>}}
 }
 
 }

@@ -16,15 +16,19 @@ R6 class storing health statistics for a Hospital.
 \itemize{
 \item \href{#method-hospital-available_plots}{\code{hospital$available_plots()}}
 \item \href{#method-hospital-plot}{\code{hospital$plot()}}
+\item \href{#method-hospital-ui}{\code{hospital$ui()}}
+\item \href{#method-hospital-server}{\code{hospital$server()}}
 \item \href{#method-hospital-clone}{\code{hospital$clone()}}
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="id"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-id'><code>HealthDataScotland::health_unit$id()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="title"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-title'><code>HealthDataScotland::health_unit$title()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="validate"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-validate'><code>HealthDataScotland::health_unit$validate()</code></a></li>
 </ul>
@@ -60,6 +64,33 @@ Character specifying plot type. See \code{available_plots} for options.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-ui"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-ui}{}}}
+\subsection{Method \code{ui()}}{
+Create UI for hospital object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$ui(ns)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ns}}{Namespace of shiny application page.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-server"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-server}{}}}
+\subsection{Method \code{server()}}{
+Create server for hospital object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$server()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-clone"></a>}}

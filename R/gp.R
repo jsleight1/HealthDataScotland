@@ -3,25 +3,22 @@
 gp <- R6Class("gp", 
     inherit = health_unit,
     private = list(
-        id_col = function() {
-            "PracticeCode"
-        },
         title_col = function() {
             "GPPracticeName"
         },
         required_cols = function() {
-            c("PracticeCode", "GPPracticeName", "PracticeListSize", 
+            c("GPPracticeName", "PracticeListSize", 
                 "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", 
                 "Postcode", "TelephoneNumber", "PracticeType", "GPCluster", 
-                "Time")
+                "Date")
         },
-        population_pyramid = function(time) {
-            dat <- self[["data"]] %>% 
-                filter(Time == time, Sex != "All") %>% 
+        population_pyramid = function(date) {
+            dat <- self[["data"]]() %>% 
+                filter(.data[["Date"]] == date, .data[["Sex"]] != "All") %>% 
                 select("Gender" = "Sex", matches("Ages"), -matches("QF")) %>% 
                 pivot_longer(-"Gender", names_to = "Age", values_to = "Population") %>% 
-                filter(Age != "AllAges") %>% 
-                mutate(Age = factor(Age, levels = c(
+                filter(.data[["Age"]] != "AllAges") %>% 
+                mutate(Age = factor(.data[["Age"]], levels = c(
                     "Ages85plus",
                     "Ages75to84",
                     "Ages65to74",
@@ -52,15 +49,15 @@ gp <- R6Class("gp",
             ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
         }, 
         population_trend = function(gender = "All") {
-            plot <- self[["data"]] %>% 
-                select("Time", "Date", "Gender" = "Sex", "Population" = "AllAges") %>% 
+            plot <- self[["data"]]() %>% 
+                select("Date", "Gender" = "Sex", "Population" = "AllAges") %>% 
                 distinct() %>% 
                 filter(Gender == gender) %>%
-                ggplot(aes(x = Time, y = Population, group = Gender)) + 
+                ggplot(aes(x = Date, y = Population, group = Gender)) + 
                     geom_line() + 
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90))
-            ggplotly(plot, tooltip = c("Time", "Gender", "Population"))
+            ggplotly(plot, tooltip = c("Date", "Gender", "Population"))
         }
     ),
     public = list(
@@ -82,82 +79,68 @@ gp <- R6Class("gp",
                 "population_pyramid" = private[["population_pyramid"]](...), 
                 "population_trend" = private[["population_trend"]](...)
             )
+        }, 
+        #' @description
+        #' Create UI for general practice object.
+        #' @param ns 
+        #'     Namespace of shiny application page.
+        ui = function(ns) {
+            ns <- NS(ns(self[["id"]]()))
+            fluidRow(
+                box(
+                    title = self[["title"]](), 
+                    width = 12, 
+                    status = "primary",
+                    solidHeader = TRUE,
+                    fluidRow(box(title = "Address", self[["address"]](), width = 12)),
+                    fluidRow(
+                        box(
+                            title = "Population pyramid",
+                            selectInput(
+                                ns("pop_pyramid_select"), 
+                                label = "Select time frame",
+                                choices = unique(self[["data"]]()[["Date"]])
+                            ),
+                            plotlyOutput(ns("pop_pyramid")),
+                            width = 6
+                        ), 
+                        box(
+                            title = "Population trend",
+                            selectInput(
+                                ns("pop_trend_select"), 
+                                label = "Select gender", 
+                                choices = unique(self[["data"]]()[["Sex"]]), 
+                                selected = "All"
+                            ),
+                            plotlyOutput(ns("pop_trend")),
+                            width = 6 
+                        )
+                    )
+                )
+            )
+        }, 
+        #' @description
+        #' Create server for general practice object.
+        server = function() {
+            moduleServer(
+                self[["id"]](),
+                function(input, output, session) {
+                    ns <- session[["ns"]]
+                    output[["pop_pyramid"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "population_pyramid", 
+                            date = req(input[["pop_pyramid_select"]])
+                        )
+                    )
+                    output[["pop_trend"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "population_trend", 
+                            gender = req(input[["pop_trend_select"]])
+                        )
+                    )
+
+                }
+            )
         }
     )
 )
-
-gp_UI <- function(x, ns) {
-    ns <- NS(ns(x[["id"]]()))
-    fluidRow(
-        box(
-            title = x[["title"]](), 
-            width = 12, 
-            status = "primary",
-            solidHeader = TRUE,
-            fluidRow(box(title = "Address", x[["address"]](), width = 12)),
-            fluidRow(
-                box(
-                    title = "Population pyramid",
-                    selectInput(
-                        ns("pop_pyramid_select"), 
-                        label = "Select time frame",
-                        choices = unique(x[["data"]][["Time"]])
-                    ),
-                    plotlyOutput(ns("pop_pyramid")),
-                    width = 6
-                ), 
-                box(
-                    title = "Population trend",
-                    selectInput(
-                        ns("pop_trend_select"), 
-                        label = "Select gender", 
-                        choices = unique(x[["data"]][["Sex"]]), 
-                        selected = "All"
-                    ),
-                    plotlyOutput(ns("pop_trend")),
-                    width = 6 
-                )
-            )
-        )
-    )
-
-}
-
-gp_server <- function(x) {
-    moduleServer(
-        x[["id"]](),
-        function(input, output, session) {
-            ns <- session[["ns"]]
-
-            output[["pop_pyramid"]] <- renderPlotly(
-                x[["plot"]](
-                    type = "population_pyramid", 
-                    time = req(input[["pop_pyramid_select"]])
-                )
-            )
-
-            output[["pop_trend"]] <- renderPlotly(
-                x[["plot"]](
-                    type = "population_trend", 
-                    gender = req(input[["pop_trend_select"]])
-                )
-            )
-
-        }
-    )
-}
-
-initialise_gp_popup <- function(meta, data, event, ns) {
-    obj <- meta %>% 
-        filter(.data[["PracticeCode"]] == event[["id"]]) %>% 
-        select(-c("HB", "HSCP", "Time")) %>% 
-        inner_join(data, by = "PracticeCode") %>% 
-        gp[["new"]]()
-
-    showModal(modalDialog(
-        gp_UI(obj, ns),
-        size = "l",
-        easyClose = TRUE
-    ))
-    gp_server(obj)
-}

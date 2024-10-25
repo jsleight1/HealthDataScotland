@@ -18,8 +18,6 @@ hopsital_meta_links <- list(
     "jul 2024" = "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0/resource/c698f450-eeed-41a0-88f7-c1e40a568acc/download/hospitals.csv"
 )
 
-board_data_url <- "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d/resource/5d55964b-8e45-4c49-bfdd-9ea3e1fb962d/download/beds_by_nhs_board-of-treatment_specialty.csv"
-
 get_data <- function(x, nm = NULL) {
     httr::GET(
         x, 
@@ -37,17 +35,11 @@ example_gp_data <- purrr::imap_dfr(gp_data_links, get_data)
 example_hospital_metadata <- purrr::imap_dfr(hopsital_meta_links, get_data)
 example_hospital_data <- purrr::imap_dfr(hospital_data_links, get_data) %>% 
     filter(FinancialYear %in% years)
-example_board_data <- get_data(board_data_url) %>% 
-    filter(FinancialYear %in% years)
-example_board_metadata <- unique(example_board_data[, c("HB")])
-example_board_metadata[["HBName"]] <- example_board_metadata[["HB"]]
 
 usethis::use_data(
     example_gp_data, 
     example_gp_metadata,
     example_hospital_data,
     example_hospital_metadata,
-    example_board_data, 
-    example_board_metadata,
     overwrite = TRUE
 )

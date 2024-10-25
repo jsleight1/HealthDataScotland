@@ -21,10 +21,12 @@ R6 class storing health statistics for a health board.
 }
 }
 \if{html}{\out{
-<details open><summary>Inherited methods</summary>
+<details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="id"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-id'><code>HealthDataScotland::health_unit$id()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="title"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-title'><code>HealthDataScotland::health_unit$title()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="validate"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-validate'><code>HealthDataScotland::health_unit$validate()</code></a></li>
 </ul>

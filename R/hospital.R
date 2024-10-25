@@ -2,18 +2,14 @@
 hospital <- R6Class("hospital", 
     inherit = health_unit,
     private = list(
-        id_col = function() {
-            "Location"
-        },
         title_col = function() {
             "HospitalName"
         },
         required_cols = function() {
-            c("Location", "HospitalName", "FinancialYear", "SpecialtyName", 
-                "AllStaffedBeds")
+            c("HospitalName", "FinancialYear", "SpecialtyName", "AllStaffedBeds")
         },
         specialty_bar = function(specialties = "All Specialties") {
-            plot <- self[["data"]] %>% 
+            plot <- self[["data"]]() %>% 
                 filter(.data[["SpecialtyName"]] %in% specialties) %>% 
                 ggplot(
                     aes(
@@ -45,76 +41,64 @@ hospital <- R6Class("hospital",
             switch(type, 
                 "specialty_bar" = private[["specialty_bar"]](...)
             )
+        }, 
+        #' @description
+        #' Create UI for hospital object.
+        #' @param ns 
+        #'     Namespace of shiny application page.
+        ui = function(ns) {
+            ns <- NS(ns(self[["id"]]()))
+            fluidRow(
+                box(
+                    title = self[["title"]](), 
+                    width = 12, 
+                    status = "primary",
+                    solidHeader = TRUE,
+                    fluidRow(box(title = "Address", self[["address"]](), width = 12))
+                ),
+                fluidRow(
+                    box(
+                        title = "All specialties",
+                        plotlyOutput(ns("all_specialty")),
+                        width = 12
+                    ), 
+                ),
+                fluidRow(
+                    box(
+                        title = "Selected specialties",
+                        selectInput(
+                            ns("specialty_select"), 
+                            label = "Select specialty", 
+                            choices = setdiff(unique(self[["data"]]()[["SpecialtyName"]]), 
+                                "All Specialties"), 
+                            multiple = TRUE, 
+                            selected = setdiff(unique(self[["data"]]()[["SpecialtyName"]]),
+                                "All Specialties")[[1]]
+                        ),
+                        plotlyOutput(ns("selected_specialties")),
+                        width = 12
+                    )
+                )
+            )
+        }, 
+        #' @description
+        #' Create server for hospital object.
+        server = function() {
+            moduleServer(
+                self[["id"]](),
+                function(input, output, session) {
+                    ns <- session[["ns"]]
+                    output[["all_specialty"]] <- renderPlotly(
+                        self[["plot"]](type = "specialty_bar")
+                    )
+                    output[["selected_specialties"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "specialty_bar",
+                            specialties = req(input[["specialty_select"]])
+                        )
+                    )
+                }
+            )
         }
     )
 )
-
-hosp_UI <- function(x, ns) {
-    ns <- NS(ns(x[["id"]]()))
-    fluidRow(
-        box(
-            title = x[["title"]](), 
-            width = 12, 
-            status = "primary",
-            solidHeader = TRUE,
-            fluidRow(box(title = "Address", x[["address"]](), width = 12))
-        ),
-        fluidRow(
-            box(
-                title = "All specialties",
-                plotlyOutput(ns("all_specialty")),
-                width = 12
-            ), 
-        ),
-        fluidRow(
-            box(
-                title = "Selected specialties",
-                selectInput(
-                    ns("specialty_select"), 
-                    label = "Select specialty", 
-                    choices = setdiff(unique(x[["data"]][["SpecialtyName"]]), 
-                        "All Specialties"), 
-                    multiple = TRUE, 
-                    selected = setdiff(unique(x[["data"]][["SpecialtyName"]]),
-                        "All Specialties")[[1]]
-                ),
-                plotlyOutput(ns("selected_specialties")),
-                width = 12
-            )
-        )
-    )
-}
-
-hosp_server <- function(x) {
-    moduleServer(
-        x[["id"]](),
-        function(input, output, session) {
-            ns <- session[["ns"]]
-
-            output[["all_specialty"]] <- renderPlotly(
-                x[["plot"]](type = "specialty_bar")
-            )
-
-            output[["selected_specialties"]] <- renderPlotly(
-                x[["plot"]](
-                    type = "specialty_bar",
-                    specialties = req(input[["specialty_select"]])
-                )
-            )
-        }
-    )
-}
-
-initialise_hosp_popup <- function(meta, data, event, ns) {
-    obj <- data %>% 
-        filter(.data[["Location"]] == event[["id"]]) %>% 
-        inner_join(meta, by = c("Location" = "HospitalCode")) %>% 
-        hospital[["new"]]()
-
-    showModal(modalDialog(
-        hosp_UI(obj, ns),
-        size = "l",
-        easyClose = TRUE
-    ))
-    hosp_server(obj)
-}
