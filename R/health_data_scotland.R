@@ -2,6 +2,11 @@
 #' @param ... Passed to shiny::shinyApp.
 #' @export
 health_data_scotland <- function(...) {
+
+    all_data <- list(process_gp_data(), process_hospital_data()) %>% 
+        reduce(bind_rows) %>% 
+        suppressMessages()
+
     ui <- dashboardPage(
         dashboardHeader(
             title = "Health Data Scotland"
@@ -15,59 +20,65 @@ health_data_scotland <- function(...) {
             tabItems(
                 tabItem(
                     tabName = "map",
-                    fluidRow(map_UI(id = "map"))
+                    fluidRow(
+                        map_UI(
+                            id = "map", 
+                            boards = get_geojson("board") %>% 
+                                as_tibble() %>% 
+                                select("HBName", "id") %>% 
+                                tibble::deframe()
+                        )
+                    )
                 )
             )
         )
     )
 
     server <- function(input, output) {
-
-        board_json <- get_geojson("board")
-        board_meta <- as_tibble(board_json) %>%
-            select("id", "HBName")
-
-        gp_json <- get_geojson()
-        gp_meta <- get_gp_meta() %>% 
-            filter(.data[["PracticeCode"]] %in% gp_json[["prac_code"]]) %>% 
-            rename("ID" = "PracticeCode") %>%
-            suppressMessages()
-        gp_data <- get_gp_data() %>% 
-            filter(.data[["PracticeCode"]] %in% gp_json[["prac_code"]]) %>% 
-            select(-matches("QF$")) %>%
-            filter(.data[["HB"]] %in% board_meta[["id"]]) %>%
-            rename("ID" = "PracticeCode") %>%
-            mutate(Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d")) %>%
-            suppressMessages()
-
-        hosp_json <- get_geojson("hospital")
-        hosp_meta <- get_hosp_meta() %>% 
-            rename("ID" = "HospitalCode") %>%
-            suppressMessages()
-        hosp_data <- get_hosp_data() %>% 
-            rename("ID" = "Location") %>%
-            filter(.data[["HB"]] %in% board_meta[["id"]]) %>%
-            filter(.data[["ID"]] %in% hosp_json[["id"]]) %>%
-            suppressMessages()
-        hosp_json <- hosp_json[hosp_json[["id"]] %in% hosp_meta[["ID"]], ]
-        hosp_json <- hosp_json[hosp_json[["id"]] %in% hosp_data[["ID"]], ]
-
-        all_data <- list(
-            "gp" = list(
-                "json" = gp_json, 
-                "meta" = gp_meta, 
-                "data" = gp_data
-            ),
-            "hosp" = list(
-                "json" = hosp_json, 
-                "meta" = hosp_meta, 
-                "data" = hosp_data
-            ), 
-            "board" = board_json
-        )
-
-        map_server("map", all_data)
+        map_server("map", all_data, get_geojson("board"))
     }
 
     shinyApp(ui, server, ...)
+}
+
+process_gp_data <- function() {
+    json <- get_geojson()
+    meta <- get_gp_meta() %>% 
+        filter(.data[["PracticeCode"]] %in% json[["prac_code"]]) %>% 
+        rename("ID" = "PracticeCode")
+    data <- get_gp_data() %>% 
+        filter(.data[["PracticeCode"]] %in% json[["prac_code"]]) %>% 
+        select(-matches("QF$")) %>%
+        filter(.data[["HB"]] %in% get_geojson("board")[["id"]]) %>%
+        rename("ID" = "PracticeCode") %>%
+        mutate(Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"))
+    json <- json[json[["id"]] %in% meta[["ID"]] & json[["id"]] %in% data[["ID"]], ]
+    attr(json, "data") <- attr(json, "data") %>% 
+        left_join(meta, by = c("id" = "ID")) %>% 
+        rename("hbcode" = "HB") %>%
+        select(required_json_cols())
+    tribble(
+        ~type,               ~meta, ~data, ~json, ~initialise,
+        "General practice",  meta,  data,  json,  gp
+    )
+}
+
+process_hospital_data <- function() {
+    json <- get_geojson("hospital")
+    meta <- get_hosp_meta() %>% 
+        rename("ID" = "HospitalCode")
+    data <- get_hosp_data() %>% 
+        rename("ID" = "Location") %>%
+        filter(.data[["HB"]] %in% get_geojson("board")[["id"]]) %>%
+        filter(.data[["ID"]] %in% json[["id"]]) 
+    json <- json[json[["id"]] %in% meta[["ID"]] & json[["id"]] %in% data[["ID"]], ]
+    attr(json, "data") <- select(attr(json, "data"), all_of(required_json_cols()))
+    tribble(
+        ~type,       ~meta, ~data, ~json, ~initialise,
+        "Hospital",  meta,  data,  json,  hospital
+    )
+}
+
+required_json_cols <- function() {
+    c("id", "postcode", "address", "type", "uprn", "hbcode")
 }
