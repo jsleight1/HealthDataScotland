@@ -62,6 +62,11 @@ gp <- R6Class("gp",
     ),
     public = list(
         #' @description
+        #' Get telephone number of GP practice.
+        telephone = function() {
+            unique(self[["data"]]()[["TelephoneNumber"]])
+        },
+        #' @description
         #' Get character vector of available plots for gp unit. Options 
         #'   are either "population_pyramid" plot or "population_trend" plot.
         available_plots = function() {
@@ -88,11 +93,13 @@ gp <- R6Class("gp",
             ns <- NS(ns(self[["id"]]()))
             fluidRow(
                 box(
-                    title = self[["title"]](), 
+                    title = paste(self[["title"]](), "-", self[["id"]]()), 
                     width = 12, 
                     status = "primary",
                     solidHeader = TRUE,
                     fluidRow(box(title = "Address", self[["address"]](), width = 12)),
+                    fluidRow(box(title = "Telephone", self[["telephone"]](), width = 12)),
+                    fluidRow(box(title = "Health board", self[["health_board"]](), width = 12)),
                     fluidRow(
                         box(
                             title = "Population pyramid",

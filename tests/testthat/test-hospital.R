@@ -3,7 +3,11 @@ hospital_data <- HealthDataScotland::example_hospital_data %>%
         HealthDataScotland::example_hospital_metadata, 
         by = c("Location" = "HospitalCode")
     ) %>% 
-    rename("ID" = "Location")
+    rename("ID" = "Location") %>% 
+    inner_join(
+        select(as_tibble(get_geojson("board")), "id", "HBName"),
+        by = c("HB" = "id")
+    )
 
 hosp_unit <- hospital_data %>% 
     filter(.data[["ID"]] == "A101H") %>%
@@ -30,6 +34,7 @@ test_that("hospital class works", {
 
     expect_true(inherits(out, "hospital"))
     expect_identical(out[["id"]](), "A101H")
+     expect_identical(out[["health_board"]](), "Ayrshire and Arran")
     expect_identical(out[["title"]](), "Arran War Memorial Hospital")
     expect_identical(out[["address"]](), 
         "Lamlash, Isle of Arran, KA278LF")

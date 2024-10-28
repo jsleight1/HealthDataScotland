@@ -2,7 +2,7 @@
 #' R6 class representing a health unit e.g. a GP practice or hospital.
 health_unit <- R6Class("health_unit", 
     public = list(
-        #' @field data A data.frame storing health statistics.
+        #' @field .data A data.frame storing health statistics.
         .data = NA, 
         #' @description
         #' Create instance of health unit.
@@ -55,7 +55,14 @@ health_unit <- R6Class("health_unit",
                 pull("x")
         },
         #' @description
+        #' Get health board of health unit.
+        health_board = function() {
+            unique(self[["data"]]()[["HBName"]])
+        },
+        #' @description
         #' Initialise model popup of health unit.
+        #' @param ns (character(1))\cr
+        #'      Namespace to create health unit UI.
         popup_modal = function(ns) {
             showModal(modalDialog(
                 self[["ui"]](ns),

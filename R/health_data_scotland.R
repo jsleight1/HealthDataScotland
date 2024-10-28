@@ -45,7 +45,11 @@ process_gp_data <- function() {
     json <- get_geojson()
     meta <- get_gp_meta() %>% 
         filter(.data[["PracticeCode"]] %in% json[["prac_code"]]) %>% 
-        rename("ID" = "PracticeCode")
+        rename("ID" = "PracticeCode") %>% 
+        inner_join(
+            select(as_tibble(get_geojson("board")), "id", "HBName"),
+            by = c("HB" = "id")
+        )
     data <- get_gp_data() %>% 
         filter(.data[["PracticeCode"]] %in% json[["prac_code"]]) %>% 
         select(-matches("QF$")) %>%
@@ -66,7 +70,11 @@ process_gp_data <- function() {
 process_hospital_data <- function() {
     json <- get_geojson("hospital")
     meta <- get_hosp_meta() %>% 
-        rename("ID" = "HospitalCode")
+        rename("ID" = "HospitalCode") %>% 
+        inner_join(
+            select(as_tibble(get_geojson("board")), "id", "HBName"),
+            by = c("HealthBoard" = "id")
+        )
     data <- get_hosp_data() %>% 
         rename("ID" = "Location") %>%
         filter(.data[["HB"]] %in% get_geojson("board")[["id"]]) %>%

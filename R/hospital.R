@@ -50,11 +50,12 @@ hospital <- R6Class("hospital",
             ns <- NS(ns(self[["id"]]()))
             fluidRow(
                 box(
-                    title = self[["title"]](), 
+                    title = paste(self[["title"]](), "-", self[["id"]]()),
                     width = 12, 
                     status = "primary",
                     solidHeader = TRUE,
-                    fluidRow(box(title = "Address", self[["address"]](), width = 12))
+                    fluidRow(box(title = "Address", self[["address"]](), width = 12)),
+                    fluidRow(box(title = "Health board", self[["health_board"]](), width = 12))
                 ),
                 fluidRow(
                     box(

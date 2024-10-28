@@ -11,14 +11,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{data}}{A data.frame storing health statistics.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{data}}{A data.frame storing health statistics.}
+\item{\code{.data}}{A data.frame storing health statistics.}
 }
 \if{html}{\out{</div>}}
 }
@@ -31,6 +24,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \item \href{#method-health_unit-id}{\code{health_unit$id()}}
 \item \href{#method-health_unit-title}{\code{health_unit$title()}}
 \item \href{#method-health_unit-address}{\code{health_unit$address()}}
+\item \href{#method-health_unit-health_board}{\code{health_unit$health_board()}}
 \item \href{#method-health_unit-popup_modal}{\code{health_unit$popup_modal()}}
 \item \href{#method-health_unit-clone}{\code{health_unit$clone()}}
 }
@@ -104,6 +98,16 @@ Get address of health unit.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unit-health_board"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-health_board}{}}}
+\subsection{Method \code{health_board()}}{
+Get health board of health unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$health_board()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unit-popup_modal"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-popup_modal}{}}}
 \subsection{Method \code{popup_modal()}}{
@@ -112,6 +116,14 @@ Initialise model popup of health unit.
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$popup_modal(ns)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ns}}{(character(1))\cr
+Namespace to create health unit UI.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unit-clone"></a>}}

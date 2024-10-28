@@ -14,6 +14,7 @@ R6 class storing health statistics for a GP practice.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-gp-telephone}{\code{gp$telephone()}}
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
 \item \href{#method-gp-ui}{\code{gp$ui()}}
@@ -26,6 +27,7 @@ R6 class storing health statistics for a GP practice.
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-health_board'><code>HealthDataScotland::health_unit$health_board()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="id"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-id'><code>HealthDataScotland::health_unit$id()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></li>
@@ -34,6 +36,16 @@ R6 class storing health statistics for a GP practice.
 </ul>
 </details>
 }}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-telephone"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-telephone}{}}}
+\subsection{Method \code{telephone()}}{
+Get telephone number of GP practice.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$telephone()}\if{html}{\out{</div>}}
+}
+
+}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-gp-available_plots}{}}}

@@ -1,7 +1,11 @@
 gp_data <- HealthDataScotland::example_gp_metadata %>% 
     select(-c("HB", "HSCP", "Time")) %>%
     inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") %>% 
-    rename("ID" = "PracticeCode")
+    rename("ID" = "PracticeCode") %>% 
+    inner_join(
+        select(as_tibble(get_geojson("board")), "id", "HBName"),
+        by = c("HB" = "id")
+    )
 
 gp_unit <- gp_data %>% 
     filter(.data[["ID"]] == 10002) %>%
@@ -28,6 +32,8 @@ test_that("gp class works", {
 
     expect_true(inherits(out, "gp"))
     expect_identical(out[["id"]](), 10002)
+    expect_identical(out[["health_board"]](), "Tayside")
+    expect_identical(out[["telephone"]](), "01382   580   264")
     expect_identical(out[["title"]](), "Muirhead Medical Centre")
     expect_identical(out[["address"]](), 
         "Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH")
