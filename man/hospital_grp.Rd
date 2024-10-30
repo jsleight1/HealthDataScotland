@@ -17,6 +17,7 @@ R6 class storing health statistics for a list of hospital health units.
 \item \href{#method-hospital_grp-available_plots}{\code{hospital_grp$available_plots()}}
 \item \href{#method-hospital_grp-plot}{\code{hospital_grp$plot()}}
 \item \href{#method-hospital_grp-plot_data}{\code{hospital_grp$plot_data()}}
+\item \href{#method-hospital_grp-summary}{\code{hospital_grp$summary()}}
 \item \href{#method-hospital_grp-clone}{\code{hospital_grp$clone()}}
 }
 }
@@ -28,6 +29,7 @@ R6 class storing health statistics for a list of hospital health units.
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ids"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ids'><code>HealthDataScotland::health_unitgrp$ids()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="json"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-json'><code>HealthDataScotland::health_unitgrp$json()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></li>
 </ul>
 </details>
@@ -79,6 +81,26 @@ Generate plot data for hospital grp.
 Character specifying plot type. See \code{available_plots} for options.}
 
 \item{\code{...}}{Passed to plot functions.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital_grp-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital_grp-summary}{}}}
+\subsection{Method \code{summary()}}{
+Summarise hospital grp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$summary(id = "Scotland national", ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{(character(1))\cr
+Character specifying the ID to assign to output data.frame.}
+
+\item{\code{...}}{Passed to plot_data.}
 }
 \if{html}{\out{</div>}}
 }

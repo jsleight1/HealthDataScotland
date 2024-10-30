@@ -17,12 +17,12 @@ test_that("gp class works", {
         expect_error("GPPracticeName column missing from data")
 
     out <- gp_data %>% 
-        filter(.data[["ID"]] == 10002) %>%
+        filter(.data[["ID"]] == "10002") %>%
         gp[["new"]]() %>% 
         expect_error(NA)
 
     expect_true(inherits(out, "gp"))
-    expect_identical(out[["id"]](), 10002)
+    expect_identical(out[["id"]](), "10002")
     expect_identical(out[["health_board"]](), "Tayside")
     expect_identical(out[["telephone"]](), "01382   580   264")
     expect_identical(out[["title"]](), "Muirhead Medical Centre")

@@ -31,7 +31,10 @@ health_unitgrp <- R6Class(
                 msg = "JSON must be SpatialPointsDataFrame object"
             )
             assert_that(
-                all(self[["ids"]]() %in% self[["json"]]()[["id"]]), 
+                identical(
+                    sort(self[["ids"]]()),
+                    sort(self[["json"]]()[["id"]])
+                ), 
                 msg = "All all health units present in JSON"
             )
             self
@@ -49,14 +52,25 @@ health_unitgrp <- R6Class(
         #' @description
         #' Get ids of stored health units
         ids = function() {
-            map_chr(self[["data"]](), function(i) as.character(i[["id"]]()))
+            unname(map_chr(self[["data"]](), function(i) i[["id"]]()))
         }, 
         #' @description
-        #' Get stored health unit by unit.
+        #' Get stored health unit.
         #' @param id (character(1))\cr
         #'     Character specifying ID of object to obtain from group.
         health_unit = function(id) {
             self[["data"]]()[[which(self[["ids"]]() == id)]]
+        }, 
+        #' @description
+        #' Subset health unit group.
+        #' @param id (character())\cr
+        #'     Character specifying ID (or IDs) of object to obtain from group.
+        subset = function(id) {
+            assert_that(all(id %in% self[["ids"]]()), 
+                msg = "ids are not found in health unit group")
+            self[[".data"]] <- self[[".data"]][which(self[["ids"]]() %in% id)]
+            self[[".json"]] <- self[[".json"]][self[[".json"]][["id"]] %in% id, ]
+            self[["validate"]]()
         }
     )
 )

@@ -8,6 +8,8 @@ hosp_unit2 <- hospital_data %>%
 
 capture_output(json <- get_geojson("hospital"))
 
+json <- json[json[["id"]] %in% c("A101H", "A201H"), ]
+
 hosp_grp_unit <- hospital_grp[["new"]](list(hosp_unit, hosp_unit2), .json = json)
 
 test_that("hospital_grp class works", {
@@ -39,4 +41,16 @@ test_that("hospital_grp class works", {
 
 test_that("hospital_grp class can be plotted", {
     expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_bar"), "plotly")
+})
+
+test_that("hospital_grp subset works", {
+    hosp_grp_unit[["subset"]]("id") %>% 
+        expect_error("ids are not found in health unit group")
+
+    out <- hosp_grp_unit[["subset"]]("A101H") %>% 
+        expect_error(NA)
+
+    expect_true(inherits(out, "hospital_grp"))
+    expect_identical(out[["ids"]](), "A101H")
+    expect_identical(out[["json"]]()[["id"]], "A101H")
 })

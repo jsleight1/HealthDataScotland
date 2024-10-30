@@ -14,10 +14,9 @@ gp <- R6Class("gp",
         },
         population_pyramid_data = function(date) {
             self[["data"]]() %>% 
-                filter(.data[["Date"]] == date, .data[["Sex"]] != "All") %>% 
-                select("Gender" = "Sex", matches("Ages"), -matches("QF")) %>% 
+                filter(.data[["Date"]] == date, .data[["Sex"]] != "All") %>%
+                select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"), -"AllAges") %>%
                 pivot_longer(-"Gender", names_to = "Age", values_to = "Population") %>% 
-                filter(.data[["Age"]] != "AllAges") %>% 
                 mutate(Age = factor(.data[["Age"]], levels = c(
                     "Ages85plus",
                     "Ages75to84",

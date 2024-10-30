@@ -71,6 +71,7 @@ process_gp_data <- function() {
         map(function(id) {
             meta %>% 
                 filter(.data[["ID"]] == id) %>% 
+                select(-"HB", -"HSCP") %>%
                 inner_join(data, by = "ID") %>% 
                 gp[["new"]]()
         }) %>% 

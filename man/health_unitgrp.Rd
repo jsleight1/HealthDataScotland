@@ -26,6 +26,7 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-json}{\code{health_unitgrp$json()}}
 \item \href{#method-health_unitgrp-ids}{\code{health_unitgrp$ids()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
+\item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
 }
@@ -95,7 +96,7 @@ Get ids of stored health units
 \if{html}{\out{<a id="method-health_unitgrp-health_unit"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-health_unit}{}}}
 \subsection{Method \code{health_unit()}}{
-Get stored health unit by unit.
+Get stored health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$health_unit(id)}\if{html}{\out{</div>}}
 }
@@ -105,6 +106,24 @@ Get stored health unit by unit.
 \describe{
 \item{\code{id}}{(character(1))\cr
 Character specifying ID of object to obtain from group.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-subset"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-subset}{}}}
+\subsection{Method \code{subset()}}{
+Subset health unit group.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$subset(id)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{(character())\cr
+Character specifying ID (or IDs) of object to obtain from group.}
 }
 \if{html}{\out{</div>}}
 }

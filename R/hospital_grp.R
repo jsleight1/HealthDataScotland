@@ -54,6 +54,19 @@ hospital_grp <- R6Class("hospital_grp",
             switch(type, 
                 "specialty_bar" = private[["specialty_bar_data"]](...)
             )
+        }, 
+        #' @description
+        #' Summarise hospital grp unit.
+        #' @param id (character(1))\cr
+        #'     Character specifying the ID to assign to output data.frame.
+        #' @param ... Passed to plot_data.
+        summary = function(id = "Scotland national", ...) {
+            self[["plot_data"]]("specialty_bar", ...) %>% 
+                mutate(ID = id) %>%
+                select("ID", "FinancialYear", "SpecialtyName", "AllStaffedBeds") %>% 
+                group_by_if(is.character) %>%
+                summarise_if(is.numeric, sum, na.rm = TRUE) %>% 
+                ungroup()
         }
     )
 )

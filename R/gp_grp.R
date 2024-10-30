@@ -80,6 +80,21 @@ gp_grp <- R6Class("gp_grp",
                 "population_pyramid" = private[["population_pyramid_data"]](...), 
                 "population_trend" = private[["population_trend_data"]](...)
             )
+        }, 
+        #' @description
+        #' Summarise gp grp.
+        #' @param type (character(1))\cr
+        #'     Character specifying summary type. See `available_plots`.
+        #' @param id (character(1))\cr
+        #'     Character specifying the ID to assign to output data.frame
+        #' @param ... Passed to plot_data functions.
+        summary = function(type, id = "Scotland national", ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            self[["plot_data"]](type, ...) %>% 
+                mutate(ID = id) %>% 
+                group_by(across(any_of(c("ID", "Date", "Gender", "Age")))) %>%
+                summarise_if(is.numeric, sum, na.rm = TRUE) %>% 
+                ungroup()
         }
     )
 )

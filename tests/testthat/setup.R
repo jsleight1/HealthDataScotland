@@ -1,7 +1,7 @@
 capture_output(board_json <- get_geojson("board"))
 
 gp_data <- HealthDataScotland::example_gp_metadata %>% 
-    select(-c("HB", "HSCP", "Time")) %>%
+    select(-c("HB", "HSCP")) %>%
     inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") %>% 
     rename("ID" = "PracticeCode") %>% 
     inner_join(

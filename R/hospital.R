@@ -6,9 +6,11 @@ hospital <- R6Class("hospital",
             "HospitalName"
         },
         required_cols = function() {
-            c("HospitalName", "FinancialYear", "SpecialtyName", "AllStaffedBeds")
+            c("HospitalName", "FinancialYear", "SpecialtyName", "SpecialtyNameQF",
+                "AllStaffedBeds")
         },
         specialty_bar_data = function(specialties = "All Specialties") {
+            assert_that(all(specialties %in% c(private[["specialty_choices"]](), "All Specialties")))
             self[["data"]]() %>% 
                 filter(.data[["SpecialtyName"]] %in% specialties)
         },
@@ -25,6 +27,12 @@ hospital <- R6Class("hospital",
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90))
             ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName", "AllStaffedBeds"))
+        },
+        specialty_choices = function() {
+            self[["data"]]() %>% 
+                filter(is.na(.data[["SpecialtyNameQF"]])) %>% 
+                pull("SpecialtyName") %>% 
+                unique()
         }
     ),
     public = list(
@@ -55,7 +63,7 @@ hospital <- R6Class("hospital",
             switch(type, 
                 "specialty_bar" = private[["specialty_bar_data"]](...)
             )
-        }, 
+        },
         #' @description
         #' Create UI for hospital object.
         #' @param ns 
@@ -84,11 +92,9 @@ hospital <- R6Class("hospital",
                         selectInput(
                             ns("specialty_select"), 
                             label = "Select specialty", 
-                            choices = setdiff(unique(self[["data"]]()[["SpecialtyName"]]), 
-                                "All Specialties"), 
+                            choices = private[["specialty_choices"]](),
                             multiple = TRUE, 
-                            selected = setdiff(unique(self[["data"]]()[["SpecialtyName"]]),
-                                "All Specialties")[[1]]
+                            selected = private[["specialty_choices"]]()[1]
                         ),
                         plotlyOutput(ns("selected_specialties")),
                         width = 12

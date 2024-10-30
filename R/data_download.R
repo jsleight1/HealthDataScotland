@@ -69,7 +69,7 @@ get_geojson <- function(type = c("gp", "hospital", "board")) {
 }
 
 set_id <- function(x, col) {
-    x[["id"]] <- x[[col]]
+    x[["id"]] <- as.character(x[[col]])
     x
 }
 
