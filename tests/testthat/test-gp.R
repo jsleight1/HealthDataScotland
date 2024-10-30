@@ -1,12 +1,3 @@
-gp_data <- HealthDataScotland::example_gp_metadata %>% 
-    select(-c("HB", "HSCP", "Time")) %>%
-    inner_join(HealthDataScotland::example_gp_data, by = "PracticeCode") %>% 
-    rename("ID" = "PracticeCode") %>% 
-    inner_join(
-        select(as_tibble(get_geojson("board")), "id", "HBName"),
-        by = c("HB" = "id")
-    )
-
 gp_unit <- gp_data %>% 
     filter(.data[["ID"]] == 10002) %>%
     gp[["new"]]() 

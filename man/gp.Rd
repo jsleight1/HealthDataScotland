@@ -17,6 +17,7 @@ R6 class storing health statistics for a GP practice.
 \item \href{#method-gp-telephone}{\code{gp$telephone()}}
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
+\item \href{#method-gp-plot_data}{\code{gp$plot_data()}}
 \item \href{#method-gp-ui}{\code{gp$ui()}}
 \item \href{#method-gp-server}{\code{gp$server()}}
 \item \href{#method-gp-clone}{\code{gp$clone()}}
@@ -74,6 +75,27 @@ Character specifying plot type. See \code{available_plots}
 for options.}
 
 \item{\code{...}}{Passed to plot functions.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-plot_data"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-plot_data}{}}}
+\subsection{Method \code{plot_data()}}{
+Generate plot data for gp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$plot_data(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots}
+for options.}
+
+\item{\code{...}}{Passed to plot_data functions.}
 }
 \if{html}{\out{</div>}}
 }

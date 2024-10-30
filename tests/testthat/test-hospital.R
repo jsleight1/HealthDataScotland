@@ -1,14 +1,3 @@
-hospital_data <- HealthDataScotland::example_hospital_data %>% 
-    inner_join(
-        HealthDataScotland::example_hospital_metadata, 
-        by = c("Location" = "HospitalCode")
-    ) %>% 
-    rename("ID" = "Location") %>% 
-    inner_join(
-        select(as_tibble(get_geojson("board")), "id", "HBName"),
-        by = c("HB" = "id")
-    )
-
 hosp_unit <- hospital_data %>% 
     filter(.data[["ID"]] == "A101H") %>%
     hospital[["new"]]()

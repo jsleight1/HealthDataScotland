@@ -35,19 +35,17 @@ map_server <- function(id, data, boards) {
         function(input, output, session) {
             ns <- session[["ns"]]
 
-            pin_json <- reduce(data[["json"]], rbind)
+            pin_json <- data %>% 
+                map(function(i) i[["json"]]()) %>% 
+                reduce(rbind)
             
             observe({
                 leafletProxy(id) %>% clearPopups()
                 event <- input[[paste0(id, "_marker_click")]]
                 if (is.null(event)) return()
                 id <- strsplit(event[["id"]], ":")[[1]][[1]]
-                tpe <- strsplit(event[["id"]], ":")[[1]][[2]]
-                obj_data <- filter(data, .data[["type"]] == tpe)
-                obj <- obj_data[["meta"]][[1]] %>% 
-                    filter(.data[["ID"]] == id) %>% 
-                    inner_join(obj_data[["data"]][[1]], by = "ID") %>% 
-                    obj_data[["initialise"]][[1]][["new"]]()
+                type <- strsplit(event[["id"]], ":")[[1]][[2]]
+                obj <- data[[type]][["health_unit"]](id)
                 isolate(obj[["popup_modal"]](ns))
             })
 

@@ -8,9 +8,12 @@ hospital <- R6Class("hospital",
         required_cols = function() {
             c("HospitalName", "FinancialYear", "SpecialtyName", "AllStaffedBeds")
         },
-        specialty_bar = function(specialties = "All Specialties") {
-            plot <- self[["data"]]() %>% 
-                filter(.data[["SpecialtyName"]] %in% specialties) %>% 
+        specialty_bar_data = function(specialties = "All Specialties") {
+            self[["data"]]() %>% 
+                filter(.data[["SpecialtyName"]] %in% specialties)
+        },
+        specialty_bar = function(specialties = "All Specialties", ...) {
+            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) %>%
                 ggplot(
                     aes(
                         x = .data[["FinancialYear"]], 
@@ -40,6 +43,17 @@ hospital <- R6Class("hospital",
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 
                 "specialty_bar" = private[["specialty_bar"]](...)
+            )
+        }, 
+        #' @description
+        #' Generate plot data for hospital unit.
+        #' @param type (character(1))\cr
+        #'     Character specifying plot type. See `available_plots` for options.
+        #' @param ... Passed to plot functions.
+        plot_data = function(type, ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            switch(type, 
+                "specialty_bar" = private[["specialty_bar_data"]](...)
             )
         }, 
         #' @description

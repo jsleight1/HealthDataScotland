@@ -4,7 +4,7 @@
 health_data_scotland <- function(...) {
 
     all_data <- list(process_gp_data(), process_hospital_data()) %>% 
-        reduce(bind_rows) %>% 
+        set_names(c("General practice", "Hospital")) %>%
         suppressMessages()
 
     ui <- dashboardPage(
@@ -43,48 +43,71 @@ health_data_scotland <- function(...) {
 
 process_gp_data <- function() {
     json <- get_geojson()
+
     meta <- get_gp_meta() %>% 
-        filter(.data[["PracticeCode"]] %in% json[["prac_code"]]) %>% 
         rename("ID" = "PracticeCode") %>% 
         inner_join(
             select(as_tibble(get_geojson("board")), "id", "HBName"),
             by = c("HB" = "id")
         )
+
     data <- get_gp_data() %>% 
-        filter(.data[["PracticeCode"]] %in% json[["prac_code"]]) %>% 
         select(-matches("QF$")) %>%
-        filter(.data[["HB"]] %in% get_geojson("board")[["id"]]) %>%
         rename("ID" = "PracticeCode") %>%
         mutate(Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"))
-    json <- json[json[["id"]] %in% meta[["ID"]] & json[["id"]] %in% data[["ID"]], ]
+
+    master_ids <- list(json[["id"]], meta[["ID"]], data[["ID"]]) %>% 
+        reduce(intersect)
+    
+    json <- json[json[["id"]] %in% master_ids, ]
     attr(json, "data") <- attr(json, "data") %>% 
         left_join(meta, by = c("id" = "ID")) %>% 
         rename("hbcode" = "HB") %>%
         select(required_json_cols())
-    tribble(
-        ~type,               ~meta, ~data, ~json, ~initialise,
-        "General practice",  meta,  data,  json,  gp
-    )
+    meta <- filter(meta, .data[["ID"]] %in% master_ids)
+    data <- filter(data, .data[["ID"]] %in% master_ids)
+
+    meta[["ID"]] %>% 
+        map(function(id) {
+            meta %>% 
+                filter(.data[["ID"]] == id) %>% 
+                inner_join(data, by = "ID") %>% 
+                gp[["new"]]()
+        }) %>% 
+        set_names(meta[["ID"]]) %>%
+        gp_grp[["new"]](.json = json)
 }
 
 process_hospital_data <- function() {
     json <- get_geojson("hospital")
+    
     meta <- get_hosp_meta() %>% 
         rename("ID" = "HospitalCode") %>% 
         inner_join(
             select(as_tibble(get_geojson("board")), "id", "HBName"),
             by = c("HealthBoard" = "id")
         )
-    data <- get_hosp_data() %>% 
-        rename("ID" = "Location") %>%
-        filter(.data[["HB"]] %in% get_geojson("board")[["id"]]) %>%
-        filter(.data[["ID"]] %in% json[["id"]]) 
-    json <- json[json[["id"]] %in% meta[["ID"]] & json[["id"]] %in% data[["ID"]], ]
+    
+    data <- rename(get_hosp_data(), "ID" = "Location")
+
+    master_ids <- list(json[["id"]], meta[["ID"]], data[["ID"]]) %>% 
+        reduce(intersect)
+    
+    json <- json[json[["id"]] %in% master_ids, ]
     attr(json, "data") <- select(attr(json, "data"), all_of(required_json_cols()))
-    tribble(
-        ~type,       ~meta, ~data, ~json, ~initialise,
-        "Hospital",  meta,  data,  json,  hospital
-    )
+
+    meta <- filter(meta, .data[["ID"]] %in% master_ids)
+    data <- filter(data, .data[["ID"]] %in% master_ids)
+
+    meta[["ID"]] %>% 
+        map(function(id) {
+            meta %>% 
+                filter(.data[["ID"]] == id) %>% 
+                inner_join(data, by = "ID") %>% 
+                hospital[["new"]]()
+        }) %>% 
+        set_names(meta[["ID"]]) %>%
+        hospital_grp[["new"]](.json = json)
 }
 
 required_json_cols <- function() {

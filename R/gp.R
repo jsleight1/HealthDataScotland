@@ -12,8 +12,8 @@ gp <- R6Class("gp",
                 "Postcode", "TelephoneNumber", "PracticeType", "GPCluster", 
                 "Date")
         },
-        population_pyramid = function(date) {
-            dat <- self[["data"]]() %>% 
+        population_pyramid_data = function(date) {
+            self[["data"]]() %>% 
                 filter(.data[["Date"]] == date, .data[["Sex"]] != "All") %>% 
                 select("Gender" = "Sex", matches("Ages"), -matches("QF")) %>% 
                 pivot_longer(-"Gender", names_to = "Age", values_to = "Population") %>% 
@@ -28,7 +28,9 @@ gp <- R6Class("gp",
                     "Ages5to14", 
                     "Ages0to4"
                 )))
-
+        },
+        population_pyramid = function(date, ...) {
+            dat <- self[["plot_data"]]("population_pyramid", date, ...)
             plot <- ggplot(dat, aes(Population = Population)) +
                 geom_bar(
                     aes(
@@ -48,11 +50,14 @@ gp <- R6Class("gp",
                 xlab(NULL)
             ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
         }, 
-        population_trend = function(gender = "All") {
-            plot <- self[["data"]]() %>% 
+        population_trend_data = function(gender = "All") {
+            self[["data"]]() %>% 
                 select("Date", "Gender" = "Sex", "Population" = "AllAges") %>% 
                 distinct() %>% 
-                filter(Gender == gender) %>%
+                filter(Gender == gender)
+        },
+        population_trend = function(gender = "All", ...) {
+            plot <- dat <- self[["plot_data"]]("population_trend", gender, ...) %>%
                 ggplot(aes(x = Date, y = Population, group = Gender)) + 
                     geom_line() + 
                     theme_bw() + 
@@ -85,6 +90,19 @@ gp <- R6Class("gp",
                 "population_trend" = private[["population_trend"]](...)
             )
         }, 
+        #' @description
+        #' Generate plot data for gp unit.
+        #' @param type (character(1))\cr
+        #'     Character specifying plot type. See `available_plots` 
+        #'   for options.
+        #' @param ... Passed to plot_data functions.
+        plot_data = function(type, ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            switch(type, 
+                "population_pyramid" = private[["population_pyramid_data"]](...), 
+                "population_trend" = private[["population_trend_data"]](...)
+            )
+        },
         #' @description
         #' Create UI for general practice object.
         #' @param ns 
