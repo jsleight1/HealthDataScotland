@@ -6,7 +6,7 @@ It was created as follows:
 - topojson -o scotland_gps.json scotland_gps.shp -p
 
 
-scotland_hosp.json contains spatial data for GP practices in Scotland as of 2021.
+scotland_hosp.json contains spatial data for Hospitals in Scotland as of 2021.
 It was created as follows:
 
 - .shp files obtained from spatial hub scotland https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b
