@@ -3,13 +3,13 @@ hospital_grp <- R6Class("hospital_grp",
     inherit = health_unitgrp, 
     private = list(
         specialty_bar_data = function(specialties = "All Specialties") {
-            self[["data"]]() %>% 
-                map(function(i) i[["plot_data"]]("specialty_bar", specialties)) %>% 
-                setNames(self[["ids"]]()) %>% 
+            self[["data"]]() |> 
+                map(function(i) i[["plot_data"]]("specialty_bar", specialties)) |> 
+                setNames(self[["ids"]]()) |> 
                 bind_rows(.id = "ID")
         },
         specialty_bar = function(specialties = "All Specialties", ...) {
-            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) %>%
+            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) |>
                 ggplot(
                     aes(
                         x = .data[["FinancialYear"]], 
@@ -61,11 +61,11 @@ hospital_grp <- R6Class("hospital_grp",
         #'     Character specifying the ID to assign to output data.frame.
         #' @param ... Passed to plot_data.
         summary = function(id = "Scotland national", ...) {
-            self[["plot_data"]]("specialty_bar", ...) %>% 
-                mutate(ID = id) %>%
-                select("ID", "FinancialYear", "SpecialtyName", "AllStaffedBeds") %>% 
-                group_by_if(is.character) %>%
-                summarise_if(is.numeric, sum, na.rm = TRUE) %>% 
+            self[["plot_data"]]("specialty_bar", ...) |> 
+                mutate(ID = id) |>
+                select("ID", "FinancialYear", "SpecialtyName", "AllStaffedBeds") |> 
+                group_by_if(is.character) |>
+                summarise_if(is.numeric, sum, na.rm = TRUE) |> 
                 ungroup()
         }
     )

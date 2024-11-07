@@ -1,9 +1,9 @@
-hosp_unit <- hospital_data %>% 
-    filter(.data[["ID"]] == "A101H") %>%
+hosp_unit <- hospital_data |> 
+    filter(.data[["ID"]] == "A101H") |>
     hospital[["new"]]()
 
-hosp_unit2 <- hospital_data %>% 
-    filter(.data[["ID"]] == "A201H") %>%
+hosp_unit2 <- hospital_data |> 
+    filter(.data[["ID"]] == "A201H") |>
     hospital[["new"]]()
 
 capture_output(sf <- get_sf("hospital"))
@@ -13,23 +13,23 @@ sf <- sf[sf[["id"]] %in% c("A101H", "A201H"), ]
 hosp_grp_unit <- hospital_grp[["new"]](list(hosp_unit, hosp_unit2), .sf = sf)
 
 test_that("hospital_grp class works", {
-    list(hosp_unit, "hosp_unit") %>% 
-        hospital_grp[["new"]](.sf = sf) %>% 
+    list(hosp_unit, "hosp_unit") |> 
+        hospital_grp[["new"]](.sf = sf) |> 
         expect_error("group must contain the same class of health units")
 
-    list(hosp_unit, hosp_unit2) %>% 
-        hospital_grp[["new"]](.sf = "sf") %>% 
+    list(hosp_unit, hosp_unit2) |> 
+        hospital_grp[["new"]](.sf = "sf") |> 
         expect_error("sf must be sf object")
 
     tst_sf <- sf[sf[["id"]] == "L203H", ]
 
-    list(hosp_unit, hosp_unit2) %>% 
-        hospital_grp[["new"]](.sf = tst_sf) %>% 
+    list(hosp_unit, hosp_unit2) |> 
+        hospital_grp[["new"]](.sf = tst_sf) |> 
         expect_error("All all health units present in sf")
 
-    out <- list(hosp_unit, hosp_unit2) %>% 
-        hospital_grp[["new"]](.sf = sf) %>% 
-        expect_error(NA)
+    out <- list(hosp_unit, hosp_unit2) |> 
+        hospital_grp[["new"]](.sf = sf) |> 
+        expect_no_error()
 
     expect_true(inherits(out, "hospital_grp"))
     expect_identical(out[["ids"]](), c("A101H", "A201H"))
@@ -44,11 +44,11 @@ test_that("hospital_grp class can be plotted", {
 })
 
 test_that("hospital_grp subset works", {
-    hosp_grp_unit[["subset"]]("id") %>% 
+    hosp_grp_unit[["subset"]]("id") |> 
         expect_error("ids are not found in health unit group")
 
-    out <- hosp_grp_unit[["subset"]]("A101H") %>% 
-        expect_error(NA)
+    out <- hosp_grp_unit[["subset"]]("A101H") |> 
+        expect_no_error()
 
     expect_true(inherits(out, "hospital_grp"))
     expect_identical(out[["ids"]](), "A101H")

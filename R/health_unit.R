@@ -47,11 +47,11 @@ health_unit <- R6Class("health_unit",
         #' @description
         #' Get address of health unit.
         address = function() {
-            self[["data"]]() %>% 
-                select(contains("Address"), -contains("QF"), "Postcode") %>% 
-                select_if(~ !any(is.na(.))) %>%
-                distinct() %>% 
-                unite(col = "x", sep = ", ") %>% 
+            self[["data"]]() |> 
+                select(contains("Address"), -contains("QF"), "Postcode") |> 
+                select_if(~ !any(is.na(.))) |>
+                distinct() |> 
+                unite(col = "x", sep = ", ") |> 
                 pull("x")
         },
         #' @description

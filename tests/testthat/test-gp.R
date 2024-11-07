@@ -1,25 +1,25 @@
-gp_unit <- gp_data %>% 
-    filter(.data[["ID"]] == 10002) %>%
+gp_unit <- gp_data |> 
+    filter(.data[["ID"]] == 10002) |>
     gp[["new"]]() 
 
 test_that("gp class works", {
-    "gp_data" %>% 
-        gp[["new"]]() %>% 
+    "gp_data" |> 
+        gp[["new"]]() |> 
         expect_error("Data set must be in data.frame")
       
-    gp_data %>%
-        gp[["new"]]() %>% 
+    gp_data |>
+        gp[["new"]]() |> 
         expect_error("Data set must contain only one unique ID")
 
-    gp_data %>% 
-        select(-"GPPracticeName") %>% 
-        gp[["new"]]() %>% 
+    gp_data |> 
+        select(-"GPPracticeName") |> 
+        gp[["new"]]() |> 
         expect_error("GPPracticeName column missing from data")
 
-    out <- gp_data %>% 
-        filter(.data[["ID"]] == "10002") %>%
-        gp[["new"]]() %>% 
-        expect_error(NA)
+    out <- gp_data |> 
+        filter(.data[["ID"]] == "10002") |>
+        gp[["new"]]() |> 
+        expect_no_error()
 
     expect_true(inherits(out, "gp"))
     expect_identical(out[["id"]](), "10002")
@@ -33,14 +33,14 @@ test_that("gp class works", {
 })
 
 test_that("gp class can be plotted", {
-    gp_unit[["plot"]](type = "population_pyramid", date = 20240401) %>% 
-        suppressWarnings() %>% 
+    gp_unit[["plot"]](type = "population_pyramid", date = 20240401) |> 
+        suppressWarnings() |> 
         expect_s3_class("plotly")
     expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "plotly")
 })
 
 test_that("gp ui works", {
-    out <- gp_unit[["ui"]](function(i) "ns") %>% 
-        expect_error(NA)
+    out <- gp_unit[["ui"]](function(i) "ns") |> 
+        expect_no_error()
     expect_s3_class(out, "shiny.tag")
 })

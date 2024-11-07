@@ -3,8 +3,8 @@
 #' @export
 health_data_scotland <- function(...) {
 
-    all_data <- list(process_gp_data(), process_hospital_data()) %>% 
-        set_names(c("General practice", "Hospital")) %>%
+    all_data <- list(process_gp_data(), process_hospital_data()) |> 
+        set_names(c("General practice", "Hospital")) |>
         suppressMessages()
 
     ui <- dashboardPage(
@@ -26,9 +26,9 @@ health_data_scotland <- function(...) {
                     fluidRow(
                         map_UI(
                             id = "map", 
-                            boards = get_sf("board") %>% 
-                                as_tibble() %>% 
-                                select("HBName", "id") %>% 
+                            boards = get_sf("board") |> 
+                                as_tibble() |> 
+                                select("HBName", "id") |> 
                                 tibble::deframe()
                         )
                     ),
@@ -68,49 +68,49 @@ health_data_scotland <- function(...) {
 process_gp_data <- function() {
     sf <- get_sf()
 
-    meta <- get_gp_meta() %>% 
-        rename("ID" = "PracticeCode") %>% 
-        mutate_at("ID", as.character) %>%
+    meta <- get_gp_meta() |> 
+        rename("ID" = "PracticeCode") |> 
+        mutate_at("ID", as.character) |>
         inner_join(
             select(as_tibble(get_sf("board")), "id", "HBName"),
             by = c("HB" = "id")
         )
 
-    data <- get_gp_data() %>% 
-        select(-matches("QF$")) %>%
-        rename("ID" = "PracticeCode") %>%
+    data <- get_gp_data() |> 
+        select(-matches("QF$")) |>
+        rename("ID" = "PracticeCode") |>
         mutate(
             Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"),
             ID = as.character(.data[["ID"]])
         )
 
-    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) %>% 
+    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) |> 
         reduce(intersect)
 
-    sf <- filter(sf, .data[["id"]] %in% master_ids) %>% 
-        mutate_at("uprn", as.character) %>% 
-        left_join(meta, by = c("id" = "ID")) %>% 
+    sf <- filter(sf, .data[["id"]] %in% master_ids) |> 
+        mutate_at("uprn", as.character) |> 
+        left_join(meta, by = c("id" = "ID")) |> 
         rename("hbcode" = "HB")
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
 
-    meta[["ID"]] %>% 
+    meta[["ID"]] |> 
         map(function(id) {
-            meta %>% 
-                filter(.data[["ID"]] == id) %>% 
-                select(-"HB", -"HSCP") %>%
-                inner_join(data, by = "ID") %>% 
+            meta |> 
+                filter(.data[["ID"]] == id) |> 
+                select(-"HB", -"HSCP") |>
+                inner_join(data, by = "ID") |> 
                 gp[["new"]]()
-        }) %>% 
-        set_names(meta[["ID"]]) %>%
+        }) |> 
+        set_names(meta[["ID"]]) |>
         gp_grp[["new"]](.sf = sf)
 }
 
 process_hospital_data <- function() {
     sf <- get_sf("hospital")
     
-    meta <- get_hosp_meta() %>% 
-        rename("ID" = "HospitalCode") %>%
+    meta <- get_hosp_meta() |> 
+        rename("ID" = "HospitalCode") |>
         inner_join(
             select(as_tibble(get_sf("board")), "id", "HBName"),
             by = c("HealthBoard" = "id")
@@ -118,21 +118,21 @@ process_hospital_data <- function() {
     
     data <- rename(get_hosp_data(), "ID" = "Location")
 
-    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) %>% 
+    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) |> 
         reduce(intersect)
     
-    sf <- filter(sf, .data[["id"]] %in% master_ids) %>% 
+    sf <- filter(sf, .data[["id"]] %in% master_ids) |> 
         mutate_at("uprn", as.character)
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
 
-    meta[["ID"]] %>% 
+    meta[["ID"]] |> 
         map(function(id) {
-            meta %>% 
-                filter(.data[["ID"]] == id) %>% 
-                inner_join(data, by = "ID") %>% 
+            meta |> 
+                filter(.data[["ID"]] == id) |> 
+                inner_join(data, by = "ID") |> 
                 hospital[["new"]]()
-        }) %>% 
-        set_names(meta[["ID"]]) %>%
+        }) |> 
+        set_names(meta[["ID"]]) |>
         hospital_grp[["new"]](.sf = sf)
 }

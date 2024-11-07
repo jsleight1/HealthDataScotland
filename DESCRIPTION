@@ -16,7 +16,6 @@ Imports:
     ggplot2,
     httr,
     leaflet,
-    magrittr,
     plotly,
     purrr,
     R6,

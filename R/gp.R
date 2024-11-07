@@ -13,10 +13,10 @@ gp <- R6Class("gp",
                 "Date")
         },
         population_pyramid_data = function(date) {
-            self[["data"]]() %>% 
-                filter(.data[["Date"]] == date, .data[["Sex"]] != "All") %>%
-                select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"), -"AllAges") %>%
-                pivot_longer(-"Gender", names_to = "Age", values_to = "Population") %>% 
+            self[["data"]]() |> 
+                filter(.data[["Date"]] == date, .data[["Sex"]] != "All") |>
+                select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"), -"AllAges") |>
+                pivot_longer(-"Gender", names_to = "Age", values_to = "Population") |> 
                 mutate(Age = factor(.data[["Age"]], levels = c(
                     "Ages85plus",
                     "Ages75to84",
@@ -50,13 +50,13 @@ gp <- R6Class("gp",
             ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
         }, 
         population_trend_data = function(gender = "All") {
-            self[["data"]]() %>% 
-                select("Date", "Gender" = "Sex", "Population" = "AllAges") %>% 
-                distinct() %>% 
+            self[["data"]]() |> 
+                select("Date", "Gender" = "Sex", "Population" = "AllAges") |> 
+                distinct() |> 
                 filter(Gender == gender)
         },
         population_trend = function(gender = "All", ...) {
-            plot <- dat <- self[["plot_data"]]("population_trend", gender, ...) %>%
+            plot <- dat <- self[["plot_data"]]("population_trend", gender, ...) |>
                 ggplot(aes(x = Date, y = Population, group = Gender)) + 
                     geom_line() + 
                     theme_bw() + 

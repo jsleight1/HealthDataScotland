@@ -53,17 +53,17 @@ get_sf <- function(type = c("gp", "hospital", "board")) {
     switch(rlang::arg_match(type), 
         "gp" = sf::read_sf(
             system.file("extdata", "scotland_gps.json", package = "HealthDataScotland")
-        ) %>% 
-        set_id("prac_code") %>% 
+        ) |> 
+        set_id("prac_code") |> 
         set_type("General practice"),
         "hospital" = sf::read_sf(
             system.file("extdata", "scotland_hosp.json", package = "HealthDataScotland")
-        ) %>% 
-        set_id("sitecode") %>% 
+        ) |> 
+        set_id("sitecode") |> 
         set_type("Hospital"),
         "board" = sf::read_sf(
             system.file("extdata", "scotland_boards.json", package = "HealthDataScotland")
-        ) %>% 
+        ) |> 
         set_id("HBCode")
     )
 }

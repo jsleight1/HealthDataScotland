@@ -4,9 +4,9 @@ gp_grp <- R6Class("gp_grp",
     inherit = health_unitgrp, 
     private = list(
         population_pyramid_data = function(date) {
-            self[["data"]]() %>% 
-                map(function(i) i[["plot_data"]]("population_pyramid", date)) %>% 
-                setNames(self[["ids"]]()) %>% 
+            self[["data"]]() |> 
+                map(function(i) i[["plot_data"]]("population_pyramid", date)) |> 
+                setNames(self[["ids"]]()) |> 
                 bind_rows(.id = "ID")
         },
         population_pyramid = function(date, ...) {
@@ -34,13 +34,13 @@ gp_grp <- R6Class("gp_grp",
 
         },
         population_trend_data = function(gender = "All") {
-            self[["data"]]() %>% 
-                map(function(i) i[["plot_data"]]("population_trend", gender)) %>% 
-                setNames(self[["ids"]]()) %>% 
+            self[["data"]]() |> 
+                map(function(i) i[["plot_data"]]("population_trend", gender)) |> 
+                setNames(self[["ids"]]()) |> 
                 bind_rows(.id = "ID")
         },
         population_trend = function(gender = "All", ...) {
-            plot <- self[["plot_data"]]("population_trend", gender, ...) %>%
+            plot <- self[["plot_data"]]("population_trend", gender, ...) |>
                 ggplot(aes(x = Date, y = Population, group = Gender, colour = ID)) + 
                     geom_line() + 
                     theme_bw() + 
@@ -90,10 +90,10 @@ gp_grp <- R6Class("gp_grp",
         #' @param ... Passed to plot_data functions.
         summary = function(type, id = "Scotland national", ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
-            self[["plot_data"]](type, ...) %>% 
-                mutate(ID = id) %>% 
-                group_by(across(any_of(c("ID", "Date", "Gender", "Age")))) %>%
-                summarise_if(is.numeric, sum, na.rm = TRUE) %>% 
+            self[["plot_data"]](type, ...) |> 
+                mutate(ID = id) |> 
+                group_by(across(any_of(c("ID", "Date", "Gender", "Age")))) |>
+                summarise_if(is.numeric, sum, na.rm = TRUE) |> 
                 ungroup()
         }
     )

@@ -11,11 +11,11 @@ hospital <- R6Class("hospital",
         },
         specialty_bar_data = function(specialties = "All Specialties") {
             assert_that(all(specialties %in% c(private[["specialty_choices"]](), "All Specialties")))
-            self[["data"]]() %>% 
+            self[["data"]]() |> 
                 filter(.data[["SpecialtyName"]] %in% specialties)
         },
         specialty_bar = function(specialties = "All Specialties", ...) {
-            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) %>%
+            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) |>
                 ggplot(
                     aes(
                         x = .data[["FinancialYear"]], 
@@ -29,9 +29,9 @@ hospital <- R6Class("hospital",
             ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName", "AllStaffedBeds"))
         },
         specialty_choices = function() {
-            self[["data"]]() %>% 
-                filter(is.na(.data[["SpecialtyNameQF"]])) %>% 
-                pull("SpecialtyName") %>% 
+            self[["data"]]() |> 
+                filter(is.na(.data[["SpecialtyNameQF"]])) |> 
+                pull("SpecialtyName") |> 
                 unique()
         }
     ),

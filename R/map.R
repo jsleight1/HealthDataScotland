@@ -35,12 +35,12 @@ map_server <- function(id, data, boards) {
         function(input, output, session) {
             ns <- session[["ns"]]
 
-            pin_sf <- data %>% 
-                map(function(i) i[["sf"]]()) %>% 
+            pin_sf <- data |> 
+                map(function(i) i[["sf"]]()) |> 
                 reduce(bind_rows)
             
             observe({
-                leafletProxy(id) %>% clearPopups()
+                leafletProxy(id) |> clearPopups()
                 event <- input[[paste0(id, "_marker_click")]]
                 if (is.null(event)) return()
                 id <- strsplit(event[["id"]], ":")[[1]][[1]]
@@ -56,8 +56,8 @@ map_server <- function(id, data, boards) {
             })
 
             output[["map"]] <- renderLeaflet({
-                leaflet() %>% 
-                    addTiles() %>% 
+                leaflet() |> 
+                    addTiles() |> 
                     addAwesomeMarkers(
                         layerId = ~paste0(as.character(id), ":", as.character(type)),
                         icon = ~pin_icon(type),
@@ -65,7 +65,7 @@ map_server <- function(id, data, boards) {
                             showCoverageOnHover = FALSE
                         ), 
                         data = pin_data()
-                    ) %>%
+                    ) |>
                     addPolygons(
                         fillOpacity = 0.01,
                         smoothFactor = 0.1, 

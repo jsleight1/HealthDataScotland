@@ -27,12 +27,12 @@ get_data <- function(x) {
     out
 }
 
-example_gp_metadata <- map_dfr(gp_meta_links, get_data) %>% 
+example_gp_metadata <- map_dfr(gp_meta_links, get_data) |> 
     mutate_at("PracticeCode", as.character)
-example_gp_data <- map_dfr(gp_data_links, get_data) %>% 
+example_gp_data <- map_dfr(gp_data_links, get_data) |> 
     mutate_at("PracticeCode", as.character)
 example_hospital_metadata <- map_dfr(hopsital_meta_links, get_data)
-example_hospital_data <- map_dfr(hospital_data_links, get_data) %>% 
+example_hospital_data <- map_dfr(hospital_data_links, get_data) |> 
     filter(FinancialYear %in% c("2022/23", "2023/24"))
 
 usethis::use_data(
