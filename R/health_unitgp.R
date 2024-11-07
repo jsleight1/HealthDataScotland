@@ -5,18 +5,18 @@ health_unitgrp <- R6Class(
     public = list(
          #' @field .data A list of health units in health unit grp.
         .data = NA,
-        #' @field .json A SpatialPointsDataFrame storing spatial information.
-        .json = NA,
+        #' @field .sf A sf storing spatial information.
+        .sf = NA,
         #' @description
         #' Create instance of health unit grp.
         #' @param .data (`list`)\cr
         #'     A list of health units in health unit grp.
-        #' @param .json (`SpatialPointsDataFrame`)
-        #'     A SpatialPointsDataFrame storing spatial information for 
+        #' @param .sf (`sf`)
+        #'     A sf storing spatial information for 
         #'     health units.
-        initialize = function(.data, .json) {
+        initialize = function(.data, .sf) {
             self[[".data"]] = .data
-            self[[".json"]] = .json
+            self[[".sf"]] = .sf
             self[["validate"]]()
         }, 
         #' @description
@@ -27,15 +27,15 @@ health_unitgrp <- R6Class(
                 msg = "group must contain the same class of health units"   
             )
             assert_that(
-                inherits(self[["json"]](), "SpatialPointsDataFrame"), 
-                msg = "JSON must be SpatialPointsDataFrame object"
+                inherits(self[["sf"]](), "sf"), 
+                msg = "sf must be sf object"
             )
             assert_that(
                 identical(
                     sort(self[["ids"]]()),
-                    sort(self[["json"]]()[["id"]])
+                    sort(self[["sf"]]()[["id"]])
                 ), 
-                msg = "All all health units present in JSON"
+                msg = "All all health units present in sf"
             )
             self
         },
@@ -45,9 +45,9 @@ health_unitgrp <- R6Class(
             self[[".data"]]
         },
         #' @description
-        #' Get JSON of health unit grp.
-        json = function() {
-            self[[".json"]]
+        #' Get sf of health unit grp.
+        sf = function() {
+            self[[".sf"]]
         },
         #' @description
         #' Get ids of stored health units
@@ -69,7 +69,7 @@ health_unitgrp <- R6Class(
             assert_that(all(id %in% self[["ids"]]()), 
                 msg = "ids are not found in health unit group")
             self[[".data"]] <- self[[".data"]][which(self[["ids"]]() %in% id)]
-            self[[".json"]] <- self[[".json"]][self[[".json"]][["id"]] %in% id, ]
+            self[[".sf"]] <- self[[".sf"]][self[[".sf"]][["id"]] %in% id, ]
             self[["validate"]]()
         }
     )

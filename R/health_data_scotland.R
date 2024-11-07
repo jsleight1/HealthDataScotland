@@ -26,7 +26,7 @@ health_data_scotland <- function(...) {
                     fluidRow(
                         map_UI(
                             id = "map", 
-                            boards = get_geojson("board") %>% 
+                            boards = get_sf("board") %>% 
                                 as_tibble() %>% 
                                 select("HBName", "id") %>% 
                                 tibble::deframe()
@@ -52,27 +52,27 @@ health_data_scotland <- function(...) {
                     h1("Notes"), 
                     p("Please note that GP practices and hospitals that are included are only those that
                       are present in all three of the metadata, demography/specialty data 
-                      and spatial JSON data.")
+                      and spatial data.")
                 )
             )
         )
     )
 
     server <- function(input, output) {
-        map_server("map", all_data, get_geojson("board"))
+        map_server("map", all_data, get_sf("board"))
     }
 
     shinyApp(ui, server, ...)
 }
 
 process_gp_data <- function() {
-    json <- get_geojson()
+    sf <- get_sf()
 
     meta <- get_gp_meta() %>% 
         rename("ID" = "PracticeCode") %>% 
         mutate_at("ID", as.character) %>%
         inner_join(
-            select(as_tibble(get_geojson("board")), "id", "HBName"),
+            select(as_tibble(get_sf("board")), "id", "HBName"),
             by = c("HB" = "id")
         )
 
@@ -84,14 +84,13 @@ process_gp_data <- function() {
             ID = as.character(.data[["ID"]])
         )
 
-    master_ids <- list(json[["id"]], meta[["ID"]], data[["ID"]]) %>% 
+    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) %>% 
         reduce(intersect)
 
-    json <- json[json[["id"]] %in% master_ids, ]
-    attr(json, "data") <- attr(json, "data") %>% 
+    sf <- filter(sf, .data[["id"]] %in% master_ids) %>% 
+        mutate_at("uprn", as.character) %>% 
         left_join(meta, by = c("id" = "ID")) %>% 
-        rename("hbcode" = "HB") %>%
-        select(required_json_cols())
+        rename("hbcode" = "HB")
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
 
@@ -104,27 +103,26 @@ process_gp_data <- function() {
                 gp[["new"]]()
         }) %>% 
         set_names(meta[["ID"]]) %>%
-        gp_grp[["new"]](.json = json)
+        gp_grp[["new"]](.sf = sf)
 }
 
 process_hospital_data <- function() {
-    json <- get_geojson("hospital")
+    sf <- get_sf("hospital")
     
     meta <- get_hosp_meta() %>% 
         rename("ID" = "HospitalCode") %>%
         inner_join(
-            select(as_tibble(get_geojson("board")), "id", "HBName"),
+            select(as_tibble(get_sf("board")), "id", "HBName"),
             by = c("HealthBoard" = "id")
         )
     
     data <- rename(get_hosp_data(), "ID" = "Location")
 
-    master_ids <- list(json[["id"]], meta[["ID"]], data[["ID"]]) %>% 
+    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) %>% 
         reduce(intersect)
     
-    json <- json[json[["id"]] %in% master_ids, ]
-    attr(json, "data") <- select(attr(json, "data"), all_of(required_json_cols()))
-
+    sf <- filter(sf, .data[["id"]] %in% master_ids) %>% 
+        mutate_at("uprn", as.character)
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
 
@@ -136,9 +134,5 @@ process_hospital_data <- function() {
                 hospital[["new"]]()
         }) %>% 
         set_names(meta[["ID"]]) %>%
-        hospital_grp[["new"]](.json = json)
-}
-
-required_json_cols <- function() {
-    c("id", "postcode", "address", "type", "uprn", "hbcode")
+        hospital_grp[["new"]](.sf = sf)
 }

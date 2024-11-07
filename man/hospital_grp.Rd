@@ -24,13 +24,13 @@ R6 class storing health statistics for a list of hospital health units.
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ids"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ids'><code>HealthDataScotland::health_unitgrp$ids()</code></a></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="json"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-json'><code>HealthDataScotland::health_unitgrp$json()</code></a></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ids"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ids'><code>HealthDataScotland::health_unitgrp$ids()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="sf"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-sf'><code>HealthDataScotland::health_unitgrp$sf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
 </ul>
 </details>
 }}

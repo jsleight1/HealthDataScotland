@@ -35,9 +35,9 @@ map_server <- function(id, data, boards) {
         function(input, output, session) {
             ns <- session[["ns"]]
 
-            pin_json <- data %>% 
-                map(function(i) i[["json"]]()) %>% 
-                reduce(rbind)
+            pin_sf <- data %>% 
+                map(function(i) i[["sf"]]()) %>% 
+                reduce(bind_rows)
             
             observe({
                 leafletProxy(id) %>% clearPopups()
@@ -52,7 +52,7 @@ map_server <- function(id, data, boards) {
             pin_data <- reactive({
                 health_boards <- input[["board_select"]]
                 centre_types <- input[["health_select"]]
-                pin_json[pin_json[["type"]] %in% centre_types & pin_json[["hbcode"]] %in% health_boards, ]
+                pin_sf[pin_sf[["type"]] %in% centre_types & pin_sf[["hbcode"]] %in% health_boards, ]
             })
 
             output[["map"]] <- renderLeaflet({

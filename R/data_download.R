@@ -49,19 +49,19 @@ get_data <- function(x) {
     out
 }
 
-get_geojson <- function(type = c("gp", "hospital", "board")) {
+get_sf <- function(type = c("gp", "hospital", "board")) {
     switch(rlang::arg_match(type), 
-        "gp" = rgdal::readOGR(
+        "gp" = sf::read_sf(
             system.file("extdata", "scotland_gps.json", package = "HealthDataScotland")
         ) %>% 
         set_id("prac_code") %>% 
         set_type("General practice"),
-        "hospital" = rgdal::readOGR(
+        "hospital" = sf::read_sf(
             system.file("extdata", "scotland_hosp.json", package = "HealthDataScotland")
         ) %>% 
         set_id("sitecode") %>% 
         set_type("Hospital"),
-        "board" = rgdal::readOGR(
+        "board" = sf::read_sf(
             system.file("extdata", "scotland_boards.json", package = "HealthDataScotland")
         ) %>% 
         set_id("HBCode")
