@@ -7,5 +7,6 @@ NULL
 #' @importFrom purrr imap_dfr map map_chr map_dfr reduce set_names
 #' @importFrom plotly ggplotly plotlyOutput renderPlotly
 #' @importFrom rlang arg_match
+#' @importFrom shinyWidgets addSpinner pickerInput
 #' @importFrom tidyr pivot_longer unite
 NULL

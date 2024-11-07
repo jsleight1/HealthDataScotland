@@ -3,23 +3,27 @@ map_UI <- function(id, boards) {
     tabPanel(
         "Map",
         column(
-            selectInput(
-                ns("board_select"), 
-                label = "Select health board",  
+            pickerInput(
+                inputId = ns("board_select"),
+                label =  "Select health board",  
                 choices = boards,
-                multiple = TRUE,
                 selected = boards,
-                width = "100%"
+                inline = TRUE,
+                multiple = TRUE, 
+                options = list(
+                    `actions-box` = TRUE, 
+                    `selected-text-format` = "count > 1"
+                )
             ),
-            checkboxGroupInput(
+            pickerInput(
                 ns("health_select"), 
                 label = "Display health centre types",  
                 choices = c("General practice", "Hospital"), 
                 selected = c("General practice", "Hospital"), 
                 inline = TRUE,
-                width = "100%"
+                multiple = TRUE
             ),
-            shinyWidgets::addSpinner(
+            addSpinner(
                 leafletOutput(ns("map"), height = 700), 
                 spin = "bounce", 
                 color = "#377EB8"
