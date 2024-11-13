@@ -3,9 +3,11 @@
 #' @export
 health_data_scotland <- function(...) {
 
-    all_data <- list(process_gp_data(), process_hospital_data()) |> 
-        set_names(c("General practice", "Hospital")) |>
-        suppressMessages()
+    # all_data <- list(process_gp_data(), process_hospital_data()) |> 
+    #     set_names(c("General practice", "Hospital")) |>
+    #     suppressMessages()
+
+    all_data <- readRDS("data.RDS")
 
     ui <- dashboardPage(
         dashboardHeader(title = "Health Data Scotland"),
@@ -19,8 +21,7 @@ health_data_scotland <- function(...) {
         dashboardBody(
             tabItems(
                 tabItem(
-                    tabName = "map",
-                    h1("Health Data Scotland Dashboard"), 
+                    tabName = "map", 
                     h4("This dashboard shows a summary of demographic information
                        for GP practices and hospital bed capacity per specialty across Scotland."),
                     fluidRow(
