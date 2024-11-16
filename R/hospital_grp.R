@@ -4,8 +4,8 @@ hospital_grp <- R6Class("hospital_grp",
     private = list(
         specialty_bar_data = function(specialties = "All Specialties") {
             self[["data"]]() |> 
-                map(function(i) i[["plot_data"]]("specialty_bar", specialties)) |> 
-                setNames(self[["ids"]]()) |> 
+                map(~.x[["plot_data"]]("specialty_bar", specialties)) |> 
+                setNames(self[["titles"]]()) |> 
                 bind_rows(.id = "ID")
         },
         specialty_bar = function(specialties = "All Specialties", ...) {
@@ -21,9 +21,16 @@ hospital_grp <- R6Class("hospital_grp",
                     geom_bar(stat = "identity") + 
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90)) +
-                    facet_wrap(~ID)
+                    facet_wrap(~ID, ncol = 2)
             ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName", 
                 "AllStaffedBeds", "ID"))
+        },
+        specialty_choices = function() {
+            self[["data"]]() |> 
+                map(~filter(.x[["data"]](), is.na(.data[["SpecialtyNameQF"]]))) |> 
+                bind_rows() |>
+                pull("SpecialtyName") |> 
+                unique()
         }
     ),
     public = list(
@@ -67,6 +74,60 @@ hospital_grp <- R6Class("hospital_grp",
                 group_by_if(is.character) |>
                 summarise_if(is.numeric, sum, na.rm = TRUE) |> 
                 ungroup()
+        },
+        #' @description
+        #' Create UI for hospital object.
+        #' @param ns 
+        #'     Namespace of shiny application page.
+        ui = function(ns, id) {
+            ns <- NS(ns(id))
+            fluidRow(
+                box(
+                   title = "Hospital",
+                   column(
+                        box(
+                            title = "All specialties",
+                            plotlyOutput(ns("all_specialty")),
+                            width = 12
+                        ),
+                        box(
+                            title = "Selected specialties",
+                            selectInput(
+                                ns("specialty_select"), 
+                                label = "Select specialty", 
+                                choices = private[["specialty_choices"]](),
+                                multiple = TRUE, 
+                                selected = private[["specialty_choices"]]()[1]
+                            ),
+                            plotlyOutput(ns("selected_specialties")),
+                            width = 12
+                        ),
+                        width = 12
+                    ),
+                    width = 12, 
+                    status = "primary",
+                    solidHeader = TRUE
+                )
+            )
+        }, 
+        #' @description
+        #' Create server for hospital object.
+        server = function(id) {
+            moduleServer(
+                id,
+                function(input, output, session) {
+                    ns <- session[["ns"]]
+                    output[["all_specialty"]] <- renderPlotly(
+                        self[["plot"]](type = "specialty_bar")
+                    )
+                    output[["selected_specialties"]] <- renderPlotly({
+                        self[["plot"]](
+                            type = "specialty_bar",
+                            specialties = req(input[["specialty_select"]])
+                        )
+                    })
+                }
+            )
         }
     )
 )

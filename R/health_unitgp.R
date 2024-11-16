@@ -52,8 +52,13 @@ health_unitgrp <- R6Class(
         #' @description
         #' Get ids of stored health units
         ids = function() {
-            unname(map_chr(self[["data"]](), function(i) i[["id"]]()))
-        }, 
+            unname(map_chr(self[["data"]](), ~.x[["id"]]()))
+        },
+        #' @description
+        #' Get names of stored health units
+        titles = function() {
+            unname(map_chr(self[["data"]](), ~.x[["title"]]()))
+        },
         #' @description
         #' Get stored health unit.
         #' @param id (character(1))\cr
@@ -71,6 +76,14 @@ health_unitgrp <- R6Class(
             self[[".data"]] <- self[[".data"]][which(self[["ids"]]() %in% id)]
             self[[".sf"]] <- self[[".sf"]][self[[".sf"]][["id"]] %in% id, ]
             self[["validate"]]()
+        },
+        #' @description
+        #' Get downloadable data.frame of health unit group.
+        get_download = function() {
+            self[["data"]]() |>
+               map(~.x[["data"]]()) |>
+               setNames(self[["ids"]]()) |>
+               bind_rows(.id = "ID")
         }
     )
 )

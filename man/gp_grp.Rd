@@ -25,6 +25,7 @@ R6 class storing health statistics for a list of gp health units.
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-get_download'><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ids"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ids'><code>HealthDataScotland::health_unitgrp$ids()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>

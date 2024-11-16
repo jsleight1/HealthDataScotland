@@ -27,6 +27,7 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-ids}{\code{health_unitgrp$ids()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
+\item \href{#method-health_unitgrp-get_download}{\code{health_unitgrp$get_download()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
 }
@@ -127,6 +128,16 @@ Character specifying ID (or IDs) of object to obtain from group.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-get_download"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-get_download}{}}}
+\subsection{Method \code{get_download()}}{
+Get downloadable data.frame of health unit group.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$get_download()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unitgrp-clone"></a>}}

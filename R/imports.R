@@ -10,3 +10,5 @@ NULL
 #' @importFrom shinyWidgets addSpinner pickerInput
 #' @importFrom tidyr pivot_longer unite
 NULL
+
+utils::globalVariables(".")

@@ -33,6 +33,7 @@ test_that("hospital_grp class works", {
 
     expect_true(inherits(out, "hospital_grp"))
     expect_identical(out[["ids"]](), c("A101H", "A201H"))
+    expect_identical(out[["titles"]](), c("Arran War Memorial Hospital", "Ailsa Hospital"))
     expect_identical(out[["data"]](), list(hosp_unit, hosp_unit2))
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("A101H"), hosp_unit)
@@ -53,4 +54,11 @@ test_that("hospital_grp subset works", {
     expect_true(inherits(out, "hospital_grp"))
     expect_identical(out[["ids"]](), "A101H")
     expect_identical(out[["sf"]]()[["id"]], "A101H")
+})
+
+test_that("hospital_grp get_download works", {
+    out <- hosp_grp_unit[["get_download"]]() |>
+       expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_identical(hosp_grp_unit[["ids"]](), unique(out[["ID"]]))
 })

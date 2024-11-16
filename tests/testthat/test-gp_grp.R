@@ -33,6 +33,7 @@ test_that("gp_grp class works", {
 
     expect_true(inherits(out, "gp_grp"))
     expect_identical(out[["ids"]](), c("10002", "10017"))
+    expect_identical(out[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
     expect_identical(out[["data"]](), list(gp_unit, gp_unit2))
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("10002"), gp_unit)
@@ -57,4 +58,11 @@ test_that("gp_grp subset works", {
     expect_true(inherits(out, "gp_grp"))
     expect_identical(out[["ids"]](), "10002")
     expect_identical(out[["sf"]]()[["id"]], "10002")
+})
+
+test_that("gp_grp get_download works", {
+    out <- gp_grp_unit[["get_download"]]() |>
+       expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_identical(gp_grp_unit[["ids"]](), unique(out[["ID"]]))
 })

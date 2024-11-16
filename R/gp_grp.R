@@ -5,8 +5,8 @@ gp_grp <- R6Class("gp_grp",
     private = list(
         population_pyramid_data = function(date) {
             self[["data"]]() |> 
-                map(function(i) i[["plot_data"]]("population_pyramid", date)) |> 
-                setNames(self[["ids"]]()) |> 
+                map(~.x[["plot_data"]]("population_pyramid", date)) |> 
+                setNames(self[["titles"]]()) |> 
                 bind_rows(.id = "ID")
         },
         population_pyramid = function(date, ...) {
@@ -26,7 +26,7 @@ gp_grp <- R6Class("gp_grp",
                     limits = max(dat$Population) * c(-1,1)
                 ) + 
                 coord_flip() + 
-                facet_wrap(~ID) +
+                facet_wrap(~ID, ncol = 2) +
                 theme_bw() +
                 ylab(NULL) + 
                 xlab(NULL)
@@ -36,7 +36,7 @@ gp_grp <- R6Class("gp_grp",
         population_trend_data = function(gender = "All") {
             self[["data"]]() |> 
                 map(function(i) i[["plot_data"]]("population_trend", gender)) |> 
-                setNames(self[["ids"]]()) |> 
+                setNames(self[["titles"]]()) |> 
                 bind_rows(.id = "ID")
         },
         population_trend = function(gender = "All", ...) {
@@ -46,6 +46,20 @@ gp_grp <- R6Class("gp_grp",
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90))
             ggplotly(plot, tooltip = c("Date", "Gender", "Population", "ID"))
+        },
+        date_choices = function() {
+            self[["data"]]() |> 
+                map(~.x[["data"]]()[, "Date"]) |>
+                bind_rows() |>
+                pull("Date") |>
+                unique()
+        },
+        gender_choices = function() {
+            self[["data"]]() |> 
+                map(~.x[["data"]]()[, "Sex"]) |>
+                bind_rows() |>
+                pull("Sex") |>
+                unique()
         }
     ),
     public = list(
@@ -95,6 +109,68 @@ gp_grp <- R6Class("gp_grp",
                 group_by(across(any_of(c("ID", "Date", "Gender", "Age")))) |>
                 summarise_if(is.numeric, sum, na.rm = TRUE) |> 
                 ungroup()
+        },
+        #' @description
+        #' Create UI for general practice object.
+        #' @param ns 
+        #'     Namespace of shiny application page.
+        ui = function(ns, id) {
+            ns <- NS(ns(id))
+            fluidRow(
+                box(
+                   title = "General Practice",
+                   column(
+                        box(
+                            title = "Population pyramid",
+                            selectInput(
+                                ns("pop_pyramid_select"), 
+                                label = "Select time frame",
+                                choices = private[["date_choices"]]()
+                            ),
+                            plotlyOutput(ns("pop_pyramid")),
+                            width = 12
+                        ),
+                        box(
+                            title = "Population trend",
+                            selectInput(
+                                ns("pop_trend_select"), 
+                                label = "Select gender",
+                                choices = private[["gender_choices"]](),
+                                selected = "All"
+                            ),
+                            plotlyOutput(ns("pop_trend")),
+                            width = 12
+                        ),,
+                        width = 12
+                    ),
+                    width = 12, 
+                    status = "primary",
+                    solidHeader = TRUE,
+                )
+            )
+        }, 
+        #' @description
+        #' Create server for general practice object.
+        server = function(id) {
+            moduleServer(
+                id,
+                function(input, output, session) {
+                    ns <- session[["ns"]]
+                    output[["pop_pyramid"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "population_pyramid", 
+                            date = req(input[["pop_pyramid_select"]])
+                        )
+                    )
+                    output[["pop_trend"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "population_trend", 
+                            gender = req(input[["pop_trend_select"]])
+                        )
+                    )
+
+                }
+            )
         }
     )
 )

@@ -10,7 +10,6 @@ hospital <- R6Class("hospital",
                 "AllStaffedBeds")
         },
         specialty_bar_data = function(specialties = "All Specialties") {
-            assert_that(all(specialties %in% c(private[["specialty_choices"]](), "All Specialties")))
             self[["data"]]() |> 
                 filter(.data[["SpecialtyName"]] %in% specialties)
         },

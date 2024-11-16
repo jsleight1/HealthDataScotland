@@ -16,15 +16,18 @@ Imports:
     ggplot2,
     httr,
     leaflet,
+    leaflet.extras,
     plotly,
     purrr,
     R6,
+    reactable,
     readr,
     rlang,
     shiny, 
     shinydashboard,
     shinyWidgets,
     sf,
+    sp,
     tibble,
     tidyr
 Suggests: 
