@@ -114,8 +114,8 @@ gp_grp <- R6Class("gp_grp",
         #' Create UI for general practice object.
         #' @param ns 
         #'     Namespace of shiny application page.
-        ui = function(ns, id) {
-            ns <- NS(ns(id))
+        ui = function(ns) {
+            ns <- NS(ns(self[["id"]]()))
             fluidRow(
                 box(
                    title = "General Practice",
@@ -151,9 +151,9 @@ gp_grp <- R6Class("gp_grp",
         }, 
         #' @description
         #' Create server for general practice object.
-        server = function(id) {
+        server = function() {
             moduleServer(
-                id,
+                self[["id"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
                     output[["pop_pyramid"]] <- renderPlotly(

@@ -7,6 +7,8 @@ health_unitgrp <- R6Class(
         .data = NA,
         #' @field .sf A sf storing spatial information.
         .sf = NA,
+        #' @field .id A character ID of object.
+        .id = NA,
         #' @description
         #' Create instance of health unit grp.
         #' @param .data (`list`)\cr
@@ -14,14 +16,21 @@ health_unitgrp <- R6Class(
         #' @param .sf (`sf`)
         #'     A sf storing spatial information for 
         #'     health units.
-        initialize = function(.data, .sf) {
+        #' @param .id (`characer`)
+        #'     A character ID of object.
+        initialize = function(.data, .sf, .id) {
             self[[".data"]] = .data
             self[[".sf"]] = .sf
+            self[[".id"]] = .id
             self[["validate"]]()
         }, 
         #' @description
         #' Validate structure of health unit grp.
         validate = function() {
+            assert_that(
+                inherits(self[["id"]](), "character") && length(self[["id"]]()) == 1, 
+                msg = "ID must be character of length 1"
+            )
             assert_that(
                 length(unique(purrr::map(self[["data"]](), class))) == 1,
                 msg = "group must contain the same class of health units"   
@@ -48,6 +57,11 @@ health_unitgrp <- R6Class(
         #' Get sf of health unit grp.
         sf = function() {
             self[[".sf"]]
+        },
+        #' @description
+        #' Get ID of health unit grp.
+        id = function() {
+            self[[".id"]]
         },
         #' @description
         #' Get ids of stored health units

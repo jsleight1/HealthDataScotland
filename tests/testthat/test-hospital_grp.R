@@ -10,28 +10,37 @@ capture_output(sf <- get_sf("hospital"))
 
 sf <- sf[sf[["id"]] %in% c("A101H", "A201H"), ]
 
-hosp_grp_unit <- hospital_grp[["new"]](list(hosp_unit, hosp_unit2), .sf = sf)
+hosp_grp_unit <- hospital_grp[["new"]](
+    list(hosp_unit, hosp_unit2), 
+    .sf = sf,
+    .id = "hospital"
+)
 
 test_that("hospital_grp class works", {
     list(hosp_unit, "hosp_unit") |> 
-        hospital_grp[["new"]](.sf = sf) |> 
+        hospital_grp[["new"]](.sf = sf, .id = "hospital") |> 
         expect_error("group must contain the same class of health units")
 
     list(hosp_unit, hosp_unit2) |> 
-        hospital_grp[["new"]](.sf = "sf") |> 
+        hospital_grp[["new"]](.sf = "sf", .id = "hospital") |> 
         expect_error("sf must be sf object")
 
     tst_sf <- sf[sf[["id"]] == "L203H", ]
 
     list(hosp_unit, hosp_unit2) |> 
-        hospital_grp[["new"]](.sf = tst_sf) |> 
+        hospital_grp[["new"]](.sf = tst_sf, .id = "hospital") |> 
         expect_error("All all health units present in sf")
 
     out <- list(hosp_unit, hosp_unit2) |> 
-        hospital_grp[["new"]](.sf = sf) |> 
+        hospital_grp[["new"]](.sf = sf, .id = 1) |> 
+        expect_error("ID must be character of length 1")
+
+    out <- list(hosp_unit, hosp_unit2) |> 
+        hospital_grp[["new"]](.sf = sf, .id = "hospital") |> 
         expect_no_error()
 
     expect_true(inherits(out, "hospital_grp"))
+    expect_identical(out[["id"]](), "hospital")
     expect_identical(out[["ids"]](), c("A101H", "A201H"))
     expect_identical(out[["titles"]](), c("Arran War Memorial Hospital", "Ailsa Hospital"))
     expect_identical(out[["data"]](), list(hosp_unit, hosp_unit2))

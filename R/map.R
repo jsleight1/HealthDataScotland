@@ -187,8 +187,8 @@ map_comparison_server <- function(id, data) {
         function(input, output, session) {
             ns <- session[["ns"]]
             output[["comparison_boxes"]] <- renderUI({
-                purrr::iwalk(data(), ~.x[["server"]](id = ns(.y)))
-                tagList(purrr::imap(data(), ~.x[["ui"]](ns, id = ns(.y))))
+                purrr::iwalk(data(), ~.x[["server"]](id))
+                tagList(purrr::imap(data(), ~.x[["ui"]](ns)))
             })
         }
     )

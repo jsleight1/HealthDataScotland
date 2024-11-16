@@ -110,7 +110,7 @@ process_gp_data <- function() {
                 gp[["new"]]()
         }) |> 
         set_names(meta[["ID"]]) |>
-        gp_grp[["new"]](.sf = sf)
+        gp_grp[["new"]](.sf = sf, .id = "gp")
 }
 
 process_hospital_data <- function() {
@@ -141,5 +141,5 @@ process_hospital_data <- function() {
                 hospital[["new"]]()
         }) |> 
         set_names(meta[["ID"]]) |>
-        hospital_grp[["new"]](.sf = sf)
+        hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }

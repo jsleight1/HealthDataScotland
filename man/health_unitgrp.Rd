@@ -14,6 +14,8 @@ R6 class storing health statistics for a list of health units.
 \item{\code{.data}}{A list of health units in health unit grp.}
 
 \item{\code{.sf}}{A sf storing spatial information.}
+
+\item{\code{.id}}{A character ID of object.}
 }
 \if{html}{\out{</div>}}
 }
@@ -24,7 +26,9 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-validate}{\code{health_unitgrp$validate()}}
 \item \href{#method-health_unitgrp-data}{\code{health_unitgrp$data()}}
 \item \href{#method-health_unitgrp-sf}{\code{health_unitgrp$sf()}}
+\item \href{#method-health_unitgrp-id}{\code{health_unitgrp$id()}}
 \item \href{#method-health_unitgrp-ids}{\code{health_unitgrp$ids()}}
+\item \href{#method-health_unitgrp-titles}{\code{health_unitgrp$titles()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
 \item \href{#method-health_unitgrp-get_download}{\code{health_unitgrp$get_download()}}
@@ -37,7 +41,7 @@ R6 class storing health statistics for a list of health units.
 \subsection{Method \code{new()}}{
 Create instance of health unit grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$new(.data, .sf)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$new(.data, .sf, .id)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -49,6 +53,9 @@ A list of health units in health unit grp.}
 \item{\code{.sf}}{(\code{sf})
 A sf storing spatial information for
 health units.}
+
+\item{\code{.id}}{(\code{characer})
+A character ID of object.}
 }
 \if{html}{\out{</div>}}
 }
@@ -84,12 +91,32 @@ Get sf of health unit grp.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-id"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-id}{}}}
+\subsection{Method \code{id()}}{
+Get ID of health unit grp.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$id()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unitgrp-ids"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-ids}{}}}
 \subsection{Method \code{ids()}}{
 Get ids of stored health units
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$ids()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-titles"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-titles}{}}}
+\subsection{Method \code{titles()}}{
+Get names of stored health units
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$titles()}\if{html}{\out{</div>}}
 }
 
 }
