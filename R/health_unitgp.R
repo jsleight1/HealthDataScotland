@@ -98,6 +98,52 @@ health_unitgrp <- R6Class(
                map(~.x[["data"]]()) |>
                setNames(self[["ids"]]()) |>
                bind_rows(.id = "ID")
+        },
+        #' @description
+        #' Create UI for health unit group object.
+        #' @param ns 
+        #'     Namespace of shiny application page.
+        #' @param title
+        #'     Character title of box. Default is "Health data"
+        download_ui = function(ns, title = "Health data") {
+            ns <- NS(ns(paste0(self[["id"]](), "_download")))
+            box(
+                title = title,
+                column(
+                    spinner(
+                        reactableOutput(ns("table"), height = 700)
+                    ),
+                    tags[["button"]](
+                        "Download as CSV", 
+                        onclick = paste0(
+                            "Reactable.downloadDataCSV('", 
+                            ns("health_data"), 
+                            "', 'health_data.csv')"
+                        )
+                    ),
+                    width = 12
+                ),
+                width = 12, 
+                status = "primary",
+                solidHeader = TRUE
+            )
+        },
+        #' @description
+        #' Create server for health unit group object.
+        download_server = function() {
+            moduleServer(
+                paste0(self[["id"]](), "_download"),
+                function(input, output, session) {
+                    ns <- session[["ns"]]
+                    output[["table"]] <- renderReactable({
+                        reactable(
+                            self[["get_download"]](),
+                            filterable = TRUE, 
+                            elementId = ns("health_data")
+                        )
+                    })
+                }
+            )
         }
     )
 )

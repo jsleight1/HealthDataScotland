@@ -27,6 +27,8 @@ R6 class storing health statistics for a list of gp health units.
 <details><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_server"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_server'><code>HealthDataScotland::health_unitgrp$download_server()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_ui"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_ui'><code>HealthDataScotland::health_unitgrp$download_ui()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-get_download'><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="id"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-id'><code>HealthDataScotland::health_unitgrp$id()</code></a></span></li>
@@ -119,7 +121,7 @@ Character specifying the ID to assign to output data.frame}
 \if{html}{\out{<a id="method-gp_grp-ui"></a>}}
 \if{latex}{\out{\hypertarget{method-gp_grp-ui}{}}}
 \subsection{Method \code{ui()}}{
-Create UI for general practice object.
+Create UI for general practice group object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui(ns)}\if{html}{\out{</div>}}
 }
@@ -136,7 +138,7 @@ Create UI for general practice object.
 \if{html}{\out{<a id="method-gp_grp-server"></a>}}
 \if{latex}{\out{\hypertarget{method-gp_grp-server}{}}}
 \subsection{Method \code{server()}}{
-Create server for general practice object.
+Create server for general practice group object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp_grp$server()}\if{html}{\out{</div>}}
 }

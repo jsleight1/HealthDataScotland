@@ -76,7 +76,7 @@ hospital_grp <- R6Class("hospital_grp",
                 ungroup()
         },
         #' @description
-        #' Create UI for hospital object.
+        #' Create UI for hospital group object.
         #' @param ns 
         #'     Namespace of shiny application page.
         ui = function(ns) {
@@ -111,7 +111,7 @@ hospital_grp <- R6Class("hospital_grp",
             )
         }, 
         #' @description
-        #' Create server for hospital object.
+        #' Create server for hospital group object.
         server = function() {
             moduleServer(
                 self[["id"]](),

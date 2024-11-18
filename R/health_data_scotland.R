@@ -3,11 +3,19 @@
 #' @export
 health_data_scotland <- function(...) {
 
-    # all_data <- list(process_gp_data(), process_hospital_data()) |> 
+    # all_data <- list(process_gp_data(), process_hospital_data()) |>
     #     set_names(c("General practice", "Hospital")) |>
     #     suppressMessages()
+    # saveRDS(all_data, "data.RDS")
 
-    all_data <- readRDS("data.RDS")
+    all_data <- readRDS("data.RDS") |>
+        purrr::imap(~{
+            switch(.y, 
+                "General practice" = create_gp_objects, 
+                "Hospital" = create_hospital_objects
+            ) |>
+            do.call(.x)
+        })
 
     ui <- dashboardPage(
         dashboardHeader(title = "Health Data Scotland"),
@@ -34,7 +42,7 @@ health_data_scotland <- function(...) {
                                     tibble::deframe()
                             ),
                             map_comparison_UI(id = "map_comparison"),
-                            map_data_UI(id = "map_data")
+                            map_download_UI(id = "map_download")
                         )
                     ),
                     p("Please note that this application was built as a hobby project,
@@ -66,7 +74,7 @@ health_data_scotland <- function(...) {
     server <- function(input, output) {
         selected_data <- map_server("map", all_data, get_sf("board"))
         map_comparison_server("map_comparison", selected_data)
-        map_data_server("map_data", all_data)
+        map_download_server("map_download", all_data)
     }
 
     shinyApp(ui, server, ...)
@@ -101,16 +109,16 @@ process_gp_data <- function() {
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
 
-    meta[["ID"]] |> 
+    out <- meta[["ID"]] |> 
         map(function(id) {
             meta |> 
                 filter(.data[["ID"]] == id) |> 
                 select(-"HB", -"HSCP") |>
-                inner_join(data, by = "ID") |> 
-                gp[["new"]]()
+                inner_join(data, by = "ID")
         }) |> 
-        set_names(meta[["ID"]]) |>
-        gp_grp[["new"]](.sf = sf, .id = "gp")
+        set_names(meta[["ID"]])
+
+    list("x" = out, "sf" = sf)
 }
 
 process_hospital_data <- function() {
@@ -135,13 +143,25 @@ process_hospital_data <- function() {
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
 
-    meta[["ID"]] |> 
+    out <- meta[["ID"]] |> 
         map(function(id) {
             meta |> 
                 filter(.data[["ID"]] == id) |> 
-                inner_join(data, by = "ID") |> 
-                hospital[["new"]]()
+                inner_join(data, by = "ID")
         }) |> 
-        set_names(meta[["ID"]]) |>
+        set_names(meta[["ID"]])
+
+    list("x" = out, "sf" = sf)
+}
+
+create_gp_objects <- function(x, sf) {
+    x |>
+        map(gp[["new"]]) |>
+        gp_grp[["new"]](.sf = sf, .id = "gp")
+}
+
+create_hospital_objects <- function(x, sf) {
+    x |>
+        map(hospital[["new"]]) |>
         hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }

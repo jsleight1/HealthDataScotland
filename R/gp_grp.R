@@ -111,7 +111,7 @@ gp_grp <- R6Class("gp_grp",
                 ungroup()
         },
         #' @description
-        #' Create UI for general practice object.
+        #' Create UI for general practice group object.
         #' @param ns 
         #'     Namespace of shiny application page.
         ui = function(ns) {
@@ -150,7 +150,7 @@ gp_grp <- R6Class("gp_grp",
             )
         }, 
         #' @description
-        #' Create server for general practice object.
+        #' Create server for general practice group object.
         server = function() {
             moduleServer(
                 self[["id"]](),

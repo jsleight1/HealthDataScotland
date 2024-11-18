@@ -162,7 +162,7 @@ format_selected_data <- function(x, pins, input) {
         group_split(.data[["type"]])
     names(dat) <- map_chr(dat, ~unique(.x[["type"]]))
     dat <- dat |>
-        map(~{cloned_data[[unique(.x[["type"]])]][["subset"]](.x[["id"]])})
+        map(~cloned_data[[unique(.x[["type"]])]][["subset"]](.x[["id"]]))
     dat
 }
 
@@ -190,37 +190,25 @@ map_comparison_server <- function(id, data) {
     )
 }
 
-map_data_UI <- function(id) {
+map_download_UI <- function(id) {
     ns <- NS(id)
     tabPanel(
-        "Data",
+        "Download", 
         column(
-            spinner(reactable::reactableOutput(ns("table"), height = 700)),
-            tags[["button"]](
-                "Download as CSV", 
-                onclick = paste0(
-                    "Reactable.downloadDataCSV('", 
-                    ns("health_data"), 
-                    "', 'health_data.csv')"
-                )
-            ),
+            uiOutput(ns("download_boxes")),
             width = 12
         )
     )
 }
 
-map_data_server <- function(id, data) {
+map_download_server <- function(id, data) {
     moduleServer(
-        id, 
+        id,
         function(input, output, session) {
             ns <- session[["ns"]]
-            output[["table"]] <- reactable::renderReactable({
-                map(data, ~.x[["get_download"]]()) |>
-                    bind_rows(.id = "Health Centre Type") |>
-                    reactable::reactable(
-                        filterable = TRUE, 
-                        elementId = ns("health_data")
-                    )
+            output[["download_boxes"]] <- renderUI({
+                purrr::walk(data, ~.x[["download_server"]]())
+                tagList(purrr::imap(data, ~.x[["download_ui"]](ns, .y)))
             })
         }
     )

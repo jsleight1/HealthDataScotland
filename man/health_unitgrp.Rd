@@ -32,6 +32,8 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
 \item \href{#method-health_unitgrp-get_download}{\code{health_unitgrp$get_download()}}
+\item \href{#method-health_unitgrp-download_ui}{\code{health_unitgrp$download_ui()}}
+\item \href{#method-health_unitgrp-download_server}{\code{health_unitgrp$download_server()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
 }
@@ -163,6 +165,35 @@ Character specifying ID (or IDs) of object to obtain from group.}
 Get downloadable data.frame of health unit group.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$get_download()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-download_ui"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-download_ui}{}}}
+\subsection{Method \code{download_ui()}}{
+Create UI for health unit group object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$download_ui(ns, title = "Health data")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ns}}{Namespace of shiny application page.}
+
+\item{\code{title}}{Character title of box. Default is "Health data"}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-download_server"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-download_server}{}}}
+\subsection{Method \code{download_server()}}{
+Create server for health unit group object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$download_server()}\if{html}{\out{</div>}}
 }
 
 }
