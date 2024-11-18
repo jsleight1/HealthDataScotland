@@ -14,9 +14,9 @@ Imports:
     assertthat,
     dplyr,
     ggplot2,
-    httr,
     leaflet,
     leaflet.extras,
+    phsopendata,
     plotly,
     purrr,
     R6,
@@ -34,3 +34,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: true
+Remotes:
+    Public-Health-Scotland/phsopendata

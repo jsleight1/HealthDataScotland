@@ -123,7 +123,9 @@ process_hospital_data <- function() {
             by = c("HealthBoard" = "id")
         )
     
-    data <- rename(get_hosp_data(), "ID" = "Location")
+    data <- get_hosp_data() |>
+        rename("ID" = "Location") |>
+        select(-"Postcode")
 
     master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) |> 
         reduce(intersect)

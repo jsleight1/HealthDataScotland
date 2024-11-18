@@ -7,7 +7,7 @@ hospital <- R6Class("hospital",
         },
         required_cols = function() {
             c("HospitalName", "FinancialYear", "SpecialtyName", "SpecialtyNameQF",
-                "AllStaffedBeds")
+                "AllStaffedBeds", "Postcode")
         },
         specialty_bar_data = function(specialties = "All Specialties") {
             self[["data"]]() |> 
