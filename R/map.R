@@ -2,30 +2,28 @@ map_UI <- function(id, boards) {
     ns <- NS(id)
     tabPanel(
         "Map",
-        column(
-            pickerInput(
-                inputId = ns("board_select"),
-                label =  "Select health board",  
-                choices = boards,
-                selected = boards,
-                inline = TRUE,
-                multiple = TRUE, 
-                options = list(
-                    `actions-box` = TRUE, 
-                    `selected-text-format` = "count > 1"
-                )
-            ),
-            pickerInput(
-                ns("health_select"), 
-                label = "Display health centre types",  
-                choices = c("General practice", "Hospital"), 
-                selected = c("General practice", "Hospital"), 
-                inline = TRUE,
-                multiple = TRUE
-            ),
-            spinner(leafletOutput(ns("map"), height = 700)),
-            width = 12
-        )
+        pickerInput(
+            inputId = ns("board_select"),
+            label =  "Select health board",  
+            choices = boards,
+            selected = boards,
+            inline = TRUE,
+            multiple = TRUE, 
+            options = list(
+                `actions-box` = TRUE, 
+                `selected-text-format` = "count > 1"
+            )
+        ),
+        pickerInput(
+            ns("health_select"), 
+            label = "Display health centre types",  
+            choices = c("General practice", "Hospital"), 
+            selected = c("General practice", "Hospital"), 
+            inline = TRUE,
+            multiple = TRUE
+        ),
+        spinner(leafletOutput(ns("map"), height = 700)),
+        width = 12
     )
 }
 
@@ -65,7 +63,11 @@ map_server <- function(id, data, boards) {
                         pin_data(),
                         input[[paste0(id, "_draw_all_features")]][["features"]][[1]]
                     )
-                    selected_data(dat)
+                    if (length(dat)) {
+                        selected_data(dat)
+                    } else {
+                        selected_data(NULL)
+                    }
                 }
             })
 
@@ -170,10 +172,7 @@ map_comparison_UI <- function(id) {
     ns <- NS(id)
     tabPanel(
         "Comparison",
-        column(
-            uiOutput(ns("comparison_boxes")),
-            width = 12
-        )
+        fluidRow(uiOutput(ns("comparison_boxes")))
     )
 }
 
@@ -183,32 +182,16 @@ map_comparison_server <- function(id, data) {
         function(input, output, session) {
             ns <- session[["ns"]]
             output[["comparison_boxes"]] <- renderUI({
-                purrr::walk(data(), ~.x[["server"]]())
-                tagList(purrr::map(data(), ~.x[["ui"]](ns)))
-            })
-        }
-    )
-}
-
-map_download_UI <- function(id) {
-    ns <- NS(id)
-    tabPanel(
-        "Download", 
-        column(
-            uiOutput(ns("download_boxes")),
-            width = 12
-        )
-    )
-}
-
-map_download_server <- function(id, data) {
-    moduleServer(
-        id,
-        function(input, output, session) {
-            ns <- session[["ns"]]
-            output[["download_boxes"]] <- renderUI({
-                purrr::walk(data, ~.x[["download_server"]]())
-                tagList(purrr::imap(data, ~.x[["download_ui"]](ns, .y)))
+                if (is.null(data())) {
+                    shinyWidgets::show_alert(
+                        title = "Warning",
+                        text = "No data selected",
+                        type = "warning"
+                    )
+                } else {
+                    purrr::walk(data(), ~.x[["server"]]())
+                    purrr::map(data(), ~.x[["ui"]](ns))
+                }
             })
         }
     )

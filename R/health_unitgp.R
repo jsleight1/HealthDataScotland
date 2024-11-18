@@ -111,7 +111,7 @@ health_unitgrp <- R6Class(
                 title = title,
                 column(
                     spinner(
-                        reactableOutput(ns("table"), height = 700)
+                        reactableOutput(ns("table"))
                     ),
                     tags[["button"]](
                         "Download as CSV", 
@@ -120,7 +120,7 @@ health_unitgrp <- R6Class(
                             ns("health_data"), 
                             "', 'health_data.csv')"
                         )
-                    ),
+                    ), 
                     width = 12
                 ),
                 width = 12, 

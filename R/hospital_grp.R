@@ -81,33 +81,28 @@ hospital_grp <- R6Class("hospital_grp",
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["id"]]()))
-            fluidRow(
+            box(
+                title = "Hospital",
                 box(
-                   title = "Hospital",
-                   column(
-                        box(
-                            title = "All specialties",
-                            spinner(plotlyOutput(ns("all_specialty"))),
-                            width = 12
-                        ),
-                        box(
-                            title = "Selected specialties",
-                            selectInput(
-                                ns("specialty_select"), 
-                                label = "Select specialty", 
-                                choices = private[["specialty_choices"]](),
-                                multiple = TRUE, 
-                                selected = private[["specialty_choices"]]()[1]
-                            ),
-                            spinner(plotlyOutput(ns("selected_specialties"))),
-                            width = 12
-                        ),
-                        width = 12
+                    title = "All specialties",
+                    spinner(plotlyOutput(ns("all_specialty"))),
+                    width = 12
+                ),
+                box(
+                    title = "Selected specialties",
+                    selectInput(
+                        ns("specialty_select"), 
+                        label = "Select specialty", 
+                        choices = private[["specialty_choices"]](),
+                        multiple = TRUE, 
+                        selected = private[["specialty_choices"]]()[1]
                     ),
-                    width = 12, 
-                    status = "primary",
-                    solidHeader = TRUE
-                )
+                    spinner(plotlyOutput(ns("selected_specialties"))),
+                    width = 12
+                ),
+                width = 12, 
+                status = "primary",
+                solidHeader = TRUE
             )
         }, 
         #' @description

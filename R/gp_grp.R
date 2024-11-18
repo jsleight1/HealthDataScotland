@@ -116,37 +116,32 @@ gp_grp <- R6Class("gp_grp",
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["id"]]()))
-            fluidRow(
+            box(
+                title = "General Practice",
                 box(
-                   title = "General Practice",
-                   column(
-                        box(
-                            title = "Population trend",
-                            selectInput(
-                                ns("pop_trend_select"), 
-                                label = "Select gender",
-                                choices = private[["gender_choices"]](),
-                                selected = "All"
-                            ),
-                            spinner(plotlyOutput(ns("pop_trend"))),
-                            width = 12
-                        ),
-                        box(
-                            title = "Population pyramid",
-                            selectInput(
-                                ns("pop_pyramid_select"), 
-                                label = "Select time frame",
-                                choices = private[["date_choices"]]()
-                            ),
-                            spinner(plotlyOutput(ns("pop_pyramid"))),
-                            width = 12
-                        ),
-                        width = 12
+                    title = "Population trend",
+                    selectInput(
+                        ns("pop_trend_select"), 
+                        label = "Select gender",
+                        choices = private[["gender_choices"]](),
+                        selected = "All"
                     ),
-                    width = 12, 
-                    status = "primary",
-                    solidHeader = TRUE,
-                )
+                    spinner(plotlyOutput(ns("pop_trend"))),
+                    width = 12
+                ),
+                box(
+                    title = "Population pyramid",
+                    selectInput(
+                        ns("pop_pyramid_select"), 
+                        label = "Select time frame",
+                        choices = private[["date_choices"]]()
+                    ),
+                    spinner(plotlyOutput(ns("pop_pyramid"))),
+                    width = 12
+                ),
+                width = 12, 
+                status = "primary",
+                solidHeader = TRUE,
             )
         }, 
         #' @description
