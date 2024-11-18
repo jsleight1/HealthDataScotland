@@ -121,16 +121,6 @@ gp_grp <- R6Class("gp_grp",
                    title = "General Practice",
                    column(
                         box(
-                            title = "Population pyramid",
-                            selectInput(
-                                ns("pop_pyramid_select"), 
-                                label = "Select time frame",
-                                choices = private[["date_choices"]]()
-                            ),
-                            plotlyOutput(ns("pop_pyramid")),
-                            width = 12
-                        ),
-                        box(
                             title = "Population trend",
                             selectInput(
                                 ns("pop_trend_select"), 
@@ -138,9 +128,19 @@ gp_grp <- R6Class("gp_grp",
                                 choices = private[["gender_choices"]](),
                                 selected = "All"
                             ),
-                            plotlyOutput(ns("pop_trend")),
+                            spinner(plotlyOutput(ns("pop_trend"))),
                             width = 12
-                        ),,
+                        ),
+                        box(
+                            title = "Population pyramid",
+                            selectInput(
+                                ns("pop_pyramid_select"), 
+                                label = "Select time frame",
+                                choices = private[["date_choices"]]()
+                            ),
+                            spinner(plotlyOutput(ns("pop_pyramid"))),
+                            width = 12
+                        ),
                         width = 12
                     ),
                     width = 12, 
@@ -155,20 +155,18 @@ gp_grp <- R6Class("gp_grp",
             moduleServer(
                 self[["id"]](),
                 function(input, output, session) {
-                    ns <- session[["ns"]]
-                    output[["pop_pyramid"]] <- renderPlotly(
-                        self[["plot"]](
-                            type = "population_pyramid", 
-                            date = req(input[["pop_pyramid_select"]])
-                        )
-                    )
                     output[["pop_trend"]] <- renderPlotly(
                         self[["plot"]](
                             type = "population_trend", 
                             gender = req(input[["pop_trend_select"]])
                         )
                     )
-
+                    output[["pop_pyramid"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "population_pyramid", 
+                            date = req(input[["pop_pyramid_select"]])
+                        )
+                    )
                 }
             )
         }

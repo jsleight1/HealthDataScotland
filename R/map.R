@@ -23,11 +23,7 @@ map_UI <- function(id, boards) {
                 inline = TRUE,
                 multiple = TRUE
             ),
-            addSpinner(
-                leafletOutput(ns("map"), height = 700), 
-                spin = "bounce", 
-                color = "#377EB8"
-            ),
+            spinner(leafletOutput(ns("map"), height = 700)),
             width = 12
         )
     )
@@ -187,8 +183,8 @@ map_comparison_server <- function(id, data) {
         function(input, output, session) {
             ns <- session[["ns"]]
             output[["comparison_boxes"]] <- renderUI({
-                purrr::iwalk(data(), ~.x[["server"]](id))
-                tagList(purrr::imap(data(), ~.x[["ui"]](ns)))
+                purrr::walk(data(), ~.x[["server"]]())
+                tagList(purrr::map(data(), ~.x[["ui"]](ns)))
             })
         }
     )
@@ -199,11 +195,7 @@ map_data_UI <- function(id) {
     tabPanel(
         "Data",
         column(
-            addSpinner(
-                reactable::reactableOutput(ns("table"), height = 700), 
-                spin = "bounce", 
-                color = "#377EB8"
-            ),
+            spinner(reactable::reactableOutput(ns("table"), height = 700)),
             tags[["button"]](
                 "Download as CSV", 
                 onclick = paste0(
@@ -234,3 +226,6 @@ map_data_server <- function(id, data) {
     )
 }
 
+spinner <- function(...) {
+    addSpinner(..., spin = "bounce", color = "#377EB8")
+}

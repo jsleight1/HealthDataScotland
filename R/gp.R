@@ -119,16 +119,6 @@ gp <- R6Class("gp",
                     fluidRow(box(title = "Health board", self[["health_board"]](), width = 12)),
                     fluidRow(
                         box(
-                            title = "Population pyramid",
-                            selectInput(
-                                ns("pop_pyramid_select"), 
-                                label = "Select time frame",
-                                choices = unique(self[["data"]]()[["Date"]])
-                            ),
-                            plotlyOutput(ns("pop_pyramid")),
-                            width = 6
-                        ), 
-                        box(
                             title = "Population trend",
                             selectInput(
                                 ns("pop_trend_select"), 
@@ -136,8 +126,18 @@ gp <- R6Class("gp",
                                 choices = unique(self[["data"]]()[["Sex"]]), 
                                 selected = "All"
                             ),
-                            plotlyOutput(ns("pop_trend")),
+                            spinner(plotlyOutput(ns("pop_trend"))),
                             width = 6 
+                        ),
+                        box(
+                            title = "Population pyramid",
+                            selectInput(
+                                ns("pop_pyramid_select"), 
+                                label = "Select time frame",
+                                choices = unique(self[["data"]]()[["Date"]])
+                            ),
+                            spinner(plotlyOutput(ns("pop_pyramid"))),
+                            width = 6
                         )
                     )
                 )
@@ -149,20 +149,18 @@ gp <- R6Class("gp",
             moduleServer(
                 self[["id"]](),
                 function(input, output, session) {
-                    ns <- session[["ns"]]
-                    output[["pop_pyramid"]] <- renderPlotly(
-                        self[["plot"]](
-                            type = "population_pyramid", 
-                            date = req(input[["pop_pyramid_select"]])
-                        )
-                    )
                     output[["pop_trend"]] <- renderPlotly(
                         self[["plot"]](
                             type = "population_trend", 
                             gender = req(input[["pop_trend_select"]])
                         )
                     )
-
+                    output[["pop_pyramid"]] <- renderPlotly(
+                        self[["plot"]](
+                            type = "population_pyramid", 
+                            date = req(input[["pop_pyramid_select"]])
+                        )
+                    )
                 }
             )
         }

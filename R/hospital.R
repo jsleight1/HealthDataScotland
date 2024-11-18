@@ -81,7 +81,7 @@ hospital <- R6Class("hospital",
                 fluidRow(
                     box(
                         title = "All specialties",
-                        plotlyOutput(ns("all_specialty")),
+                        spinner(plotlyOutput(ns("all_specialty"))),
                         width = 12
                     ), 
                 ),
@@ -95,7 +95,7 @@ hospital <- R6Class("hospital",
                             multiple = TRUE, 
                             selected = private[["specialty_choices"]]()[1]
                         ),
-                        plotlyOutput(ns("selected_specialties")),
+                        spinner(plotlyOutput(ns("selected_specialties"))),
                         width = 12
                     )
                 )
