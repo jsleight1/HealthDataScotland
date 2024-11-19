@@ -2,24 +2,7 @@
 #' @param ... Passed to shiny::shinyApp.
 #' @export
 health_data_scotland <- function(...) {
-
-    # all_data <- tribble(
-    #         ~type,        ~meta_func,            ~data_func,              ~sf_func,
-    #         "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
-    #         "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
-    #     ) |>
-    #     purrr::pmap(process_data) |>
-    #     setNames(c("General practice", "Hospital")) |>
-    #     saveRDS("data.RDS")
-
-    all_data <- readRDS("data.RDS") |>
-        purrr::imap(~{
-            switch(.y, 
-                "General practice" = create_gp_objects, 
-                "Hospital" = create_hospital_objects
-            ) |>
-            do.call(.x)
-        })
+    all_data <- create_data_objects(readRDS("data.RDS"))
 
     ui <- dashboardPage(
         dashboardHeader(title = "Health Data Scotland"),

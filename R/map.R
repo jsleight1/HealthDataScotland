@@ -159,12 +159,12 @@ format_selected_data <- function(x, pins, input) {
     dat <- find_locations(
             shape = input, 
             location_coordinates = sf::as_Spatial(pins),
-            location_id_colnames = c("id", "type")
+            location_id_colnames = c("ID", "type")
         ) |>
         group_split(.data[["type"]])
     names(dat) <- map_chr(dat, ~unique(.x[["type"]]))
     dat <- dat |>
-        map(~cloned_data[[unique(.x[["type"]])]][["subset"]](.x[["id"]]))
+        map(~cloned_data[[unique(.x[["type"]])]][["subset"]](.x[["ID"]]))
     dat
 }
 

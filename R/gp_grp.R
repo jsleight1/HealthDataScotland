@@ -115,7 +115,7 @@ gp_grp <- R6Class("gp_grp",
         #' @param ns 
         #'     Namespace of shiny application page.
         ui = function(ns) {
-            ns <- NS(ns(self[["ID"]]()))
+            ns <- NS(ns(self[["id"]]()))
             box(
                 title = "General Practice",
                 box(
@@ -148,7 +148,7 @@ gp_grp <- R6Class("gp_grp",
         #' Create server for general practice group object.
         server = function() {
             moduleServer(
-                self[["ID"]](),
+                self[["id"]](),
                 function(input, output, session) {
                     output[["pop_trend"]] <- renderPlotly(
                         self[["plot"]](

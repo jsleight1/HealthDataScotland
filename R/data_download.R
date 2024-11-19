@@ -75,7 +75,7 @@ process_gp_meta <- function() {
 
 process_gp_data <- function() {
     get_gp_data() |> 
-        select(-matches("QF$")) |>
+        select(-matches("QF$"), -"HB", -"HSCP") |>
         rename("ID" = "PracticeCode") |>
         mutate(
             Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"),
@@ -119,25 +119,40 @@ process_hospital_sf <- function(x, ids, ...) {
 }
 
 create_process_lst <- function(meta, data, sf) {
-    out <- meta[["ID"]] |> 
-        map(function(ID) {
-            meta |> 
-                filter(.data[["ID"]] == ID) |> 
-                inner_join(data, by = "ID")
-        }) |> 
-        set_names(meta[["ID"]])
-
+    out <- meta |>
+        inner_join(data, by = "ID") |>
+        group_split(.data[["ID"]])
+    names(out) <- map_chr(out, ~unique(.x[["ID"]]))
     list("x" = out, "sf" = sf)
 }
 
-create_gp_objects <- function(x, sf) {
+create_data_objects <- function(x) {
+    purrr::imap(x, ~{
+        switch(.y, 
+            "General practice" = create_gp_grp, 
+            "Hospital" = create_hospital_grp
+        ) |>
+        do.call(.x)
+    })
+}
+
+create_gp_grp <- function(x, sf) {
     x |>
         map(gp[["new"]]) |>
         gp_grp[["new"]](.sf = sf, .id = "gp")
 }
 
-create_hospital_objects <- function(x, sf) {
+create_hospital_grp <- function(x, sf) {
     x |>
         map(hospital[["new"]]) |>
         hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }
+
+# tribble(
+#         ~type,        ~meta_func,            ~data_func,              ~sf_func,
+#         "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
+#         "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
+#     ) |>
+#     purrr::pmap(process_data) |>
+#     setNames(c("General practice", "Hospital")) |>
+#     saveRDS("data.RDS")

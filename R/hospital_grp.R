@@ -80,7 +80,7 @@ hospital_grp <- R6Class("hospital_grp",
         #' @param ns 
         #'     Namespace of shiny application page.
         ui = function(ns) {
-            ns <- NS(ns(self[["ID"]]()))
+            ns <- NS(ns(self[["id"]]()))
             box(
                 title = "Hospital",
                 box(
@@ -109,7 +109,7 @@ hospital_grp <- R6Class("hospital_grp",
         #' Create server for hospital group object.
         server = function() {
             moduleServer(
-                self[["ID"]](),
+                self[["id"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
                     output[["all_specialty"]] <- renderPlotly(

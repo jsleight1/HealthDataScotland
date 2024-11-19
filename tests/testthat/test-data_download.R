@@ -81,7 +81,7 @@ test_that("process_gp_meta works", {
             expect_no_error()
     )
     expect_s3_class(out, "data.frame")
-    expect_snapshot_output(head(out))
+    expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_gp_data works", {
@@ -91,7 +91,7 @@ test_that("process_gp_data works", {
             expect_no_error()
     )
     expect_s3_class(out, "data.frame")
-    expect_snapshot_output(head(out))
+    expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_gp_sf works", {
@@ -113,7 +113,7 @@ test_that("process_hopsital_meta works", {
             expect_no_error()
     )
     expect_s3_class(out, "data.frame")
-    expect_snapshot_output(head(out))
+    expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_hopsital_data works", {
@@ -123,7 +123,7 @@ test_that("process_hopsital_data works", {
             expect_no_error()
     )
     expect_s3_class(out, "data.frame")
-    expect_snapshot_output(head(out))
+    expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_hospital_sf works", {
