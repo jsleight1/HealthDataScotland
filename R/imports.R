@@ -11,6 +11,7 @@ NULL
 #' @importFrom tidyr pivot_longer unite
 #' @importFrom phsopendata get_dataset
 #' @importFrom reactable reactable reactableOutput renderReactable
+#' @importFrom rdrop2 drop_auth drop_download
 NULL
 
 utils::globalVariables(".")

@@ -23,6 +23,7 @@ Imports:
     reactable,
     readr,
     rlang,
+    rdrop2,
     shiny, 
     shinydashboard,
     shinyWidgets,
@@ -36,4 +37,5 @@ Suggests:
 Config/testthat/edition: 3
 LazyData: true
 Remotes:
-    Public-Health-Scotland/phsopendata
+    Public-Health-Scotland/phsopendata,
+    karthik/rdrop2

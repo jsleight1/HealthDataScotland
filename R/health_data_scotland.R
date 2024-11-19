@@ -2,7 +2,19 @@
 #' @param ... Passed to shiny::shinyApp.
 #' @export
 health_data_scotland <- function(...) {
-    all_data <- create_data_objects(readRDS("data.RDS"))
+    token <- drop_auth()
+    saveRDS(token, file.path(tempdir(), "token.RDS"))
+
+    drop_download(
+        path = "processed_health_data.RDS", 
+        local_path = file.path(tempdir(), "downloaded_health_data.RDS"),
+        dtoken = readRDS(file.path(tempdir(), "token.RDS"))
+    )
+    file.remove(file.path(tempdir(), "token.RDS"))
+
+    downloaded_data <- readRDS(file.path(tempdir(), "downloaded_health_data.RDS"))
+
+    all_data <- create_data_objects(downloaded_data)
 
     ui <- dashboardPage(
         dashboardHeader(title = "Health Data Scotland"),

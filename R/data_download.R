@@ -155,4 +155,4 @@ create_hospital_grp <- function(x, sf) {
 #     ) |>
 #     purrr::pmap(process_data) |>
 #     setNames(c("General practice", "Hospital")) |>
-#     saveRDS("data.RDS")
+#     saveRDS("processed_health_data.RDS")
