@@ -85,11 +85,12 @@ health_unitgrp <- R6Class(
         #' @param id (character())\cr
         #'     Character specifying ID (or IDs) of object to obtain from group.
         subset = function(id) {
-            assert_that(all(id %in% self[["ids"]]()), 
+            out <- self[["clone"]](deep = TRUE)
+            assert_that(all(id %in% out[["ids"]]()), 
                 msg = "ids are not found in health unit group")
-            self[[".data"]] <- self[[".data"]][which(self[["ids"]]() %in% id)]
-            self[[".sf"]] <- self[[".sf"]][self[[".sf"]][["ID"]] %in% id, ]
-            self[["validate"]]()
+            out[[".data"]] <- out[[".data"]][which(out[["ids"]]() %in% id)]
+            out[[".sf"]] <- out[[".sf"]][out[[".sf"]][["ID"]] %in% id, ]
+            out[["validate"]]()
         },
         #' @description
         #' Get downloadable data.frame of health unit group.

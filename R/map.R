@@ -34,7 +34,7 @@ map_server <- function(id, data, boards) {
             ns <- session[["ns"]]
 
             pin_sf <- data |> 
-                map(function(i) i[["sf"]]()) |> 
+                map(~.x[["sf"]]()) |> 
                 reduce(bind_rows)
             
             observe({
@@ -53,21 +53,31 @@ map_server <- function(id, data, boards) {
                 pin_sf[pin_sf[["type"]] %in% centre_types & pin_sf[["hbcode"]] %in% health_boards, ]
             })
 
+            selected_pins <- reactiveVal() 
+            observeEvent(input[[paste0(id, "_draw_new_feature")]], {
+                out <- find_locations(
+                    shape = input[[paste0(id, "_draw_new_feature")]], 
+                    location_coordinates = sf::as_Spatial(pin_data()),
+                    location_id_colnames = c("ID", "type")
+                )
+                if (is.null(selected_pins())) {
+                    selected_pins(out)
+                } else {
+                    selected_pins(bind_rows(out, selected_pins()))
+                }
+            })
+
+            observeEvent(input[[paste0(id, "_draw_deleted_features")]], {
+                selected_pins(NULL)
+            })
+
             selected_data <- reactiveVal()
-            observeEvent(input[[paste0(id, "_draw_all_features")]], {
-                if (identical(input[[paste0(id, "_draw_all_features")]][["features"]], list())) {
+            observe({
+                x <- selected_pins()
+                if (is.null(x) || !length(x)) {
                     selected_data(NULL)
                 } else {
-                    dat <- format_selected_data(
-                        data, 
-                        pin_data(),
-                        input[[paste0(id, "_draw_all_features")]][["features"]][[1]]
-                    )
-                    if (length(dat)) {
-                        selected_data(dat)
-                    } else {
-                        selected_data(NULL)
-                    }
+                    selected_data(subset_selected_data(x, data))
                 }
             })
 
@@ -154,25 +164,17 @@ find_locations <- function(shape, location_coordinates, location_id_colnames) {
     as_tibble(out)
 }
 
-format_selected_data <- function(x, pins, input) {
-    cloned_data <- map(x, ~.x[["clone"]](deep = TRUE))
-    dat <- find_locations(
-            shape = input, 
-            location_coordinates = sf::as_Spatial(pins),
-            location_id_colnames = c("ID", "type")
-        ) |>
-        group_split(.data[["type"]])
-    names(dat) <- map_chr(dat, ~unique(.x[["type"]]))
-    dat <- dat |>
-        map(~cloned_data[[unique(.x[["type"]])]][["subset"]](.x[["ID"]]))
-    dat
+subset_selected_data <- function(x, data) {
+    x <- group_split(x, .data[["type"]])
+    names(x) <- map_chr(x, ~unique(.x[["type"]]))
+    map(x, ~data[[unique(.x[["type"]])]][["subset"]](.x[["ID"]]))
 }
 
 map_comparison_UI <- function(id) {
     ns <- NS(id)
     tabPanel(
         "Comparison",
-        fluidRow(uiOutput(ns("comparison_boxes")))
+        spinner(fluidRow(uiOutput(ns("comparison_boxes"))))
     )
 }
 
@@ -183,12 +185,22 @@ map_comparison_server <- function(id, data) {
             ns <- session[["ns"]]
             output[["comparison_boxes"]] <- renderUI({
                 if (is.null(data())) {
-                    shinyWidgets::show_alert(
+                    show_alert(
                         title = "Warning",
                         text = "No data selected",
                         type = "warning"
                     )
                 } else {
+                    if (any(purrr::map_lgl(data(), ~length(.x[["ids"]]()) > 10))) {
+                        show_alert(
+                            title = "Warning",
+                            text = "
+                                Be aware that selecting > 10 datasets can cause
+                                issues with data presentation.
+                            ",
+                            type = "warning"
+                        )
+                    }
                     purrr::walk(data(), ~.x[["server"]]())
                     purrr::map(data(), ~.x[["ui"]](ns))
                 }

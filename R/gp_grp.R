@@ -35,7 +35,7 @@ gp_grp <- R6Class("gp_grp",
         },
         population_trend_data = function(gender = "All") {
             self[["data"]]() |> 
-                map(function(i) i[["plot_data"]]("population_trend", gender)) |> 
+                map(~.x[["plot_data"]]("population_trend", gender)) |> 
                 setNames(self[["titles"]]()) |> 
                 bind_rows(.id = "ID")
         },

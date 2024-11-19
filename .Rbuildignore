@@ -3,4 +3,5 @@
 ^data-raw$
 ^LICENSE.md$
 ^\.github$
-^\.RDS$
+^\.httr-oauth$
+^processed_health_data\.RDS$
