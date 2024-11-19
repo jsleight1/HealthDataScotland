@@ -8,7 +8,7 @@ hosp_unit2 <- hospital_data |>
 
 capture_output(sf <- get_sf("hospital"))
 
-sf <- sf[sf[["id"]] %in% c("A101H", "A201H"), ]
+sf <- sf[sf[["ID"]] %in% c("A101H", "A201H"), ]
 
 hosp_grp_unit <- hospital_grp[["new"]](
     list(hosp_unit, hosp_unit2), 
@@ -25,7 +25,7 @@ test_that("hospital_grp class works", {
         hospital_grp[["new"]](.sf = "sf", .id = "hospital") |> 
         expect_error("sf must be sf object")
 
-    tst_sf <- sf[sf[["id"]] == "L203H", ]
+    tst_sf <- sf[sf[["ID"]] == "L203H", ]
 
     list(hosp_unit, hosp_unit2) |> 
         hospital_grp[["new"]](.sf = tst_sf, .id = "hospital") |> 
@@ -54,7 +54,7 @@ test_that("hospital_grp class can be plotted", {
 })
 
 test_that("hospital_grp subset works", {
-    hosp_grp_unit[["subset"]]("id") |> 
+    hosp_grp_unit[["subset"]]("ID") |> 
         expect_error("ids are not found in health unit group")
 
     out <- hosp_grp_unit[["subset"]]("A101H") |> 
@@ -62,7 +62,7 @@ test_that("hospital_grp subset works", {
 
     expect_true(inherits(out, "hospital_grp"))
     expect_identical(out[["ids"]](), "A101H")
-    expect_identical(out[["sf"]]()[["id"]], "A101H")
+    expect_identical(out[["sf"]]()[["ID"]], "A101H")
 })
 
 test_that("hospital_grp get_download works", {

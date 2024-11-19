@@ -42,7 +42,7 @@ health_unitgrp <- R6Class(
             assert_that(
                 identical(
                     sort(self[["ids"]]()),
-                    sort(self[["sf"]]()[["id"]])
+                    sort(self[["sf"]]()[["ID"]])
                 ), 
                 msg = "All all health units present in sf"
             )
@@ -66,7 +66,7 @@ health_unitgrp <- R6Class(
         #' @description
         #' Get ids of stored health units
         ids = function() {
-            unname(map_chr(self[["data"]](), ~.x[["id"]]()))
+            unname(map_chr(self[["data"]](), ~.x[["ID"]]()))
         },
         #' @description
         #' Get names of stored health units
@@ -88,7 +88,7 @@ health_unitgrp <- R6Class(
             assert_that(all(id %in% self[["ids"]]()), 
                 msg = "ids are not found in health unit group")
             self[[".data"]] <- self[[".data"]][which(self[["ids"]]() %in% id)]
-            self[[".sf"]] <- self[[".sf"]][self[[".sf"]][["id"]] %in% id, ]
+            self[[".sf"]] <- self[[".sf"]][self[[".sf"]][["ID"]] %in% id, ]
             self[["validate"]]()
         },
         #' @description
@@ -97,7 +97,7 @@ health_unitgrp <- R6Class(
             self[["data"]]() |>
                map(~.x[["data"]]()) |>
                setNames(self[["ids"]]()) |>
-               bind_rows(.id = "ID")
+               bind_rows(.id = "id")
         },
         #' @description
         #' Create UI for health unit group object.

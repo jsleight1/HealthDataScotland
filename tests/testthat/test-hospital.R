@@ -22,7 +22,7 @@ test_that("hospital class works", {
         expect_no_error()
 
     expect_true(inherits(out, "hospital"))
-    expect_identical(out[["id"]](), "A101H")
+    expect_identical(out[["ID"]](), "A101H")
      expect_identical(out[["health_board"]](), "Ayrshire and Arran")
     expect_identical(out[["title"]](), "Arran War Memorial Hospital")
     expect_identical(out[["address"]](), 

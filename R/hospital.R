@@ -68,10 +68,10 @@ hospital <- R6Class("hospital",
         #' @param ns 
         #'     Namespace of shiny application page.
         ui = function(ns) {
-            ns <- NS(ns(self[["id"]]()))
+            ns <- NS(ns(self[["ID"]]()))
             fluidRow(
                 box(
-                    title = paste(self[["title"]](), "-", self[["id"]]()),
+                    title = paste(self[["title"]](), "-", self[["ID"]]()),
                     width = 12, 
                     status = "primary",
                     solidHeader = TRUE,
@@ -105,7 +105,7 @@ hospital <- R6Class("hospital",
         #' Create server for hospital object.
         server = function() {
             moduleServer(
-                self[["id"]](),
+                self[["ID"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
                     output[["all_specialty"]] <- renderPlotly(

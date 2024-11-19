@@ -107,10 +107,10 @@ gp <- R6Class("gp",
         #' @param ns 
         #'     Namespace of shiny application page.
         ui = function(ns) {
-            ns <- NS(ns(self[["id"]]()))
+            ns <- NS(ns(self[["ID"]]()))
             fluidRow(
                 box(
-                    title = paste(self[["title"]](), "-", self[["id"]]()), 
+                    title = paste(self[["title"]](), "-", self[["ID"]]()), 
                     width = 12, 
                     status = "primary",
                     solidHeader = TRUE,
@@ -147,7 +147,7 @@ gp <- R6Class("gp",
         #' Create server for general practice object.
         server = function() {
             moduleServer(
-                self[["id"]](),
+                self[["ID"]](),
                 function(input, output, session) {
                     output[["pop_trend"]] <- renderPlotly(
                         self[["plot"]](

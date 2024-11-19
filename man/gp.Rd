@@ -26,10 +26,10 @@ R6 class storing health statistics for a GP practice.
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="ID"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-ID'><code>HealthDataScotland::health_unit$ID()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-health_board'><code>HealthDataScotland::health_unit$health_board()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="id"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-id'><code>HealthDataScotland::health_unit$id()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="title"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-title'><code>HealthDataScotland::health_unit$title()</code></a></span></li>

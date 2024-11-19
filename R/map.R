@@ -75,7 +75,7 @@ map_server <- function(id, data, boards) {
                 leaflet() |> 
                     addTiles() |> 
                     addAwesomeMarkers(
-                        layerId = ~paste0(as.character(id), ":", as.character(type)),
+                        layerId = ~paste0(as.character(ID), ":", as.character(type)),
                         icon = ~pin_icon(type),
                         clusterOptions = markerClusterOptions(
                             showCoverageOnHover = FALSE
@@ -88,7 +88,7 @@ map_server <- function(id, data, boards) {
                         weight = 2,
                         color = "#377EB8",
                         label = as_tibble(boards)[["HBName"]],
-                        layerId = ~as.character(id), 
+                        layerId = ~as.character(ID), 
                         data = boards
                     ) |>
                     leaflet.extras::addDrawToolbar(

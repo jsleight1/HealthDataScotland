@@ -21,7 +21,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \item \href{#method-health_unit-new}{\code{health_unit$new()}}
 \item \href{#method-health_unit-validate}{\code{health_unit$validate()}}
 \item \href{#method-health_unit-data}{\code{health_unit$data()}}
-\item \href{#method-health_unit-id}{\code{health_unit$id()}}
+\item \href{#method-health_unit-ID}{\code{health_unit$ID()}}
 \item \href{#method-health_unit-title}{\code{health_unit$title()}}
 \item \href{#method-health_unit-address}{\code{health_unit$address()}}
 \item \href{#method-health_unit-health_board}{\code{health_unit$health_board()}}
@@ -68,12 +68,12 @@ Get data of health unit.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unit-id"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unit-id}{}}}
-\subsection{Method \code{id()}}{
+\if{html}{\out{<a id="method-health_unit-ID"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-ID}{}}}
+\subsection{Method \code{ID()}}{
 Get ID of health unit.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unit$id()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$ID()}\if{html}{\out{</div>}}
 }
 
 }

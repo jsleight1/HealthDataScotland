@@ -36,7 +36,7 @@ health_unit <- R6Class("health_unit",
         },
         #' @description
         #' Get ID of health unit.
-        id = function() {
+        ID = function() {
             unique(self[["data"]]()[["ID"]])
         },
         #' @description

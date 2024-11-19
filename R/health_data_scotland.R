@@ -3,10 +3,14 @@
 #' @export
 health_data_scotland <- function(...) {
 
-    # all_data <- list(process_gp_data(), process_hospital_data()) |>
-    #     set_names(c("General practice", "Hospital")) |>
-    #     suppressMessages()
-    # saveRDS(all_data, "data.RDS")
+    # all_data <- tribble(
+    #         ~type,        ~meta_func,            ~data_func,              ~sf_func,
+    #         "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
+    #         "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
+    #     ) |>
+    #     purrr::pmap(process_data) |>
+    #     setNames(c("General practice", "Hospital")) |>
+    #     saveRDS("data.RDS")
 
     all_data <- readRDS("data.RDS") |>
         purrr::imap(~{
@@ -40,7 +44,7 @@ health_data_scotland <- function(...) {
                                 id = "map", 
                                 boards = get_sf("board") |> 
                                     as_tibble() |> 
-                                    select("HBName", "id") |> 
+                                    select("HBName", "ID") |> 
                                     tibble::deframe()
                             ),
                             map_comparison_UI(id = "map_comparison")
@@ -86,92 +90,4 @@ health_data_scotland <- function(...) {
     }
 
     shinyApp(ui, server, ...)
-}
-
-process_gp_data <- function() {
-    sf <- get_sf()
-
-    meta <- get_gp_meta() |> 
-        rename("ID" = "PracticeCode") |> 
-        mutate_at("ID", as.character) |>
-        inner_join(
-            select(as_tibble(get_sf("board")), "id", "HBName"),
-            by = c("HB" = "id")
-        )
-
-    data <- get_gp_data() |> 
-        select(-matches("QF$")) |>
-        rename("ID" = "PracticeCode") |>
-        mutate(
-            Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"),
-            ID = as.character(.data[["ID"]])
-        )
-
-    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) |> 
-        reduce(intersect)
-
-    sf <- filter(sf, .data[["id"]] %in% master_ids) |> 
-        mutate_at("uprn", as.character) |> 
-        left_join(meta, by = c("id" = "ID")) |> 
-        rename("hbcode" = "HB")
-    meta <- filter(meta, .data[["ID"]] %in% master_ids)
-    data <- filter(data, .data[["ID"]] %in% master_ids)
-
-    out <- meta[["ID"]] |> 
-        map(function(id) {
-            meta |> 
-                filter(.data[["ID"]] == id) |> 
-                select(-"HB", -"HSCP") |>
-                inner_join(data, by = "ID")
-        }) |> 
-        set_names(meta[["ID"]])
-
-    list("x" = out, "sf" = sf)
-}
-
-process_hospital_data <- function() {
-    sf <- get_sf("hospital")
-    
-    meta <- get_hosp_meta() |> 
-        rename("ID" = "HospitalCode") |>
-        inner_join(
-            select(as_tibble(get_sf("board")), "id", "HBName"),
-            by = c("HealthBoard" = "id")
-        )
-    
-    data <- get_hosp_data() |>
-        filter(!is.na(.data[["FinancialYear"]])) |>
-        rename("ID" = "Location") |>
-        select_if(~ !all(is.na(.))) |>
-        select(-contains("Address"))
-
-    master_ids <- list(sf[["id"]], meta[["ID"]], data[["ID"]]) |> 
-        reduce(intersect)
-    
-    sf <- filter(sf, .data[["id"]] %in% master_ids) |> 
-        mutate_at("uprn", as.character)
-    meta <- filter(meta, .data[["ID"]] %in% master_ids)
-    data <- filter(data, .data[["ID"]] %in% master_ids)
-
-    out <- meta[["ID"]] |> 
-        map(function(id) {
-            meta |> 
-                filter(.data[["ID"]] == id) |> 
-                inner_join(data, by = "ID")
-        }) |> 
-        set_names(meta[["ID"]])
-
-    list("x" = out, "sf" = sf)
-}
-
-create_gp_objects <- function(x, sf) {
-    x |>
-        map(gp[["new"]]) |>
-        gp_grp[["new"]](.sf = sf, .id = "gp")
-}
-
-create_hospital_objects <- function(x, sf) {
-    x |>
-        map(hospital[["new"]]) |>
-        hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }

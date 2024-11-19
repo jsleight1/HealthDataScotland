@@ -42,11 +42,102 @@ get_sf <- function(type = c("gp", "hospital", "board")) {
 }
 
 set_id <- function(x, col) {
-    x[["id"]] <- as.character(x[[col]])
+    x[["ID"]] <- as.character(x[[col]])
     x
 }
 
 set_type <- function(x, value) {
     x[["type"]] <- value 
     x
+}
+
+process_data <- function(type, meta_func, data_func, sf_func) {
+    sf <- get_sf(type)
+    meta <- meta_func()
+    data <- data_func()
+    master_ids <- list(sf[["ID"]], meta[["ID"]], data[["ID"]]) |> 
+        intersect_ids()
+    sf <- sf_func(sf, master_ids, meta)
+    meta <- filter(meta, .data[["ID"]] %in% master_ids)
+    data <- filter(data, .data[["ID"]] %in% master_ids)
+    create_process_lst(meta, data, sf)
+}
+
+process_gp_meta <- function() {
+    get_gp_meta() |> 
+        rename("ID" = "PracticeCode") |> 
+        mutate_at("ID", as.character) |>
+        inner_join(
+            select(as_tibble(get_sf("board")), "ID", "HBName"),
+            by = c("HB" = "ID")
+        )
+}
+
+process_gp_data <- function() {
+    get_gp_data() |> 
+        select(-matches("QF$")) |>
+        rename("ID" = "PracticeCode") |>
+        mutate(
+            Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"),
+            ID = as.character(.data[["ID"]])
+        )
+}
+
+process_gp_sf <- function(x, ids, meta, ...) {
+    x |>
+        filter(.data[["ID"]] %in% ids) |> 
+        mutate_at("uprn", as.character) |> 
+        left_join(meta, by = c("ID" = "ID")) |> 
+        rename("hbcode" = "HB")
+}
+
+intersect_ids <- function(...) {
+    reduce(..., intersect)
+}
+
+process_hospital_meta <- function() {
+    get_hosp_meta() |> 
+        rename("ID" = "HospitalCode") |>
+        inner_join(
+            select(as_tibble(get_sf("board")), "ID", "HBName"),
+            by = c("HealthBoard" = "ID")
+        )
+}
+
+process_hospital_data <- function() {
+    get_hosp_data() |>
+        filter(!is.na(.data[["FinancialYear"]])) |>
+        rename("ID" = "Location") |>
+        select_if(~ !all(is.na(.))) |>
+        select(-contains("Address"))
+}
+
+process_hospital_sf <- function(x, ids, ...) {
+    x |>
+        filter(.data[["ID"]] %in% ids) |> 
+        mutate_at("uprn", as.character)
+}
+
+create_process_lst <- function(meta, data, sf) {
+    out <- meta[["ID"]] |> 
+        map(function(ID) {
+            meta |> 
+                filter(.data[["ID"]] == ID) |> 
+                inner_join(data, by = "ID")
+        }) |> 
+        set_names(meta[["ID"]])
+
+    list("x" = out, "sf" = sf)
+}
+
+create_gp_objects <- function(x, sf) {
+    x |>
+        map(gp[["new"]]) |>
+        gp_grp[["new"]](.sf = sf, .id = "gp")
+}
+
+create_hospital_objects <- function(x, sf) {
+    x |>
+        map(hospital[["new"]]) |>
+        hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }
