@@ -2,19 +2,7 @@
 #' @param ... Passed to shiny::shinyApp.
 #' @export
 health_data_scotland <- function(...) {
-    token <- drop_auth()
-    saveRDS(token, file.path(tempdir(), "token.RDS"))
-
-    drop_download(
-        path = "processed_health_data.RDS", 
-        local_path = file.path(tempdir(), "downloaded_health_data.RDS"),
-        dtoken = readRDS(file.path(tempdir(), "token.RDS"))
-    )
-    file.remove(file.path(tempdir(), "token.RDS"))
-
-    downloaded_data <- readRDS(file.path(tempdir(), "downloaded_health_data.RDS"))
-
-    all_data <- create_data_objects(downloaded_data)
+    data <- create_data_objects(download_dropbox_data())
 
     ui <- dashboardPage(
         dashboardHeader(title = "Health Data Scotland"),
@@ -79,9 +67,9 @@ health_data_scotland <- function(...) {
     )
 
     server <- function(input, output) {
-        selected_data <- map_server("map", all_data, get_sf("board"))
+        selected_data <- map_server("map", data, get_sf("board"))
         map_comparison_server("map_comparison", selected_data)
-        download_server("downloads", all_data)
+        download_server("downloads", data)
     }
 
     shinyApp(ui, server, ...)

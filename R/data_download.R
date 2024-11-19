@@ -148,6 +148,21 @@ create_hospital_grp <- function(x, sf) {
         hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }
 
+download_dropbox_data <- function() {
+    token <- drop_auth()
+    saveRDS(token, file.path(tempdir(), "token.RDS"))
+
+    drop_download(
+        path = "processed_health_data.RDS", 
+        local_path = file.path(tempdir(), "downloaded_health_data.RDS"),
+        dtoken = readRDS(file.path(tempdir(), "token.RDS")), 
+        overwrite = TRUE
+    )
+    file.remove(file.path(tempdir(), "token.RDS"))
+
+    readRDS(file.path(tempdir(), "downloaded_health_data.RDS"))
+}
+
 # tribble(
 #         ~type,        ~meta_func,            ~data_func,              ~sf_func,
 #         "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
