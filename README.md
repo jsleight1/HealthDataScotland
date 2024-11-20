@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/jsleight1/HealthDataScotland/branch/1-development/graph/badge.svg)](https://app.codecov.io/gh/jsleight1/HealthDataScotland/?branch=1-development)
 <!-- badges: end -->
 
 HealthDataScotland contains a shiny application for the presentation of
