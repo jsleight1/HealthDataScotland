@@ -3,6 +3,11 @@
 
 # HealthDataScotland
 
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml)
+<!-- badges: end -->
+
 HealthDataScotland contains a shiny application for the presentation of
 general practice (GP) demographic and hospital bed capacity data. The
 shiny application presents interactive maps of the locations of GP

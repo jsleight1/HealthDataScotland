@@ -13,6 +13,11 @@ knitr::opts_chunk$set(
 
 # HealthDataScotland
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml)
+<!-- badges: end -->
+
+
 HealthDataScotland contains a shiny application for the presentation 
 of general practice (GP) demographic and hospital bed capacity data. The shiny application presents interactive maps of the locations 
 of GP practices and hospital across Scotland. Indiviual GP practices and hospitals can be clicked to interogate the data was single centre. Conversely comparisons can be made across centres by using the map draw function to selected multiple health centres. The processed data is also presented in a table format. This can be downlaoded in full or can be filtered to downloaded a subset of the data set.
