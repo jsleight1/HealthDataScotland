@@ -17,8 +17,8 @@ practices and hospital across Scotland. Indiviual GP practices and
 hospitals can be clicked to interogate the data was single centre.
 Conversely comparisons can be made across centres by using the map draw
 function to selected multiple health centres. The processed data is also
-presented in a table format. This can be downlaoded in full or can be
-filtered to downloaded a subset of the data set.
+presented in a table format. This can be downloaded in full or can be
+filtered to download a subset of the data set.
 
 ## Installation
 

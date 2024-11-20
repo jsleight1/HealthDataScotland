@@ -24,31 +24,10 @@ get_hosp_meta <- function(...) {
 
 get_sf <- function(type = c("gp", "hospital", "board")) {
     switch(rlang::arg_match(type), 
-        "gp" = sf::read_sf(
-            system.file("extdata", "scotland_gps.json", package = "HealthDataScotland")
-        ) |> 
-        set_id("prac_code") |> 
-        set_type("General practice"),
-        "hospital" = sf::read_sf(
-            system.file("extdata", "scotland_hosp.json", package = "HealthDataScotland")
-        ) |> 
-        set_id("sitecode") |> 
-        set_type("Hospital"),
-        "board" = sf::read_sf(
-            system.file("extdata", "scotland_boards.json", package = "HealthDataScotland")
-        ) |> 
-        set_id("HBCode")
+        "gp" = HealthDataScotland::example_gp_sf,
+        "hospital" = HealthDataScotland::example_hospital_sf,
+        "board" = HealthDataScotland::example_board_sf,
     )
-}
-
-set_id <- function(x, col) {
-    x[["ID"]] <- as.character(x[[col]])
-    x
-}
-
-set_type <- function(x, value) {
-    x[["type"]] <- value 
-    x
 }
 
 process_data <- function(type, meta_func, data_func, sf_func) {
