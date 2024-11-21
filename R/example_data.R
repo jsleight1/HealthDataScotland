@@ -20,6 +20,17 @@ NULL
 #' @keywords data
 NULL
 
+#' Example GP spatial data
+#' 
+#' sf data.frame object containing spatial data for GP practices in Scotland as 
+#' of 2021. See `inst/extdata/READM.md` for details.
+#' 
+#' @name example_gp_sf
+#' @family health data scotland examples
+#' @docType data
+#' @keywords data
+NULL
+
 #' Example hospital dataset.
 #' 
 #' Data.frame object containing specialty bed data for Scottish Hospitals for
@@ -42,22 +53,23 @@ NULL
 #' @keywords data
 NULL
 
-#' Example health board dataset.
+#' Example hospital spatial data
 #' 
-#' Data.frame object containing specialty bed data for Scottish health boards
-#' for 2022/24.
+#' sf data.frame object containing spatial data for hospitals in Scotland as 
+#' of 2021. See `inst/extdata/READM.md` for details.
 #' 
-#' @name example_board_data 
-#' @family health data scotland examples 
-#' @docType data 
+#' @name example_hospital_sf
+#' @family health data scotland examples
+#' @docType data
 #' @keywords data
 NULL
 
-#' Example health board metadata.
+#' Example health board spatial data
 #' 
-#' Data.frame object containing metadata for scottish health boards.
+#' sf data.frame object containing spatial data for health boards in Scotland as 
+#' of 2010. See `inst/extdata/READM.md` for details.
 #' 
-#' @name example_board_metadata
+#' @name example_board_sf
 #' @family health data scotland examples
 #' @docType data
 #' @keywords data

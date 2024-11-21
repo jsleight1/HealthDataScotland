@@ -10,11 +10,12 @@ from April 2024.
 }
 \seealso{
 Other health data scotland examples: 
-\code{\link{example_board_data}},
-\code{\link{example_board_metadata}},
+\code{\link{example_board_sf}},
 \code{\link{example_gp_data}},
+\code{\link{example_gp_sf}},
 \code{\link{example_hospital_data}},
-\code{\link{example_hospital_metadata}}
+\code{\link{example_hospital_metadata}},
+\code{\link{example_hospital_sf}}
 }
 \concept{health data scotland examples}
 \keyword{data}
