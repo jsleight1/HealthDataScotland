@@ -23,6 +23,7 @@ get_hosp_meta <- function(...) {
 }
 
 get_sf <- function(type = c("gp", "hospital", "board")) {
+    requireNamespace("sf", quietly = TRUE)
     switch(rlang::arg_match(type), 
         "gp" = HealthDataScotland::example_gp_sf,
         "hospital" = HealthDataScotland::example_hospital_sf,

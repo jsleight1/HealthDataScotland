@@ -2,12 +2,14 @@
 #' @param ... Passed to shiny::shinyApp.
 #' @export
 health_data_scotland <- function(...) {
+    requireNamespace("sf", quietly = TRUE)
     data <- create_data_objects(download_dropbox_data())
 
     ui <- dashboardPage(
         dashboardHeader(title = "Health Data Scotland"),
         dashboardSidebar(
             sidebarMenu(
+                id = "sidebar",
                 menuItem("Dashboard", tabName = "map"), 
                 menuItem("Downloads", tabName = "download"), 
                 menuItem("References", tabName = "references")
@@ -67,6 +69,7 @@ health_data_scotland <- function(...) {
     )
 
     server <- function(input, output) {
+        requireNamespace("sf", quietly = TRUE)
         selected_data <- map_server("map", data, get_sf("board"))
         map_comparison_server("map_comparison", selected_data)
         download_server("downloads", data)

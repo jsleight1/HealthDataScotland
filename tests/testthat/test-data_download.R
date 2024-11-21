@@ -55,12 +55,14 @@ test_that("get_sf works", {
 })
 
 test_that("process_data works", {
+    m1 <- mock(HealthDataScotland::example_gp_metadata)
     with_mocked_bindings(
-        get_gp_meta = function() HealthDataScotland::example_gp_metadata,
+        get_gp_meta = m1,
         meta <- process_gp_meta()
     )
+    m2 <- mock(HealthDataScotland::example_gp_data)
     with_mocked_bindings(
-        get_gp_data = function() HealthDataScotland::example_gp_data,
+        get_gp_data = m2,
         data <- process_gp_data()
     )
     out <- process_data(
@@ -70,70 +72,84 @@ test_that("process_data works", {
             process_gp_sf
         ) |>
         expect_no_error()
+    expect_called(m1, 1)
+    expect_called(m2, 1)
     expect_true(inherits(out, "list"))
     expect_identical(names(out), c("x", "sf"))
 })
 
 test_that("process_gp_meta works", {
+    m <- mock(HealthDataScotland::example_gp_metadata)
     with_mocked_bindings(
-        get_gp_meta = function() HealthDataScotland::example_gp_metadata,
+        get_gp_meta = m,
         out <- process_gp_meta() |>
             expect_no_error()
     )
+    expect_called(m, 1)
     expect_s3_class(out, "data.frame")
     expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_gp_data works", {
+    m <- mock(HealthDataScotland::example_gp_data)
     with_mocked_bindings(
-        get_gp_data = function() HealthDataScotland::example_gp_data,
+        get_gp_data = m,
         out <- process_gp_data() |>
             expect_no_error()
     )
+    expect_called(m, 1)
     expect_s3_class(out, "data.frame")
     expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_gp_sf works", {
+    m <- mock(HealthDataScotland::example_gp_metadata)
     with_mocked_bindings(
-        get_gp_meta = function() HealthDataScotland::example_gp_metadata,
+        get_gp_meta = m,
         meta <- process_gp_meta()
     )
     out <- get_sf() |>
         process_gp_sf(c("30030", "30059"), meta) |>
         expect_no_error()
+    expect_called(m, 1)
     expect_s3_class(out, "sf")
     expect_identical(out[["ID"]], c("30030", "30059"))
 })
 
 test_that("process_hopsital_meta works", {
+    m <- mock(HealthDataScotland::example_hospital_metadata)
     with_mocked_bindings(
-        get_hosp_meta = function() HealthDataScotland::example_hospital_metadata,
+        get_hosp_meta = m,
         out <- process_hospital_meta() |>
             expect_no_error()
     )
+    expect_called(m, 1)
     expect_s3_class(out, "data.frame")
     expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_hopsital_data works", {
+    m <- mock(HealthDataScotland::example_hospital_data)
     with_mocked_bindings(
-        get_hosp_data = function() HealthDataScotland::example_hospital_data,
-        out <- process_hospital_meta() |>
+        get_hosp_data = m,
+        out <- process_hospital_data() |>
             expect_no_error()
     )
+    expect_called(m, 1)
     expect_s3_class(out, "data.frame")
     expect_snapshot_output(head(as.data.frame(out)))
 })
 
 test_that("process_hospital_sf works", {
+    m <- mock(HealthDataScotland::example_hospital_metadata)
     with_mocked_bindings(
-        get_hosp_meta = function() HealthDataScotland::example_hospital_metadata,
+        get_hosp_meta = m,
         meta <- process_hospital_meta()
     )
     out <- get_sf("hospital") |>
         process_hospital_sf(c("A013G", "A026B"), meta) |>
         expect_no_error()
+    expect_called(m, 1)
     expect_s3_class(out, "sf")
     expect_identical(out[["ID"]], c("A013G", "A026B"))
 })

@@ -20,13 +20,13 @@ example_gp_sf <- sf::read_sf(
     "inst/extdata/scotland_gps.json"
 )
 example_gp_sf[["ID"]] <- as.character(example_gp_sf[["prac_code"]])
-example_gp_sf[["type"]] <- example_gp_sf[["General practice"]]
+example_gp_sf[["type"]] <- "General practice"
 
 example_hospital_sf <- sf::read_sf(
     "inst/extdata/scotland_hosp.json"
 )
 example_hospital_sf[["ID"]] <- example_hospital_sf[["sitecode"]]
-example_hospital_sf[["type"]] <- example_hospital_sf[["Hospital"]]
+example_hospital_sf[["type"]] <- "Hospital"
 
 example_board_sf <- sf::read_sf(
     "inst/extdata/scotland_boards.json"
