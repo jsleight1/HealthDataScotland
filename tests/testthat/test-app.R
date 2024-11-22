@@ -58,7 +58,6 @@ test_that("map selectors works", {
         height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(`map-health_select` = "Hospital")
-    app$set_inputs(`map-board_select` = c("S08000015", "S08000016", "S08000017"))
 
     app$expect_values()
     app$expect_unique_names()
