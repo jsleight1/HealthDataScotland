@@ -8,9 +8,9 @@
     "map-health_select": "Hospital",
     "map-map_bounds": {
       "north": 61.7419302246182,
-      "east": 4.746093750000001,
+      "east": 1.03271484375,
       "south": 53.55336278552809,
-      "west": -14.12841796875
+      "west": -10.39306640625
     },
     "map-map_center": {
       "lng": -4.687596781892633,

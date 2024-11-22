@@ -174,7 +174,7 @@ map_comparison_UI <- function(id) {
     ns <- NS(id)
     tabPanel(
         "Comparison",
-        spinner(fluidRow(uiOutput(ns("comparison_boxes"))))
+        fluidRow(uiOutput(ns("comparison_boxes")))
     )
 }
 

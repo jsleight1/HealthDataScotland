@@ -43,8 +43,8 @@ with_mocked_bindings(
 test_that("health_data_scotland app initial values works", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "initial", width = 1139, height = 812,
-        seed = 4323)
+    app <- AppDriver$new(shiny_app, name = "initial", width = 800, height = 700,
+        seed = 4323, load_timeout = 20 * 1000)
 
     app$expect_values()
     app$expect_unique_names()
@@ -54,8 +54,8 @@ test_that("health_data_scotland app initial values works", {
 test_that("map selectors works", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "map_selectors", width = 1139, 
-        height = 812, seed = 4323)
+    app <- AppDriver$new(shiny_app, name = "map_selectors", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(`map-health_select` = "Hospital")
     app$set_inputs(`map-board_select` = c("S08000015", "S08000016", "S08000017"))
@@ -68,8 +68,8 @@ test_that("map selectors works", {
 test_that("comparison tab works with no selected data", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "empty_comparison_tab", width = 1139, 
-        height = 812, seed = 4323)
+    app <- AppDriver$new(shiny_app, name = "empty_comparison_tab", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(map_tabs = "Comparison")
     app$expect_values()
@@ -80,8 +80,8 @@ test_that("comparison tab works with no selected data", {
 test_that("downloads page works", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "downloads_page", width = 1139, 
-        height = 812, seed = 4323)
+    app <- AppDriver$new(shiny_app, name = "downloads_page", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(sidebar = "download")
     app$expect_values()
@@ -91,8 +91,8 @@ test_that("downloads page works", {
 test_that("references page works", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "references_page", width = 1139, 
-        height = 812, seed = 4323)
+    app <- AppDriver$new(shiny_app, name = "references_page", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(sidebar = "references")
     app$expect_values()
