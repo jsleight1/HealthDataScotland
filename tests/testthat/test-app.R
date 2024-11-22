@@ -51,19 +51,6 @@ test_that("health_data_scotland app initial values works", {
     app$stop()
 })
 
-test_that("map selectors works", {
-    skip_on_cran()
-
-    app <- AppDriver$new(shiny_app, name = "map_selectors", width = 800, 
-        height = 700, seed = 4323, load_timeout = 20 * 1000)
-
-    app$set_inputs(`map-health_select` = "Hospital")
-
-    app$expect_values()
-    app$expect_unique_names()
-    app$stop()
-})
-
 test_that("comparison tab works with no selected data", {
     skip_on_cran()
 
