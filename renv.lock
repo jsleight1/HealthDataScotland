@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://www.stats.bris.ac.uk/R"
+        "URL": "https://packagemanager.posit.co/cran/latest"
       }
     ]
   },
@@ -685,6 +685,21 @@
       ],
       "Hash": "ca012d4a706e21ce217ba15f22d402b2"
     },
+    "leaflet.extras": {
+      "Package": "leaflet.extras",
+      "Version": "2.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "htmltools",
+        "htmlwidgets",
+        "leaflet",
+        "magrittr",
+        "stringr"
+      ],
+      "Hash": "1626fb22ec9e788f66c1d08fd863da4c"
+    },
     "leaflet.providers": {
       "Package": "leaflet.providers",
       "Version": "2.0.0",
@@ -791,6 +806,28 @@
         "askpass"
       ],
       "Hash": "d413e0fef796c9401a4419485f709ca1"
+    },
+    "phsopendata": {
+      "Package": "phsopendata",
+      "Version": "0.3.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "Public-Health-Scotland",
+      "RemoteRepo": "phsopendata",
+      "RemoteRef": "master",
+      "RemoteSha": "ff246f085d70f9291b0250632e3db3203e980fe2",
+      "Requirements": [
+        "cli",
+        "dplyr",
+        "httr",
+        "magrittr",
+        "purrr",
+        "rlang",
+        "stringdist",
+        "tibble"
+      ],
+      "Hash": "1e3b2e2ad2c90835821cda6ff1c7ade5"
     },
     "pillar": {
       "Package": "pillar",
@@ -952,6 +989,53 @@
       ],
       "Hash": "0e2829df8cb74a98179c886b023ffea8"
     },
+    "rdrop2": {
+      "Package": "rdrop2",
+      "Version": "0.8.2.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "karthik",
+      "RemoteRepo": "rdrop2",
+      "RemoteRef": "master",
+      "RemoteSha": "81bedd2f0fbd0ee55dd163230c1a0b26a80162cc",
+      "Requirements": [
+        "R",
+        "assertthat",
+        "digest",
+        "dplyr",
+        "httr",
+        "jsonlite",
+        "magrittr",
+        "purrr"
+      ],
+      "Hash": "1fdcffdad0933168b73d560a1d2503a4"
+    },
+    "reactR": {
+      "Package": "reactR",
+      "Version": "0.6.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "htmltools"
+      ],
+      "Hash": "b8e3d93f508045812f47136c7c44c251"
+    },
+    "reactable": {
+      "Package": "reactable",
+      "Version": "0.4.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "htmltools",
+        "htmlwidgets",
+        "jsonlite",
+        "reactR"
+      ],
+      "Hash": "6069eb2a6597963eae0605c1875ff14c"
+    },
     "readr": {
       "Package": "readr",
       "Version": "2.1.5",
@@ -1067,7 +1151,7 @@
     },
     "sf": {
       "Package": "sf",
-      "Version": "1.0-18",
+      "Version": "1.0-19",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1086,7 +1170,7 @@
         "units",
         "utils"
       ],
-      "Hash": "801bec14b3bae0f37eef4d187ee0bb44"
+      "Hash": "fe02eec2f6b3ba0e24afe83d5ccfb528"
     },
     "shiny": {
       "Package": "shiny",
@@ -1179,6 +1263,17 @@
       ],
       "Hash": "75940133cca2e339afce15a586f85b11"
     },
+    "stringdist": {
+      "Package": "stringdist",
+      "Version": "0.9.12",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "parallel"
+      ],
+      "Hash": "f360720fa3feb7db9d4133b31ebb067f"
+    },
     "stringi": {
       "Package": "stringi",
       "Version": "1.8.4",
@@ -1215,6 +1310,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "de342ebfebdbf40477d0758d05426646"
+    },
+    "terra": {
+      "Package": "terra",
+      "Version": "1.7-78",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "methods"
+      ],
+      "Hash": "8f020def0792119cb98bd8f696dab22d"
     },
     "tibble": {
       "Package": "tibble",
