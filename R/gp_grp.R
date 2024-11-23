@@ -7,17 +7,18 @@ gp_grp <- R6Class("gp_grp",
             self[["data"]]() |> 
                 map(~.x[["plot_data"]]("population_pyramid", date)) |> 
                 setNames(self[["titles"]]()) |> 
-                bind_rows(.id = "ID")
+                bind_rows(.id = "Practice")
         },
-        population_pyramid = function(date, ...) {
-            dat <- self[["plot_data"]]("population_pyramid", date, ...)
+        population_pyramid = function(date, practices = self[["titles"]](), ...) {
+            dat <- self[["plot_data"]]("population_pyramid", date, ...) |>
+                filter(.data[["Practice"]] %in% practices)
             plot <- ggplot(dat, aes(Population = Population)) +
                 geom_bar(
                     aes(
                         x = Age, 
                         fill = Gender, 
                         y = ifelse(Gender == "Male", -Population,  Population), 
-                        ID = ID
+                        Practice = Practice
                     ), 
                     stat = "identity"
                 ) +
@@ -26,7 +27,7 @@ gp_grp <- R6Class("gp_grp",
                     limits = max(dat$Population) * c(-1,1)
                 ) + 
                 coord_flip() + 
-                facet_wrap(~ID, ncol = 2) +
+                facet_wrap(~Practice, ncol = 3) +
                 theme_bw() +
                 ylab(NULL) + 
                 xlab(NULL)
@@ -121,22 +122,34 @@ gp_grp <- R6Class("gp_grp",
                 box(
                     title = "Population trend",
                     selectInput(
-                        ns("pop_trend_select"), 
+                        inputId = ns("pop_trend_select"), 
                         label = "Select gender",
                         choices = private[["gender_choices"]](),
                         selected = "All"
                     ),
-                    spinner(plotlyOutput(ns("pop_trend"))),
+                    spinner(plotlyOutput(outputId = ns("pop_trend"))),
                     width = 12
                 ),
                 box(
                     title = "Population pyramid",
                     selectInput(
-                        ns("pop_pyramid_select"), 
+                        inputId = ns("pop_pyramid_select_date"), 
                         label = "Select time frame",
                         choices = private[["date_choices"]]()
                     ),
-                    spinner(plotlyOutput(ns("pop_pyramid"))),
+                    pickerInput(
+                        inputId = ns("pop_pyramid_select_practice"),
+                        label = "Select GP practices", 
+                        choices = self[["titles"]](),
+                        selected = self[["titles"]](),
+                        inline = TRUE,
+                        multiple = TRUE, 
+                        options = list(
+                            `actions-box` = TRUE, 
+                            `selected-text-format` = "count > 1"
+                        )
+                    ),
+                    spinner(plotlyOutput(outputId = ns("pop_pyramid"))),
                     width = 12
                 ),
                 width = 12, 
@@ -159,7 +172,8 @@ gp_grp <- R6Class("gp_grp",
                     output[["pop_pyramid"]] <- renderPlotly(
                         self[["plot"]](
                             type = "population_pyramid", 
-                            date = req(input[["pop_pyramid_select"]])
+                            date = req(input[["pop_pyramid_select_date"]]),
+                            practices = req(input[["pop_pyramid_select_practice"]])
                         )
                     )
                 }

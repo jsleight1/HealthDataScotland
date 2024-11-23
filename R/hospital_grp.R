@@ -85,19 +85,19 @@ hospital_grp <- R6Class("hospital_grp",
                 title = "Hospital",
                 box(
                     title = "All specialties",
-                    spinner(plotlyOutput(ns("all_specialty"))),
+                    spinner(plotlyOutput(outputId = ns("all_specialty"))),
                     width = 12
                 ),
                 box(
                     title = "Selected specialties",
                     selectInput(
-                        ns("specialty_select"), 
+                        inputId = ns("specialty_select"), 
                         label = "Select specialty", 
                         choices = private[["specialty_choices"]](),
                         multiple = TRUE, 
                         selected = private[["specialty_choices"]]()[1]
                     ),
-                    spinner(plotlyOutput(ns("selected_specialties"))),
+                    spinner(plotlyOutput(outputId = ns("selected_specialties"))),
                     width = 12
                 ),
                 width = 12, 

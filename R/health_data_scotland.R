@@ -6,7 +6,7 @@ health_data_scotland <- function(...) {
     data <- create_data_objects(download_dropbox_data())
 
     ui <- dashboardPage(
-        dashboardHeader(title = "Health Data Scotland"),
+        dashboardHeader(title = "Health Data Scotland (beta version)"),
         dashboardSidebar(
             sidebarMenu(
                 id = "sidebar",
