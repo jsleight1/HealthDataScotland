@@ -13,8 +13,8 @@ hospital <- R6Class("hospital",
             self[["data"]]() |> 
                 filter(.data[["SpecialtyName"]] %in% specialties)
         },
-        specialty_bar = function(specialties = "All Specialties", ...) {
-            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) |>
+        specialty_bar = function(...) {
+            plot <- self[["plot_data"]]("specialty_bar", ...) |>
                 ggplot(
                     aes(
                         x = .data[["FinancialYear"]], 

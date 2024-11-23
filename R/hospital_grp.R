@@ -2,14 +2,18 @@
 hospital_grp <- R6Class("hospital_grp", 
     inherit = health_unitgrp, 
     private = list(
-        specialty_bar_data = function(specialties = "All Specialties") {
+        specialty_bar_data = function(
+                specialties = "All Specialties", 
+                hospitals = self[["titles"]]()
+            ) {
             self[["data"]]() |> 
                 map(~.x[["plot_data"]]("specialty_bar", specialties)) |> 
                 setNames(self[["titles"]]()) |> 
-                bind_rows(.id = "ID")
+                bind_rows(.id = "ID") |>
+                filter(.data[["ID"]] %in% hospitals)
         },
-        specialty_bar = function(specialties = "All Specialties", ...) {
-            plot <- self[["plot_data"]]("specialty_bar", specialties, ...) |>
+        specialty_bar = function(...) {
+            plot <- self[["plot_data"]]("specialty_bar", ...) |>
                 ggplot(
                     aes(
                         x = .data[["FinancialYear"]], 
@@ -21,7 +25,7 @@ hospital_grp <- R6Class("hospital_grp",
                     geom_bar(stat = "identity") + 
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90)) +
-                    facet_wrap(~ID, ncol = 2)
+                    facet_wrap(~ID, ncol = 3)
             ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName", 
                 "AllStaffedBeds", "ID"))
         },
@@ -97,6 +101,18 @@ hospital_grp <- R6Class("hospital_grp",
                         multiple = TRUE, 
                         selected = private[["specialty_choices"]]()[1]
                     ),
+                    pickerInput(
+                        inputId = ns("specialty_select_hospital"),
+                        label = "Select hospitals", 
+                        choices = self[["titles"]](),
+                        selected = self[["titles"]](),
+                        inline = TRUE,
+                        multiple = TRUE, 
+                        options = list(
+                            `actions-box` = TRUE, 
+                            `selected-text-format` = "count > 1"
+                        )
+                    ),
                     spinner(plotlyOutput(outputId = ns("selected_specialties"))),
                     width = 12
                 ),
@@ -118,7 +134,8 @@ hospital_grp <- R6Class("hospital_grp",
                     output[["selected_specialties"]] <- renderPlotly({
                         self[["plot"]](
                             type = "specialty_bar",
-                            specialties = req(input[["specialty_select"]])
+                            specialties = req(input[["specialty_select"]]),
+                            hospitals = req(input[["specialty_select_hospital"]])
                         )
                     })
                 }
