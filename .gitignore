@@ -1,0 +1,4 @@
+*.RDS
+.httr-oauth
+*_.new.png
+rsconnect/
