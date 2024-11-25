@@ -32,13 +32,9 @@ Imports:
     tibble,
     tidyr
 Suggests: 
-    fs,
-    htmlwidgets,
     mockery,
     shinytest2,
-    testthat (>= 3.0.0),
-    webshot2,
-    withr
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: true
 Remotes:

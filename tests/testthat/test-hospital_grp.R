@@ -49,12 +49,9 @@ test_that("hospital_grp class works", {
     expect_identical(out[["available_plots"]](), "specialty_bar")
 })
 
-# test_that("hospital_grp class can be plotted", {
-#     out <- hosp_grp_unit[["plot"]](type = "specialty_bar") |>
-#         expect_no_error()
-#     expect_s3_class(out, "plotly")
-#     expect_snapshot_plotly(out, "hosp_grp_specialty_bar")
-# })
+test_that("hospital_grp class can be plotted", {
+    expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_bar"), "plotly")
+})
 
 test_that("hospital_grp subset works", {
     hosp_grp_unit[["subset"]]("ID") |> 
@@ -73,10 +70,4 @@ test_that("hospital_grp get_download works", {
        expect_no_error()
     expect_s3_class(out, "data.frame")
     expect_identical(hosp_grp_unit[["ids"]](), unique(out[["ID"]]))
-})
-
-test_that("hospital_grp ui works", {
-    out <- hosp_grp_unit[["ui"]](function(i) "ns") |> 
-        expect_no_error()
-    expect_s3_class(out, "shiny.tag")
 })

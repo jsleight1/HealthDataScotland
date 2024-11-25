@@ -32,18 +32,12 @@ test_that("gp class works", {
         c("population_pyramid", "population_trend"))
 })
 
-# test_that("gp class can be plotted", {
-#     out <- gp_unit[["plot"]](type = "population_pyramid", date = 20240401) |> 
-#         suppressWarnings() |> 
-#         expect_no_error()
-#     expect_s3_class(out, "plotly")
-#     expect_snapshot_plotly(out, "gp_pyramid")
-    
-#     out <- gp_unit[["plot"]](type = "population_trend") |>
-#         expect_no_error()
-#     expect_s3_class(out, "plotly")
-#     expect_snapshot_plotly(out, "gp_trend")
-# })
+test_that("gp class can be plotted", {
+    gp_unit[["plot"]](type = "population_pyramid", date = 20240401) |> 
+        suppressWarnings() |> 
+        expect_s3_class("plotly")
+    expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "plotly")
+})
 
 test_that("gp ui works", {
     out <- gp_unit[["ui"]](function(i) "ns") |> 

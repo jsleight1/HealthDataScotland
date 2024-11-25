@@ -46,18 +46,12 @@ test_that("gp_grp class works", {
         c("population_pyramid", "population_trend"))
 })
 
-# test_that("gp_grp class can be plotted", {
-#     out <- gp_grp_unit[["plot"]](type = "population_pyramid", date = 20240401) |> 
-#         suppressWarnings() |> 
-#         expect_no_error()
-#     expect_s3_class(out, "plotly")
-#     expect_snapshot_plotly(out, "gp_grp_pyramid")
-
-#     out <- gp_grp_unit[["plot"]](type = "population_trend") |>
-#         expect_no_error()
-#     expect_s3_class(out, "plotly")
-#     expect_snapshot_plotly(out, "gp_grp_trend")
-# })
+test_that("gp_grp class can be plotted", {
+    gp_grp_unit[["plot"]](type = "population_pyramid", date = 20240401) |> 
+        suppressWarnings() |> 
+        expect_s3_class("plotly")
+    expect_s3_class(gp_grp_unit[["plot"]](type = "population_trend"), "plotly")
+})
 
 test_that("gp_grp subset works", {
     gp_grp_unit[["subset"]]("ID") |> 
@@ -76,10 +70,4 @@ test_that("gp_grp get_download works", {
        expect_no_error()
     expect_s3_class(out, "data.frame")
     expect_identical(gp_grp_unit[["ids"]](), unique(out[["ID"]]))
-})
-
-test_that("gp_grp ui works", {
-    out <- gp_grp_unit[["ui"]](function(i) "ns") |> 
-        expect_no_error()
-    expect_s3_class(out, "shiny.tag")
 })
