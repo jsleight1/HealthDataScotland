@@ -37,7 +37,8 @@ Suggests:
     mockery,
     shinytest2,
     testthat (>= 3.0.0),
-    webshot2
+    webshot2,
+    withr
 Config/testthat/edition: 3
 LazyData: true
 Remotes:

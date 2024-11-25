@@ -31,8 +31,10 @@ test_that("hospital class works", {
 })
 
 test_that("hospital class can be plotted", {
-    out <- hosp_unit[["plot"]](type = "specialty_bar") |>
-        expect_no_error()
+    withr::with_seed(123, {
+        out <- hosp_unit[["plot"]](type = "specialty_bar") |>
+            expect_no_error()
+    })
     expect_s3_class(out, "plotly")
     expect_snapshot_plotly(out, "hosp_specialty_bar")
 })
