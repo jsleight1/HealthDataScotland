@@ -7,3 +7,4 @@
 ^processed_health_data\.RDS$
 ^README.Rmd$
 ^app.R$
+rsconnect/

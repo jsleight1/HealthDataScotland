@@ -31,7 +31,10 @@ test_that("hospital class works", {
 })
 
 test_that("hospital class can be plotted", {
-    expect_s3_class(hosp_unit[["plot"]](type = "specialty_bar"), "plotly")
+    out <- hosp_unit[["plot"]](type = "specialty_bar") |>
+        expect_no_error()
+    expect_s3_class(out, "plotly")
+    expect_snapshot_plotly(out, "hosp_specialty_bar")
 })
 
 test_that("hospital ui works", {
