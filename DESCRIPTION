@@ -14,10 +14,12 @@ Imports:
     assertthat,
     dplyr,
     ggplot2,
+    glue,
+    httr2,
     leaflet,
     leaflet.extras,
-    phsopendata,
     plotly,
+    pkgload,
     purrr,
     R6,
     reactable,
@@ -38,5 +40,4 @@ Suggests:
 Config/testthat/edition: 3
 LazyData: true
 Remotes:
-    Public-Health-Scotland/phsopendata,
     karthik/rdrop2

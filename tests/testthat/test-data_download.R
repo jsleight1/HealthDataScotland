@@ -4,7 +4,7 @@ library(mockery)
 test_that("get_gp_data works", {
     m <- mock()
     with_mocked_bindings(
-        get_dataset = m,
+        get_phs_dataset = m,
         expect_no_error(get_gp_data())
     )
     expect_args(m, 1, "gp-practice-populations", max_resources = 10)
@@ -13,7 +13,7 @@ test_that("get_gp_data works", {
 test_that("get_gp_meta works", {
     m <- mock()
     with_mocked_bindings(
-        get_dataset = m,
+        get_phs_dataset = m,
         expect_no_error(get_gp_meta())
     )
     expect_args(m, 1, "gp-practice-contact-details-and-list-sizes", 
@@ -23,7 +23,7 @@ test_that("get_gp_meta works", {
 test_that("get_hosp_data works", {
     m <- mock()
     with_mocked_bindings(
-        get_dataset = m,
+        get_phs_dataset = m,
         expect_no_error(get_hosp_data())
     )
     expect_args(m, 1, "annual-hospital-beds-information")
@@ -32,7 +32,7 @@ test_that("get_hosp_data works", {
 test_that("get_hosp_data works", {
     m <- mock()
     with_mocked_bindings(
-        get_dataset = m,
+        get_phs_dataset = m,
         expect_no_error(get_hosp_meta())
     )
     expect_args(m, 1, "hospital-codes", max_resources = 1)

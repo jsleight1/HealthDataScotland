@@ -9,9 +9,10 @@ NULL
 #' @importFrom rlang arg_match
 #' @importFrom shinyWidgets addSpinner pickerInput show_alert
 #' @importFrom tidyr pivot_longer unite
-#' @importFrom phsopendata get_dataset
 #' @importFrom reactable reactable reactableOutput renderReactable
 #' @importFrom rdrop2 drop_auth drop_download
+#' @importFrom httr2 request req_retry req_perform resp_body_json resp_body_string
+#' @importFrom glue glue
 NULL
 
 utils::globalVariables(".")

@@ -1,5 +1,33 @@
+get_phs_dataset <- function(x, ...) {
+    ids <- get_phs_ids(x, ...)
+    dump_url <- "https://www.opendata.nhs.scot/datastore/dump"
+    urls <- map(ids, ~glue("{dump_url}/{.x}"))
+    map(urls, ~{
+            request(.x) |>
+                req_retry(max_tries = 5) |>
+                req_perform() |>
+                resp_body_string() |>
+                readr::read_csv() |>
+                dplyr::select(-"_id") |>
+                suppressMessages()
+        }) |>
+        set_names(ids) |>
+        bind_rows(.id = "datasetID")
+}
+
+get_phs_ids <- function(x, max_resources = 1, ...) {
+    url <- glue("https://www.opendata.nhs.scot/api/3/action/package_show?id={x}")
+    content <- request(url) |>
+        req_retry(max_tries = 5) |>
+        req_perform() |>
+        resp_body_json()
+
+    ids <- map_chr(content$result$resources, ~.x[["id"]])
+    ids[seq(max_resources)]
+}
+
 get_gp_data <- function(max_resources = 10, ...) {
-    get_dataset(
+    get_phs_dataset(
         "gp-practice-populations", 
         max_resources = max_resources,
         ...
@@ -7,7 +35,7 @@ get_gp_data <- function(max_resources = 10, ...) {
 }
 
 get_gp_meta <- function(...) {
-    get_dataset(
+    get_phs_dataset(
         "gp-practice-contact-details-and-list-sizes", 
         max_resources = 1,
         ...
@@ -15,11 +43,11 @@ get_gp_meta <- function(...) {
 }
 
 get_hosp_data <- function(...) {
-    get_dataset("annual-hospital-beds-information", ...)
+    get_phs_dataset("annual-hospital-beds-information", ...)
 }
 
 get_hosp_meta <- function(...) {
-    get_dataset("hospital-codes", max_resources = 1, ...)
+    get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
 get_sf <- function(type = c("gp", "hospital", "board")) {
