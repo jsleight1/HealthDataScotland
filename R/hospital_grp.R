@@ -25,7 +25,7 @@ hospital_grp <- R6Class("hospital_grp",
                     geom_bar(stat = "identity") + 
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90)) +
-                    facet_wrap(~ID, ncol = 3)
+                    facet_wrap(~ID)
             ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName", 
                 "AllStaffedBeds", "ID"))
         },

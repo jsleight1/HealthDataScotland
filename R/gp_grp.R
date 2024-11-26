@@ -27,7 +27,7 @@ gp_grp <- R6Class("gp_grp",
                     limits = max(dat$Population) * c(-1,1)
                 ) + 
                 coord_flip() + 
-                facet_wrap(~Practice, ncol = 3) +
+                facet_wrap(~Practice) +
                 theme_bw() +
                 ylab(NULL) + 
                 xlab(NULL)
