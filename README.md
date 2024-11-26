@@ -42,9 +42,7 @@ health_data_scotland()
 ## Data and references.
 
 GP and Hospital is downloaded from the [Scottish Health and Social Care
-Open Data platform](https://www.opendata.nhs.scot/) using the
-[phsopendata](https://github.com/Public-Health-Scotland/phsopendata/) R
-package. Spatial data for the generation of interactive maps are
+Open Data platform](https://www.opendata.nhs.scot/). Spatial data for the generation of interactive maps are
 obtained from the [Spatial Hub Scotland](https://data.spatialhub.scot/)
 and from data.gov.uk. For further information please refer to these
 databases.
