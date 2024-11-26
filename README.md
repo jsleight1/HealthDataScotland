@@ -10,11 +10,11 @@ coverage](https://codecov.io/gh/jsleight1/HealthDataScotland/branch/1-developmen
 
 <!-- badges: end -->
 
-This repo contains an R package to created the [HealthDataScotland](https://jack-sleight.shinyapps.io/healthdatascotland/) shiny application.
-The shiny application generates interactive maps of the locations
-of GP practices and hospital across Scotland and presents associated demographic and bed capacity data.
-Indiviual GP practices and hospitals can be clicked to interogate the data was single centre.
-Conversely comparisons can be made across centres by using the map draw function to selected multiple health centres. The processed data is also presented in a table format. This can be downloaded in full or can be filtered to download a subset of the data set.
+This repo contains an R package to create the [HealthDataScotland](https://jack-sleight.shinyapps.io/healthdatascotland/) shiny application.
+The shiny application generates interactive maps showing the locations 
+of GP practices and hospitals across Scotland and presents associated demographic and bed capacity data. 
+These maps can be used to select individual GP practices and hospitals to interogate the data for a single centre.
+Conversely comparisons can be made across centres by using the map draw function to selected multiple health centres. The processed data is also presented in a table format, which can be filtered and downloaded.
 
 ## Installation
 
