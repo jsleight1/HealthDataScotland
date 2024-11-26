@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # HealthDataScotland
@@ -8,24 +7,21 @@
 [![R-CMD-check](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/jsleight1/HealthDataScotland/branch/1-development/graph/badge.svg)](https://app.codecov.io/gh/jsleight1/HealthDataScotland/?branch=1-development)
+
 <!-- badges: end -->
 
-HealthDataScotland contains a shiny application for the presentation of
-general practice (GP) demographic and hospital bed capacity data. The
-shiny application presents interactive maps of the locations of GP
-practices and hospital across Scotland. Indiviual GP practices and
-hospitals can be clicked to interogate the data was single centre.
-Conversely comparisons can be made across centres by using the map draw
-function to selected multiple health centres. The processed data is also
-presented in a table format. This can be downloaded in full or can be
-filtered to download a subset of the data set.
+This repo contains an R package to created the [HealthDataScotland](https://jack-sleight.shinyapps.io/healthdatascotland/) shiny application.
+The shiny application generates interactive maps of the locations
+of GP practices and hospital across Scotland and presents associated demographic and bed capacity data.
+Indiviual GP practices and hospitals can be clicked to interogate the data was single centre.
+Conversely comparisons can be made across centres by using the map draw function to selected multiple health centres. The processed data is also presented in a table format. This can be downloaded in full or can be filtered to download a subset of the data set.
 
 ## Installation
 
 You can install the development version of HealthDataScotland from
 [GitHub](https://github.com/) with:
 
-``` r
+```r
 # install.packages("pak")
 pak::pak("jsleight1/HealthDataScotland")
 ```
@@ -38,7 +34,7 @@ reproducible environment for development.
 
 The shiny application can be launched locally using:
 
-``` r
+```r
 library(HealthDataScotland)
 health_data_scotland()
 ```
