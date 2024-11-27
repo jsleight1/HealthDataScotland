@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/jsleight1/HealthDataScotland/actions/workflows/check-standard.yaml)
-[![Codecov test coverage](https://codecov.io/gh/jsleight1/HealthDataScotland/branch/1-development/graph/badge.svg)](https://app.codecov.io/gh/jsleight1/HealthDataScotland/?branch=1-development)
+[![Codecov test coverage](https://codecov.io/gh/jsleight1/HealthDataScotland/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jsleight1/HealthDataScotland/?branch=main)
 <!-- badges: end -->
 
 
@@ -31,10 +31,11 @@ You can install the development version of HealthDataScotland from [GitHub](http
 
 ```{r, eval = FALSE}
 # install.packages("pak")
-pak::pak("jsleight1/HealthDataScotland")
+devtools::install_github("jsleight1/HealthDataScotland")
 ```
 
-You can also install HealthDataScotland using [renv](https://rstudio.github.io/renv/articles/renv.html) to create a reproducible environment for development.
+HealthDataScotland also contains a `renv.lock` file which can be used to create 
+a reproducible environment using [renv](https://rstudio.github.io/renv/articles/renv.html).
 
 ## Example
 
@@ -48,7 +49,7 @@ health_data_scotland()
 ## Data and references.
 
 GP and Hospital is downloaded from the [Scottish Health and Social Care
-Open Data platform](https://www.opendata.nhs.scot/). Spatial data for the generation of interactive maps are
+Open Data platform](https://www.opendata.nhs.scot/). Spatial data for interactive maps are
 obtained from the [Spatial Hub Scotland](https://data.spatialhub.scot/)
 and from data.gov.uk. For further information please refer to these
 databases.
