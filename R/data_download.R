@@ -60,8 +60,8 @@ get_sf <- function(type = c("gp", "hospital", "board")) {
 
 process_data <- function(type, meta_func, data_func, sf_func) {
     sf <- get_sf(type)
-    meta <- meta_func()
-    data <- data_func()
+    meta <- rename(meta_func(), "PHS metadata ID" = "datasetID")
+    data <- rename(data_func(), "PHS data ID" = "datasetID")
     master_ids <- list(sf[["ID"]], meta[["ID"]], data[["ID"]]) |> 
         reduce(intersect)
     sf <- sf_func(sf, master_ids, meta)
@@ -149,50 +149,6 @@ create_hospital_grp <- function(x, sf) {
     x |>
         map(hospital[["new"]]) |>
         hospital_grp[["new"]](.sf = sf, .id = "hospital")
-}
-
-drop_auth_RT <- function (
-        key = "mmhfsybffdom42w", 
-        secret = "l8zeqqqgm1ne5z0", 
-        cache = TRUE
-    ) {
-    .dstate <- new.env(parent = emptyenv())
-    if (file.exists(".httr-oauth")) {
-      message("Removing old credentials...")
-      file.remove(".httr-oauth")
-    }
-    # Based on stackoverflow post to extend dropbox authentication time
-    # Added "?token_access_type=offline" to the "authorize" parameter so that 
-    # it can return an access token as well as a refresh token
-    dropbox <- httr::oauth_endpoint(
-        authorize = "https://www.dropbox.com/oauth2/authorize?token_access_type=offline",
-        access = "https://api.dropbox.com/oauth2/token"
-    )
-    dropbox_app <- httr::oauth_app("dropbox", key, secret)
-    dropbox_token <- httr::oauth2.0_token(
-        dropbox, 
-        dropbox_app, 
-        cache = cache
-    )
-    if (!inherits(dropbox_token, "Token2.0")) {
-      stop("something went wrong, try again")
-    }
-    .dstate$token <- dropbox_token
-}
-
-download_dropbox_data <- function() {
-    token <- drop_auth_RT()
-    saveRDS(token, file.path(tempdir(), "token.RDS"))
-
-    drop_download(
-        path = "processed_health_data.RDS", 
-        local_path = file.path(tempdir(), "downloaded_health_data.RDS"),
-        dtoken = readRDS(file.path(tempdir(), "token.RDS")), 
-        overwrite = TRUE
-    )
-    file.remove(file.path(tempdir(), "token.RDS"))
-
-    readRDS(file.path(tempdir(), "downloaded_health_data.RDS"))
 }
 
 save_processed_data <- function(out = "processed_health_data.RDS") {

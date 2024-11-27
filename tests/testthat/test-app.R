@@ -14,37 +14,31 @@ object_app <- function(x) {
 
 with_mocked_bindings(
     get_gp_meta = function() HealthDataScotland::example_gp_metadata,
-    gp_meta <- process_gp_meta()
-)
-with_mocked_bindings(
     get_gp_data = function() HealthDataScotland::example_gp_data,
-    gp_data <- process_gp_data()
-)
-
-with_mocked_bindings(
     get_hospital_meta = function() HealthDataScotland::example_hospital_metadata,
-    hospital_meta <- process_hospital_meta()
-)
-with_mocked_bindings(
     get_hospital_data = function() HealthDataScotland::example_hospital_data,
-    hospital_data <- process_hospital_data()
-)
-
-data_objects <- create_data_objects(
-    list(
-        "General practice" = process_data(
-            "gp", 
-            function() gp_meta, 
-            function() gp_data,
-            process_gp_sf
-        ),
-        "Hospital" = process_data(
-            "hospital", 
-            function() hospital_meta, 
-            function() hospital_data,
-            process_hospital_sf
+    {
+        gp_meta <- process_gp_meta()
+        gp_data <- process_gp_data()
+        hospital_meta <- process_hospital_meta()
+        hospital_data <- process_hospital_data()
+        data_objects <- create_data_objects(
+            list(
+                "General practice" = process_data(
+                    "gp", 
+                    function() gp_meta, 
+                    function() gp_data,
+                    process_gp_sf
+                ),
+                "Hospital" = process_data(
+                    "hospital", 
+                    function() hospital_meta, 
+                    function() hospital_data,
+                    process_hospital_sf
+                )
+            )
         )
-    )
+    }
 )
 
 with_mocked_bindings(

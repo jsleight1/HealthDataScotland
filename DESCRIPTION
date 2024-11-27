@@ -25,7 +25,6 @@ Imports:
     reactable,
     readr,
     rlang,
-    rdrop2,
     shiny, 
     shinydashboard,
     shinyWidgets,
