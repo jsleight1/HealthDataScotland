@@ -73,6 +73,7 @@ health_data_scotland <- function(...) {
     )
 
     server <- function(input, output) {
+        requireNamespace("sf", quietly = TRUE)
         selected_data <- map_server("map", data, get_sf("board"))
         map_comparison_server("map_comparison", selected_data)
         download_server("downloads", data)
