@@ -1,0 +1,11 @@
+^renv$
+^renv\.lock$
+^data-raw$
+^LICENSE.md$
+^\.github$
+^\.httr-oauth$
+^processed_health_data\.RDS$
+^README.Rmd$
+^app.R$
+rsconnect/
+_disable_autoload.R
