@@ -89,6 +89,18 @@ hospital_grp <- R6Class("hospital_grp",
                 title = "Hospital",
                 box(
                     title = "All specialties",
+                    pickerInput(
+                        inputId = ns("all_specialty_select_hospital"),
+                        label = "Select hospitals", 
+                        choices = self[["titles"]](),
+                        selected = self[["titles"]](),
+                        inline = TRUE,
+                        multiple = TRUE, 
+                        options = list(
+                            `actions-box` = TRUE, 
+                            `selected-text-format` = "count > 1"
+                        )
+                    ),
                     spinner(plotlyOutput(outputId = ns("all_specialty"))),
                     width = 12
                 ),
@@ -129,7 +141,10 @@ hospital_grp <- R6Class("hospital_grp",
                 function(input, output, session) {
                     ns <- session[["ns"]]
                     output[["all_specialty"]] <- renderPlotly(
-                        self[["plot"]](type = "specialty_bar")
+                        self[["plot"]](
+                            type = "specialty_bar",
+                            hospitals = req(input[["all_specialty_select_hospital"]])
+                        )
                     )
                     output[["selected_specialties"]] <- renderPlotly({
                         self[["plot"]](

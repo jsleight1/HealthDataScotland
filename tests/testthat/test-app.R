@@ -1,5 +1,17 @@
 library(shinytest2)
 
+object_app <- function(x) {
+    ui <- fluidPage(uiOutput("ui"))
+    server <- function(input, output, session) {
+        ns <- session[["ns"]]
+        output[["ui"]] <- renderUI(
+            x[["ui"]](ns)
+        )
+        x[["server"]]()
+    }
+    shinyApp(ui, server)
+}
+
 with_mocked_bindings(
     get_gp_meta = function() HealthDataScotland::example_gp_metadata,
     gp_meta <- process_gp_meta()
@@ -10,12 +22,12 @@ with_mocked_bindings(
 )
 
 with_mocked_bindings(
-    get_hosp_meta = function() HealthDataScotland::example_hospital_metadata,
-    hosp_meta <- process_hospital_meta()
+    get_hospital_meta = function() HealthDataScotland::example_hospital_metadata,
+    hospital_meta <- process_hospital_meta()
 )
 with_mocked_bindings(
-    get_hosp_data = function() HealthDataScotland::example_hospital_data,
-    hosp_data <- process_hospital_data()
+    get_hospital_data = function() HealthDataScotland::example_hospital_data,
+    hospital_data <- process_hospital_data()
 )
 
 data_objects <- create_data_objects(
@@ -28,8 +40,8 @@ data_objects <- create_data_objects(
         ),
         "Hospital" = process_data(
             "hospital", 
-            function() hosp_meta, 
-            function() hosp_data,
+            function() hospital_meta, 
+            function() hospital_data,
             process_hospital_sf
         )
     )
@@ -84,3 +96,44 @@ test_that("references page works", {
     app$expect_values()
     app$stop()
 })
+
+test_that("gp_grp ui/server works", {
+    skip_on_cran()
+    gp_grp_unit <- data_objects[["General practice"]][["subset"]](
+        c("10002", "10017", "10036")
+    )
+
+    app <- object_app(gp_grp_unit)
+    app <- AppDriver$new(app, name = "gp_grp_object", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
+    
+    app$expect_values()
+    app$stop()
+})
+
+test_that("hospital ui/server works", {
+    skip_on_cran()
+    hospital_unit <- data_objects[["Hospital"]][["data"]]()[[1]]
+
+    app <- object_app(hospital_unit)
+    app <- AppDriver$new(app, name = "hopsital_object", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
+    
+    app$expect_values()
+    app$stop()
+})
+
+test_that("hospital_grp ui/server works", {
+    skip_on_cran()
+    hospital_grp_unit <- data_objects[["Hospital"]][["subset"]](
+        c("A101H", "A103H", "A110H")
+    )
+
+    app <- object_app(hospital_grp_unit)
+    app <- AppDriver$new(app, name = "hospital_grp_object", width = 800, 
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
+    
+    app$expect_values()
+    app$stop()
+})
+

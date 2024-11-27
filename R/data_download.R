@@ -15,15 +15,14 @@ get_phs_dataset <- function(x, ...) {
         bind_rows(.id = "datasetID")
 }
 
-get_phs_ids <- function(x, max_resources = 1, ...) {
+get_phs_ids <- function(x, max_resources = NULL, ...) {
     url <- glue("https://www.opendata.nhs.scot/api/3/action/package_show?id={x}")
     content <- request(url) |>
         req_retry(max_tries = 5) |>
         req_perform() |>
         resp_body_json()
-
-    ids <- map_chr(content$result$resources, ~.x[["id"]])
-    ids[seq(max_resources)]
+    ids <- map_chr(content[["result"]][["resources"]], ~.x[["id"]])
+    ids[seq(min(length(ids), max_resources))]
 }
 
 get_gp_data <- function(max_resources = 10, ...) {
@@ -42,11 +41,11 @@ get_gp_meta <- function(...) {
     )
 }
 
-get_hosp_data <- function(...) {
+get_hospital_data <- function(...) {
     get_phs_dataset("annual-hospital-beds-information", ...)
 }
 
-get_hosp_meta <- function(...) {
+get_hospital_meta <- function(...) {
     get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
@@ -64,7 +63,7 @@ process_data <- function(type, meta_func, data_func, sf_func) {
     meta <- meta_func()
     data <- data_func()
     master_ids <- list(sf[["ID"]], meta[["ID"]], data[["ID"]]) |> 
-        intersect_ids()
+        reduce(intersect)
     sf <- sf_func(sf, master_ids, meta)
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)
@@ -99,12 +98,8 @@ process_gp_sf <- function(x, ids, meta, ...) {
         rename("hbcode" = "HB")
 }
 
-intersect_ids <- function(...) {
-    reduce(..., intersect)
-}
-
 process_hospital_meta <- function() {
-    get_hosp_meta() |> 
+    get_hospital_meta() |> 
         rename("ID" = "HospitalCode") |>
         inner_join(
             select(as_tibble(get_sf("board")), "ID", "HBName"),
@@ -113,8 +108,8 @@ process_hospital_meta <- function() {
 }
 
 process_hospital_data <- function() {
-    get_hosp_data() |>
-        filter(!is.na(.data[["FinancialYear"]])) |>
+    get_hospital_data() |>
+        filter(.data[["datasetID"]] == "d719af13-5fb3-430f-810e-ab3360961107") |>
         rename("ID" = "Location") |>
         select_if(~ !all(is.na(.))) |>
         select(-contains("Address"))

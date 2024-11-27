@@ -3,50 +3,55 @@
 gp_grp <- R6Class("gp_grp", 
     inherit = health_unitgrp, 
     private = list(
-        population_pyramid_data = function(date) {
+        population_pyramid_data = function(date, practices = self[["titles"]]()) {
             self[["data"]]() |> 
                 map(~.x[["plot_data"]]("population_pyramid", date)) |> 
                 setNames(self[["titles"]]()) |> 
-                bind_rows(.id = "Practice")
-        },
-        population_pyramid = function(date, practices = self[["titles"]](), ...) {
-            dat <- self[["plot_data"]]("population_pyramid", date, ...) |>
+                bind_rows(.id = "Practice") |>
                 filter(.data[["Practice"]] %in% practices)
+        },
+        population_pyramid = function(date,  ...) {
+            dat <- self[["plot_data"]]("population_pyramid", date, ...)
             plot <- ggplot(dat, aes(Population = Population)) +
-                geom_bar(
-                    aes(
-                        x = Age, 
-                        fill = Gender, 
-                        y = ifelse(Gender == "Male", -Population,  Population), 
-                        Practice = Practice
-                    ), 
-                    stat = "identity"
-                ) +
-                scale_y_continuous(
-                    labels = abs, 
-                    limits = max(dat$Population) * c(-1,1)
-                ) + 
-                coord_flip() + 
-                facet_wrap(~Practice) +
-                theme_bw() +
-                ylab(NULL) + 
-                xlab(NULL)
+                    geom_bar(
+                        aes(
+                            x = Age, 
+                            fill = Gender, 
+                            y = ifelse(Gender == "Male", -Population,  Population), 
+                            Practice = Practice
+                        ), 
+                        stat = "identity"
+                    ) +
+                    scale_y_continuous(
+                        labels = abs, 
+                        limits = max(dat$Population) * c(-1,1)
+                    ) + 
+                    coord_flip() + 
+                    facet_wrap(~Practice) +
+                    theme_bw() +
+                    ylab(NULL) + 
+                    xlab(NULL)
             ggplotly(plot, tooltip = c("Gender", "Age", "Population", "ID"))
 
         },
-        population_trend_data = function(gender = "All") {
+        population_trend_data = function(
+                gender = "All",
+                practices = self[["titles"]](), 
+                ...
+            ) {
             self[["data"]]() |> 
                 map(~.x[["plot_data"]]("population_trend", gender)) |> 
                 setNames(self[["titles"]]()) |> 
-                bind_rows(.id = "ID")
+                bind_rows(.id = "Practice") |>
+                filter(.data[["Practice"]] %in% practices)
         },
-        population_trend = function(gender = "All", ...) {
-            plot <- self[["plot_data"]]("population_trend", gender, ...) |>
-                ggplot(aes(x = Date, y = Population, group = Gender, colour = ID)) + 
+        population_trend = function( ...) {
+            plot <- self[["plot_data"]]("population_trend", ...) |>
+                ggplot(aes(x = Date, y = Population, group = Gender, colour = Practice)) + 
                     geom_line() + 
                     theme_bw() + 
                     theme(axis.text.x = element_text(angle = 90))
-            ggplotly(plot, tooltip = c("Date", "Gender", "Population", "ID"))
+            ggplotly(plot, tooltip = c("Date", "Gender", "Population", "Practice"))
         },
         date_choices = function() {
             self[["data"]]() |> 
@@ -127,6 +132,18 @@ gp_grp <- R6Class("gp_grp",
                         choices = private[["gender_choices"]](),
                         selected = "All"
                     ),
+                    pickerInput(
+                        inputId = ns("pop_trend_select_practice"),
+                        label = "Select GP practices", 
+                        choices = self[["titles"]](),
+                        selected = self[["titles"]](),
+                        inline = TRUE,
+                        multiple = TRUE, 
+                        options = list(
+                            `actions-box` = TRUE, 
+                            `selected-text-format` = "count > 1"
+                        )
+                    ),
                     spinner(plotlyOutput(outputId = ns("pop_trend"))),
                     width = 12
                 ),
@@ -166,7 +183,8 @@ gp_grp <- R6Class("gp_grp",
                     output[["pop_trend"]] <- renderPlotly(
                         self[["plot"]](
                             type = "population_trend", 
-                            gender = req(input[["pop_trend_select"]])
+                            gender = req(input[["pop_trend_select"]]),
+                            practices = req(input[["pop_trend_select_practice"]])
                         )
                     )
                     output[["pop_pyramid"]] <- renderPlotly(

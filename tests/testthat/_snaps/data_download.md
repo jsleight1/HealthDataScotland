@@ -1,12 +1,19 @@
 # process_gp_meta works
 
-         ID                                 GPPracticeName PracticeListSize
-    1 10002                        Muirhead Medical Centre             8251
-    2 10017                              The Blue Practice             7272
-    3 10036 Aberfeldy And Kinloch Rannoch Medical Practice             4843
-    4 10106                            Grove Health Centre             6429
-    5 10125                            Alyth Health Centre             4590
-    6 10182                    Arbroath Medical Centre LLP             9901
+                                 datasetID    ID
+    1 b3b126d3-3b0c-4856-b348-0b37f8286367 10002
+    2 b3b126d3-3b0c-4856-b348-0b37f8286367 10017
+    3 b3b126d3-3b0c-4856-b348-0b37f8286367 10036
+    4 b3b126d3-3b0c-4856-b348-0b37f8286367 10106
+    5 b3b126d3-3b0c-4856-b348-0b37f8286367 10125
+    6 b3b126d3-3b0c-4856-b348-0b37f8286367 10182
+                                      GPPracticeName PracticeListSize
+    1                        Muirhead Medical Centre             8251
+    2                              The Blue Practice             7272
+    3 Aberfeldy And Kinloch Rannoch Medical Practice             4843
+    4                            Grove Health Centre             6429
+    5                            Alyth Health Centre             4590
+    6                    Arbroath Medical Centre LLP             9901
                                         AddressLine1          AddressLine2
     1                        Muirhead Medical Centre             Liff Road
     2                              The Blue Practice Crieff Medical Centre
@@ -31,80 +38,94 @@
 
 # process_gp_data works
 
-            Date    ID    Sex AllAges Ages0to4 Ages5to14 Ages15to24 Ages25to44
-    1 2024-04-01 10002   Male    4056      186       456        415        945
-    2 2024-04-01 10002 Female    4195      176       397        425        961
-    3 2024-04-01 10002    All    8251      362       853        840       1906
-    4 2024-04-01 10017   Male    3652      134       393        512        780
-    5 2024-04-01 10017 Female    3620      115       351        457        777
-    6 2024-04-01 10017    All    7272      249       744        969       1557
-      Ages45to64 Ages65to74 Ages75to84 Ages85plus
-    1       1160        494        312         88
-    2       1256        535        344        101
-    3       2416       1029        656        189
-    4        991        422        315        105
-    5        959        456        334        171
-    6       1950        878        649        276
+                                 datasetID       Date    ID    Sex AllAges Ages0to4
+    1 3306ab5a-cd22-494a-be76-ee6753cef92d 2024-04-01 10002   Male    4056      186
+    2 3306ab5a-cd22-494a-be76-ee6753cef92d 2024-04-01 10002 Female    4195      176
+    3 3306ab5a-cd22-494a-be76-ee6753cef92d 2024-04-01 10002    All    8251      362
+    4 3306ab5a-cd22-494a-be76-ee6753cef92d 2024-04-01 10017   Male    3652      134
+    5 3306ab5a-cd22-494a-be76-ee6753cef92d 2024-04-01 10017 Female    3620      115
+    6 3306ab5a-cd22-494a-be76-ee6753cef92d 2024-04-01 10017    All    7272      249
+      Ages5to14 Ages15to24 Ages25to44 Ages45to64 Ages65to74 Ages75to84 Ages85plus
+    1       456        415        945       1160        494        312         88
+    2       397        425        961       1256        535        344        101
+    3       853        840       1906       2416       1029        656        189
+    4       393        512        780        991        422        315        105
+    5       351        457        777        959        456        334        171
+    6       744        969       1557       1950        878        649        276
 
 # process_hopsital_meta works
 
-         ID                                              HospitalName
-    1 A101H                               Arran War Memorial Hospital
-    2 A103H                                 Ayrshire Central Hospital
-    3 A110H                                    Lady Margaret Hospital
-    4 A111H                            University Hospital Crosshouse
-    5 A114H Warrix Avenue Mental Health Community Rehabilitation Unit
-    6 A201H                                            Ailsa Hospital
-            AddressLine1  AddressLine2 AddressLine2QF    AddressLine3
-    1            Lamlash Isle of Arran           <NA>            <NA>
-    2    Kilwinning Road        Irvine           <NA>            <NA>
-    3         College St      Millport           <NA> Isle of Cumbrae
-    4    Kilmarnock Road    Kilmarnock           <NA>        Ayrshire
-    5      Warrix Avenue        Irvine           <NA>            <NA>
-    6 Dalmellington Road           Ayr           <NA>            <NA>
-      AddressLine3QF AddressLine4 AddressLine4QF Postcode HealthBoard      HSCP
-    1              z         <NA>              z  KA278LF   S08000015 S37000020
-    2              z         <NA>              z  KA128SS   S08000015 S37000020
-    3           <NA>         <NA>              z  KA280HF   S08000015 S37000020
-    4           <NA>         <NA>              z  KA2 0BE   S08000015 S37000008
-    5              z         <NA>              z  KA120DP   S08000015 S37000020
-    6              z         <NA>              z  KA6 6AB   S08000015 S37000027
-      CouncilArea IntermediateZone  DataZone             HBName
-    1   S12000021        S02002097 S01011176 Ayrshire and Arran
-    2   S12000021        S02002105 S01011213 Ayrshire and Arran
-    3   S12000021        S02002128 S01011328 Ayrshire and Arran
-    4   S12000008        S02001504 S01008027 Ayrshire and Arran
-    5   S12000021        S02002109 S01011229 Ayrshire and Arran
-    6   S12000028        S02002333 S01012444 Ayrshire and Arran
+                                 datasetID    ID
+    1 c698f450-eeed-41a0-88f7-c1e40a568acc A101H
+    2 c698f450-eeed-41a0-88f7-c1e40a568acc A103H
+    3 c698f450-eeed-41a0-88f7-c1e40a568acc A110H
+    4 c698f450-eeed-41a0-88f7-c1e40a568acc A111H
+    5 c698f450-eeed-41a0-88f7-c1e40a568acc A114H
+    6 c698f450-eeed-41a0-88f7-c1e40a568acc A201H
+                                                   HospitalName       AddressLine1
+    1                               Arran War Memorial Hospital            Lamlash
+    2                                 Ayrshire Central Hospital    Kilwinning Road
+    3                                    Lady Margaret Hospital         College St
+    4                            University Hospital Crosshouse    Kilmarnock Road
+    5 Warrix Avenue Mental Health Community Rehabilitation Unit      Warrix Avenue
+    6                                            Ailsa Hospital Dalmellington Road
+       AddressLine2 AddressLine2QF    AddressLine3 AddressLine3QF AddressLine4
+    1 Isle of Arran           <NA>            <NA>              z         <NA>
+    2        Irvine           <NA>            <NA>              z         <NA>
+    3      Millport           <NA> Isle of Cumbrae           <NA>         <NA>
+    4    Kilmarnock           <NA>        Ayrshire           <NA>         <NA>
+    5        Irvine           <NA>            <NA>              z         <NA>
+    6           Ayr           <NA>            <NA>              z         <NA>
+      AddressLine4QF Postcode HealthBoard      HSCP CouncilArea IntermediateZone
+    1              z  KA278LF   S08000015 S37000020   S12000021        S02002097
+    2              z  KA128SS   S08000015 S37000020   S12000021        S02002105
+    3              z  KA280HF   S08000015 S37000020   S12000021        S02002128
+    4              z  KA2 0BE   S08000015 S37000008   S12000008        S02001504
+    5              z  KA120DP   S08000015 S37000020   S12000021        S02002109
+    6              z  KA6 6AB   S08000015 S37000027   S12000028        S02002333
+       DataZone             HBName
+    1 S01011176 Ayrshire and Arran
+    2 S01011213 Ayrshire and Arran
+    3 S01011328 Ayrshire and Arran
+    4 S01008027 Ayrshire and Arran
+    5 S01011229 Ayrshire and Arran
+    6 S01012444 Ayrshire and Arran
 
 # process_hopsital_data works
 
-      FinancialYear FinancialYearQF        HB HBQF    ID LocationQF Specialty
-    1       2022/23            <NA> S08000015 <NA> A101H       <NA>        A1
-    2       2022/23            <NA> S08000015 <NA> A101H       <NA>        A2
-    3       2022/23            <NA> S08000015 <NA> A101H       <NA>        AB
-    4       2022/23            <NA> S08000015 <NA> A101H       <NA>        C1
-    5       2022/23            <NA> S08000015 <NA> A101H       <NA>        C8
-    6       2022/23            <NA> S08000015 <NA> A101H       <NA>       E12
-      SpecialtyQF                  SpecialtyName SpecialtyNameQF  SpecialtyGrouping
-    1        <NA>               General Medicine            <NA>   Medical Grouping
-    2        <NA>                     Cardiology            <NA>   Medical Grouping
-    3        <NA>             Geriatric Medicine            <NA>   Medical Grouping
-    4        <NA>                General Surgery            <NA>   Surgery Grouping
-    5        <NA> Trauma and Orthopaedic Surgery            <NA>   Surgery Grouping
-    6        <NA>       GP Other than Obstetrics            <NA> Community Grouping
-      SpecialtyGroupingQF AverageAvailableStaffedBeds PercentageOccupancy
-    1                <NA>                           0                  NA
-    2                <NA>                           0                  NA
-    3                <NA>                           0                  NA
-    4                <NA>                           0                  NA
-    5                <NA>                           0                  NA
-    6                <NA>                           9                77.4
-      PercentageOccupancyQF AllStaffedBeds AverageOccupiedBeds TotalOccupiedBeds
-    1                     z              0            0.000000                 0
-    2                     z              0            0.000000                 0
-    3                     z              0            0.000000                 0
-    4                     z              0            0.000000                 0
-    5                     z              0            0.000000                 0
-    6                  <NA>           3263            6.920548              2526
+                                 datasetID FinancialYear FinancialYearQF        HB
+    1 d719af13-5fb3-430f-810e-ab3360961107       2022/23            <NA> S08000015
+    2 d719af13-5fb3-430f-810e-ab3360961107       2022/23            <NA> S08000015
+    3 d719af13-5fb3-430f-810e-ab3360961107       2022/23            <NA> S08000015
+    4 d719af13-5fb3-430f-810e-ab3360961107       2022/23            <NA> S08000015
+    5 d719af13-5fb3-430f-810e-ab3360961107       2022/23            <NA> S08000015
+    6 d719af13-5fb3-430f-810e-ab3360961107       2022/23            <NA> S08000015
+      HBQF    ID LocationQF Specialty SpecialtyQF                  SpecialtyName
+    1 <NA> A101H       <NA>        A1        <NA>               General Medicine
+    2 <NA> A101H       <NA>        A2        <NA>                     Cardiology
+    3 <NA> A101H       <NA>        AB        <NA>             Geriatric Medicine
+    4 <NA> A101H       <NA>        C1        <NA>                General Surgery
+    5 <NA> A101H       <NA>        C8        <NA> Trauma and Orthopaedic Surgery
+    6 <NA> A101H       <NA>       E12        <NA>       GP Other than Obstetrics
+      SpecialtyNameQF  SpecialtyGrouping SpecialtyGroupingQF
+    1            <NA>   Medical Grouping                <NA>
+    2            <NA>   Medical Grouping                <NA>
+    3            <NA>   Medical Grouping                <NA>
+    4            <NA>   Surgery Grouping                <NA>
+    5            <NA>   Surgery Grouping                <NA>
+    6            <NA> Community Grouping                <NA>
+      AverageAvailableStaffedBeds PercentageOccupancy PercentageOccupancyQF
+    1                           0                  NA                     z
+    2                           0                  NA                     z
+    3                           0                  NA                     z
+    4                           0                  NA                     z
+    5                           0                  NA                     z
+    6                           9                77.4                  <NA>
+      AllStaffedBeds AverageOccupiedBeds TotalOccupiedBeds
+    1              0            0.000000                 0
+    2              0            0.000000                 0
+    3              0            0.000000                 0
+    4              0            0.000000                 0
+    5              0            0.000000                 0
+    6           3263            6.920548              2526
 

@@ -8,3 +8,4 @@
 ^README.Rmd$
 ^app.R$
 rsconnect/
+_disable_autoload.R

@@ -61,9 +61,10 @@ health_data_scotland <- function(...) {
                         h4("GitHub"),
                         p(tags$a(href = "https://github.com/jsleight1/HealthDataScotland", " - HealthDataScotland")),
                         h4("Notes"), 
-                        p("Please note that GP practices and hospitals that are included are only those that
+                        p("Please note that the GP practices and hospitals included are only those that
                         are present in all three of the metadata, demography/specialty data 
-                        and spatial data."),
+                        and spatial data. Therefore some data may be missing. Please refer to the 
+                        original data sets in these cases."),
                         width = 12
                     )
                 )

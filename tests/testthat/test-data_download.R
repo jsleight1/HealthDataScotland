@@ -20,20 +20,20 @@ test_that("get_gp_meta works", {
         max_resources = 1)
 })
 
-test_that("get_hosp_data works", {
+test_that("get_hospital_data works", {
     m <- mock()
     with_mocked_bindings(
         get_phs_dataset = m,
-        expect_no_error(get_hosp_data())
+        expect_no_error(get_hospital_data())
     )
     expect_args(m, 1, "annual-hospital-beds-information")
 })
 
-test_that("get_hosp_data works", {
+test_that("get_hospital_data works", {
     m <- mock()
     with_mocked_bindings(
         get_phs_dataset = m,
-        expect_no_error(get_hosp_meta())
+        expect_no_error(get_hospital_meta())
     )
     expect_args(m, 1, "hospital-codes", max_resources = 1)
 })
@@ -119,7 +119,7 @@ test_that("process_gp_sf works", {
 test_that("process_hopsital_meta works", {
     m <- mock(HealthDataScotland::example_hospital_metadata)
     with_mocked_bindings(
-        get_hosp_meta = m,
+        get_hospital_meta = m,
         out <- process_hospital_meta() |>
             expect_no_error()
     )
@@ -131,7 +131,7 @@ test_that("process_hopsital_meta works", {
 test_that("process_hopsital_data works", {
     m <- mock(HealthDataScotland::example_hospital_data)
     with_mocked_bindings(
-        get_hosp_data = m,
+        get_hospital_data = m,
         out <- process_hospital_data() |>
             expect_no_error()
     )
@@ -143,7 +143,7 @@ test_that("process_hopsital_data works", {
 test_that("process_hospital_sf works", {
     m <- mock(HealthDataScotland::example_hospital_metadata)
     with_mocked_bindings(
-        get_hosp_meta = m,
+        get_hospital_meta = m,
         meta <- process_hospital_meta()
     )
     out <- get_sf("hospital") |>
