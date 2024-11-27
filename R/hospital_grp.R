@@ -128,6 +128,7 @@ hospital_grp <- R6Class("hospital_grp",
                     spinner(plotlyOutput(outputId = ns("selected_specialties"))),
                     width = 12
                 ),
+                downloadButton(ns("download")),
                 width = 12, 
                 status = "primary",
                 solidHeader = TRUE
@@ -153,6 +154,12 @@ hospital_grp <- R6Class("hospital_grp",
                             hospitals = req(input[["specialty_select_hospital"]])
                         )
                     })
+                    output[["download"]] <- downloadHandler(
+                        filename = function() "hospital_data.csv",
+                        content = function(con) {
+                            write.csv(self[["get_download"]](), con)
+                        }
+                    )
                 }
             )
         }

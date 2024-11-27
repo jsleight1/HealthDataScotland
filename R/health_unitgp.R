@@ -96,9 +96,7 @@ health_unitgrp <- R6Class(
         #' Get downloadable data.frame of health unit group.
         get_download = function() {
             self[["data"]]() |>
-               map(~.x[["data"]]()) |>
-               setNames(self[["ids"]]()) |>
-               bind_rows(.id = "id")
+               map_dfr(~.x[["data"]]())
         },
         #' @description
         #' Create UI for health unit group object.

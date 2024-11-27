@@ -19,9 +19,23 @@ health_data_scotland <- function(...) {
             tabItems(
                 tabItem(
                     tabName = "map", 
-                    h4("This dashboard shows a summary of demographic information
-                    for GP practices and a summary of bed capacity for hospitals
-                    across Scotland."),
+                    box(
+                        title = "Introduction", 
+                        width = 14,
+                        status = "primary",
+                        solidHeader = TRUE,
+                        h4("Welcome to the HealthDataScotland shiny application."),
+                        h5("This dashboard shows a summary of demographic information
+                        for GP practices and a summary of bed capacity for hospitals
+                        across Scotland. The interactive map below can be used to 
+                        click on indivdual GP practice and hospital to view associated
+                        data for that particular health centre. The map draw functions 
+                        (top left pentagon and square icons) can be used to draw an area
+                        around particular health centres. Comparisons between the selected
+                        health centres can then be viewed in the comparisons tab.
+                        Data has been obtained from various sources (see References page)
+                        and is available for download (see Downloads page)"), 
+                    ),
                     fluidRow(
                         tabBox(
                             id = "map_tabs",
@@ -39,7 +53,7 @@ health_data_scotland <- function(...) {
                     p("Please note that this application was built as a hobby project.
                     Therefore informed decisions based on the presented data should 
                     only be made after consulating the relevant published data sets.
-                    These be accessed in the references section.",
+                    These can be accessed in the references section.",
                     style = "color:red; padding-top:10px;")
                 ), 
                 tabItem(

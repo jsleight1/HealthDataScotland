@@ -1,5 +1,5 @@
 Package: HealthDataScotland
-Title: Shiny application for visualisation of health statistics in Scotland.
+Title: Shiny application for visualisation of health statistics in Scotland
 Description: 
     This package downloads, processes and presents GP practices and hospital
     related statistics for health centres across Scotland.

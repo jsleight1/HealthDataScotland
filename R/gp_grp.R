@@ -169,6 +169,7 @@ gp_grp <- R6Class("gp_grp",
                     spinner(plotlyOutput(outputId = ns("pop_pyramid"))),
                     width = 12
                 ),
+                downloadButton(ns("download")),
                 width = 12, 
                 status = "primary",
                 solidHeader = TRUE,
@@ -193,6 +194,12 @@ gp_grp <- R6Class("gp_grp",
                             date = req(input[["pop_pyramid_select_date"]]),
                             practices = req(input[["pop_pyramid_select_practice"]])
                         )
+                    )
+                    output[["download"]] <- downloadHandler(
+                        filename = function() "gp_data.csv",
+                        content = function(con) {
+                            write.csv(self[["get_download"]](), con)
+                        }
                     )
                 }
             )

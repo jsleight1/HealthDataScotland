@@ -76,28 +76,29 @@ hospital <- R6Class("hospital",
                     status = "primary",
                     solidHeader = TRUE,
                     fluidRow(box(title = "Address", self[["address"]](), width = 12)),
-                    fluidRow(box(title = "Health board", self[["health_board"]](), width = 12))
-                ),
-                fluidRow(
-                    box(
-                        title = "All specialties",
-                        spinner(plotlyOutput(ns("all_specialty"))),
-                        width = 12
-                    ), 
-                ),
-                fluidRow(
-                    box(
-                        title = "Selected specialties",
-                        selectInput(
-                            ns("specialty_select"), 
-                            label = "Select specialty", 
-                            choices = private[["specialty_choices"]](),
-                            multiple = TRUE, 
-                            selected = private[["specialty_choices"]]()[1]
-                        ),
-                        spinner(plotlyOutput(ns("selected_specialties"))),
-                        width = 12
-                    )
+                    fluidRow(box(title = "Health board", self[["health_board"]](), width = 12)),
+                    fluidRow(
+                        box(
+                            title = "All specialties",
+                            spinner(plotlyOutput(ns("all_specialty"))),
+                            width = 12
+                        ), 
+                    ),
+                    fluidRow(
+                        box(
+                            title = "Selected specialties",
+                            selectInput(
+                                ns("specialty_select"), 
+                                label = "Select specialty", 
+                                choices = private[["specialty_choices"]](),
+                                multiple = TRUE, 
+                                selected = private[["specialty_choices"]]()[1]
+                            ),
+                            spinner(plotlyOutput(ns("selected_specialties"))),
+                            width = 12
+                        )
+                    ),
+                    downloadButton(ns("download"))
                 )
             )
         }, 
@@ -116,6 +117,12 @@ hospital <- R6Class("hospital",
                             type = "specialty_bar",
                             specialties = req(input[["specialty_select"]])
                         )
+                    )
+                    output[["download"]] <- downloadHandler(
+                        filename = function() "hospital_data.csv",
+                        content = function(con) {
+                            write.csv(self[["data"]](), con)
+                        }
                     )
                 }
             )
