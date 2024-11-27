@@ -1075,28 +1075,6 @@
       ],
       "Hash": "0e2829df8cb74a98179c886b023ffea8"
     },
-    "rdrop2": {
-      "Package": "rdrop2",
-      "Version": "0.8.2.2",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "karthik",
-      "RemoteRepo": "rdrop2",
-      "RemoteRef": "master",
-      "RemoteSha": "81bedd2f0fbd0ee55dd163230c1a0b26a80162cc",
-      "Requirements": [
-        "R",
-        "assertthat",
-        "digest",
-        "dplyr",
-        "httr",
-        "jsonlite",
-        "magrittr",
-        "purrr"
-      ],
-      "Hash": "1fdcffdad0933168b73d560a1d2503a4"
-    },
     "reactR": {
       "Package": "reactR",
       "Version": "0.6.1",
