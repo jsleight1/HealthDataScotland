@@ -20,7 +20,8 @@ health_data_scotland <- function(...) {
                 tabItem(
                     tabName = "map", 
                     h4("This dashboard shows a summary of demographic information
-                    for GP practices and hospital bed capacity per specialty across Scotland."),
+                    for GP practices and a summary of bed capacity for hospitals
+                    across Scotland."),
                     fluidRow(
                         tabBox(
                             id = "map_tabs",
