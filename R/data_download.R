@@ -156,8 +156,37 @@ create_hospital_grp <- function(x, sf) {
         hospital_grp[["new"]](.sf = sf, .id = "hospital")
 }
 
+drop_auth_RT <- function (
+        key = "mmhfsybffdom42w", 
+        secret = "l8zeqqqgm1ne5z0", 
+        cache = TRUE
+    ) {
+    .dstate <- new.env(parent = emptyenv())
+    if (file.exists(".httr-oauth")) {
+      message("Removing old credentials...")
+      file.remove(".httr-oauth")
+    }
+    # Based on stackoverflow post to extend dropbox authentication time
+    # Added "?token_access_type=offline" to the "authorize" parameter so that 
+    # it can return an access token as well as a refresh token
+    dropbox <- httr::oauth_endpoint(
+        authorize = "https://www.dropbox.com/oauth2/authorize?token_access_type=offline",
+        access = "https://api.dropbox.com/oauth2/token"
+    )
+    dropbox_app <- httr::oauth_app("dropbox", key, secret)
+    dropbox_token <- httr::oauth2.0_token(
+        dropbox, 
+        dropbox_app, 
+        cache = cache
+    )
+    if (!inherits(dropbox_token, "Token2.0")) {
+      stop("something went wrong, try again")
+    }
+    .dstate$token <- dropbox_token
+}
+
 download_dropbox_data <- function() {
-    token <- drop_auth()
+    token <- drop_auth_RT()
     saveRDS(token, file.path(tempdir(), "token.RDS"))
 
     drop_download(
@@ -171,11 +200,13 @@ download_dropbox_data <- function() {
     readRDS(file.path(tempdir(), "downloaded_health_data.RDS"))
 }
 
-# tribble(
-#         ~type,        ~meta_func,            ~data_func,              ~sf_func,
-#         "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
-#         "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
-#     ) |>
-#     purrr::pmap(process_data) |>
-#     setNames(c("General practice", "Hospital")) |>
-#     saveRDS("processed_health_data.RDS")
+save_processed_data <- function(out = "processed_health_data.RDS") {
+    tribble(
+        ~type,        ~meta_func,            ~data_func,              ~sf_func,
+        "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
+        "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
+    ) |>
+    purrr::pmap(process_data) |>
+    set_names(c("General practice", "Hospital")) |>
+    saveRDS(out)
+}
