@@ -195,8 +195,8 @@ map_comparison_server <- function(id, data) {
                         show_alert(
                             title = "Warning",
                             text = "
-                                Be aware that selecting > 10 datasets can cause
-                                issues with data presentation.
+                                Please be aware that selecting > 10 datasets can cause
+                                issues with data performance and presentation.
                             ",
                             type = "warning"
                         )

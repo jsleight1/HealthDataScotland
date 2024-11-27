@@ -20,7 +20,7 @@ health_data_scotland <- function(...) {
                 tabItem(
                     tabName = "map", 
                     h4("This dashboard shows a summary of demographic information
-                       for GP practices and hospital bed capacity per specialty across Scotland."),
+                    for GP practices and hospital bed capacity per specialty across Scotland."),
                     fluidRow(
                         tabBox(
                             id = "map_tabs",
@@ -35,9 +35,11 @@ health_data_scotland <- function(...) {
                             map_comparison_UI(id = "map_comparison")
                         )
                     ),
-                    p("Please note that this application was built as a hobby project,
-                      therefore should be verified using the referenced published datasets",
-                      style = "color:red; padding-top:10px;")
+                    p("Please note that this application was built as a hobby project.
+                    Therefore informed decisions based on the presented data should 
+                    only be made after consulating the relevant published data sets.
+                    These be accessed in the references section.",
+                    style = "color:red; padding-top:10px;")
                 ), 
                 tabItem(
                     tabName = "download",
@@ -58,10 +60,10 @@ health_data_scotland <- function(...) {
                         h4("GitHub"),
                         p(tags$a(href = "https://github.com/jsleight1/HealthDataScotland", " - HealthDataScotland")),
                         h4("Notes"), 
-                        p("Please note that the GP practices and hospitals included are only those that
-                        are present in all three of the metadata, demography/specialty data 
-                        and spatial data. Therefore some data may be missing. Please refer to the 
-                        original data sets in these cases."),
+                        p("Please note that GP practices and hospitals included in this application
+                        are only those present in all three of the metadata, demography/specialty data 
+                        and spatial data. Where missing appears to be missing please refer to the
+                        original published data sets."),
                         width = 12
                     )
                 )
