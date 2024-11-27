@@ -6,10 +6,7 @@ health_data_scotland <- function(...) {
     data <- create_data_objects(readRDS("processed_health_data.RDS"))
 
     ui <- dashboardPage(
-        dashboardHeader(
-            title = "Health Data Scotland - beta version",
-            titleWidth = "350"
-        ),
+        dashboardHeader(title = "Health Data Scotland"),
         dashboardSidebar(
             sidebarMenu(
                 id = "sidebar",
