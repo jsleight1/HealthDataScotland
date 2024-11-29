@@ -34,7 +34,7 @@ health_data_scotland <- function(...) {
                         around particular health centres. Comparisons between the selected
                         health centres can then be viewed in the comparisons tab.
                         Data has been obtained from various sources (see References page)
-                        and is available for download (see Downloads page)"), 
+                        and is available for download (see Downloads page)."), 
                     ),
                     fluidRow(
                         tabBox(

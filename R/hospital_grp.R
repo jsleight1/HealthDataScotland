@@ -2,7 +2,7 @@
 hospital_grp <- R6Class("hospital_grp", 
     inherit = health_unitgrp, 
     private = list(
-        specialty_bar_data = function(
+        specialty_data = function(
                 specialties = "All Specialties", 
                 hospitals = self[["titles"]]()
             ) {
@@ -63,7 +63,7 @@ hospital_grp <- R6Class("hospital_grp",
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 
-                "specialty_bar" = private[["specialty_bar_data"]](...)
+                "specialty_bar" = private[["specialty_data"]](...)
             )
         }, 
         #' @description
