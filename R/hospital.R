@@ -94,8 +94,8 @@ hospital <- R6Class("hospital",
     ),
     public = list(
         #' @description
-        #' Get character vector of available plots for hospital unit. Options 
-        #'   are either "specialty_bar" plot.
+        #' Get character vector of available plots for hospital grp. Options 
+        #'   are either "specialty_bar" or "specialty_line" plot.
         available_plots = function() {
             c("specialty_bar", "specialty_line")
         },
@@ -107,9 +107,9 @@ hospital <- R6Class("hospital",
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 
-                "specialty_bar" = private[["specialty_bar"]](...), 
-                "specialty_line" = private[["specialty_line"]](...)
-            )
+                "specialty_bar" = private[["specialty_bar"]],
+                "specialty_line" = private[["specialty_line"]]
+            )(...)
         }, 
         #' @description
         #' Generate plot data for hospital unit.
@@ -119,9 +119,9 @@ hospital <- R6Class("hospital",
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type, 
-                "specialty_bar" = private[["specialty_data"]](...), 
-                "specialty_line" = private[["specialty_line_data"]](...)
-            )
+                "specialty_bar" = private[["specialty_data"]], 
+                "specialty_line" = private[["specialty_line_data"]]
+            )(...)
         },
         #' @description
         #' Create UI for hospital object.

@@ -46,11 +46,56 @@ test_that("hospital_grp class works", {
     expect_identical(out[["data"]](), list(hosp_unit, hosp_unit2))
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("A101H"), hosp_unit)
-    expect_identical(out[["available_plots"]](), "specialty_bar")
+    expect_identical(
+        out[["available_plots"]](), 
+        c("specialty_bar", "specialty_line")
+    )
 })
 
 test_that("hospital_grp class can be plotted", {
     expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_bar"), "plotly")
+    expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_line"), "plotly")
+})
+
+test_that("hospital_grp plot data works", {
+    out <- hosp_grp_unit[["plot_data"]](
+            type = "specialty_bar", 
+            hospitals = "Arran War Memorial Hospital",
+            specialties = c("All Specialties", "General Medicine")
+        ) |>
+        expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_snapshot_output(as.data.frame(out))
+
+    out <- hosp_grp_unit[["plot_data"]](
+            type = "specialty_line", 
+            data_type = "annual",
+            hospitals = "Arran War Memorial Hospital"
+        ) |>
+        expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_snapshot_output(as.data.frame(out))
+
+    out <- hosp_grp_unit[["plot_data"]](
+            type = "specialty_line", 
+            data_type = "daily",
+            hospitals = "Arran War Memorial Hospital"
+        ) |>
+        expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_snapshot_output(as.data.frame(out))
+
+    hosp_grp_unit[["plot_data"]](type = "specialty_line", data_type = "d") |>
+        expect_error("`data_type` must be one of.+")
+
+    hosp_grp_unit[["plot_data"]](
+            type = "specialty_line", 
+            specialties = c("General Medicine", "Cardiology")
+        ) |>
+        expect_error("`hospital_grp` line plots can only display one specialty")
+
+    hosp_grp_unit[["plot_data"]](type = "p") |>
+        expect_error("`type` must be one.+")
 })
 
 test_that("hospital_grp subset works", {
