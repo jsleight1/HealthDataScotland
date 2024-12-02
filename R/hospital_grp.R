@@ -3,13 +3,11 @@ hospital_grp <- R6Class("hospital_grp",
     inherit = health_unitgrp,
     private = list(
         specialty_data = function(hospitals = self[["titles"]](), ...) {
-            args <- list(...)
-            self[["data"]]() |>
-                map(~{
-                    do.call(.x[["plot_data"]], c(list(type = "specialty_bar"), args))
-                }) |>
-                setNames(self[["titles"]]()) |>
-                bind_rows(.id = "ID") |>
+            private[["map_combine"]](
+                    func = "plot_data",
+                    type = "specialty_bar",
+                    ...
+                ) |>
                 filter(.data[["ID"]] %in% hospitals)
         },
         specialty_bar = function(...) {
@@ -30,13 +28,11 @@ hospital_grp <- R6Class("hospital_grp",
                 "AllStaffedBeds", "ID"))
         },
         specialty_line_data = function(hospitals = self[["titles"]](), ...) {
-            args <- list(...)
-            out <- self[["data"]]() |>
-                map(~{
-                    do.call(.x[["plot_data"]], c(list(type = "specialty_line"), args))
-                }) |>
-                setNames(self[["titles"]]()) |>
-                bind_rows(.id = "ID") |>
+            out <- private[["map_combine"]](
+                    func = "plot_data",
+                    type = "specialty_line",
+                    ...
+                ) |>
                 filter(.data[["ID"]] %in% hospitals)
             assert_that(length(unique(out[["SpecialtyName"]])) == 1,
                 msg = "`hospital_grp` line plots can only display one specialty"

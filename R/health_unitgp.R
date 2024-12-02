@@ -2,6 +2,15 @@
 #' R6 class storing health statistics for a list of health units.
 health_unitgrp <- R6Class(
     "health_unitgrp",
+    private = list(
+        map_combine = function(func, nms = self[["titles"]](), id = "ID", ...) {
+            args <- list(...)
+            self[["data"]]() |>
+                map(~do.call(.x[[func]], args)) |>
+                setNames(nms) |>
+                bind_rows(.id = id)
+        }
+    ),
     public = list(
          #' @field .data A list of health units in health unit grp.
         .data = NA,

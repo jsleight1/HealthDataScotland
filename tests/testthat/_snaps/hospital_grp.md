@@ -58,11 +58,21 @@
     2 Arran War Memorial Hospital       2022/23 Arran War Memorial Hospital
     3 Arran War Memorial Hospital       2023/24 Arran War Memorial Hospital
     4 Arran War Memorial Hospital       2023/24 Arran War Memorial Hospital
-        SpecialtyName                                    name value
-    1 All Specialties Annual number of available staffed beds  3263
-    2 All Specialties          Annual number of occupied beds  2526
-    3 All Specialties Annual number of available staffed beds  3631
-    4 All Specialties          Annual number of occupied beds  2488
+        SpecialtyName PercentageOccupancy                                    name
+    1 All Specialties                77.4 Annual number of available staffed beds
+    2 All Specialties                77.4          Annual number of occupied beds
+    3 All Specialties                68.5 Annual number of available staffed beds
+    4 All Specialties                68.5          Annual number of occupied beds
+      value
+    1  3263
+    2  2526
+    3  3631
+    4  2488
+                                                                                                                                                                                        text
+    1 Financial year: 2022/23\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nAnnual number of available staffed beds: 3263\nPercentage of daily occupancy of beds: 77.4
+    2          Financial year: 2022/23\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nAnnual number of occupied beds: 2526\nPercentage of daily occupancy of beds: 77.4
+    3 Financial year: 2023/24\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nAnnual number of available staffed beds: 3631\nPercentage of daily occupancy of beds: 68.5
+    4          Financial year: 2023/24\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nAnnual number of occupied beds: 2488\nPercentage of daily occupancy of beds: 68.5
 
 ---
 
@@ -71,9 +81,19 @@
     2 Arran War Memorial Hospital       2022/23 Arran War Memorial Hospital
     3 Arran War Memorial Hospital       2023/24 Arran War Memorial Hospital
     4 Arran War Memorial Hospital       2023/24 Arran War Memorial Hospital
-        SpecialtyName                                           name     value
-    1 All Specialties Daily average number of available staffed beds  9.000000
-    2 All Specialties          Daily average number of occupied beds  6.920548
-    3 All Specialties Daily average number of available staffed beds 10.000000
-    4 All Specialties          Daily average number of occupied beds  6.797814
+        SpecialtyName PercentageOccupancy
+    1 All Specialties                77.4
+    2 All Specialties                77.4
+    3 All Specialties                68.5
+    4 All Specialties                68.5
+                                                name     value
+    1 Daily average number of available staffed beds  9.000000
+    2          Daily average number of occupied beds  6.920548
+    3 Daily average number of available staffed beds 10.000000
+    4          Daily average number of occupied beds  6.797814
+                                                                                                                                                                                                  text
+    1       Financial year: 2022/23\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nDaily average number of available staffed beds: 9\nPercentage of daily occupancy of beds: 77.4
+    2 Financial year: 2022/23\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nDaily average number of occupied beds: 6.92054794520548\nPercentage of daily occupancy of beds: 77.4
+    3      Financial year: 2023/24\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nDaily average number of available staffed beds: 10\nPercentage of daily occupancy of beds: 68.5
+    4 Financial year: 2023/24\nHospital: Arran War Memorial Hospital\nSpecialty: All Specialties\nDaily average number of occupied beds: 6.79781420765027\nPercentage of daily occupancy of beds: 68.5
 

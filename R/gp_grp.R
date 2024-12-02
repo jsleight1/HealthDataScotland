@@ -3,22 +3,28 @@
 gp_grp <- R6Class("gp_grp",
     inherit = health_unitgrp,
     private = list(
-        population_pyramid_data = function(date, practices = self[["titles"]]()) {
-            self[["data"]]() |>
-                map(~.x[["plot_data"]]("population_pyramid", date)) |>
-                setNames(self[["titles"]]()) |>
-                bind_rows(.id = "Practice") |>
-                filter(.data[["Practice"]] %in% practices)
+        population_pyramid_data = function(
+                date,
+                practices = self[["titles"]](),
+                ...
+            ) {
+            private[["map_combine"]](
+                    func = "plot_data",
+                    type = "population_pyramid",
+                    date = date,
+                    ...
+                ) |>
+                filter(.data[["ID"]] %in% practices)
         },
-        population_pyramid = function(date,  ...) {
-            dat <- self[["plot_data"]]("population_pyramid", date, ...)
+        population_pyramid = function(...) {
+            dat <- self[["plot_data"]]("population_pyramid", ...)
             plot <- ggplot(dat, aes(Population = Population)) +
                     geom_bar(
                         aes(
                             x = Age,
                             fill = Gender,
                             y = ifelse(Gender == "Male", -Population,  Population),
-                            Practice = Practice
+                            ID = ID
                         ),
                         stat = "identity"
                     ) +
@@ -27,7 +33,7 @@ gp_grp <- R6Class("gp_grp",
                         limits = max(dat$Population) * c(-1,1)
                     ) +
                     coord_flip() +
-                    facet_wrap(~Practice) +
+                    facet_wrap(~ID) +
                     theme_bw() +
                     ylab(NULL) +
                     xlab(NULL)
@@ -39,31 +45,29 @@ gp_grp <- R6Class("gp_grp",
                 practices = self[["titles"]](),
                 ...
             ) {
-            self[["data"]]() |>
-                map(~.x[["plot_data"]]("population_trend", gender)) |>
-                setNames(self[["titles"]]()) |>
-                bind_rows(.id = "Practice") |>
-                filter(.data[["Practice"]] %in% practices)
+            private[["map_combine"]](
+                    func = "plot_data",
+                    type = "population_trend",
+                    gender = gender,
+                    ...
+                ) |>
+                filter(.data[["ID"]] %in% practices)
         },
         population_trend = function( ...) {
             plot <- self[["plot_data"]]("population_trend", ...) |>
-                ggplot(aes(x = Date, y = Population, group = Gender, colour = Practice)) +
+                ggplot(aes(x = Date, y = Population, group = Gender, colour = ID)) +
                     geom_line() +
                     theme_bw() +
                     theme(axis.text.x = element_text(angle = 90))
-            ggplotly(plot, tooltip = c("Date", "Gender", "Population", "Practice"))
+            ggplotly(plot, tooltip = c("Date", "Gender", "Population", "ID"))
         },
         date_choices = function() {
-            self[["data"]]() |>
-                map(~.x[["data"]]()[, "Date"]) |>
-                bind_rows() |>
+            private[["map_combine"]](func = "data") |>
                 pull("Date") |>
                 unique()
         },
         gender_choices = function() {
-            self[["data"]]() |>
-                map(~.x[["data"]]()[, "Sex"]) |>
-                bind_rows() |>
+            private[["map_combine"]](func = "data") |>
                 pull("Sex") |>
                 unique()
         }

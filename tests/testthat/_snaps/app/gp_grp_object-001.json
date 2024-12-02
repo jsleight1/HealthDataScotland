@@ -1,19 +1,5 @@
 {
   "input": {
-    ".clientValue-default-plotlyCrosstalkOpts": {
-      "on": "plotly_click",
-      "persistent": false,
-      "dynamic": false,
-      "selectize": false,
-      "opacityDim": 0.2,
-      "selected": {
-        "opacity": 1
-      },
-      "debounce": 0,
-      "color": [
-
-      ]
-    },
     "gp-pop_pyramid_select_date": "2024-04-01",
     "gp-pop_pyramid_select_practice": [
       "Muirhead Medical Centre",
@@ -25,8 +11,7 @@
       "Muirhead Medical Centre",
       "The Blue Practice",
       "Aberfeldy And Kinloch Rannoch Medical Practice"
-    ],
-    "plotly_afterplot-A": "\"gp-pop_trend\""
+    ]
   },
   "output": {
     "gp-pop_pyramid": {
@@ -75,14 +60,14 @@
               1
             ],
             "text": [
-              "Population:   53<br />Age: Ages0to4<br />Gender: Female",
-              "Population:  206<br />Age: Ages5to14<br />Gender: Female",
-              "Population:  199<br />Age: Ages15to24<br />Gender: Female",
-              "Population:  487<br />Age: Ages25to44<br />Gender: Female",
-              "Population:  753<br />Age: Ages45to64<br />Gender: Female",
-              "Population:  346<br />Age: Ages65to74<br />Gender: Female",
-              "Population:  254<br />Age: Ages75to84<br />Gender: Female",
-              "Population:  108<br />Age: Ages85plus<br />Gender: Female"
+              "Population:   53<br />Age: Ages0to4<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  206<br />Age: Ages5to14<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  199<br />Age: Ages15to24<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  487<br />Age: Ages25to44<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  753<br />Age: Ages45to64<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  346<br />Age: Ages65to74<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  254<br />Age: Ages75to84<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  108<br />Age: Ages85plus<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice"
             ],
             "type": "bar",
             "textposition": "none",
@@ -145,14 +130,14 @@
               1
             ],
             "text": [
-              "Population:  176<br />Age: Ages0to4<br />Gender: Female",
-              "Population:  397<br />Age: Ages5to14<br />Gender: Female",
-              "Population:  425<br />Age: Ages15to24<br />Gender: Female",
-              "Population:  961<br />Age: Ages25to44<br />Gender: Female",
-              "Population: 1256<br />Age: Ages45to64<br />Gender: Female",
-              "Population:  535<br />Age: Ages65to74<br />Gender: Female",
-              "Population:  344<br />Age: Ages75to84<br />Gender: Female",
-              "Population:  101<br />Age: Ages85plus<br />Gender: Female"
+              "Population:  176<br />Age: Ages0to4<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population:  397<br />Age: Ages5to14<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population:  425<br />Age: Ages15to24<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population:  961<br />Age: Ages25to44<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population: 1256<br />Age: Ages45to64<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population:  535<br />Age: Ages65to74<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population:  344<br />Age: Ages75to84<br />Gender: Female<br />ID: Muirhead Medical Centre",
+              "Population:  101<br />Age: Ages85plus<br />Gender: Female<br />ID: Muirhead Medical Centre"
             ],
             "type": "bar",
             "textposition": "none",
@@ -215,14 +200,14 @@
               1
             ],
             "text": [
-              "Population:  115<br />Age: Ages0to4<br />Gender: Female",
-              "Population:  351<br />Age: Ages5to14<br />Gender: Female",
-              "Population:  457<br />Age: Ages15to24<br />Gender: Female",
-              "Population:  777<br />Age: Ages25to44<br />Gender: Female",
-              "Population:  959<br />Age: Ages45to64<br />Gender: Female",
-              "Population:  456<br />Age: Ages65to74<br />Gender: Female",
-              "Population:  334<br />Age: Ages75to84<br />Gender: Female",
-              "Population:  171<br />Age: Ages85plus<br />Gender: Female"
+              "Population:  115<br />Age: Ages0to4<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  351<br />Age: Ages5to14<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  457<br />Age: Ages15to24<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  777<br />Age: Ages25to44<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  959<br />Age: Ages45to64<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  456<br />Age: Ages65to74<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  334<br />Age: Ages75to84<br />Gender: Female<br />ID: The Blue Practice",
+              "Population:  171<br />Age: Ages85plus<br />Gender: Female<br />ID: The Blue Practice"
             ],
             "type": "bar",
             "textposition": "none",
@@ -285,14 +270,14 @@
               1
             ],
             "text": [
-              "Population:   99<br />Age: Ages0to4<br />Gender: Male",
-              "Population:  210<br />Age: Ages5to14<br />Gender: Male",
-              "Population:  248<br />Age: Ages15to24<br />Gender: Male",
-              "Population:  514<br />Age: Ages25to44<br />Gender: Male",
-              "Population:  727<br />Age: Ages45to64<br />Gender: Male",
-              "Population:  349<br />Age: Ages65to74<br />Gender: Male",
-              "Population:  228<br />Age: Ages75to84<br />Gender: Male",
-              "Population:   62<br />Age: Ages85plus<br />Gender: Male"
+              "Population:   99<br />Age: Ages0to4<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  210<br />Age: Ages5to14<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  248<br />Age: Ages15to24<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  514<br />Age: Ages25to44<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  727<br />Age: Ages45to64<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  349<br />Age: Ages65to74<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:  228<br />Age: Ages75to84<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Population:   62<br />Age: Ages85plus<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice"
             ],
             "type": "bar",
             "textposition": "none",
@@ -355,14 +340,14 @@
               1
             ],
             "text": [
-              "Population:  186<br />Age: Ages0to4<br />Gender: Male",
-              "Population:  456<br />Age: Ages5to14<br />Gender: Male",
-              "Population:  415<br />Age: Ages15to24<br />Gender: Male",
-              "Population:  945<br />Age: Ages25to44<br />Gender: Male",
-              "Population: 1160<br />Age: Ages45to64<br />Gender: Male",
-              "Population:  494<br />Age: Ages65to74<br />Gender: Male",
-              "Population:  312<br />Age: Ages75to84<br />Gender: Male",
-              "Population:   88<br />Age: Ages85plus<br />Gender: Male"
+              "Population:  186<br />Age: Ages0to4<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population:  456<br />Age: Ages5to14<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population:  415<br />Age: Ages15to24<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population:  945<br />Age: Ages25to44<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population: 1160<br />Age: Ages45to64<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population:  494<br />Age: Ages65to74<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population:  312<br />Age: Ages75to84<br />Gender: Male<br />ID: Muirhead Medical Centre",
+              "Population:   88<br />Age: Ages85plus<br />Gender: Male<br />ID: Muirhead Medical Centre"
             ],
             "type": "bar",
             "textposition": "none",
@@ -425,14 +410,14 @@
               1
             ],
             "text": [
-              "Population:  134<br />Age: Ages0to4<br />Gender: Male",
-              "Population:  393<br />Age: Ages5to14<br />Gender: Male",
-              "Population:  512<br />Age: Ages15to24<br />Gender: Male",
-              "Population:  780<br />Age: Ages25to44<br />Gender: Male",
-              "Population:  991<br />Age: Ages45to64<br />Gender: Male",
-              "Population:  422<br />Age: Ages65to74<br />Gender: Male",
-              "Population:  315<br />Age: Ages75to84<br />Gender: Male",
-              "Population:  105<br />Age: Ages85plus<br />Gender: Male"
+              "Population:  134<br />Age: Ages0to4<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  393<br />Age: Ages5to14<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  512<br />Age: Ages15to24<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  780<br />Age: Ages25to44<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  991<br />Age: Ages45to64<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  422<br />Age: Ages65to74<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  315<br />Age: Ages75to84<br />Gender: Male<br />ID: The Blue Practice",
+              "Population:  105<br />Age: Ages85plus<br />Gender: Male<br />ID: The Blue Practice"
             ],
             "type": "bar",
             "textposition": "none",
@@ -1019,9 +1004,9 @@
               4843
             ],
             "text": [
-              "Date: 2023-10-01<br />Population: 4874<br />Gender: All<br />Practice: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Date: 2024-01-01<br />Population: 4831<br />Gender: All<br />Practice: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Date: 2024-04-01<br />Population: 4843<br />Gender: All<br />Practice: Aberfeldy And Kinloch Rannoch Medical Practice"
+              "Date: 2023-10-01<br />Population: 4874<br />Gender: All<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Date: 2024-01-01<br />Population: 4831<br />Gender: All<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Date: 2024-04-01<br />Population: 4843<br />Gender: All<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1051,9 +1036,9 @@
               8251
             ],
             "text": [
-              "Date: 2023-10-01<br />Population: 8301<br />Gender: All<br />Practice: Muirhead Medical Centre",
-              "Date: 2024-01-01<br />Population: 8274<br />Gender: All<br />Practice: Muirhead Medical Centre",
-              "Date: 2024-04-01<br />Population: 8251<br />Gender: All<br />Practice: Muirhead Medical Centre"
+              "Date: 2023-10-01<br />Population: 8301<br />Gender: All<br />ID: Muirhead Medical Centre",
+              "Date: 2024-01-01<br />Population: 8274<br />Gender: All<br />ID: Muirhead Medical Centre",
+              "Date: 2024-04-01<br />Population: 8251<br />Gender: All<br />ID: Muirhead Medical Centre"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1083,9 +1068,9 @@
               7272
             ],
             "text": [
-              "Date: 2023-10-01<br />Population: 7046<br />Gender: All<br />Practice: The Blue Practice",
-              "Date: 2024-01-01<br />Population: 7164<br />Gender: All<br />Practice: The Blue Practice",
-              "Date: 2024-04-01<br />Population: 7272<br />Gender: All<br />Practice: The Blue Practice"
+              "Date: 2023-10-01<br />Population: 7046<br />Gender: All<br />ID: The Blue Practice",
+              "Date: 2024-01-01<br />Population: 7164<br />Gender: All<br />ID: The Blue Practice",
+              "Date: 2024-04-01<br />Population: 7272<br />Gender: All<br />ID: The Blue Practice"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1267,7 +1252,7 @@
               "size": 11.68949771689498
             },
             "title": {
-              "text": "Practice",
+              "text": "ID",
               "font": {
                 "color": "rgba(0,0,0,1)",
                 "family": "",
@@ -1486,9 +1471,9 @@
         },
         {
           "name": "font-awesome",
-          "version": "6.5.2",
+          "version": "6.4.2",
           "src": {
-            "href": "font-awesome-6.5.2"
+            "href": "font-awesome-6.4.2"
           },
           "meta": null,
           "script": null,
