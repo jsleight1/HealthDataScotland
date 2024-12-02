@@ -1,5 +1,19 @@
 {
   "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {         
+      "on": "plotly_click",                               
+      "persistent": false,                                
+      "dynamic": false,                                   
+      "selectize": false,                                 
+      "opacityDim": 0.2,                                  
+      "selected": {                                       
+        "opacity": 1                                      
+      },                                                  
+      "debounce": 0,                                      
+      "color": [                                          
+                                                               
+      ]                                                   
+    }, 
     "hospital-hospital_annual_select": [
       "Arran War Memorial Hospital",
       "Ayrshire Central Hospital",
@@ -11,7 +25,8 @@
       "Lady Margaret Hospital"
     ],
     "hospital-specialty_annual_select": "All Specialties",
-    "hospital-specialty_daily_select": "All Specialties"
+    "hospital-specialty_daily_select": "All Specialties",
+    "plotly_afterplot-A": "\"hospital-annual_beds\""
   },
   "output": {
     "hospital-annual_beds": {
@@ -1621,9 +1636,9 @@
         },
         {
           "name": "font-awesome",
-          "version": "6.4.2",
+          "version": "6.5.2",
           "src": {
-            "href": "font-awesome-6.4.2"
+            "href": "font-awesome-6.5.2"
           },
           "meta": null,
           "script": null,
