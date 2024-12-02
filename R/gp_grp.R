@@ -18,12 +18,15 @@ gp_grp <- R6Class("gp_grp",
         },
         population_pyramid = function(...) {
             dat <- self[["plot_data"]]("population_pyramid", ...)
-            plot <- ggplot(dat, aes(Population = Population)) +
+            plot <- ggplot(dat, aes(Population = .data[["Population"]])) +
                     geom_bar(
                         aes(
-                            x = Age,
-                            fill = Gender,
-                            y = ifelse(Gender == "Male", -Population,  Population),
+                            x = .data[["Age"]],
+                            fill = .data[["Gender"]],
+                            y = ifelse(Gender == "Male",
+                                -.data[["Population"]],
+                                .data[["Population"]]
+                            ),
                             ID = ID
                         ),
                         stat = "identity"
@@ -33,7 +36,7 @@ gp_grp <- R6Class("gp_grp",
                         limits = max(dat$Population) * c(-1,1)
                     ) +
                     coord_flip() +
-                    facet_wrap(~ID) +
+                    facet_wrap(~.data[["ID"]]) +
                     theme_bw() +
                     ylab(NULL) +
                     xlab(NULL)
@@ -55,7 +58,14 @@ gp_grp <- R6Class("gp_grp",
         },
         population_trend = function( ...) {
             plot <- self[["plot_data"]]("population_trend", ...) |>
-                ggplot(aes(x = Date, y = Population, group = Gender, colour = ID)) +
+                ggplot(
+                    aes(
+                        x = .data[["Date"]],
+                        y = .data[["Population"]],
+                        group = .data[["Gender"]],
+                        colour = .data[["ID"]]
+                    )
+                ) +
                     geom_line() +
                     theme_bw() +
                     theme(axis.text.x = element_text(angle = 90))
