@@ -1,3 +1,6 @@
+# HealthDataScotland 1.1.0
+
+* Add annual and daily hospital bed statistics using 'specialty_line' plot option for `hospital` and `hospital_grp` objects.
 
 # HealthDataScotland 1.0.0
 

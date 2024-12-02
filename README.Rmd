@@ -20,8 +20,8 @@ knitr::opts_chunk$set(
 
 
 This repo contains an R package to create the [HealthDataScotland](https://jack-sleight.shinyapps.io/healthdatascotland/) shiny application.
-The shiny application generates interactive maps showing the locations 
-of GP practices and hospitals across Scotland and presents associated demographic and bed capacity data. 
+The shiny application generates interactive maps showing the locations
+of GP practices and hospitals across Scotland and presents associated demographic and bed capacity data.
 These maps can be used to select individual GP practices and hospitals to interogate the data for a single centre.
 Conversely comparisons can be made across centres by using the map draw function to selected multiple health centres. The processed data is also presented in a table format, which can be filtered and downloaded.
 
@@ -34,7 +34,7 @@ You can install the development version of HealthDataScotland from [GitHub](http
 devtools::install_github("jsleight1/HealthDataScotland")
 ```
 
-HealthDataScotland also contains a `renv.lock` file which can be used to create 
+HealthDataScotland also contains a `renv.lock` file which can be used to create
 a reproducible environment using [renv](https://rstudio.github.io/renv/articles/renv.html).
 
 ## Example

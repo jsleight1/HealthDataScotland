@@ -10,52 +10,52 @@ health_data_scotland <- function(...) {
         dashboardSidebar(
             sidebarMenu(
                 id = "sidebar",
-                menuItem("Dashboard", tabName = "map"), 
-                menuItem("Downloads", tabName = "download"), 
+                menuItem("Dashboard", tabName = "map"),
+                menuItem("Downloads", tabName = "download"),
                 menuItem("References", tabName = "references")
             )
         ),
         dashboardBody(
             tabItems(
                 tabItem(
-                    tabName = "map", 
+                    tabName = "map",
                     box(
-                        title = "Introduction", 
+                        title = "Introduction",
                         width = 14,
                         status = "primary",
                         solidHeader = TRUE,
                         h4("Welcome to the HealthDataScotland shiny application."),
                         h5("This dashboard shows a summary of demographic information
                         for GP practices and a summary of bed capacity for hospitals
-                        across Scotland. The interactive map below can be used to 
+                        across Scotland. The interactive map below can be used to
                         click on indivdual GP practice and hospital to view associated
-                        data for that particular health centre. The map draw functions 
+                        data for that particular health centre. The map draw functions
                         (top left pentagon and square icons) can be used to draw an area
                         around particular health centres. Comparisons between the selected
                         health centres can then be viewed in the comparisons tab.
                         Data has been obtained from various sources (see References page)
-                        and is available for download (see Downloads page)."), 
+                        and is available for download (see Downloads page)."),
                     ),
                     fluidRow(
                         tabBox(
                             id = "map_tabs",
                             width = 12,
                             map_UI(
-                                id = "map", 
-                                boards = get_sf("board") |> 
-                                    as_tibble() |> 
-                                    select("HBName", "ID") |> 
+                                id = "map",
+                                boards = get_sf("board") |>
+                                    as_tibble() |>
+                                    select("HBName", "ID") |>
                                     tibble::deframe()
                             ),
                             map_comparison_UI(id = "map_comparison")
                         )
                     ),
                     p("Please note that this application was built as a hobby project.
-                    Therefore informed decisions based on the presented data should 
+                    Therefore informed decisions based on the presented data should
                     only be made after consulating the relevant published data sets.
                     These can be accessed in the references section.",
                     style = "color:red; padding-top:10px;")
-                ), 
+                ),
                 tabItem(
                     tabName = "download",
                     download_UI("downloads")
@@ -74,9 +74,9 @@ health_data_scotland <- function(...) {
                         p(tags$a(href = "https://data.gov.uk/dataset/27d0fe5f-79bb-4116-aec9-a8e565ff756a/nhs-health-boards", " - Health board spatial data")),
                         h4("GitHub"),
                         p(tags$a(href = "https://github.com/jsleight1/HealthDataScotland", " - HealthDataScotland")),
-                        h4("Notes"), 
+                        h4("Notes"),
                         p("Please note that GP practices and hospitals included in this application
-                        are only those present in all three of the metadata, demography/specialty data 
+                        are only those present in all three of the metadata, demography/specialty data
                         and spatial data. Where missing appears to be missing please refer to the
                         original published data sets."),
                         width = 12

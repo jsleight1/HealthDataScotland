@@ -19,7 +19,7 @@ get_phs_dataset <- function(ids, ...) {
 }
 
 example_gp_data <- c(
-        "3306ab5a-cd22-494a-be76-ee6753cef92d", 
+        "3306ab5a-cd22-494a-be76-ee6753cef92d",
         "488685e9-95ff-4a48-b085-af50e1dc1863",
         "ab677c28-f495-4191-83e1-aaa0c3e6a9b4"
     ) |>
@@ -29,7 +29,7 @@ example_gp_data <- c(
 example_gp_metadata <- get_phs_dataset("b3b126d3-3b0c-4856-b348-0b37f8286367") |>
     mutate_at("PracticeCode", as.character)
 
-example_hospital_data <- get_phs_dataset("d719af13-5fb3-430f-810e-ab3360961107") |> 
+example_hospital_data <- get_phs_dataset("d719af13-5fb3-430f-810e-ab3360961107") |>
     filter(FinancialYear %in% c("2022/23", "2023/24")) |>
     mutate(datasetID = "d719af13-5fb3-430f-810e-ab3360961107")
 
@@ -53,11 +53,11 @@ example_board_sf <- sf::read_sf(
 example_board_sf[["ID"]] <- example_board_sf[["HBCode"]]
 
 usethis::use_data(
-    example_gp_data, 
+    example_gp_data,
     example_gp_metadata,
     example_hospital_data,
     example_hospital_metadata,
-    example_gp_sf, 
+    example_gp_sf,
     example_hospital_sf,
     example_board_sf,
     overwrite = TRUE

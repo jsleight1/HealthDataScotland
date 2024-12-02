@@ -1,14 +1,14 @@
 #' R6 class storing health statistics for a list of hospital health units.
-hospital_grp <- R6Class("hospital_grp", 
-    inherit = health_unitgrp, 
+hospital_grp <- R6Class("hospital_grp",
+    inherit = health_unitgrp,
     private = list(
         specialty_data = function(hospitals = self[["titles"]](), ...) {
             args <- list(...)
-            self[["data"]]() |> 
+            self[["data"]]() |>
                 map(~{
                     do.call(.x[["plot_data"]], c(list(type = "specialty_bar"), args))
-                }) |> 
-                setNames(self[["titles"]]()) |> 
+                }) |>
+                setNames(self[["titles"]]()) |>
                 bind_rows(.id = "ID") |>
                 filter(.data[["ID"]] %in% hospitals)
         },
@@ -16,29 +16,29 @@ hospital_grp <- R6Class("hospital_grp",
             plot <- self[["plot_data"]]("specialty_bar", ...) |>
                 ggplot(
                     aes(
-                        x = .data[["FinancialYear"]], 
-                        y = .data[["AllStaffedBeds"]], 
-                        fill = .data[["SpecialtyName"]], 
+                        x = .data[["FinancialYear"]],
+                        y = .data[["AllStaffedBeds"]],
+                        fill = .data[["SpecialtyName"]],
                         ID = .data[["ID"]]
                     )
-                ) + 
-                    geom_bar(stat = "identity") + 
-                    theme_bw() + 
+                ) +
+                    geom_bar(stat = "identity") +
+                    theme_bw() +
                     theme(axis.text.x = element_text(angle = 90)) +
                     facet_wrap(~ID)
-            ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName", 
+            ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName",
                 "AllStaffedBeds", "ID"))
         },
         specialty_line_data = function(hospitals = self[["titles"]](), ...) {
             args <- list(...)
-            out <- self[["data"]]() |> 
+            out <- self[["data"]]() |>
                 map(~{
                     do.call(.x[["plot_data"]], c(list(type = "specialty_line"), args))
                 }) |>
-                setNames(self[["titles"]]()) |> 
+                setNames(self[["titles"]]()) |>
                 bind_rows(.id = "ID") |>
                 filter(.data[["ID"]] %in% hospitals)
-            assert_that(length(unique(out[["SpecialtyName"]])) == 1, 
+            assert_that(length(unique(out[["SpecialtyName"]])) == 1,
                 msg = "`hospital_grp` line plots can only display one specialty"
             )
             out
@@ -48,17 +48,17 @@ hospital_grp <- R6Class("hospital_grp",
             plot <- ggplot(
                     dat,
                     aes(
-                        x = .data[["FinancialYear"]], 
-                        y = .data[["value"]], 
+                        x = .data[["FinancialYear"]],
+                        y = .data[["value"]],
                         color = .data[["name"]]
                     )
-                ) + 
+                ) +
                     geom_point(aes(group = .data[["name"]])) +
                     geom_line(aes(group = .data[["name"]])) +
-                    theme_bw() + 
+                    theme_bw() +
                     theme(
                         axis.text.x = element_text(angle = 90),
-                        legend.position = "bottom", 
+                        legend.position = "bottom",
                         legend.title = element_blank()
                     ) +
                     labs(color = "Category") +
@@ -69,17 +69,17 @@ hospital_grp <- R6Class("hospital_grp",
                 plotly::layout(legend = list(orientation = "h", x = 0.4, y = -0.4))
         },
         specialty_choices = function() {
-            out <- self[["data"]]() |> 
-                map(~filter(.x[["data"]](), is.na(.data[["SpecialtyNameQF"]]))) |> 
+            out <- self[["data"]]() |>
+                map(~filter(.x[["data"]](), is.na(.data[["SpecialtyNameQF"]]))) |>
                 bind_rows() |>
-                pull("SpecialtyName") |> 
+                pull("SpecialtyName") |>
                 unique()
             c("All Specialties", out)
         }
     ),
     public = list(
         #' @description
-        #' Get character vector of available plots for hospital grp. Options 
+        #' Get character vector of available plots for hospital grp. Options
         #'   are either "specialty_bar" or "specialty_line" plot.
         available_plots = function() {
             c("specialty_bar", "specialty_line")
@@ -91,11 +91,11 @@ hospital_grp <- R6Class("hospital_grp",
         #' @param ... Passed to plot functions.
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
-            switch(type, 
+            switch(type,
                 "specialty_bar" = private[["specialty_bar"]],
                 "specialty_line" = private[["specialty_line"]]
             )(...)
-        }, 
+        },
         #' @description
         #' Generate plot data for hospital grp.
         #' @param type (character(1))\cr
@@ -103,27 +103,27 @@ hospital_grp <- R6Class("hospital_grp",
         #' @param ... Passed to plot functions.
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
-            switch(type, 
-                "specialty_bar" = private[["specialty_data"]], 
+            switch(type,
+                "specialty_bar" = private[["specialty_data"]],
                 "specialty_line" = private[["specialty_line_data"]]
             )(...)
-        }, 
+        },
         #' @description
         #' Summarise hospital grp unit.
         #' @param id (character(1))\cr
         #'     Character specifying the ID to assign to output data.frame.
         #' @param ... Passed to plot_data.
         summary = function(id = "Scotland national", ...) {
-            self[["plot_data"]]("specialty_bar", ...) |> 
+            self[["plot_data"]]("specialty_bar", ...) |>
                 mutate(ID = id) |>
-                select("ID", "FinancialYear", "SpecialtyName", "AllStaffedBeds") |> 
+                select("ID", "FinancialYear", "SpecialtyName", "AllStaffedBeds") |>
                 group_by_if(is.character) |>
-                summarise_if(is.numeric, sum, na.rm = TRUE) |> 
+                summarise_if(is.numeric, sum, na.rm = TRUE) |>
                 ungroup()
         },
         #' @description
         #' Create UI for hospital group object.
-        #' @param ns 
+        #' @param ns
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["id"]]()))
@@ -136,24 +136,24 @@ hospital_grp <- R6Class("hospital_grp",
                     solidHeader = TRUE,
                     pickerInput(
                         inputId = ns("hospital_annual_select"),
-                        label = "Select hospitals", 
+                        label = "Select hospitals",
                         choices = self[["titles"]](),
                         selected = self[["titles"]](),
                         inline = TRUE,
-                        multiple = TRUE, 
+                        multiple = TRUE,
                         options = list(
-                            `actions-box` = TRUE, 
+                            `actions-box` = TRUE,
                             `selected-text-format` = "count > 1"
                         )
                     ),
                     selectInput(
-                        ns("specialty_annual_select"), 
-                        label = "Select specialty", 
+                        ns("specialty_annual_select"),
+                        label = "Select specialty",
                         choices = private[["specialty_choices"]](),
                         selected = private[["specialty_choices"]]()[1]
                     ),
                     spinner(plotlyOutput(ns("annual_beds")))
-                ), 
+                ),
                 box(
                     title = "Daily Average Available Staffed Beds",
                     width = 12,
@@ -161,30 +161,30 @@ hospital_grp <- R6Class("hospital_grp",
                     solidHeader = TRUE,
                     pickerInput(
                         inputId = ns("hospital_daily_select"),
-                        label = "Select hospitals", 
+                        label = "Select hospitals",
                         choices = self[["titles"]](),
                         selected = self[["titles"]](),
                         inline = TRUE,
-                        multiple = TRUE, 
+                        multiple = TRUE,
                         options = list(
-                            `actions-box` = TRUE, 
+                            `actions-box` = TRUE,
                             `selected-text-format` = "count > 1"
                         )
                     ),
                     selectInput(
-                        ns("specialty_daily_select"), 
-                        label = "Select specialty", 
+                        ns("specialty_daily_select"),
+                        label = "Select specialty",
                         choices = private[["specialty_choices"]](),
                         selected = private[["specialty_choices"]]()[1]
                     ),
                     spinner(plotlyOutput(ns("daily_beds")))
                 ),
                 downloadButton(ns("download")),
-                width = 12, 
+                width = 12,
                 status = "primary",
                 solidHeader = TRUE
             )
-        }, 
+        },
         #' @description
         #' Create server for hospital group object.
         server = function() {
@@ -195,8 +195,8 @@ hospital_grp <- R6Class("hospital_grp",
 
                     output[["annual_beds"]] <- renderPlotly(
                         self[["plot"]](
-                            type = "specialty_line", 
-                            data_type = "annual", 
+                            type = "specialty_line",
+                            data_type = "annual",
                             specialties = req(input[["specialty_annual_select"]]),
                             hospitals = req(input[["hospital_annual_select"]])
                         )
@@ -204,8 +204,8 @@ hospital_grp <- R6Class("hospital_grp",
 
                     output[["daily_beds"]] <- renderPlotly(
                         self[["plot"]](
-                            type = "specialty_line", 
-                            data_type = "daily", 
+                            type = "specialty_line",
+                            data_type = "daily",
                             specialties = req(input[["specialty_daily_select"]]),
                             hospitals = req(input[["hospital_daily_select"]])
                         )
