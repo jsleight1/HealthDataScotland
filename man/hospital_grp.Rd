@@ -46,7 +46,7 @@ R6 class storing health statistics for a list of hospital health units.
 \if{latex}{\out{\hypertarget{method-hospital_grp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
 Get character vector of available plots for hospital grp. Options
-are either "specialty_bar" plot.
+are either "specialty_bar" or "specialty_line" plot.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital_grp$available_plots()}\if{html}{\out{</div>}}
 }

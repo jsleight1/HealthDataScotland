@@ -25,14 +25,14 @@ with_mocked_bindings(
         data_objects <- create_data_objects(
             list(
                 "General practice" = process_data(
-                    "gp", 
-                    function() gp_meta, 
+                    "gp",
+                    function() gp_meta,
                     function() gp_data,
                     process_gp_sf
                 ),
                 "Hospital" = process_data(
-                    "hospital", 
-                    function() hospital_meta, 
+                    "hospital",
+                    function() hospital_meta,
                     function() hospital_data,
                     process_hospital_sf
                 )
@@ -42,7 +42,7 @@ with_mocked_bindings(
 )
 
 with_mocked_bindings(
-    create_data_objects = function(x) data_objects, 
+    create_data_objects = function(x) data_objects,
     shiny_app <- health_data_scotland()
 )
 
@@ -60,7 +60,7 @@ test_that("health_data_scotland app initial values works", {
 test_that("comparison tab works with no selected data", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "empty_comparison_tab", width = 800, 
+    app <- AppDriver$new(shiny_app, name = "empty_comparison_tab", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(map_tabs = "Comparison")
@@ -72,7 +72,7 @@ test_that("comparison tab works with no selected data", {
 test_that("downloads page works", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "downloads_page", width = 800, 
+    app <- AppDriver$new(shiny_app, name = "downloads_page", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(sidebar = "download")
@@ -83,7 +83,7 @@ test_that("downloads page works", {
 test_that("references page works", {
     skip_on_cran()
 
-    app <- AppDriver$new(shiny_app, name = "references_page", width = 800, 
+    app <- AppDriver$new(shiny_app, name = "references_page", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
 
     app$set_inputs(sidebar = "references")
@@ -98,9 +98,9 @@ test_that("gp_grp ui/server works", {
     )
 
     app <- object_app(gp_grp_unit)
-    app <- AppDriver$new(app, name = "gp_grp_object", width = 800, 
+    app <- AppDriver$new(app, name = "gp_grp_object", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
-    
+
     app$expect_values()
     app$stop()
 })
@@ -110,9 +110,9 @@ test_that("hospital ui/server works", {
     hospital_unit <- data_objects[["Hospital"]][["data"]]()[[1]]
 
     app <- object_app(hospital_unit)
-    app <- AppDriver$new(app, name = "hopsital_object", width = 800, 
+    app <- AppDriver$new(app, name = "hopsital_object", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
-    
+
     app$expect_values()
     app$stop()
 })
@@ -124,9 +124,9 @@ test_that("hospital_grp ui/server works", {
     )
 
     app <- object_app(hospital_grp_unit)
-    app <- AppDriver$new(app, name = "hospital_grp_object", width = 800, 
+    app <- AppDriver$new(app, name = "hospital_grp_object", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
-    
+
     app$expect_values()
     app$stop()
 })

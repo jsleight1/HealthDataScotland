@@ -1,5 +1,5 @@
 #' @import ggplot2 dplyr shiny shinydashboard leaflet
-NULL 
+NULL
 
 #' @importFrom R6 R6Class
 #' @importFrom assertthat assert_that

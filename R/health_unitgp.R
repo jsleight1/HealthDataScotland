@@ -1,7 +1,7 @@
 
 #' R6 class storing health statistics for a list of health units.
 health_unitgrp <- R6Class(
-    "health_unitgrp", 
+    "health_unitgrp",
     public = list(
          #' @field .data A list of health units in health unit grp.
         .data = NA,
@@ -14,7 +14,7 @@ health_unitgrp <- R6Class(
         #' @param .data (`list`)\cr
         #'     A list of health units in health unit grp.
         #' @param .sf (`sf`)
-        #'     A sf storing spatial information for 
+        #'     A sf storing spatial information for
         #'     health units.
         #' @param .id (`characer`)
         #'     A character ID of object.
@@ -23,27 +23,27 @@ health_unitgrp <- R6Class(
             self[[".sf"]] = .sf
             self[[".id"]] = .id
             self[["validate"]]()
-        }, 
+        },
         #' @description
         #' Validate structure of health unit grp.
         validate = function() {
             assert_that(
-                inherits(self[["id"]](), "character") && length(self[["id"]]()) == 1, 
+                inherits(self[["id"]](), "character") && length(self[["id"]]()) == 1,
                 msg = "ID must be character of length 1"
             )
             assert_that(
                 length(unique(purrr::map(self[["data"]](), class))) == 1,
-                msg = "group must contain the same class of health units"   
+                msg = "group must contain the same class of health units"
             )
             assert_that(
-                inherits(self[["sf"]](), "sf"), 
+                inherits(self[["sf"]](), "sf"),
                 msg = "sf must be sf object"
             )
             assert_that(
                 identical(
                     sort(self[["ids"]]()),
                     sort(self[["sf"]]()[["ID"]])
-                ), 
+                ),
                 msg = "All all health units present in sf"
             )
             self
@@ -79,14 +79,14 @@ health_unitgrp <- R6Class(
         #'     Character specifying ID of object to obtain from group.
         health_unit = function(id) {
             self[["data"]]()[[which(self[["ids"]]() == id)]]
-        }, 
+        },
         #' @description
         #' Subset health unit group.
         #' @param id (character())\cr
         #'     Character specifying ID (or IDs) of object to obtain from group.
         subset = function(id) {
             out <- self[["clone"]](deep = TRUE)
-            assert_that(all(id %in% out[["ids"]]()), 
+            assert_that(all(id %in% out[["ids"]]()),
                 msg = "ids are not found in health unit group")
             out[[".data"]] <- out[[".data"]][which(out[["ids"]]() %in% id)]
             out[[".sf"]] <- out[[".sf"]][out[[".sf"]][["ID"]] %in% id, ]
@@ -100,7 +100,7 @@ health_unitgrp <- R6Class(
         },
         #' @description
         #' Create UI for health unit group object.
-        #' @param ns 
+        #' @param ns
         #'     Namespace of shiny application page.
         #' @param title
         #'     Character title of box. Default is "Health data"
@@ -113,16 +113,16 @@ health_unitgrp <- R6Class(
                         reactableOutput(ns("table"))
                     ),
                     tags[["button"]](
-                        "Download as CSV", 
+                        "Download as CSV",
                         onclick = paste0(
-                            "Reactable.downloadDataCSV('", 
-                            ns("health_data"), 
+                            "Reactable.downloadDataCSV('",
+                            ns("health_data"),
                             "', 'health_data.csv')"
                         )
-                    ), 
+                    ),
                     width = 12
                 ),
-                width = 12, 
+                width = 12,
                 status = "primary",
                 solidHeader = TRUE
             )
@@ -137,7 +137,7 @@ health_unitgrp <- R6Class(
                     output[["table"]] <- renderReactable({
                         reactable(
                             self[["get_download"]](),
-                            filterable = TRUE, 
+                            filterable = TRUE,
                             elementId = ns("health_data")
                         )
                     })

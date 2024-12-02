@@ -1,22 +1,22 @@
 
 #' R6 class storing health statistics for a GP practice.
-gp <- R6Class("gp", 
+gp <- R6Class("gp",
     inherit = health_unit,
     private = list(
         title_col = function() {
             "GPPracticeName"
         },
         required_cols = function() {
-            c("GPPracticeName", "PracticeListSize", 
-                "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", 
-                "Postcode", "TelephoneNumber", "PracticeType", "GPCluster", 
+            c("GPPracticeName", "PracticeListSize",
+                "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4",
+                "Postcode", "TelephoneNumber", "PracticeType", "GPCluster",
                 "Date")
         },
         population_pyramid_data = function(date) {
-            self[["data"]]() |> 
+            self[["data"]]() |>
                 filter(.data[["Date"]] == date, .data[["Sex"]] != "All") |>
                 select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"), -"AllAges") |>
-                pivot_longer(-"Gender", names_to = "Age", values_to = "Population") |> 
+                pivot_longer(-"Gender", names_to = "Age", values_to = "Population") |>
                 mutate(Age = factor(.data[["Age"]], levels = c(
                     "Ages85plus",
                     "Ages75to84",
@@ -24,7 +24,7 @@ gp <- R6Class("gp",
                     "Ages45to64",
                     "Ages25to44",
                     "Ages15to24",
-                    "Ages5to14", 
+                    "Ages5to14",
                     "Ages0to4"
                 )))
         },
@@ -33,33 +33,33 @@ gp <- R6Class("gp",
             plot <- ggplot(dat, aes(Population = Population)) +
                 geom_bar(
                     aes(
-                        x = Age, 
-                        fill = Gender, 
+                        x = Age,
+                        fill = Gender,
                         y = ifelse(Gender == "Male", -Population,  Population)
-                    ), 
+                    ),
                     stat = "identity"
                 ) +
                 scale_y_continuous(
-                    labels = abs, 
+                    labels = abs,
                     limits = max(dat$Population) * c(-1,1)
-                ) + 
-                coord_flip() + 
+                ) +
+                coord_flip() +
                 theme_bw() +
-                ylab(NULL) + 
+                ylab(NULL) +
                 xlab(NULL)
             ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
-        }, 
+        },
         population_trend_data = function(gender = "All") {
-            self[["data"]]() |> 
-                select("Date", "Gender" = "Sex", "Population" = "AllAges") |> 
-                distinct() |> 
+            self[["data"]]() |>
+                select("Date", "Gender" = "Sex", "Population" = "AllAges") |>
+                distinct() |>
                 filter(Gender == gender)
         },
         population_trend = function(gender = "All", ...) {
             plot <- dat <- self[["plot_data"]]("population_trend", gender, ...) |>
-                ggplot(aes(x = Date, y = Population, group = Gender)) + 
-                    geom_line() + 
-                    theme_bw() + 
+                ggplot(aes(x = Date, y = Population, group = Gender)) +
+                    geom_line() +
+                    theme_bw() +
                     theme(axis.text.x = element_text(angle = 90))
             ggplotly(plot, tooltip = c("Date", "Gender", "Population"))
         }
@@ -71,7 +71,7 @@ gp <- R6Class("gp",
             unique(self[["data"]]()[["TelephoneNumber"]])
         },
         #' @description
-        #' Get character vector of available plots for gp unit. Options 
+        #' Get character vector of available plots for gp unit. Options
         #'   are either "population_pyramid" plot or "population_trend" plot.
         available_plots = function() {
             c("population_pyramid", "population_trend")
@@ -79,39 +79,39 @@ gp <- R6Class("gp",
         #' @description
         #' Plot gp unit.
         #' @param type (character(1))\cr
-        #'     Character specifying plot type. See `available_plots` 
+        #'     Character specifying plot type. See `available_plots`
         #'   for options.
         #' @param ... Passed to plot functions.
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
-            switch(type, 
-                "population_pyramid" = private[["population_pyramid"]](...), 
+            switch(type,
+                "population_pyramid" = private[["population_pyramid"]](...),
                 "population_trend" = private[["population_trend"]](...)
             )
-        }, 
+        },
         #' @description
         #' Generate plot data for gp unit.
         #' @param type (character(1))\cr
-        #'     Character specifying plot type. See `available_plots` 
+        #'     Character specifying plot type. See `available_plots`
         #'   for options.
         #' @param ... Passed to plot_data functions.
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
-            switch(type, 
-                "population_pyramid" = private[["population_pyramid_data"]](...), 
+            switch(type,
+                "population_pyramid" = private[["population_pyramid_data"]](...),
                 "population_trend" = private[["population_trend_data"]](...)
             )
         },
         #' @description
         #' Create UI for general practice object.
-        #' @param ns 
+        #' @param ns
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["ID"]]()))
             fluidRow(
                 box(
-                    title = paste(self[["title"]](), "-", self[["ID"]]()), 
-                    width = 12, 
+                    title = paste(self[["title"]](), "-", self[["ID"]]()),
+                    width = 12,
                     status = "primary",
                     solidHeader = TRUE,
                     fluidRow(box(title = "Address", self[["address"]](), width = 12)),
@@ -121,18 +121,18 @@ gp <- R6Class("gp",
                         box(
                             title = "Population trend",
                             selectInput(
-                                ns("pop_trend_select"), 
-                                label = "Select gender", 
-                                choices = unique(self[["data"]]()[["Sex"]]), 
+                                ns("pop_trend_select"),
+                                label = "Select gender",
+                                choices = unique(self[["data"]]()[["Sex"]]),
                                 selected = "All"
                             ),
                             spinner(plotlyOutput(ns("pop_trend"))),
-                            width = 6 
+                            width = 6
                         ),
                         box(
                             title = "Population pyramid",
                             selectInput(
-                                ns("pop_pyramid_select"), 
+                                ns("pop_pyramid_select"),
                                 label = "Select time frame",
                                 choices = unique(self[["data"]]()[["Date"]])
                             ),
@@ -143,7 +143,7 @@ gp <- R6Class("gp",
                     downloadButton(ns("download"))
                 )
             )
-        }, 
+        },
         #' @description
         #' Create server for general practice object.
         server = function() {
@@ -152,13 +152,13 @@ gp <- R6Class("gp",
                 function(input, output, session) {
                     output[["pop_trend"]] <- renderPlotly(
                         self[["plot"]](
-                            type = "population_trend", 
+                            type = "population_trend",
                             gender = req(input[["pop_trend_select"]])
                         )
                     )
                     output[["pop_pyramid"]] <- renderPlotly(
                         self[["plot"]](
-                            type = "population_pyramid", 
+                            type = "population_pyramid",
                             date = req(input[["pop_pyramid_select"]])
                         )
                     )
