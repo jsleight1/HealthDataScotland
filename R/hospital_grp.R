@@ -44,13 +44,13 @@ hospital_grp <- R6Class("hospital_grp",
             out
         },
         specialty_line = function(...) {
-            dat <- self[["plot_data"]]("specialty_line", ...)
-            plot <- ggplot(
-                    dat,
+            plot <- self[["plot_data"]]("specialty_line", ...) |>
+                ggplot(
                     aes(
                         x = .data[["FinancialYear"]],
                         y = .data[["value"]],
-                        color = .data[["name"]]
+                        color = .data[["name"]],
+                        text = .data[["text"]]
                     )
                 ) +
                     geom_point(aes(group = .data[["name"]])) +
@@ -65,16 +65,16 @@ hospital_grp <- R6Class("hospital_grp",
                     xlab(NULL) +
                     ylab(NULL) +
                     facet_wrap(~ID)
-            ggplotly(plot, tooltip = c("FinancialYear", "Category", "group", "value")) |>
+            ggplotly(plot, tooltip = "text") |>
                 plotly::layout(legend = list(orientation = "h", x = 0.4, y = -0.4))
         },
         specialty_choices = function() {
-            out <- self[["data"]]() |>
-                map(~filter(.x[["data"]](), is.na(.data[["SpecialtyNameQF"]]))) |>
-                bind_rows() |>
-                pull("SpecialtyName") |>
-                unique()
-            c("All Specialties", out)
+            self[["data"]]() |>
+                map(~.x[["data"]]()) |>
+                map(pull, "SpecialtyName") |>
+                unlist() |>
+                unique() |>
+                sort()
         }
     ),
     public = list(

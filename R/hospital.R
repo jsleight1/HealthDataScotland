@@ -35,18 +35,27 @@ hospital <- R6Class("hospital",
                 ...
             ) {
             cols <- switch(arg_match(data_type),
-                "annual" = private[["annual_cols"]](),
-                "daily" = private[["daily_cols"]]()
-            )
-            private[["specialty_data"]](...) |>
+                "annual" = private[["annual_cols"]],
+                "daily" = private[["daily_cols"]]
+            )()
+            out <- private[["specialty_data"]](...) |>
                 select(
                     "ID",
                     "FinancialYear",
                     "HospitalName",
                     "SpecialtyName",
+                    "PercentageOccupancy",
                     all_of(cols)
                 ) |>
                 pivot_longer(cols = names(cols))
+            out[["text"]] <- glue(
+                "Financial year: {out[['FinancialYear']]}\n",
+                "Hospital: {out[['HospitalName']]}\n",
+                "Specialty: {out[['SpecialtyName']]}\n",
+                "{out[['name']]}: {out[['value']]}\n",
+                "Percentage of daily occupancy of beds: {out[['PercentageOccupancy']]}"
+            )
+            out
         },
         annual_cols = function() {
             c(
@@ -66,7 +75,8 @@ hospital <- R6Class("hospital",
                     aes(
                         x = .data[["FinancialYear"]],
                         y = .data[["value"]],
-                        color = .data[["name"]]
+                        color = .data[["name"]],
+                        text = .data[["text"]]
                     )
                 ) +
                     geom_point(aes(group = .data[["name"]])) +
@@ -81,15 +91,11 @@ hospital <- R6Class("hospital",
                     xlab(NULL) +
                     ylab(NULL) +
                     facet_wrap(~SpecialtyName, scales = "free_y", ncol = 1)
-            ggplotly(plot, tooltip = c("FinancialYear", "Category", "group", "value")) |>
+            ggplotly(plot, tooltip = "text") |>
                 plotly::layout(legend = list(orientation = "h", x = 0.4, y = -0.4))
         },
         specialty_choices = function() {
-            out <- self[["data"]]() |>
-                filter(is.na(.data[["SpecialtyNameQF"]])) |>
-                pull("SpecialtyName") |>
-                unique()
-            c("All Specialties", out)
+            sort(unique(self[["data"]]()[["SpecialtyName"]]))
         }
     ),
     public = list(
