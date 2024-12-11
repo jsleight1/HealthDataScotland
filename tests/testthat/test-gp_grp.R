@@ -21,15 +21,19 @@ test_that("gp_grp class works", {
         gp_grp[["new"]](.sf = "sf", .id = "gp") |>
         expect_error("sf must be sf object")
 
-    tst_sf <- sf[sf[["ID"]] == "78185", ]
+    tst_sf <- sf[sf[["ID"]] == "10002", ]
 
     list(gp_unit, gp_unit2) |>
-        hospital_grp[["new"]](.sf = tst_sf, .id = "gp") |>
-        expect_error("All all health units present in sf")
+        gp_grp[["new"]](.sf = tst_sf, .id = "gp") |>
+        expect_error("Are all health units present in sf")
 
     list(gp_unit, gp_unit2) |>
         gp_grp[["new"]](.sf = sf, .id = 1) |>
         expect_error("ID must be character of length 1")
+
+    list(gp_unit, gp_unit) |>
+        gp_grp[["new"]](.sf = bind_rows(tst_sf, tst_sf), .id = "gp") |>
+        expect_error("Health units must not be duplicated")
 
     out <- list(gp_unit, gp_unit2) |>
         gp_grp[["new"]](.sf = sf, .id = "gp") |>
@@ -51,6 +55,28 @@ test_that("gp_grp class can be plotted", {
         suppressWarnings() |>
         expect_s3_class("plotly")
     expect_s3_class(gp_grp_unit[["plot"]](type = "population_trend"), "plotly")
+})
+
+test_that("gp_grp plot data works", {
+    out <- gp_grp_unit[["plot_data"]](
+            type = "population_trend",
+            practices = "10002"
+        ) |>
+        expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_snapshot_output(as.data.frame(out))
+
+    out <- gp_grp_unit[["plot_data"]](
+            type = "population_pyramid",
+            date = 20240401,
+            practices = "10002"
+        ) |>
+        expect_no_error()
+    expect_s3_class(out, "data.frame")
+    expect_snapshot_output(as.data.frame(out))
+
+    gp_grp_unit[["plot_data"]](type = "p") |>
+        expect_error("`type` must be one.+")
 })
 
 test_that("gp_grp subset works", {

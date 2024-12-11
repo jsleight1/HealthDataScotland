@@ -50,7 +50,8 @@ hospital <- R6Class("hospital",
                 pivot_longer(cols = names(cols))
             out[["text"]] <- glue(
                 "Financial year: {out[['FinancialYear']]}\n",
-                "Hospital: {out[['HospitalName']]}\n",
+                "Hospital id: {out[['ID']]}\n",
+                "Hospital name: {out[['HospitalName']]}\n",
                 "Specialty: {out[['SpecialtyName']]}\n",
                 "{out[['name']]}: {out[['value']]}\n",
                 "Percentage of daily occupancy of beds: {out[['PercentageOccupancy']]}"
@@ -153,7 +154,7 @@ hospital <- R6Class("hospital",
                             label = "Select specialty",
                             choices = private[["specialty_choices"]](),
                             multiple = TRUE,
-                            selected = private[["specialty_choices"]]()[1]
+                            selected = "All Specialties"
                         ),
                         spinner(plotlyOutput(ns("annual_beds")))
                     ),
@@ -167,7 +168,7 @@ hospital <- R6Class("hospital",
                             label = "Select specialty",
                             choices = private[["specialty_choices"]](),
                             multiple = TRUE,
-                            selected = private[["specialty_choices"]]()[1]
+                            selected = "All Specialties"
                         ),
                         spinner(plotlyOutput(ns("daily_beds")))
                     ),

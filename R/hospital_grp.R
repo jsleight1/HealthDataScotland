@@ -2,7 +2,7 @@
 hospital_grp <- R6Class("hospital_grp",
     inherit = health_unitgrp,
     private = list(
-        specialty_data = function(hospitals = self[["titles"]](), ...) {
+        specialty_data = function(hospitals = self[["ids"]](), ...) {
             private[["map_combine"]](
                     func = "plot_data",
                     type = "specialty_bar",
@@ -11,23 +11,26 @@ hospital_grp <- R6Class("hospital_grp",
                 filter(.data[["ID"]] %in% hospitals)
         },
         specialty_bar = function(...) {
-            plot <- self[["plot_data"]]("specialty_bar", ...) |>
-                ggplot(
-                    aes(
-                        x = .data[["FinancialYear"]],
-                        y = .data[["AllStaffedBeds"]],
-                        fill = .data[["SpecialtyName"]],
-                        ID = .data[["ID"]]
-                    )
-                ) +
-                    geom_bar(stat = "identity") +
-                    theme_bw() +
-                    theme(axis.text.x = element_text(angle = 90)) +
-                    facet_wrap(~ID)
+            dat <- self[["plot_data"]]("specialty_bar", ...)
+            labels <- private[["id_name_labels"]](dat, "HospitalName")
+            plot <- ggplot(
+                dat,
+                aes(
+                    x = .data[["FinancialYear"]],
+                    y = .data[["AllStaffedBeds"]],
+                    fill = .data[["SpecialtyName"]],
+                    ID = .data[["ID"]],
+                    HospitalName = .data[["HospitalName"]]
+                )
+            ) +
+                geom_bar(stat = "identity") +
+                theme_bw() +
+                theme(axis.text.x = element_text(angle = 90)) +
+                facet_wrap(~.data[["ID"]], labeller = labeller(ID = labels))
             ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName",
-                "AllStaffedBeds", "ID"))
+                "AllStaffedBeds", "ID", "HospitalName"))
         },
-        specialty_line_data = function(hospitals = self[["titles"]](), ...) {
+        specialty_line_data = function(hospitals = self[["ids"]](), ...) {
             out <- private[["map_combine"]](
                     func = "plot_data",
                     type = "specialty_line",
@@ -40,27 +43,29 @@ hospital_grp <- R6Class("hospital_grp",
             out
         },
         specialty_line = function(...) {
-            plot <- self[["plot_data"]]("specialty_line", ...) |>
-                ggplot(
-                    aes(
-                        x = .data[["FinancialYear"]],
-                        y = .data[["value"]],
-                        color = .data[["name"]],
-                        text = .data[["text"]]
-                    )
+            dat <- self[["plot_data"]]("specialty_line", ...)
+            labels <- private[["id_name_labels"]](dat, "HospitalName")
+            plot <- ggplot(
+                dat,
+                aes(
+                    x = .data[["FinancialYear"]],
+                    y = .data[["value"]],
+                    color = .data[["name"]],
+                    text = .data[["text"]]
+                )
+            ) +
+                geom_point(aes(group = .data[["name"]])) +
+                geom_line(aes(group = .data[["name"]])) +
+                theme_bw() +
+                theme(
+                    axis.text.x = element_text(angle = 90),
+                    legend.position = "bottom",
+                    legend.title = element_blank()
                 ) +
-                    geom_point(aes(group = .data[["name"]])) +
-                    geom_line(aes(group = .data[["name"]])) +
-                    theme_bw() +
-                    theme(
-                        axis.text.x = element_text(angle = 90),
-                        legend.position = "bottom",
-                        legend.title = element_blank()
-                    ) +
-                    labs(color = "Category") +
-                    xlab(NULL) +
-                    ylab(NULL) +
-                    facet_wrap(~ID)
+                labs(color = "Category") +
+                xlab(NULL) +
+                ylab(NULL) +
+                facet_wrap(~.data[["ID"]], labeller = labeller(ID = labels))
             ggplotly(plot, tooltip = "text") |>
                 plotly::layout(legend = list(orientation = "h", x = 0.4, y = -0.4))
         },
@@ -133,8 +138,8 @@ hospital_grp <- R6Class("hospital_grp",
                     pickerInput(
                         inputId = ns("hospital_annual_select"),
                         label = "Select hospitals",
-                        choices = self[["titles"]](),
-                        selected = self[["titles"]](),
+                        choices = private[["id_name_selection"]](),
+                        selected = private[["id_name_selection"]](),
                         inline = TRUE,
                         multiple = TRUE,
                         options = list(
@@ -146,7 +151,7 @@ hospital_grp <- R6Class("hospital_grp",
                         ns("specialty_annual_select"),
                         label = "Select specialty",
                         choices = private[["specialty_choices"]](),
-                        selected = private[["specialty_choices"]]()[1]
+                        selected = "All Specialties"
                     ),
                     spinner(plotlyOutput(ns("annual_beds")))
                 ),
@@ -158,8 +163,8 @@ hospital_grp <- R6Class("hospital_grp",
                     pickerInput(
                         inputId = ns("hospital_daily_select"),
                         label = "Select hospitals",
-                        choices = self[["titles"]](),
-                        selected = self[["titles"]](),
+                        choices = private[["id_name_selection"]](),
+                        selected = private[["id_name_selection"]](),
                         inline = TRUE,
                         multiple = TRUE,
                         options = list(
@@ -171,7 +176,7 @@ hospital_grp <- R6Class("hospital_grp",
                         ns("specialty_daily_select"),
                         label = "Select specialty",
                         choices = private[["specialty_choices"]](),
-                        selected = private[["specialty_choices"]]()[1]
+                        selected = "All Specialties"
                     ),
                     spinner(plotlyOutput(ns("daily_beds")))
                 ),
@@ -188,7 +193,6 @@ hospital_grp <- R6Class("hospital_grp",
                 self[["id"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
-
                     output[["annual_beds"]] <- renderPlotly(
                         self[["plot"]](
                             type = "specialty_line",
@@ -197,7 +201,6 @@ hospital_grp <- R6Class("hospital_grp",
                             hospitals = req(input[["hospital_annual_select"]])
                         )
                     )
-
                     output[["daily_beds"]] <- renderPlotly(
                         self[["plot"]](
                             type = "specialty_line",
@@ -206,13 +209,7 @@ hospital_grp <- R6Class("hospital_grp",
                             hospitals = req(input[["hospital_daily_select"]])
                         )
                     )
-
-                    output[["download"]] <- downloadHandler(
-                        filename = function() "hospital_data.csv",
-                        content = function(con) {
-                            write.csv(self[["get_download"]](), con)
-                        }
-                    )
+                    output[["download"]] <- self[["download_handler"]]()
                 }
             )
         }

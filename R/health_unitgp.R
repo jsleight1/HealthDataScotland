@@ -3,12 +3,18 @@
 health_unitgrp <- R6Class(
     "health_unitgrp",
     private = list(
-        map_combine = function(func, nms = self[["titles"]](), id = "ID", ...) {
+        map_combine = function(func, nms = self[["ids"]](), id = "ID", ...) {
             args <- list(...)
             self[["data"]]() |>
                 map(~do.call(.x[[func]], args)) |>
                 setNames(nms) |>
                 bind_rows(.id = id)
+        },
+        id_name_labels = function(x, name) {
+            deframe(distinct(select(x, "ID", all_of(name))))
+        },
+        id_name_selection = function() {
+            setNames(self[["ids"]](), self[["titles"]]())
         }
     ),
     public = list(
@@ -53,7 +59,10 @@ health_unitgrp <- R6Class(
                     sort(self[["ids"]]()),
                     sort(self[["sf"]]()[["ID"]])
                 ),
-                msg = "All all health units present in sf"
+                msg = "Are all health units present in sf"
+            )
+            assert_that(!any(duplicated(self[["ids"]]())),
+                msg = "Health units must not be duplicated"
             )
             self
         },
@@ -104,8 +113,15 @@ health_unitgrp <- R6Class(
         #' @description
         #' Get downloadable data.frame of health unit group.
         get_download = function() {
-            self[["data"]]() |>
-               map_dfr(~.x[["data"]]())
+            private[["map_combine"]](func = "data")
+        },
+        download_handler = function() {
+            downloadHandler(
+                filename = function() glue('{self[["id"]]()}_data.csv'),
+                content = function(con) {
+                    write.csv(self[["get_download"]](), con)
+                }
+            )
         },
         #' @description
         #' Create UI for health unit group object.

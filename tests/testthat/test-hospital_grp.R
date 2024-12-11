@@ -25,15 +25,19 @@ test_that("hospital_grp class works", {
         hospital_grp[["new"]](.sf = "sf", .id = "hospital") |>
         expect_error("sf must be sf object")
 
-    tst_sf <- sf[sf[["ID"]] == "L203H", ]
+    tst_sf <- sf[sf[["ID"]] == "A101H", ]
 
     list(hosp_unit, hosp_unit2) |>
         hospital_grp[["new"]](.sf = tst_sf, .id = "hospital") |>
-        expect_error("All all health units present in sf")
+        expect_error("Are all health units present in sf")
 
     out <- list(hosp_unit, hosp_unit2) |>
         hospital_grp[["new"]](.sf = sf, .id = 1) |>
         expect_error("ID must be character of length 1")
+
+    list(hosp_unit, hosp_unit) |>
+        hospital_grp[["new"]](.sf = bind_rows(tst_sf, tst_sf), .id = "hospital") |>
+        expect_error("Health units must not be duplicated")
 
     out <- list(hosp_unit, hosp_unit2) |>
         hospital_grp[["new"]](.sf = sf, .id = "hospital") |>
@@ -60,7 +64,7 @@ test_that("hospital_grp class can be plotted", {
 test_that("hospital_grp plot data works", {
     out <- hosp_grp_unit[["plot_data"]](
             type = "specialty_bar",
-            hospitals = "Arran War Memorial Hospital",
+            hospitals = "A101H",
             specialties = c("All Specialties", "General Medicine")
         ) |>
         expect_no_error()
@@ -70,7 +74,7 @@ test_that("hospital_grp plot data works", {
     out <- hosp_grp_unit[["plot_data"]](
             type = "specialty_line",
             data_type = "annual",
-            hospitals = "Arran War Memorial Hospital"
+            hospitals = "A101H"
         ) |>
         expect_no_error()
     expect_s3_class(out, "data.frame")
@@ -79,7 +83,7 @@ test_that("hospital_grp plot data works", {
     out <- hosp_grp_unit[["plot_data"]](
             type = "specialty_line",
             data_type = "daily",
-            hospitals = "Arran War Memorial Hospital"
+            hospitals = "A101H"
         ) |>
         expect_no_error()
     expect_s3_class(out, "data.frame")

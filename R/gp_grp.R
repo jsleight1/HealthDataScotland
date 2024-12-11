@@ -5,7 +5,7 @@ gp_grp <- R6Class("gp_grp",
     private = list(
         population_pyramid_data = function(
                 date,
-                practices = self[["titles"]](),
+                practices = self[["ids"]](),
                 ...
             ) {
             private[["map_combine"]](
@@ -18,34 +18,41 @@ gp_grp <- R6Class("gp_grp",
         },
         population_pyramid = function(...) {
             dat <- self[["plot_data"]]("population_pyramid", ...)
-            plot <- ggplot(dat, aes(Population = .data[["Population"]])) +
-                    geom_bar(
-                        aes(
-                            x = .data[["Age"]],
-                            fill = .data[["Gender"]],
-                            y = ifelse(Gender == "Male",
-                                -.data[["Population"]],
-                                .data[["Population"]]
-                            ),
-                            ID = ID
-                        ),
-                        stat = "identity"
-                    ) +
-                    scale_y_continuous(
-                        labels = abs,
-                        limits = max(dat$Population) * c(-1,1)
-                    ) +
-                    coord_flip() +
-                    facet_wrap(~.data[["ID"]]) +
-                    theme_bw() +
-                    ylab(NULL) +
-                    xlab(NULL)
-            ggplotly(plot, tooltip = c("Gender", "Age", "Population", "ID"))
-
+            labels <- private[["id_name_labels"]](dat, "GPPracticeName")
+            plot <- ggplot(
+                dat,
+                aes(
+                    Population = .data[["Population"]],
+                    ID = .data[["ID"]],
+                    GPPracticeName = .data[["GPPracticeName"]]
+                )
+            ) +
+                geom_bar(
+                    aes(
+                        x = .data[["Age"]],
+                        fill = .data[["Gender"]],
+                        y = ifelse(Gender == "Male",
+                            -.data[["Population"]],
+                            .data[["Population"]]
+                        )
+                    ),
+                    stat = "identity"
+                ) +
+                scale_y_continuous(
+                    labels = abs,
+                    limits = max(dat$Population) * c(-1,1)
+                ) +
+                coord_flip() +
+                facet_wrap(~.data[["ID"]], labeller = labeller(ID = labels)) +
+                theme_bw() +
+                ylab(NULL) +
+                xlab(NULL)
+            ggplotly(plot, tooltip = c("Gender", "Age", "Population", "ID",
+                "GPPracticeName"))
         },
         population_trend_data = function(
                 gender = "All",
-                practices = self[["titles"]](),
+                practices = self[["ids"]](),
                 ...
             ) {
             private[["map_combine"]](
@@ -57,19 +64,29 @@ gp_grp <- R6Class("gp_grp",
                 filter(.data[["ID"]] %in% practices)
         },
         population_trend = function( ...) {
-            plot <- self[["plot_data"]]("population_trend", ...) |>
-                ggplot(
-                    aes(
-                        x = .data[["Date"]],
-                        y = .data[["Population"]],
-                        group = .data[["Gender"]],
-                        colour = .data[["ID"]]
-                    )
-                ) +
-                    geom_line() +
-                    theme_bw() +
-                    theme(axis.text.x = element_text(angle = 90))
-            ggplotly(plot, tooltip = c("Date", "Gender", "Population", "ID"))
+            dat <- self[["plot_data"]]("population_trend", ...)
+            labels <- private[["id_name_labels"]](dat, "GPPracticeName")
+            plot <- ggplot(
+                dat,
+                aes(
+                    x = .data[["Date"]],
+                    y = .data[["Population"]],
+                    colour = .data[["ID"]],
+                    Gender = .data[["Gender"]],
+                    GPPracticeName = .data[["GPPracticeName"]]
+                )
+            ) +
+                geom_line() +
+                theme_bw() +
+                theme(axis.text.x = element_text(angle = 90))
+            out <- ggplotly(plot, tooltip = c("Date", "Gender", "Population", "ID",
+                "GPPracticeName"))
+            # Manually required as ggplot doesn't handle scale_colour_hue.
+            out[["x"]][["data"]][] <- map(out[["x"]][["data"]], function(i) {
+                i[["name"]] <- labels[[i[["name"]]]]
+                i
+            })
+            out
         },
         date_choices = function() {
             private[["map_combine"]](func = "data") |>
@@ -149,8 +166,8 @@ gp_grp <- R6Class("gp_grp",
                     pickerInput(
                         inputId = ns("pop_trend_select_practice"),
                         label = "Select GP practices",
-                        choices = self[["titles"]](),
-                        selected = self[["titles"]](),
+                        choices = private[["id_name_selection"]](),
+                        selected = private[["id_name_selection"]](),
                         inline = TRUE,
                         multiple = TRUE,
                         options = list(
@@ -171,8 +188,8 @@ gp_grp <- R6Class("gp_grp",
                     pickerInput(
                         inputId = ns("pop_pyramid_select_practice"),
                         label = "Select GP practices",
-                        choices = self[["titles"]](),
-                        selected = self[["titles"]](),
+                        choices = private[["id_name_selection"]](),
+                        selected = private[["id_name_selection"]](),
                         inline = TRUE,
                         multiple = TRUE,
                         options = list(
@@ -209,12 +226,7 @@ gp_grp <- R6Class("gp_grp",
                             practices = req(input[["pop_pyramid_select_practice"]])
                         )
                     )
-                    output[["download"]] <- downloadHandler(
-                        filename = function() "gp_data.csv",
-                        content = function(con) {
-                            write.csv(self[["get_download"]](), con)
-                        }
-                    )
+                    output[["download"]] <- self[["download_handler"]]()
                 }
             )
         }

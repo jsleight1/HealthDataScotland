@@ -15,8 +15,13 @@ gp <- R6Class("gp",
         population_pyramid_data = function(date) {
             self[["data"]]() |>
                 filter(.data[["Date"]] == date, .data[["Sex"]] != "All") |>
-                select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"), -"AllAges") |>
-                pivot_longer(-"Gender", names_to = "Age", values_to = "Population") |>
+                select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
+                    -"AllAges", "GPPracticeName") |>
+                pivot_longer(
+                    -c("Gender", "GPPracticeName"),
+                    names_to = "Age",
+                    values_to = "Population"
+                ) |>
                 mutate(Age = factor(.data[["Age"]], levels = c(
                     "Ages85plus",
                     "Ages75to84",
@@ -54,7 +59,8 @@ gp <- R6Class("gp",
         },
         population_trend_data = function(gender = "All") {
             self[["data"]]() |>
-                select("Date", "Gender" = "Sex", "Population" = "AllAges") |>
+                select("Date", "GPPracticeName", "Gender" = "Sex",
+                    "Population" = "AllAges") |>
                 distinct() |>
                 filter(Gender == gender)
         },
