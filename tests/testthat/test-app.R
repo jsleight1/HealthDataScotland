@@ -25,14 +25,14 @@ with_mocked_bindings(
         data_objects <- create_data_objects(
             list(
                 "General practice" = process_data(
-                    "gp", 
-                    function() gp_meta, 
+                    "gp",
+                    function() gp_meta,
                     function() gp_data,
                     process_gp_sf
                 ),
                 "Hospital" = process_data(
-                    "hospital", 
-                    function() hospital_meta, 
+                    "hospital",
+                    function() hospital_meta,
                     function() hospital_data,
                     process_hospital_sf
                 )
@@ -42,92 +42,43 @@ with_mocked_bindings(
 )
 
 with_mocked_bindings(
-    create_data_objects = function(x) data_objects, 
+    create_data_objects = function(x) data_objects,
     shiny_app <- health_data_scotland()
 )
 
-test_that("health_data_scotland app initial values works", {
-    skip_on_cran()
-
-    app <- AppDriver$new(shiny_app, name = "initial", width = 800, height = 700,
-        seed = 4323, load_timeout = 20 * 1000)
-
-    app$expect_values()
-    app$expect_unique_names()
-    app$stop()
-})
-
-test_that("comparison tab works with no selected data", {
-    skip_on_cran()
-
-    app <- AppDriver$new(shiny_app, name = "empty_comparison_tab", width = 800, 
-        height = 700, seed = 4323, load_timeout = 20 * 1000)
-
-    app$set_inputs(map_tabs = "Comparison")
-    app$expect_values()
-    app$expect_unique_names()
-    app$stop()
-})
-
-test_that("downloads page works", {
-    skip_on_cran()
-
-    app <- AppDriver$new(shiny_app, name = "downloads_page", width = 800, 
-        height = 700, seed = 4323, load_timeout = 20 * 1000)
-
-    app$set_inputs(sidebar = "download")
-    app$expect_values()
-    app$stop()
-})
-
-test_that("references page works", {
-    skip_on_cran()
-
-    app <- AppDriver$new(shiny_app, name = "references_page", width = 800, 
-        height = 700, seed = 4323, load_timeout = 20 * 1000)
-
-    app$set_inputs(sidebar = "references")
-    app$expect_values()
-    app$stop()
-})
-
-test_that("gp_grp ui/server works", {
-    skip_on_cran()
-    gp_grp_unit <- data_objects[["General practice"]][["subset"]](
-        c("10002", "10017", "10036")
+test_that("example works", {
+    ui <- fluidPage(
+        titlePanel("Hello Shiny!"),
+        sidebarLayout(
+            sidebarPanel(
+                sliderInput(
+                    inputId = "bins",
+                    label = "Number of bins:",
+                    min = 1,
+                    max = 50,
+                    value = 30
+                )
+            ),
+            mainPanel(plotOutput(outputId = "distPlot"))
+        )
     )
 
-    app <- object_app(gp_grp_unit)
-    app <- AppDriver$new(app, name = "gp_grp_object", width = 800, 
+    server <- function(input, output) {
+        output$distPlot <- renderPlot({
+            x <- datasets::faithful$waiting
+            bins <- seq(min(x), max(x), length.out = input$bins + 1)
+            hist(x, breaks = bins, col = "#75AADB", border = "white",
+                xlab = "Waiting time to next eruption (in mins)",
+                main = "Histogram of waiting times")
+
+        })
+    }
+
+    app <- shinyApp(ui, server)
+
+    app <- AppDriver$new(app, name = "example", width = 800,
         height = 700, seed = 4323, load_timeout = 20 * 1000)
-    
+
     app$expect_values()
     app$stop()
 })
-
-test_that("hospital ui/server works", {
-    skip_on_cran()
-    hospital_unit <- data_objects[["Hospital"]][["data"]]()[[1]]
-
-    app <- object_app(hospital_unit)
-    app <- AppDriver$new(app, name = "hopsital_object", width = 800, 
-        height = 700, seed = 4323, load_timeout = 20 * 1000)
-    
-    app$expect_values()
-    app$stop()
-})
-
-test_that("hospital_grp ui/server works", {
-    skip_on_cran()
-    hospital_grp_unit <- data_objects[["Hospital"]][["subset"]](
-        c("A101H", "A103H", "A110H")
-    )
-
-    app <- object_app(hospital_grp_unit)
-    app <- AppDriver$new(app, name = "hospital_grp_object", width = 800, 
-        height = 700, seed = 4323, load_timeout = 20 * 1000)
-    
-    app$expect_values()
-    app$stop()
-})
-

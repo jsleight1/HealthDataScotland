@@ -4,21 +4,21 @@ map_UI <- function(id, boards) {
         "Map",
         pickerInput(
             inputId = ns("board_select"),
-            label =  "Select health board",  
+            label =  "Select health board",
             choices = boards,
             selected = boards,
             inline = TRUE,
-            multiple = TRUE, 
+            multiple = TRUE,
             options = list(
-                `actions-box` = TRUE, 
+                `actions-box` = TRUE,
                 `selected-text-format` = "count > 1"
             )
         ),
         pickerInput(
-            ns("health_select"), 
-            label = "Display health centre types",  
-            choices = c("General practice", "Hospital"), 
-            selected = c("General practice", "Hospital"), 
+            ns("health_select"),
+            label = "Display health centre types",
+            choices = c("General practice", "Hospital"),
+            selected = c("General practice", "Hospital"),
             inline = TRUE,
             multiple = TRUE
         ),
@@ -29,14 +29,14 @@ map_UI <- function(id, boards) {
 
 map_server <- function(id, data, boards) {
     moduleServer(
-        id, 
+        id,
         function(input, output, session) {
             ns <- session[["ns"]]
 
-            pin_sf <- data |> 
-                map(~.x[["sf"]]()) |> 
+            pin_sf <- data |>
+                map(~.x[["sf"]]()) |>
                 reduce(bind_rows)
-            
+
             observe({
                 leafletProxy(id) |> clearPopups()
                 event <- input[[paste0(id, "_marker_click")]]
@@ -46,17 +46,17 @@ map_server <- function(id, data, boards) {
                 obj <- data[[type]][["health_unit"]](id)
                 isolate(obj[["popup_modal"]](ns))
             })
-            
+
             pin_data <- reactive({
                 health_boards <- input[["board_select"]]
                 centre_types <- input[["health_select"]]
                 pin_sf[pin_sf[["type"]] %in% centre_types & pin_sf[["hbcode"]] %in% health_boards, ]
             })
 
-            selected_pins <- reactiveVal() 
+            selected_pins <- reactiveVal()
             observeEvent(input[[paste0(id, "_draw_new_feature")]], {
                 out <- find_locations(
-                    shape = input[[paste0(id, "_draw_new_feature")]], 
+                    shape = input[[paste0(id, "_draw_new_feature")]],
                     location_coordinates = sf::as_Spatial(pin_data()),
                     location_id_colnames = c("ID", "type")
                 )
@@ -82,23 +82,23 @@ map_server <- function(id, data, boards) {
             })
 
             output[["map"]] <- renderLeaflet({
-                leaflet() |> 
-                    addTiles() |> 
+                leaflet() |>
+                    addTiles() |>
                     addAwesomeMarkers(
                         layerId = ~paste0(as.character(ID), ":", as.character(type)),
                         icon = ~pin_icon(type),
                         clusterOptions = markerClusterOptions(
                             showCoverageOnHover = FALSE
-                        ), 
+                        ),
                         data = pin_data()
                     ) |>
                     addPolygons(
                         fillOpacity = 0.01,
-                        smoothFactor = 0.1, 
+                        smoothFactor = 0.1,
                         weight = 2,
                         color = "#377EB8",
                         label = as_tibble(boards)[["HBName"]],
-                        layerId = ~as.character(ID), 
+                        layerId = ~as.character(ID),
                         data = boards
                     ) |>
                     leaflet.extras::addDrawToolbar(
@@ -107,13 +107,13 @@ map_server <- function(id, data, boards) {
                         circleMarkerOptions = FALSE,
                         polygonOptions = leaflet.extras::drawPolygonOptions(
                             shapeOptions = leaflet.extras::drawShapeOptions(
-                                fillOpacity = 0, 
+                                fillOpacity = 0,
                                 color = "red"
                             )
                         ),
                         rectangleOptions = leaflet.extras::drawRectangleOptions(
                             shapeOptions = leaflet.extras::drawShapeOptions(
-                                fillOpacity = 0, 
+                                fillOpacity = 0,
                                 color = "red"
                             )
                         ),
@@ -154,7 +154,7 @@ find_locations <- function(shape, location_coordinates, location_id_colnames) {
     )
 
     selected_locs <- sp::over(
-        location_coordinates, 
+        location_coordinates,
         sp::SpatialPolygons(
             list(sp::Polygons(list(drawn_polygon),"drawn_polygon"))
         )
@@ -180,7 +180,7 @@ map_comparison_UI <- function(id) {
 
 map_comparison_server <- function(id, data) {
      moduleServer(
-        id, 
+        id,
         function(input, output, session) {
             ns <- session[["ns"]]
             output[["comparison_boxes"]] <- renderUI({

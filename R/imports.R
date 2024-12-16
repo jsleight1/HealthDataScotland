@@ -1,5 +1,5 @@
 #' @import ggplot2 dplyr shiny shinydashboard leaflet
-NULL 
+NULL
 
 #' @importFrom R6 R6Class
 #' @importFrom assertthat assert_that
@@ -12,6 +12,7 @@ NULL
 #' @importFrom reactable reactable reactableOutput renderReactable
 #' @importFrom httr2 request req_retry req_perform resp_body_json resp_body_string
 #' @importFrom glue glue
+#' @importFrom tibble as_tibble deframe
 NULL
 
 utils::globalVariables(".")
