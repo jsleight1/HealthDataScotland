@@ -11,7 +11,7 @@ get_phs_dataset <- function(x, ...) {
                 dplyr::select(-"_id") |>
                 suppressMessages()
         }) |>
-        setNames(ids) |>
+        set_names(ids) |>
         bind_rows(.id = "datasetID")
 }
 
@@ -158,6 +158,6 @@ save_processed_data <- function(out = "processed_health_data.RDS") {
         "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
     ) |>
     purrr::pmap(process_data) |>
-    setNames(c("General practice", "Hospital")) |>
+    set_names(c("General practice", "Hospital")) |>
     saveRDS(out)
 }

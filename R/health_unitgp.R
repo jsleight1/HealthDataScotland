@@ -7,14 +7,14 @@ health_unitgrp <- R6Class(
             args <- list(...)
             self[["data"]]() |>
                 map(~do.call(.x[[func]], args)) |>
-                setNames(nms) |>
+                set_names(nms) |>
                 bind_rows(.id = id)
         },
         id_name_labels = function(x, name) {
-            deframe(distinct(select(x, "ID", all_of(name))))
+            tibble::deframe(distinct(select(x, "ID", all_of(name))))
         },
         id_name_selection = function() {
-            setNames(self[["ids"]](), self[["titles"]]())
+            set_names(self[["ids"]](), self[["titles"]]())
         }
     ),
     public = list(
@@ -115,6 +115,8 @@ health_unitgrp <- R6Class(
         get_download = function() {
             private[["map_combine"]](func = "data")
         },
+        #' @description
+        #' Get download handler function of health unit group.
         download_handler = function() {
             downloadHandler(
                 filename = function() glue('{self[["id"]]()}_data.csv'),

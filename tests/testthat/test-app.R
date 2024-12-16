@@ -91,6 +91,18 @@ test_that("references page works", {
     app$stop()
 })
 
+test_that("gp ui/server works", {
+    skip_on_cran()
+    gp_unit <- data_objects[["General practice"]][["data"]]()[[1]]
+
+    app <- object_app(gp_unit)
+    app <- AppDriver$new(app, name = "gp_object", width = 800,
+        height = 700, seed = 4323, load_timeout = 20 * 1000)
+
+    app$expect_values()
+    app$stop()
+})
+
 test_that("gp_grp ui/server works", {
     skip_on_cran()
     gp_grp_unit <- data_objects[["General practice"]][["subset"]](

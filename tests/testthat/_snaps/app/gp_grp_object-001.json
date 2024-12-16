@@ -1,92 +1,37 @@
 {
   "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
     "gp-pop_pyramid_select_date": "2024-04-01",
     "gp-pop_pyramid_select_practice": [
-      "Muirhead Medical Centre",
-      "The Blue Practice",
-      "Aberfeldy And Kinloch Rannoch Medical Practice"
+      "10002",
+      "10017",
+      "10036"
     ],
     "gp-pop_trend_select": "All",
     "gp-pop_trend_select_practice": [
-      "Muirhead Medical Centre",
-      "The Blue Practice",
-      "Aberfeldy And Kinloch Rannoch Medical Practice"
-    ]
+      "10002",
+      "10017",
+      "10036"
+    ],
+    "plotly_afterplot-A": "\"gp-pop_trend\""
   },
   "output": {
     "gp-pop_pyramid": {
       "x": {
         "data": [
-          {
-            "orientation": "h",
-            "width": [
-              0.89999999999999947,
-              0.90000000000000036,
-              0.90000000000000036,
-              0.90000000000000036,
-              0.90000000000000036,
-              0.90000000000000036,
-              0.90000000000000013,
-              0.89999999999999991
-            ],
-            "base": [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0
-            ],
-            "x": [
-              53,
-              206,
-              199,
-              487,
-              753,
-              346,
-              254,
-              108
-            ],
-            "y": [
-              8,
-              7,
-              6,
-              5,
-              4,
-              3,
-              2,
-              1
-            ],
-            "text": [
-              "Population:   53<br />Age: Ages0to4<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  206<br />Age: Ages5to14<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  199<br />Age: Ages15to24<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  487<br />Age: Ages25to44<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  753<br />Age: Ages45to64<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  346<br />Age: Ages65to74<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  254<br />Age: Ages75to84<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  108<br />Age: Ages85plus<br />Gender: Female<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice"
-            ],
-            "type": "bar",
-            "textposition": "none",
-            "marker": {
-              "autocolorscale": false,
-              "color": "rgba(248,118,109,1)",
-              "line": {
-                "width": 1.8897637795275593,
-                "color": "transparent"
-              }
-            },
-            "name": "Female",
-            "legendgroup": "Female",
-            "showlegend": true,
-            "xaxis": "x",
-            "yaxis": "y",
-            "hoverinfo": "text",
-            "frame": null
-          },
           {
             "orientation": "h",
             "width": [
@@ -130,14 +75,14 @@
               1
             ],
             "text": [
-              "Population:  176<br />Age: Ages0to4<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population:  397<br />Age: Ages5to14<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population:  425<br />Age: Ages15to24<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population:  961<br />Age: Ages25to44<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population: 1256<br />Age: Ages45to64<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population:  535<br />Age: Ages65to74<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population:  344<br />Age: Ages75to84<br />Gender: Female<br />ID: Muirhead Medical Centre",
-              "Population:  101<br />Age: Ages85plus<br />Gender: Female<br />ID: Muirhead Medical Centre"
+              "Population:  176<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages0to4<br />Gender: Female",
+              "Population:  397<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages5to14<br />Gender: Female",
+              "Population:  425<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages15to24<br />Gender: Female",
+              "Population:  961<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages25to44<br />Gender: Female",
+              "Population: 1256<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages45to64<br />Gender: Female",
+              "Population:  535<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages65to74<br />Gender: Female",
+              "Population:  344<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages75to84<br />Gender: Female",
+              "Population:  101<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages85plus<br />Gender: Female"
             ],
             "type": "bar",
             "textposition": "none",
@@ -151,8 +96,8 @@
             },
             "name": "Female",
             "legendgroup": "Female",
-            "showlegend": false,
-            "xaxis": "x2",
+            "showlegend": true,
+            "xaxis": "x",
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
@@ -200,14 +145,14 @@
               1
             ],
             "text": [
-              "Population:  115<br />Age: Ages0to4<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  351<br />Age: Ages5to14<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  457<br />Age: Ages15to24<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  777<br />Age: Ages25to44<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  959<br />Age: Ages45to64<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  456<br />Age: Ages65to74<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  334<br />Age: Ages75to84<br />Gender: Female<br />ID: The Blue Practice",
-              "Population:  171<br />Age: Ages85plus<br />Gender: Female<br />ID: The Blue Practice"
+              "Population:  115<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages0to4<br />Gender: Female",
+              "Population:  351<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages5to14<br />Gender: Female",
+              "Population:  457<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages15to24<br />Gender: Female",
+              "Population:  777<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages25to44<br />Gender: Female",
+              "Population:  959<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages45to64<br />Gender: Female",
+              "Population:  456<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages65to74<br />Gender: Female",
+              "Population:  334<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages75to84<br />Gender: Female",
+              "Population:  171<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages85plus<br />Gender: Female"
             ],
             "type": "bar",
             "textposition": "none",
@@ -222,7 +167,7 @@
             "name": "Female",
             "legendgroup": "Female",
             "showlegend": false,
-            "xaxis": "x3",
+            "xaxis": "x2",
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
@@ -240,24 +185,24 @@
               0.89999999999999991
             ],
             "base": [
-              -99,
-              -210,
-              -248,
-              -514,
-              -727,
-              -349,
-              -228,
-              -62
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
             ],
             "x": [
-              99,
-              210,
-              248,
-              514,
-              727,
-              349,
-              228,
-              62
+              53,
+              206,
+              199,
+              487,
+              753,
+              346,
+              254,
+              108
             ],
             "y": [
               8,
@@ -270,29 +215,29 @@
               1
             ],
             "text": [
-              "Population:   99<br />Age: Ages0to4<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  210<br />Age: Ages5to14<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  248<br />Age: Ages15to24<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  514<br />Age: Ages25to44<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  727<br />Age: Ages45to64<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  349<br />Age: Ages65to74<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:  228<br />Age: Ages75to84<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Population:   62<br />Age: Ages85plus<br />Gender: Male<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice"
+              "Population:   53<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages0to4<br />Gender: Female",
+              "Population:  206<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages5to14<br />Gender: Female",
+              "Population:  199<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages15to24<br />Gender: Female",
+              "Population:  487<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages25to44<br />Gender: Female",
+              "Population:  753<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages45to64<br />Gender: Female",
+              "Population:  346<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages65to74<br />Gender: Female",
+              "Population:  254<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages75to84<br />Gender: Female",
+              "Population:  108<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages85plus<br />Gender: Female"
             ],
             "type": "bar",
             "textposition": "none",
             "marker": {
               "autocolorscale": false,
-              "color": "rgba(0,191,196,1)",
+              "color": "rgba(248,118,109,1)",
               "line": {
                 "width": 1.8897637795275593,
                 "color": "transparent"
               }
             },
-            "name": "Male",
-            "legendgroup": "Male",
-            "showlegend": true,
-            "xaxis": "x",
+            "name": "Female",
+            "legendgroup": "Female",
+            "showlegend": false,
+            "xaxis": "x3",
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
@@ -340,14 +285,14 @@
               1
             ],
             "text": [
-              "Population:  186<br />Age: Ages0to4<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population:  456<br />Age: Ages5to14<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population:  415<br />Age: Ages15to24<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population:  945<br />Age: Ages25to44<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population: 1160<br />Age: Ages45to64<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population:  494<br />Age: Ages65to74<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population:  312<br />Age: Ages75to84<br />Gender: Male<br />ID: Muirhead Medical Centre",
-              "Population:   88<br />Age: Ages85plus<br />Gender: Male<br />ID: Muirhead Medical Centre"
+              "Population:  186<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages0to4<br />Gender: Male",
+              "Population:  456<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages5to14<br />Gender: Male",
+              "Population:  415<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages15to24<br />Gender: Male",
+              "Population:  945<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages25to44<br />Gender: Male",
+              "Population: 1160<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages45to64<br />Gender: Male",
+              "Population:  494<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages65to74<br />Gender: Male",
+              "Population:  312<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages75to84<br />Gender: Male",
+              "Population:   88<br />ID: 10002<br />GPPracticeName: Muirhead Medical Centre<br />Age: Ages85plus<br />Gender: Male"
             ],
             "type": "bar",
             "textposition": "none",
@@ -361,8 +306,8 @@
             },
             "name": "Male",
             "legendgroup": "Male",
-            "showlegend": false,
-            "xaxis": "x2",
+            "showlegend": true,
+            "xaxis": "x",
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
@@ -410,14 +355,84 @@
               1
             ],
             "text": [
-              "Population:  134<br />Age: Ages0to4<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  393<br />Age: Ages5to14<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  512<br />Age: Ages15to24<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  780<br />Age: Ages25to44<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  991<br />Age: Ages45to64<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  422<br />Age: Ages65to74<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  315<br />Age: Ages75to84<br />Gender: Male<br />ID: The Blue Practice",
-              "Population:  105<br />Age: Ages85plus<br />Gender: Male<br />ID: The Blue Practice"
+              "Population:  134<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages0to4<br />Gender: Male",
+              "Population:  393<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages5to14<br />Gender: Male",
+              "Population:  512<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages15to24<br />Gender: Male",
+              "Population:  780<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages25to44<br />Gender: Male",
+              "Population:  991<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages45to64<br />Gender: Male",
+              "Population:  422<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages65to74<br />Gender: Male",
+              "Population:  315<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages75to84<br />Gender: Male",
+              "Population:  105<br />ID: 10017<br />GPPracticeName: The Blue Practice<br />Age: Ages85plus<br />Gender: Male"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(0,191,196,1)",
+              "line": {
+                "width": 1.8897637795275593,
+                "color": "transparent"
+              }
+            },
+            "name": "Male",
+            "legendgroup": "Male",
+            "showlegend": false,
+            "xaxis": "x2",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "orientation": "h",
+            "width": [
+              0.89999999999999947,
+              0.90000000000000036,
+              0.90000000000000036,
+              0.90000000000000036,
+              0.90000000000000036,
+              0.90000000000000036,
+              0.90000000000000013,
+              0.89999999999999991
+            ],
+            "base": [
+              -99,
+              -210,
+              -248,
+              -514,
+              -727,
+              -349,
+              -228,
+              -62
+            ],
+            "x": [
+              99,
+              210,
+              248,
+              514,
+              727,
+              349,
+              228,
+              62
+            ],
+            "y": [
+              8,
+              7,
+              6,
+              5,
+              4,
+              3,
+              2,
+              1
+            ],
+            "text": [
+              "Population:   99<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages0to4<br />Gender: Male",
+              "Population:  210<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages5to14<br />Gender: Male",
+              "Population:  248<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages15to24<br />Gender: Male",
+              "Population:  514<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages25to44<br />Gender: Male",
+              "Population:  727<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages45to64<br />Gender: Male",
+              "Population:  349<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages65to74<br />Gender: Male",
+              "Population:  228<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages75to84<br />Gender: Male",
+              "Population:   62<br />ID: 10036<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice<br />Age: Ages85plus<br />Gender: Male"
             ],
             "type": "bar",
             "textposition": "none",
@@ -677,7 +692,7 @@
           ],
           "annotations": [
             {
-              "text": "Aberfeldy And Kinloch Rannoch Medical Practice",
+              "text": "Muirhead Medical Centre",
               "x": 0.16238584474885845,
               "y": 1,
               "showarrow": false,
@@ -695,7 +710,7 @@
               "yanchor": "bottom"
             },
             {
-              "text": "Muirhead Medical Centre",
+              "text": "The Blue Practice",
               "x": 0.5,
               "y": 1,
               "showarrow": false,
@@ -713,7 +728,7 @@
               "yanchor": "bottom"
             },
             {
-              "text": "The Blue Practice",
+              "text": "Aberfeldy And Kinloch Rannoch Medical Practice",
               "x": 0.83761415525114158,
               "y": 1,
               "showarrow": false,
@@ -999,14 +1014,14 @@
               19814
             ],
             "y": [
-              4874,
-              4831,
-              4843
+              8301,
+              8274,
+              8251
             ],
             "text": [
-              "Date: 2023-10-01<br />Population: 4874<br />Gender: All<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Date: 2024-01-01<br />Population: 4831<br />Gender: All<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice",
-              "Date: 2024-04-01<br />Population: 4843<br />Gender: All<br />ID: Aberfeldy And Kinloch Rannoch Medical Practice"
+              "Date: 2023-10-01<br />Population: 8301<br />ID: 10002<br />Gender: All<br />GPPracticeName: Muirhead Medical Centre",
+              "Date: 2024-01-01<br />Population: 8274<br />ID: 10002<br />Gender: All<br />GPPracticeName: Muirhead Medical Centre",
+              "Date: 2024-04-01<br />Population: 8251<br />ID: 10002<br />Gender: All<br />GPPracticeName: Muirhead Medical Centre"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1016,40 +1031,8 @@
               "dash": "solid"
             },
             "hoveron": "points",
-            "name": "Aberfeldy And Kinloch Rannoch Medical Practice",
-            "legendgroup": "Aberfeldy And Kinloch Rannoch Medical Practice",
-            "showlegend": true,
-            "xaxis": "x",
-            "yaxis": "y",
-            "hoverinfo": "text",
-            "frame": null
-          },
-          {
-            "x": [
-              19631,
-              19723,
-              19814
-            ],
-            "y": [
-              8301,
-              8274,
-              8251
-            ],
-            "text": [
-              "Date: 2023-10-01<br />Population: 8301<br />Gender: All<br />ID: Muirhead Medical Centre",
-              "Date: 2024-01-01<br />Population: 8274<br />Gender: All<br />ID: Muirhead Medical Centre",
-              "Date: 2024-04-01<br />Population: 8251<br />Gender: All<br />ID: Muirhead Medical Centre"
-            ],
-            "type": "scatter",
-            "mode": "lines",
-            "line": {
-              "width": 1.8897637795275593,
-              "color": "rgba(0,186,56,1)",
-              "dash": "solid"
-            },
-            "hoveron": "points",
             "name": "Muirhead Medical Centre",
-            "legendgroup": "Muirhead Medical Centre",
+            "legendgroup": "10002",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -1068,9 +1051,41 @@
               7272
             ],
             "text": [
-              "Date: 2023-10-01<br />Population: 7046<br />Gender: All<br />ID: The Blue Practice",
-              "Date: 2024-01-01<br />Population: 7164<br />Gender: All<br />ID: The Blue Practice",
-              "Date: 2024-04-01<br />Population: 7272<br />Gender: All<br />ID: The Blue Practice"
+              "Date: 2023-10-01<br />Population: 7046<br />ID: 10017<br />Gender: All<br />GPPracticeName: The Blue Practice",
+              "Date: 2024-01-01<br />Population: 7164<br />ID: 10017<br />Gender: All<br />GPPracticeName: The Blue Practice",
+              "Date: 2024-04-01<br />Population: 7272<br />ID: 10017<br />Gender: All<br />GPPracticeName: The Blue Practice"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,186,56,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "name": "The Blue Practice",
+            "legendgroup": "10017",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              19631,
+              19723,
+              19814
+            ],
+            "y": [
+              4874,
+              4831,
+              4843
+            ],
+            "text": [
+              "Date: 2023-10-01<br />Population: 4874<br />ID: 10036<br />Gender: All<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Date: 2024-01-01<br />Population: 4831<br />ID: 10036<br />Gender: All<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice",
+              "Date: 2024-04-01<br />Population: 4843<br />ID: 10036<br />Gender: All<br />GPPracticeName: Aberfeldy And Kinloch Rannoch Medical Practice"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1080,8 +1095,8 @@
               "dash": "solid"
             },
             "hoveron": "points",
-            "name": "The Blue Practice",
-            "legendgroup": "The Blue Practice",
+            "name": "Aberfeldy And Kinloch Rannoch Medical Practice",
+            "legendgroup": "10036",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -1386,7 +1401,7 @@
       ]
     },
     "ui": {
-      "html": "<div class=\"col-sm-12\">\n  <div class=\"box box-solid box-primary\">\n    <div class=\"box-header\">\n      <h3 class=\"box-title\">General Practice<\/h3>\n    <\/div>\n    <div class=\"box-body\">\n      <div class=\"col-sm-12\">\n        <div class=\"box\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Population trend<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"gp-pop_trend_select-label\" for=\"gp-pop_trend_select\">Select gender<\/label>\n              <div>\n                <select id=\"gp-pop_trend_select\" class=\"shiny-input-select\"><option value=\"Male\">Male<\/option>\n<option value=\"Female\">Female<\/option>\n<option value=\"All\" selected>All<\/option><\/select>\n                <script type=\"application/json\" data-for=\"gp-pop_trend_select\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"gp-pop_trend_select_practice-label\" for=\"gp-pop_trend_select_practice\" style=\"display: inline-block;\">Select GP practices<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"gp-pop_trend_select_practice\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"Muirhead Medical Centre\" selected>Muirhead Medical Centre<\/option>\n<option value=\"The Blue Practice\" selected>The Blue Practice<\/option>\n<option value=\"Aberfeldy And Kinloch Rannoch Medical Practice\" selected>Aberfeldy And Kinloch Rannoch Medical Practice<\/option><\/select>\n            <\/div>\n            <!--SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <head>\n              <link href=\"shinyWidgets/spinner/spin.css\" rel=\"stylesheet\" type=\"text/css\"/>\n              <style>.recalculating {opacity: 0.01 !important}<\/style>\n            <\/head>\n            <!--/SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"gp-pop_trend\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <div class=\"col-sm-12\">\n        <div class=\"box\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Population pyramid<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"gp-pop_pyramid_select_date-label\" for=\"gp-pop_pyramid_select_date\">Select time frame<\/label>\n              <div>\n                <select id=\"gp-pop_pyramid_select_date\" class=\"shiny-input-select\"><option value=\"2024-04-01\" selected>2024-04-01<\/option>\n<option value=\"2024-01-01\">2024-01-01<\/option>\n<option value=\"2023-10-01\">2023-10-01<\/option><\/select>\n                <script type=\"application/json\" data-for=\"gp-pop_pyramid_select_date\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"gp-pop_pyramid_select_practice-label\" for=\"gp-pop_pyramid_select_practice\" style=\"display: inline-block;\">Select GP practices<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"gp-pop_pyramid_select_practice\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"Muirhead Medical Centre\" selected>Muirhead Medical Centre<\/option>\n<option value=\"The Blue Practice\" selected>The Blue Practice<\/option>\n<option value=\"Aberfeldy And Kinloch Rannoch Medical Practice\" selected>Aberfeldy And Kinloch Rannoch Medical Practice<\/option><\/select>\n            <\/div>\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"gp-pop_pyramid\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <a id=\"gp-download\" class=\"btn btn-default shiny-download-link disabled\" href=\"\" target=\"_blank\" download aria-disabled=\"true\" tabindex=\"-1\">\n        <i class=\"fas fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n        Download\n      <\/a>\n    <\/div>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"col-sm-12\">\n  <div class=\"box box-solid box-primary\">\n    <div class=\"box-header\">\n      <h3 class=\"box-title\">General Practice<\/h3>\n    <\/div>\n    <div class=\"box-body\">\n      <div class=\"col-sm-12\">\n        <div class=\"box\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Population trend<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"gp-pop_trend_select-label\" for=\"gp-pop_trend_select\">Select gender<\/label>\n              <div>\n                <select id=\"gp-pop_trend_select\" class=\"shiny-input-select\"><option value=\"Male\">Male<\/option>\n<option value=\"Female\">Female<\/option>\n<option value=\"All\" selected>All<\/option><\/select>\n                <script type=\"application/json\" data-for=\"gp-pop_trend_select\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"gp-pop_trend_select_practice-label\" for=\"gp-pop_trend_select_practice\" style=\"display: inline-block;\">Select GP practices<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"gp-pop_trend_select_practice\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"10002\" selected>Muirhead Medical Centre<\/option>\n<option value=\"10017\" selected>The Blue Practice<\/option>\n<option value=\"10036\" selected>Aberfeldy And Kinloch Rannoch Medical Practice<\/option><\/select>\n            <\/div>\n            <!--SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <head>\n              <link href=\"shinyWidgets/spinner/spin.css\" rel=\"stylesheet\" type=\"text/css\"/>\n              <style>.recalculating {opacity: 0.01 !important}<\/style>\n            <\/head>\n            <!--/SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"gp-pop_trend\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <div class=\"col-sm-12\">\n        <div class=\"box\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Population pyramid<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"gp-pop_pyramid_select_date-label\" for=\"gp-pop_pyramid_select_date\">Select time frame<\/label>\n              <div>\n                <select id=\"gp-pop_pyramid_select_date\" class=\"shiny-input-select\"><option value=\"2024-04-01\" selected>2024-04-01<\/option>\n<option value=\"2024-01-01\">2024-01-01<\/option>\n<option value=\"2023-10-01\">2023-10-01<\/option><\/select>\n                <script type=\"application/json\" data-for=\"gp-pop_pyramid_select_date\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"gp-pop_pyramid_select_practice-label\" for=\"gp-pop_pyramid_select_practice\" style=\"display: inline-block;\">Select GP practices<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"gp-pop_pyramid_select_practice\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"10002\" selected>Muirhead Medical Centre<\/option>\n<option value=\"10017\" selected>The Blue Practice<\/option>\n<option value=\"10036\" selected>Aberfeldy And Kinloch Rannoch Medical Practice<\/option><\/select>\n            <\/div>\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"gp-pop_pyramid\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <a id=\"gp-download\" class=\"btn btn-default shiny-download-link disabled\" href=\"\" target=\"_blank\" download aria-disabled=\"true\" tabindex=\"-1\">\n        <i class=\"fas fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n        Download\n      <\/a>\n    <\/div>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "selectize",

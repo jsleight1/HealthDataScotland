@@ -15,14 +15,14 @@
       ]
     },
     "hospital-hospital_annual_select": [
-      "Arran War Memorial Hospital",
-      "Ayrshire Central Hospital",
-      "Lady Margaret Hospital"
+      "A101H",
+      "A103H",
+      "A110H"
     ],
     "hospital-hospital_daily_select": [
-      "Arran War Memorial Hospital",
-      "Ayrshire Central Hospital",
-      "Lady Margaret Hospital"
+      "A101H",
+      "A103H",
+      "A110H"
     ],
     "hospital-specialty_annual_select": "All Specialties",
     "hospital-specialty_daily_select": "All Specialties",
@@ -42,8 +42,8 @@
               3631
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:  3263<br />name: Annual number of available staffed beds",
-              "FinancialYear: 2023/24<br />value:  3631<br />name: Annual number of available staffed beds"
+              "Financial year: 2022/23<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Annual number of available staffed beds: 3263<br />Percentage of daily occupancy of beds: 77.4",
+              "Financial year: 2023/24<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Annual number of available staffed beds: 3631<br />Percentage of daily occupancy of beds: 68.5"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -82,8 +82,8 @@
               16451
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value: 16966<br />name: Annual number of available staffed beds",
-              "FinancialYear: 2023/24<br />value: 16451<br />name: Annual number of available staffed beds"
+              "Financial year: 2022/23<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Annual number of available staffed beds: 16966<br />Percentage of daily occupancy of beds: 70.9",
+              "Financial year: 2023/24<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Annual number of available staffed beds: 16451<br />Percentage of daily occupancy of beds: 80"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -122,8 +122,8 @@
               3660
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:  3650<br />name: Annual number of available staffed beds",
-              "FinancialYear: 2023/24<br />value:  3660<br />name: Annual number of available staffed beds"
+              "Financial year: 2022/23<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Annual number of available staffed beds: 3650<br />Percentage of daily occupancy of beds: 11.8",
+              "Financial year: 2023/24<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Annual number of available staffed beds: 3660<br />Percentage of daily occupancy of beds: 18.1"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -162,8 +162,8 @@
               2488
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:  2526<br />name: Annual number of occupied beds",
-              "FinancialYear: 2023/24<br />value:  2488<br />name: Annual number of occupied beds"
+              "Financial year: 2022/23<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Annual number of occupied beds: 2526<br />Percentage of daily occupancy of beds: 77.4",
+              "Financial year: 2023/24<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Annual number of occupied beds: 2488<br />Percentage of daily occupancy of beds: 68.5"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -202,8 +202,8 @@
               13162
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value: 12035<br />name: Annual number of occupied beds",
-              "FinancialYear: 2023/24<br />value: 13162<br />name: Annual number of occupied beds"
+              "Financial year: 2022/23<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Annual number of occupied beds: 12035<br />Percentage of daily occupancy of beds: 70.9",
+              "Financial year: 2023/24<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Annual number of occupied beds: 13162<br />Percentage of daily occupancy of beds: 80"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -242,8 +242,8 @@
               663
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:   429<br />name: Annual number of occupied beds",
-              "FinancialYear: 2023/24<br />value:   663<br />name: Annual number of occupied beds"
+              "Financial year: 2022/23<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Annual number of occupied beds: 429<br />Percentage of daily occupancy of beds: 11.8",
+              "Financial year: 2023/24<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Annual number of occupied beds: 663<br />Percentage of daily occupancy of beds: 18.1"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -801,8 +801,8 @@
               10
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:  9.000000<br />name: Daily average number of available staffed beds",
-              "FinancialYear: 2023/24<br />value: 10.000000<br />name: Daily average number of available staffed beds"
+              "Financial year: 2022/23<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Daily average number of available staffed beds: 9<br />Percentage of daily occupancy of beds: 77.4",
+              "Financial year: 2023/24<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Daily average number of available staffed beds: 10<br />Percentage of daily occupancy of beds: 68.5"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -841,8 +841,8 @@
               45
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value: 46.000000<br />name: Daily average number of available staffed beds",
-              "FinancialYear: 2023/24<br />value: 45.000000<br />name: Daily average number of available staffed beds"
+              "Financial year: 2022/23<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Daily average number of available staffed beds: 46<br />Percentage of daily occupancy of beds: 70.9",
+              "Financial year: 2023/24<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Daily average number of available staffed beds: 45<br />Percentage of daily occupancy of beds: 80"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -881,8 +881,8 @@
               10
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value: 10.000000<br />name: Daily average number of available staffed beds",
-              "FinancialYear: 2023/24<br />value: 10.000000<br />name: Daily average number of available staffed beds"
+              "Financial year: 2022/23<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Daily average number of available staffed beds: 10<br />Percentage of daily occupancy of beds: 11.8",
+              "Financial year: 2023/24<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Daily average number of available staffed beds: 10<br />Percentage of daily occupancy of beds: 18.1"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -921,8 +921,8 @@
               6.7978142076502737
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:  6.920548<br />name: Daily average number of occupied beds",
-              "FinancialYear: 2023/24<br />value:  6.797814<br />name: Daily average number of occupied beds"
+              "Financial year: 2022/23<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Daily average number of occupied beds: 6.92054794520548<br />Percentage of daily occupancy of beds: 77.4",
+              "Financial year: 2023/24<br />Hospital id: A101H<br />Hospital name: Arran War Memorial Hospital<br />Specialty: All Specialties<br />Daily average number of occupied beds: 6.79781420765027<br />Percentage of daily occupancy of beds: 68.5"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -961,8 +961,8 @@
               35.961748633879779
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value: 32.972603<br />name: Daily average number of occupied beds",
-              "FinancialYear: 2023/24<br />value: 35.961749<br />name: Daily average number of occupied beds"
+              "Financial year: 2022/23<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Daily average number of occupied beds: 32.972602739726<br />Percentage of daily occupancy of beds: 70.9",
+              "Financial year: 2023/24<br />Hospital id: A103H<br />Hospital name: Ayrshire Central Hospital<br />Specialty: All Specialties<br />Daily average number of occupied beds: 35.9617486338798<br />Percentage of daily occupancy of beds: 80"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -1001,8 +1001,8 @@
               1.8114754098360657
             ],
             "text": [
-              "FinancialYear: 2022/23<br />value:  1.175342<br />name: Daily average number of occupied beds",
-              "FinancialYear: 2023/24<br />value:  1.811475<br />name: Daily average number of occupied beds"
+              "Financial year: 2022/23<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Daily average number of occupied beds: 1.17534246575342<br />Percentage of daily occupancy of beds: 11.8",
+              "Financial year: 2023/24<br />Hospital id: A110H<br />Hospital name: Lady Margaret Hospital<br />Specialty: All Specialties<br />Daily average number of occupied beds: 1.81147540983607<br />Percentage of daily occupancy of beds: 18.1"
             ],
             "type": "scatter",
             "mode": "markers+lines",
@@ -1551,7 +1551,7 @@
       ]
     },
     "ui": {
-      "html": "<div class=\"col-sm-12\">\n  <div class=\"box box-solid box-primary\">\n    <div class=\"box-header\">\n      <h3 class=\"box-title\">Hospital<\/h3>\n    <\/div>\n    <div class=\"box-body\">\n      <div class=\"col-sm-12\">\n        <div class=\"box box-solid box-primary\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Annually Available Staffed Beds<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"hospital-hospital_annual_select-label\" for=\"hospital-hospital_annual_select\" style=\"display: inline-block;\">Select hospitals<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"hospital-hospital_annual_select\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"Arran War Memorial Hospital\" selected>Arran War Memorial Hospital<\/option>\n<option value=\"Ayrshire Central Hospital\" selected>Ayrshire Central Hospital<\/option>\n<option value=\"Lady Margaret Hospital\" selected>Lady Margaret Hospital<\/option><\/select>\n            <\/div>\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"hospital-specialty_annual_select-label\" for=\"hospital-specialty_annual_select\">Select specialty<\/label>\n              <div>\n                <select id=\"hospital-specialty_annual_select\" class=\"shiny-input-select\"><option value=\"All Specialties\" selected>All Specialties<\/option>\n<option value=\"General Medicine\">General Medicine<\/option>\n<option value=\"Cardiology\">Cardiology<\/option>\n<option value=\"Geriatric Medicine\">Geriatric Medicine<\/option>\n<option value=\"General Surgery\">General Surgery<\/option>\n<option value=\"Trauma and Orthopaedic Surgery\">Trauma and Orthopaedic Surgery<\/option>\n<option value=\"GP Other than Obstetrics\">GP Other than Obstetrics<\/option>\n<option value=\"Rehabilitation Medicine\">Rehabilitation Medicine<\/option>\n<option value=\"Accident &amp; Emergency\">Accident &amp; Emergency<\/option><\/select>\n                <script type=\"application/json\" data-for=\"hospital-specialty_annual_select\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <!--SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <head>\n              <link href=\"shinyWidgets/spinner/spin.css\" rel=\"stylesheet\" type=\"text/css\"/>\n              <style>.recalculating {opacity: 0.01 !important}<\/style>\n            <\/head>\n            <!--/SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"hospital-annual_beds\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <div class=\"col-sm-12\">\n        <div class=\"box box-solid box-primary\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Daily Average Available Staffed Beds<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"hospital-hospital_daily_select-label\" for=\"hospital-hospital_daily_select\" style=\"display: inline-block;\">Select hospitals<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"hospital-hospital_daily_select\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"Arran War Memorial Hospital\" selected>Arran War Memorial Hospital<\/option>\n<option value=\"Ayrshire Central Hospital\" selected>Ayrshire Central Hospital<\/option>\n<option value=\"Lady Margaret Hospital\" selected>Lady Margaret Hospital<\/option><\/select>\n            <\/div>\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"hospital-specialty_daily_select-label\" for=\"hospital-specialty_daily_select\">Select specialty<\/label>\n              <div>\n                <select id=\"hospital-specialty_daily_select\" class=\"shiny-input-select\"><option value=\"All Specialties\" selected>All Specialties<\/option>\n<option value=\"General Medicine\">General Medicine<\/option>\n<option value=\"Cardiology\">Cardiology<\/option>\n<option value=\"Geriatric Medicine\">Geriatric Medicine<\/option>\n<option value=\"General Surgery\">General Surgery<\/option>\n<option value=\"Trauma and Orthopaedic Surgery\">Trauma and Orthopaedic Surgery<\/option>\n<option value=\"GP Other than Obstetrics\">GP Other than Obstetrics<\/option>\n<option value=\"Rehabilitation Medicine\">Rehabilitation Medicine<\/option>\n<option value=\"Accident &amp; Emergency\">Accident &amp; Emergency<\/option><\/select>\n                <script type=\"application/json\" data-for=\"hospital-specialty_daily_select\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"hospital-daily_beds\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <a id=\"hospital-download\" class=\"btn btn-default shiny-download-link disabled\" href=\"\" target=\"_blank\" download aria-disabled=\"true\" tabindex=\"-1\">\n        <i class=\"fas fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n        Download\n      <\/a>\n    <\/div>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"col-sm-12\">\n  <div class=\"box box-solid box-primary\">\n    <div class=\"box-header\">\n      <h3 class=\"box-title\">Hospital<\/h3>\n    <\/div>\n    <div class=\"box-body\">\n      <div class=\"col-sm-12\">\n        <div class=\"box box-solid box-primary\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Annually Available Staffed Beds<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"hospital-hospital_annual_select-label\" for=\"hospital-hospital_annual_select\" style=\"display: inline-block;\">Select hospitals<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"hospital-hospital_annual_select\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"A101H\" selected>Arran War Memorial Hospital<\/option>\n<option value=\"A103H\" selected>Ayrshire Central Hospital<\/option>\n<option value=\"A110H\" selected>Lady Margaret Hospital<\/option><\/select>\n            <\/div>\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"hospital-specialty_annual_select-label\" for=\"hospital-specialty_annual_select\">Select specialty<\/label>\n              <div>\n                <select id=\"hospital-specialty_annual_select\" class=\"shiny-input-select\"><option value=\"Accident &amp; Emergency\">Accident &amp; Emergency<\/option>\n<option value=\"All Acute Specialties\">All Acute Specialties<\/option>\n<option value=\"All Specialties\" selected>All Specialties<\/option>\n<option value=\"Cardiology\">Cardiology<\/option>\n<option value=\"Community Grouping\">Community Grouping<\/option>\n<option value=\"Emergency Grouping\">Emergency Grouping<\/option>\n<option value=\"GP Other than Obstetrics\">GP Other than Obstetrics<\/option>\n<option value=\"General Medicine\">General Medicine<\/option>\n<option value=\"General Surgery\">General Surgery<\/option>\n<option value=\"Geriatric Medicine\">Geriatric Medicine<\/option>\n<option value=\"Medical Grouping\">Medical Grouping<\/option>\n<option value=\"Rehabilitation Medicine\">Rehabilitation Medicine<\/option>\n<option value=\"Surgery Grouping\">Surgery Grouping<\/option>\n<option value=\"Trauma and Orthopaedic Surgery\">Trauma and Orthopaedic Surgery<\/option><\/select>\n                <script type=\"application/json\" data-for=\"hospital-specialty_annual_select\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <!--SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <head>\n              <link href=\"shinyWidgets/spinner/spin.css\" rel=\"stylesheet\" type=\"text/css\"/>\n              <style>.recalculating {opacity: 0.01 !important}<\/style>\n            <\/head>\n            <!--/SHINY.SINGLETON[2f16dd4143257d29fc20e2a92962db655ff01cb9]-->\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"hospital-annual_beds\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <div class=\"col-sm-12\">\n        <div class=\"box box-solid box-primary\">\n          <div class=\"box-header\">\n            <h3 class=\"box-title\">Daily Average Available Staffed Beds<\/h3>\n          <\/div>\n          <div class=\"box-body\">\n            <div class=\"form-group shiny-input-container shiny-input-container-inline\" style=\"display: inline-block;\">\n              <label class=\"control-label\" id=\"hospital-hospital_daily_select-label\" for=\"hospital-hospital_daily_select\" style=\"display: inline-block;\">Select hospitals<\/label>\n              <select data-actions-box=\"true\" data-selected-text-format=\"count &gt; 1\" data-state-input=\"true\" id=\"hospital-hospital_daily_select\" class=\"selectpicker form-control\" autocomplete=\"off\" multiple=\"multiple\"><option value=\"A101H\" selected>Arran War Memorial Hospital<\/option>\n<option value=\"A103H\" selected>Ayrshire Central Hospital<\/option>\n<option value=\"A110H\" selected>Lady Margaret Hospital<\/option><\/select>\n            <\/div>\n            <div class=\"form-group shiny-input-container\">\n              <label class=\"control-label\" id=\"hospital-specialty_daily_select-label\" for=\"hospital-specialty_daily_select\">Select specialty<\/label>\n              <div>\n                <select id=\"hospital-specialty_daily_select\" class=\"shiny-input-select\"><option value=\"Accident &amp; Emergency\">Accident &amp; Emergency<\/option>\n<option value=\"All Acute Specialties\">All Acute Specialties<\/option>\n<option value=\"All Specialties\" selected>All Specialties<\/option>\n<option value=\"Cardiology\">Cardiology<\/option>\n<option value=\"Community Grouping\">Community Grouping<\/option>\n<option value=\"Emergency Grouping\">Emergency Grouping<\/option>\n<option value=\"GP Other than Obstetrics\">GP Other than Obstetrics<\/option>\n<option value=\"General Medicine\">General Medicine<\/option>\n<option value=\"General Surgery\">General Surgery<\/option>\n<option value=\"Geriatric Medicine\">Geriatric Medicine<\/option>\n<option value=\"Medical Grouping\">Medical Grouping<\/option>\n<option value=\"Rehabilitation Medicine\">Rehabilitation Medicine<\/option>\n<option value=\"Surgery Grouping\">Surgery Grouping<\/option>\n<option value=\"Trauma and Orthopaedic Surgery\">Trauma and Orthopaedic Surgery<\/option><\/select>\n                <script type=\"application/json\" data-for=\"hospital-specialty_daily_select\" data-nonempty=\"\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n              <\/div>\n            <\/div>\n            <div style=\"position: relative; width:100%; height:400px;\">\n              <div class=\"spinner-bounce loading-spinner\">\n                <div style=\"background-color: #377EB8;\" class=\"bounce1\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce2\"><\/div>\n                <div style=\"background-color: #377EB8;\" class=\"bounce3\"><\/div>\n              <\/div>\n              <div class=\"plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item\" id=\"hospital-daily_beds\" style=\"width:100%;height:400px;\"><\/div>\n            <\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n      <a id=\"hospital-download\" class=\"btn btn-default shiny-download-link disabled\" href=\"\" target=\"_blank\" download aria-disabled=\"true\" tabindex=\"-1\">\n        <i class=\"fas fa-download\" role=\"presentation\" aria-label=\"download icon\"><\/i>\n        Download\n      <\/a>\n    <\/div>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "shinyWidgets",
@@ -1636,9 +1636,9 @@
         },
         {
           "name": "font-awesome",
-          "version": "6.5.2",
+          "version": "6.4.2",
           "src": {
-            "href": "font-awesome-6.5.2"
+            "href": "font-awesome-6.4.2"
           },
           "meta": null,
           "script": null,

@@ -48,7 +48,7 @@ hospital <- R6Class("hospital",
                     all_of(cols)
                 ) |>
                 pivot_longer(cols = names(cols))
-            out[["text"]] <- glue(
+            out[["text"]] <- glue::glue(
                 "Financial year: {out[['FinancialYear']]}\n",
                 "Hospital id: {out[['ID']]}\n",
                 "Hospital name: {out[['HospitalName']]}\n",
