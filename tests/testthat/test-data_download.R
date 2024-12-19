@@ -16,7 +16,7 @@ test_that("get_gp_meta works", {
         get_phs_dataset = m,
         expect_no_error(get_gp_meta())
     )
-    expect_args(m, 1, "gp-practice-contact-details-and-list-sizes", 
+    expect_args(m, 1, "gp-practice-contact-details-and-list-sizes",
         max_resources = 1)
 })
 
@@ -66,8 +66,8 @@ test_that("process_data works", {
         data <- process_gp_data()
     )
     out <- process_data(
-            "gp", 
-            function() meta, 
+            "gp",
+            function() meta,
             function() data,
             process_gp_sf
         ) |>
