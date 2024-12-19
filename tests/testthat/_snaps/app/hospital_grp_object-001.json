@@ -1,0 +1,22 @@
+{
+  "input": {
+    "ui-hospital_annual_select": [
+      "A101H",
+      "A103H",
+      "A110H"
+    ],
+    "ui-hospital_daily_select": [
+      "A101H",
+      "A103H",
+      "A110H"
+    ],
+    "ui-specialty_annual_select": "All Specialties",
+    "ui-specialty_daily_select": "All Specialties"
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "input": {
+    "ui-pop_pyramid_select_date": "2024-04-01",
+    "ui-pop_pyramid_select_practice": [
+      "10002",
+      "10017",
+      "10036"
+    ],
+    "ui-pop_trend_select": "All",
+    "ui-pop_trend_select_practice": [
+      "10002",
+      "10017",
+      "10036"
+    ]
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}
