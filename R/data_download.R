@@ -27,7 +27,7 @@ get_phs_ids <- function(x, max_resources = NULL, ...) {
 
 get_gp_data <- function(max_resources = 10, ...) {
     get_phs_dataset(
-        "gp-practice-populations", 
+        "gp-practice-populations",
         max_resources = max_resources,
         ...
     )
@@ -35,7 +35,7 @@ get_gp_data <- function(max_resources = 10, ...) {
 
 get_gp_meta <- function(...) {
     get_phs_dataset(
-        "gp-practice-contact-details-and-list-sizes", 
+        "gp-practice-contact-details-and-list-sizes",
         max_resources = 1,
         ...
     )
@@ -51,7 +51,7 @@ get_hospital_meta <- function(...) {
 
 get_sf <- function(type = c("gp", "hospital", "board")) {
     requireNamespace("sf", quietly = TRUE)
-    switch(rlang::arg_match(type), 
+    switch(rlang::arg_match(type),
         "gp" = HealthDataScotland::example_gp_sf,
         "hospital" = HealthDataScotland::example_hospital_sf,
         "board" = HealthDataScotland::example_board_sf,
@@ -62,7 +62,7 @@ process_data <- function(type, meta_func, data_func, sf_func) {
     sf <- get_sf(type)
     meta <- rename(meta_func(), "PHS metadata ID" = "datasetID")
     data <- rename(data_func(), "PHS data ID" = "datasetID")
-    master_ids <- list(sf[["ID"]], meta[["ID"]], data[["ID"]]) |> 
+    master_ids <- list(sf[["ID"]], meta[["ID"]], data[["ID"]]) |>
         reduce(intersect)
     sf <- sf_func(sf, master_ids, meta)
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
@@ -71,8 +71,8 @@ process_data <- function(type, meta_func, data_func, sf_func) {
 }
 
 process_gp_meta <- function() {
-    get_gp_meta() |> 
-        rename("ID" = "PracticeCode") |> 
+    get_gp_meta() |>
+        rename("ID" = "PracticeCode") |>
         mutate_at("ID", as.character) |>
         inner_join(
             select(as_tibble(get_sf("board")), "ID", "HBName"),
@@ -81,7 +81,7 @@ process_gp_meta <- function() {
 }
 
 process_gp_data <- function() {
-    get_gp_data() |> 
+    get_gp_data() |>
         select(-matches("QF$"), -"HB", -"HSCP") |>
         rename("ID" = "PracticeCode") |>
         mutate(
@@ -92,14 +92,14 @@ process_gp_data <- function() {
 
 process_gp_sf <- function(x, ids, meta, ...) {
     x |>
-        filter(.data[["ID"]] %in% ids) |> 
-        mutate_at("uprn", as.character) |> 
-        left_join(meta, by = c("ID" = "ID")) |> 
+        filter(.data[["ID"]] %in% ids) |>
+        mutate_at("uprn", as.character) |>
+        left_join(meta, by = c("ID" = "ID")) |>
         rename("hbcode" = "HB")
 }
 
 process_hospital_meta <- function() {
-    get_hospital_meta() |> 
+    get_hospital_meta() |>
         rename("ID" = "HospitalCode") |>
         inner_join(
             select(as_tibble(get_sf("board")), "ID", "HBName"),
@@ -117,7 +117,7 @@ process_hospital_data <- function() {
 
 process_hospital_sf <- function(x, ids, ...) {
     x |>
-        filter(.data[["ID"]] %in% ids) |> 
+        filter(.data[["ID"]] %in% ids) |>
         mutate_at("uprn", as.character)
 }
 
@@ -131,8 +131,8 @@ create_process_lst <- function(meta, data, sf) {
 
 create_data_objects <- function(x) {
     purrr::imap(x, ~{
-        switch(.y, 
-            "General practice" = create_gp_grp, 
+        switch(.y,
+            "General practice" = create_gp_grp,
             "Hospital" = create_hospital_grp
         ) |>
         do.call(.x)
