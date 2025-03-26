@@ -17,6 +17,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     # libxml2-dev \
     binutils \
     libproj-dev \
+    libgdal-dev \
     gdal-bin \
     libgit2-dev \
     git \
