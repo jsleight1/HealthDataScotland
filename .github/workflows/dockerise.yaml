@@ -1,0 +1,53 @@
+on:
+  push:
+    branches: [9-dockerise-app]
+
+name: dockerise.yaml
+
+permissions: read-all
+
+jobs:
+  dockerise:
+    runs-on: ubuntu-24.04-arm
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RVERSION: 4.4.2
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Get R package version
+      run: |
+        version=$(grep Version DESCRIPTION | grep -o "[0-9.]\+")
+        echo "packageVersion=${version}" >> $GITHUB_ENV
+      shell: bash {0}
+
+    - name: Get current date
+      run: |
+        echo "DATE=`date +%Y%m%d`" >> $GITHUB_ENV
+      shell: bash {0}
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        platforms: linux/arm64, linux/amd64
+        push: true
+        build-args: |
+          RVERSION=${{ env.RVERSION }}
+        tags: |
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:latest
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-latest
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-${{ env.DATE }}
