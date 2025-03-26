@@ -11,7 +11,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     # libfribidi-dev \
     # libharfbuzz-dev \
     # libfreetype6-dev \
-    # libpng-dev \
+    libpng-dev \
     # libtiff5-dev \
     # libjpeg-dev \
     # libxml2-dev \
