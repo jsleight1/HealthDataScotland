@@ -18,6 +18,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     binutils \
     libproj-dev \
     libgdal-dev \
+    libudunits2-dev \
     gdal-bin \
     libgit2-dev \
     git \
