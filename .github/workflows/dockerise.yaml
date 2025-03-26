@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [9-dockerise-app]
+    branches: [main]
 
 name: dockerise.yaml
 
