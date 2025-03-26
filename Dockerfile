@@ -8,8 +8,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     # libcurl4-openssl-dev \
     # libssl-dev \
     libfontconfig1-dev \
-    # libfribidi-dev \
-    # libharfbuzz-dev \
+    libfribidi-dev \
+    libharfbuzz-dev \
     # libfreetype6-dev \
     libpng-dev \
     # libtiff5-dev \
