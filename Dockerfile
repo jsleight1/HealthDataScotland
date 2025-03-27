@@ -40,7 +40,7 @@ RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
 
 # Create data object
-RUN Rscript -e "devtools::install()"
+RUN Rscript -e "devtools::install(dependencies = FALSE)"
 RUN Rscript -e "HealthDataScotland:::save_processed_data()"
 
 # Expose port and run shiny application
