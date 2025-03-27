@@ -1,3 +1,5 @@
+Sys.setenv(CHROMOTE_CHROME="/usr/bin/brave-browser")
+
 capture_output(board_sf <- get_sf("board"))
 
 gp_data <- HealthDataScotland::example_gp_metadata |>
