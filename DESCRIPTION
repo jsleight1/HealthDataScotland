@@ -14,6 +14,8 @@ Depends:
     R (>= 4.4.0)
 Imports:
     assertthat,
+    bslib,
+    bsicons,
     dplyr,
     ggplot2,
     glue,

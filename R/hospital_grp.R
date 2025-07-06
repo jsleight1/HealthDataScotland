@@ -128,62 +128,89 @@ hospital_grp <- R6Class("hospital_grp",
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["id"]]()))
-            box(
+            nav_panel(
                 title = "Hospital",
-                box(
-                    title = "Annually Available Staffed Beds",
-                    width = 12,
-                    status = "primary",
-                    solidHeader = TRUE,
-                    pickerInput(
-                        inputId = ns("hospital_annual_select"),
-                        label = "Select hospitals",
-                        choices = private[["id_name_selection"]](),
-                        selected = private[["id_name_selection"]](),
-                        inline = TRUE,
-                        multiple = TRUE,
-                        options = list(
-                            `actions-box` = TRUE,
-                            `selected-text-format` = "count > 1"
-                        )
+                div(
+                    card(
+                    full_screen = TRUE,
+                        card_header(
+                            "Annually Available Staffed Beds",
+                            popover(
+                                id = ns("hospital_annual_help"),
+                                bs_icon("question-circle"),
+                                "This line chart shows the annual number of
+                                available staffed beds and the number occupied
+                                in the selected hospitals. Settings can be used
+                                to show data for selected hospitals and specialities
+                                (default is to present data for all specialities)."
+                            ),
+                            popover(
+                                id = ns("hospital_annual_settings"),
+                                bs_icon("gear", class = "ms-auto"),
+                                pickerInput(
+                                    inputId = ns("hospital_annual_select"),
+                                    label = "Select hospitals",
+                                    choices = private[["id_name_selection"]](),
+                                    selected = private[["id_name_selection"]](),
+                                    inline = TRUE,
+                                    multiple = TRUE,
+                                    options = list(
+                                        `actions-box` = TRUE,
+                                        `selected-text-format` = "count > 1"
+                                    )
+                                ),
+                                selectInput(
+                                    ns("specialty_annual_select"),
+                                    label = "Select specialty",
+                                    choices = private[["specialty_choices"]](),
+                                    selected = "All Specialties"
+                                )
+                            ),
+                            class = "d-flex align-items-center gap-1"
+                        ),
+                        spinner(plotlyOutput(ns("annual_beds")))
                     ),
-                    selectInput(
-                        ns("specialty_annual_select"),
-                        label = "Select specialty",
-                        choices = private[["specialty_choices"]](),
-                        selected = "All Specialties"
+                    card(
+                        full_screen = TRUE,
+                        card_header(
+                            "Daily Average Available Staffed Beds",
+                            popover(
+                                id = ns("hospital_daily_help"),
+                                bs_icon("question-circle"),
+                                "This line chart shows the daily average number of
+                                available staffed beds and the number occupied
+                                in the selected hospitals. Settings can be used
+                                to show data for selected hospitals and specialities
+                                (default is to present data for all specialities)."
+                            ),
+                            popover(
+                                id = ns("hospital_daily_settings"),
+                                bs_icon("gear", class = "ms-auto"),
+                                pickerInput(
+                                    inputId = ns("hospital_daily_select"),
+                                    label = "Select hospitals",
+                                    choices = private[["id_name_selection"]](),
+                                    selected = private[["id_name_selection"]](),
+                                    inline = TRUE,
+                                    multiple = TRUE,
+                                    options = list(
+                                        `actions-box` = TRUE,
+                                        `selected-text-format` = "count > 1"
+                                    )
+                                ),
+                                selectInput(
+                                    ns("specialty_daily_select"),
+                                    label = "Select specialty",
+                                    choices = private[["specialty_choices"]](),
+                                    selected = "All Specialties"
+                                ),
+                                class = "d-flex align-items-center gap-1"
+                            )
+                        ),
+                        spinner(plotlyOutput(ns("daily_beds")))
                     ),
-                    spinner(plotlyOutput(ns("annual_beds")))
-                ),
-                box(
-                    title = "Daily Average Available Staffed Beds",
-                    width = 12,
-                    status = "primary",
-                    solidHeader = TRUE,
-                    pickerInput(
-                        inputId = ns("hospital_daily_select"),
-                        label = "Select hospitals",
-                        choices = private[["id_name_selection"]](),
-                        selected = private[["id_name_selection"]](),
-                        inline = TRUE,
-                        multiple = TRUE,
-                        options = list(
-                            `actions-box` = TRUE,
-                            `selected-text-format` = "count > 1"
-                        )
-                    ),
-                    selectInput(
-                        ns("specialty_daily_select"),
-                        label = "Select specialty",
-                        choices = private[["specialty_choices"]](),
-                        selected = "All Specialties"
-                    ),
-                    spinner(plotlyOutput(ns("daily_beds")))
-                ),
-                downloadButton(ns("download")),
-                width = 12,
-                status = "primary",
-                solidHeader = TRUE
+                    card(downloadButton(ns("download")))
+                )
             )
         },
         #' @description

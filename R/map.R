@@ -1,29 +1,45 @@
 map_UI <- function(id, boards) {
     ns <- NS(id)
-    tabPanel(
-        "Map",
-        pickerInput(
-            inputId = ns("board_select"),
-            label =  "Select health board",
-            choices = boards,
-            selected = boards,
-            inline = TRUE,
-            multiple = TRUE,
-            options = list(
-                `actions-box` = TRUE,
-                `selected-text-format` = "count > 1"
-            )
+    card(
+        full_screen = TRUE,
+        card_header(
+            popover(
+                bs_icon("question-circle"),
+                "The interactive map below can be used to
+                click on indivdual GP practice and hospital to view associated
+                data for that particular health centre. The map draw functions
+                (top left pentagon and square icons) can be used to draw an area
+                around particular health centres. Comparisons between the selected
+                health centres can then be viewed in the comparisons tab.",
+                placement = "right"
+            ),
+            popover(
+                bs_icon("gear", class = "ms-auto"),
+                pickerInput(
+                    inputId = ns("board_select"),
+                    label =  "Select health board",
+                    choices = boards,
+                    selected = boards,
+                    inline = TRUE,
+                    multiple = TRUE,
+                    options = list(
+                        `actions-box` = TRUE,
+                        `selected-text-format` = "count > 1"
+                    )
+                ),
+                pickerInput(
+                    ns("health_select"),
+                    label = "Display health centre types",
+                    choices = c("General practice", "Hospital"),
+                    selected = c("General practice", "Hospital"),
+                    inline = TRUE,
+                    multiple = TRUE
+                ),
+                title = "Map settings"
+            ),
+            class = "d-flex align-items-center gap-1"
         ),
-        pickerInput(
-            ns("health_select"),
-            label = "Display health centre types",
-            choices = c("General practice", "Hospital"),
-            selected = c("General practice", "Hospital"),
-            inline = TRUE,
-            multiple = TRUE
-        ),
-        spinner(leafletOutput(ns("map"), height = 700)),
-        width = 12
+        leafletOutput(ns("map"), width = "100%", height = "100%")
     )
 }
 
@@ -172,9 +188,9 @@ subset_selected_data <- function(x, data) {
 
 map_comparison_UI <- function(id) {
     ns <- NS(id)
-    tabPanel(
-        "Comparison",
-        fluidRow(uiOutput(ns("comparison_boxes")))
+    card(
+        full_screen = TRUE,
+        uiOutput(ns("comparison_boxes"))
     )
 }
 
@@ -183,6 +199,7 @@ map_comparison_server <- function(id, data) {
         id,
         function(input, output, session) {
             ns <- session[["ns"]]
+
             output[["comparison_boxes"]] <- renderUI({
                 if (is.null(data())) {
                     show_alert(
@@ -202,7 +219,7 @@ map_comparison_server <- function(id, data) {
                         )
                     }
                     purrr::walk(data(), ~.x[["server"]]())
-                    purrr::map(data(), ~.x[["ui"]](ns))
+                    reduce(purrr::map(data(), ~.x[["ui"]](ns)), navset_bar)
                 }
             })
         }

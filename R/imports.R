@@ -1,8 +1,9 @@
-#' @import ggplot2 dplyr shiny shinydashboard leaflet
+#' @import ggplot2 dplyr shiny shinydashboard leaflet bslib
 NULL
 
 #' @importFrom R6 R6Class
 #' @importFrom assertthat assert_that
+#' @importFrom bsicons bs_icon
 #' @importFrom readr read_csv
 #' @importFrom purrr imap_dfr map map_chr map_dfr reduce set_names
 #' @importFrom plotly ggplotly plotlyOutput renderPlotly

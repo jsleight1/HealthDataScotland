@@ -123,40 +123,61 @@ gp <- R6Class("gp",
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["ID"]]()))
-            fluidRow(
-                box(
-                    title = paste(self[["title"]](), "-", self[["ID"]]()),
-                    width = 12,
-                    status = "primary",
-                    solidHeader = TRUE,
-                    fluidRow(box(title = "Address", self[["address"]](), width = 12)),
-                    fluidRow(box(title = "Telephone", self[["telephone"]](), width = 12)),
-                    fluidRow(box(title = "Health board", self[["health_board"]](), width = 12)),
-                    fluidRow(
-                        box(
-                            title = "Population trend",
+            card(
+                card_header(paste(self[["title"]](), "-", self[["ID"]]())),
+                div(glue("Address: {self[['address']]()}")),
+                div(glue("Telephone: {self[['telephone']]()}")),
+                div(glue("Health Board: {self[['health_board']]()}")),
+                card(
+                    full_screen = TRUE,
+                    card_header(
+                        "Population trend",
+                        popover(
+                            id = ns("pop_trend_help"),
+                            bs_icon("question-circle"),
+                            "This line chart shows the population trend for
+                            the selected GP practice over time. Settings can
+                            be used to show trends for selected genders (
+                            default shows all combined)."
+                        ),
+                        popover(
+                            id = ns("pop_trend_settings"),
+                            bs_icon("gear", class = "ms-auto"),
                             selectInput(
                                 ns("pop_trend_select"),
                                 label = "Select gender",
                                 choices = unique(self[["data"]]()[["Sex"]]),
                                 selected = "All"
-                            ),
-                            spinner(plotlyOutput(ns("pop_trend"))),
-                            width = 6
+                            )
+                        )
+                    ),
+                    spinner(plotlyOutput(ns("pop_trend")))
+                ),
+                card(
+                    full_screen = TRUE,
+                    card_header(
+                        "Population pyramid",
+                        popover(
+                            id = ns("pop_pyramid_help"),
+                            bs_icon("question-circle"),
+                            "This bar chart shows a population pyramid of
+                            the selected GP practice. Settings can be used to
+                            show data for selected time frames (default is
+                            the most recent)."
                         ),
-                        box(
-                            title = "Population pyramid",
+                        popover(
+                            id = ns("pop_pryramid_settings"),
+                            bs_icon("gear", class = "ms-auto"),
                             selectInput(
                                 ns("pop_pyramid_select"),
                                 label = "Select time frame",
                                 choices = unique(self[["data"]]()[["Date"]])
-                            ),
-                            spinner(plotlyOutput(ns("pop_pyramid"))),
-                            width = 6
+                            )
                         )
                     ),
-                    downloadButton(ns("download"))
-                )
+                    spinner(plotlyOutput(ns("pop_pyramid")))
+                ),
+                card(downloadButton(ns("download")))
             )
         },
         #' @description

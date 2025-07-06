@@ -153,57 +153,86 @@ gp_grp <- R6Class("gp_grp",
         #'     Namespace of shiny application page.
         ui = function(ns) {
             ns <- NS(ns(self[["id"]]()))
-            box(
-                title = "General Practice",
-                box(
-                    title = "Population trend",
-                    selectInput(
-                        inputId = ns("pop_trend_select"),
-                        label = "Select gender",
-                        choices = private[["gender_choices"]](),
-                        selected = "All"
+            nav_panel(
+                title = "General practice",
+                div(
+                    card(
+                        full_screen = TRUE,
+                        card_header(
+                            "Population trend",
+                            popover(
+                                id = ns("pop_trend_help"),
+                                bs_icon("question-circle"),
+                                "This line chart shows the population trend of
+                                selected GP practices over time. Settings can
+                                be used to show trends for selected genders and
+                                practices."
+                            ),
+                            popover(
+                                id = ns("pop_trend_settings"),
+                                bs_icon("gear", class = "ms-auto"),
+                                selectInput(
+                                    inputId = ns("pop_trend_select"),
+                                    label = "Select gender",
+                                    choices = private[["gender_choices"]](),
+                                    selected = "All"
+                                ),
+                                pickerInput(
+                                    inputId = ns("pop_trend_select_practice"),
+                                    label = "Select GP practices",
+                                    choices = private[["id_name_selection"]](),
+                                    selected = private[["id_name_selection"]](),
+                                    inline = TRUE,
+                                    multiple = TRUE,
+                                    options = list(
+                                        `actions-box` = TRUE,
+                                        `selected-text-format` = "count > 1"
+                                    )
+                                )
+                            ),
+                            class = "d-flex align-items-center gap-1"
+                        ),
+                        spinner(plotlyOutput(outputId = ns("pop_trend")))
                     ),
-                    pickerInput(
-                        inputId = ns("pop_trend_select_practice"),
-                        label = "Select GP practices",
-                        choices = private[["id_name_selection"]](),
-                        selected = private[["id_name_selection"]](),
-                        inline = TRUE,
-                        multiple = TRUE,
-                        options = list(
-                            `actions-box` = TRUE,
-                            `selected-text-format` = "count > 1"
-                        )
+                    card(
+                        full_screen = TRUE,
+                        card_header(
+                            "Population pyramid",
+                             popover(
+                                id = ns("pop_pyramid_help"),
+                                bs_icon("question-circle"),
+                                "This bar chart shows a population pyramid of
+                                selected GP practices. Settings can be used to
+                                show data for selected time frames (default is
+                                the most recent) and selected practices."
+                            ),
+                            popover(
+                                id = ns("pop_pyramid_settings"),
+                                bs_icon("gear", class = "ms-auto"),
+                                selectInput(
+                                    inputId = ns("pop_pyramid_select_date"),
+                                    label = "Select time frame",
+                                    choices = private[["date_choices"]]()
+                                ),
+                                pickerInput(
+                                    inputId = ns("pop_pyramid_select_practice"),
+                                    label = "Select GP practices",
+                                    choices = private[["id_name_selection"]](),
+                                    selected = private[["id_name_selection"]](),
+                                    inline = TRUE,
+                                    multiple = TRUE,
+                                    options = list(
+                                        `actions-box` = TRUE,
+                                        `selected-text-format` = "count > 1"
+                                    )
+                                )
+                            ),
+                            class = "d-flex align-items-center gap-1"
+                        ),
+                        spinner(plotlyOutput(outputId = ns("pop_pyramid")))
                     ),
-                    spinner(plotlyOutput(outputId = ns("pop_trend"))),
-                    width = 12
-                ),
-                box(
-                    title = "Population pyramid",
-                    selectInput(
-                        inputId = ns("pop_pyramid_select_date"),
-                        label = "Select time frame",
-                        choices = private[["date_choices"]]()
-                    ),
-                    pickerInput(
-                        inputId = ns("pop_pyramid_select_practice"),
-                        label = "Select GP practices",
-                        choices = private[["id_name_selection"]](),
-                        selected = private[["id_name_selection"]](),
-                        inline = TRUE,
-                        multiple = TRUE,
-                        options = list(
-                            `actions-box` = TRUE,
-                            `selected-text-format` = "count > 1"
-                        )
-                    ),
-                    spinner(plotlyOutput(outputId = ns("pop_pyramid"))),
-                    width = 12
-                ),
-                downloadButton(ns("download")),
-                width = 12,
-                status = "primary",
-                solidHeader = TRUE,
+                    card(downloadButton(ns("download")))
+                )
             )
         },
         #' @description
