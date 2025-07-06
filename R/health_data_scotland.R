@@ -81,13 +81,19 @@ health_data_scotland <- function(...) {
                 p(tags$a(href = "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d", " - Hospital specialty data")),
                 p(tags$a(href = "https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b", " - Hospital spatial data")),
                 p(tags$a(href = "https://data.gov.uk/dataset/27d0fe5f-79bb-4116-aec9-a8e565ff756a/nhs-health-boards", " - Health board spatial data")),
-                h4("GitHub"),
-                p(tags$a(href = "https://github.com/jsleight1/HealthDataScotland", " - HealthDataScotland")),
                 h4("Notes"),
                 p("Please note that GP practices and hospitals included in this application
                 are only those present in all three of the metadata, demography/specialty data
                 and spatial data. Where missing appears to be missing please refer to the
                 original published data sets.")
+            )
+        ),
+        nav_spacer(),
+        nav_item(
+            a(
+                href="https://github.com/jsleight1/HealthDataScotland",
+                target = "_blank",
+                bs_icon("github")
             )
         )
     )
