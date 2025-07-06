@@ -1,6 +1,6 @@
 download_UI <- function(id) {
     ns <- NS(id)
-    uiOutput(ns("download_uis"))
+    card(uiOutput(ns("download_uis")))
 }
 
 download_server <- function(id, data) {
@@ -10,9 +10,7 @@ download_server <- function(id, data) {
             ns <- session[["ns"]]
             output[["download_uis"]] <- renderUI({
                 purrr::walk(data, ~.x[["download_server"]]())
-                fluidRow(
-                    purrr::imap(data, ~.x[["download_ui"]](ns, .y))
-                )
+                reduce(purrr::imap(data, ~.x[["download_ui"]](ns, .y)), navset_bar)
             })
         }
     )

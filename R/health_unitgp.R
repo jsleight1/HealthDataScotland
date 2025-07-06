@@ -133,19 +133,26 @@ health_unitgrp <- R6Class(
         #'     Character title of box. Default is "Health data"
         download_ui = function(ns, title = "Health data") {
             ns <- NS(ns(paste0(self[["id"]](), "_download")))
-            card(
-                card_header(
-                    title,
-                    tags[["button"]](
-                        "Download as CSV",
-                        onclick = paste0(
-                            "Reactable.downloadDataCSV('",
-                            ns("health_data"),
-                            "', 'health_data.csv')"
+            nav_panel(
+                title = title,
+                card(
+                    full_screen = TRUE,
+                    card_header(
+                        popover(
+                            id = ns("download_settings"),
+                            bs_icon("gear", class = "ms-auto"),
+                            tags[["button"]](
+                                "Download as CSV",
+                                onclick = paste0(
+                                    "Reactable.downloadDataCSV('",
+                                    ns("health_data"),
+                                    "', 'health_data.csv')"
+                                )
+                            )
                         )
-                    )
-                ),
-                spinner(reactableOutput(ns("table")))
+                    ),
+                    div(spinner(reactableOutput(ns("table"))))
+                )
             )
         },
         #' @description
