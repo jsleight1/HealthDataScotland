@@ -4,7 +4,6 @@ gp_grp <- R6Class("gp_grp",
     inherit = health_unitgrp,
     private = list(
         population_pyramid = function(practices = self[["ids"]](), ...) {
-            browser()
             out <- self[["subset"]](id = practices)[["data"]]() |>
                 map(function(i) i[["plot"]](type = "population_pyramid"))
             out |>
