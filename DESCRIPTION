@@ -17,6 +17,7 @@ Imports:
     bslib,
     bsicons,
     dplyr,
+    echarts4r,
     ggplot2,
     glue,
     httr2,

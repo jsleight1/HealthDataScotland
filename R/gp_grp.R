@@ -3,90 +3,20 @@
 gp_grp <- R6Class("gp_grp",
     inherit = health_unitgrp,
     private = list(
-        population_pyramid_data = function(
-                date,
-                practices = self[["ids"]](),
-                ...
-            ) {
-            private[["map_combine"]](
-                    func = "plot_data",
-                    type = "population_pyramid",
-                    date = date,
-                    ...
-                ) |>
-                filter(.data[["ID"]] %in% practices)
+        population_pyramid = function(practices = self[["ids"]](), ...) {
+            browser()
+            out <- self[["subset"]](id = practices)[["data"]]() |>
+                map(function(i) i[["plot"]](type = "population_pyramid"))
+            out |>
+                append(c(rows = length(out), cols = 1)) %>%
+                do.call(e_arrange, .)
         },
-        population_pyramid = function(...) {
-            dat <- self[["plot_data"]]("population_pyramid", ...)
-            labels <- private[["id_name_labels"]](dat, "GPPracticeName")
-            plot <- ggplot(
-                dat,
-                aes(
-                    Population = .data[["Population"]],
-                    ID = .data[["ID"]],
-                    GPPracticeName = .data[["GPPracticeName"]]
-                )
-            ) +
-                geom_bar(
-                    aes(
-                        x = .data[["Age"]],
-                        fill = .data[["Gender"]],
-                        y = ifelse(Gender == "Male",
-                            -.data[["Population"]],
-                            .data[["Population"]]
-                        )
-                    ),
-                    stat = "identity"
-                ) +
-                scale_y_continuous(
-                    labels = abs,
-                    limits = max(dat$Population) * c(-1,1)
-                ) +
-                coord_flip() +
-                facet_wrap(~.data[["ID"]], labeller = labeller(ID = labels)) +
-                theme_bw() +
-                ylab(NULL) +
-                xlab(NULL)
-            ggplotly(plot, tooltip = c("Gender", "Age", "Population", "ID",
-                "GPPracticeName"))
-        },
-        population_trend_data = function(
-                gender = "All",
-                practices = self[["ids"]](),
-                ...
-            ) {
-            private[["map_combine"]](
-                    func = "plot_data",
-                    type = "population_trend",
-                    gender = gender,
-                    ...
-                ) |>
-                filter(.data[["ID"]] %in% practices)
-        },
-        population_trend = function( ...) {
-            dat <- self[["plot_data"]]("population_trend", ...)
-            labels <- private[["id_name_labels"]](dat, "GPPracticeName")
-            plot <- ggplot(
-                dat,
-                aes(
-                    x = .data[["Date"]],
-                    y = .data[["Population"]],
-                    colour = .data[["ID"]],
-                    Gender = .data[["Gender"]],
-                    GPPracticeName = .data[["GPPracticeName"]]
-                )
-            ) +
-                geom_line() +
-                theme_bw() +
-                theme(axis.text.x = element_text(angle = 90))
-            out <- ggplotly(plot, tooltip = c("Date", "Gender", "Population", "ID",
-                "GPPracticeName"))
-            # Manually required as ggplot doesn't handle scale_colour_hue.
-            out[["x"]][["data"]][] <- map(out[["x"]][["data"]], function(i) {
-                i[["name"]] <- labels[[i[["name"]]]]
-                i
-            })
-            out
+        population_trend = function(practices = self[["ids"]](), ...) {
+            out <- self[["subset"]](id = practices)[["data"]]() |>
+                map(function(i) i[["plot"]](type = "population_trend"))
+            out |>
+                append(c(rows = length(out), cols = 1)) %>%
+                do.call(e_arrange, .)
         },
         date_choices = function() {
             private[["map_combine"]](func = "data") |>
@@ -117,19 +47,6 @@ gp_grp <- R6Class("gp_grp",
             switch(type,
                 "population_pyramid" = private[["population_pyramid"]](...),
                 "population_trend" = private[["population_trend"]](...)
-            )
-        },
-        #' @description
-        #' Generate plot data for gp grp.
-        #' @param type (character(1))\cr
-        #'     Character specifying plot type. See `available_plots`
-        #'   for options.
-        #' @param ... Passed to plot_data functions.
-        plot_data = function(type, ...) {
-            type <- arg_match(type, values = self[["available_plots"]]())
-            switch(type,
-                "population_pyramid" = private[["population_pyramid_data"]](...),
-                "population_trend" = private[["population_trend_data"]](...)
             )
         },
         #' @description
@@ -165,18 +82,11 @@ gp_grp <- R6Class("gp_grp",
                                 bs_icon("question-circle"),
                                 "This line chart shows the population trend of
                                 selected GP practices over time. Settings can
-                                be used to show trends for selected genders and
-                                practices."
+                                be used to show trends for selected practices."
                             ),
                             popover(
                                 id = ns("pop_trend_settings"),
                                 bs_icon("gear", class = "ms-auto"),
-                                selectInput(
-                                    inputId = ns("pop_trend_select"),
-                                    label = "Select gender",
-                                    choices = private[["gender_choices"]](),
-                                    selected = "All"
-                                ),
                                 pickerInput(
                                     inputId = ns("pop_trend_select_practice"),
                                     label = "Select GP practices",
@@ -192,7 +102,7 @@ gp_grp <- R6Class("gp_grp",
                             ),
                             class = "d-flex align-items-center gap-1"
                         ),
-                        spinner(plotlyOutput(outputId = ns("pop_trend")))
+                        spinner(uiOutput(outputId = ns("pop_trend")))
                     ),
                     card(
                         full_screen = TRUE,
@@ -209,11 +119,6 @@ gp_grp <- R6Class("gp_grp",
                             popover(
                                 id = ns("pop_pyramid_settings"),
                                 bs_icon("gear", class = "ms-auto"),
-                                selectInput(
-                                    inputId = ns("pop_pyramid_select_date"),
-                                    label = "Select time frame",
-                                    choices = private[["date_choices"]]()
-                                ),
                                 pickerInput(
                                     inputId = ns("pop_pyramid_select_practice"),
                                     label = "Select GP practices",
@@ -229,7 +134,7 @@ gp_grp <- R6Class("gp_grp",
                             ),
                             class = "d-flex align-items-center gap-1"
                         ),
-                        spinner(plotlyOutput(outputId = ns("pop_pyramid")))
+                        spinner(uiOutput(outputId = ns("pop_pyramid")))
                     ),
                     card(downloadButton(ns("download")))
                 )
@@ -241,17 +146,15 @@ gp_grp <- R6Class("gp_grp",
             moduleServer(
                 self[["id"]](),
                 function(input, output, session) {
-                    output[["pop_trend"]] <- renderPlotly(
+                    output[["pop_trend"]] <- renderUI(
                         self[["plot"]](
                             type = "population_trend",
-                            gender = req(input[["pop_trend_select"]]),
                             practices = req(input[["pop_trend_select_practice"]])
                         )
                     )
-                    output[["pop_pyramid"]] <- renderPlotly(
+                    output[["pop_pyramid"]] <- renderUI(
                         self[["plot"]](
                             type = "population_pyramid",
-                            date = req(input[["pop_pyramid_select_date"]]),
                             practices = req(input[["pop_pyramid_select_practice"]])
                         )
                     )

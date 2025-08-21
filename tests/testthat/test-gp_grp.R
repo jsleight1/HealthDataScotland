@@ -51,32 +51,11 @@ test_that("gp_grp class works", {
 })
 
 test_that("gp_grp class can be plotted", {
-    gp_grp_unit[["plot"]](type = "population_pyramid", date = 20240401) |>
+    gp_grp_unit[["plot"]](type = "population_pyramid") |>
         suppressWarnings() |>
-        expect_s3_class("plotly")
-    expect_s3_class(gp_grp_unit[["plot"]](type = "population_trend"), "plotly")
-})
-
-test_that("gp_grp plot data works", {
-    out <- gp_grp_unit[["plot_data"]](
-            type = "population_trend",
-            practices = "10002"
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
-
-    out <- gp_grp_unit[["plot_data"]](
-            type = "population_pyramid",
-            date = 20240401,
-            practices = "10002"
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
-
-    gp_grp_unit[["plot_data"]](type = "p") |>
-        expect_error("`type` must be one.+")
+        expect_s3_class("shiny.tag")
+    gp_grp_unit[["plot"]](type = "population_trend") |>
+        expect_s3_class("shiny.tag")
 })
 
 test_that("gp_grp subset works", {

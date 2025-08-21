@@ -3,6 +3,7 @@
 export(health_data_scotland)
 import(bslib)
 import(dplyr)
+import(echarts4r)
 import(ggplot2)
 import(leaflet)
 import(shiny)

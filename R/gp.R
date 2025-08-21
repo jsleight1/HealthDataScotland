@@ -12,71 +12,87 @@ gp <- R6Class("gp",
                 "Postcode", "TelephoneNumber", "PracticeType", "GPCluster",
                 "Date")
         },
-        population_pyramid_data = function(date) {
+        population_pyramid_data = function() {
             self[["data"]]() |>
-                filter(.data[["Date"]] == date, .data[["Sex"]] != "All") |>
-                select("Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
+                filter(.data[["Sex"]] != "All") |>
+                select("Date", "Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
                     -"AllAges", "GPPracticeName") |>
                 pivot_longer(
-                    -c("Gender", "GPPracticeName"),
+                    -c("Gender", "GPPracticeName", "Date"),
                     names_to = "Age",
                     values_to = "Population"
                 ) |>
-                mutate(Age = factor(.data[["Age"]], levels = c(
-                    "Ages85plus",
-                    "Ages75to84",
-                    "Ages65to74",
-                    "Ages45to64",
-                    "Ages25to44",
-                    "Ages15to24",
-                    "Ages5to14",
-                    "Ages0to4"
-                )))
+                pivot_wider(names_from = "Gender", values_from = "Population") |>
+                mutate(
+                    Age = factor(.data[["Age"]], levels = c(
+                        "Ages85plus",
+                        "Ages75to84",
+                        "Ages65to74",
+                        "Ages45to64",
+                        "Ages25to44",
+                        "Ages15to24",
+                        "Ages5to14",
+                        "Ages0to4"
+                    )),
+                    Female = Female * -1
+                ) |>
+                group_by(.data[["Date"]])
         },
-        population_pyramid = function(date, ...) {
-            dat <- self[["plot_data"]]("population_pyramid", date, ...)
-            plot <- ggplot(dat, aes(Population = .data[["Population"]])) +
-                geom_bar(
-                    aes(
-                        x = .data[["Age"]],
-                        fill = .data[["Gender"]],
-                        y = ifelse(.data[["Gender"]] == "Male",
-                            -.data[["Population"]],
-                            .data[["Population"]]
+        population_pyramid = function(...) {
+            self[["plot_data"]]("population_pyramid", ...) |>
+                e_charts(Age, timeline = TRUE) |>
+                e_bar(Male, stack = "quantity") |>
+                e_bar(Female, stack = "quantity") |>
+                e_flip_coords() |>
+                e_x_axis(
+                    axisLabel = list(
+                        formatter = htmlwidgets::JS(
+                            'function (value) {
+                                return(Math.abs(value))
+                            }'
                         )
-                    ),
-                    stat = "identity"
-                ) +
-                scale_y_continuous(
-                    labels = abs,
-                    limits = max(dat$Population) * c(-1,1)
-                ) +
-                coord_flip() +
-                theme_bw() +
-                ylab(NULL) +
-                xlab(NULL)
-            ggplotly(plot, tooltip = c("Gender", "Age", "Population"))
+                    )
+                ) |>
+                e_tooltip(
+                    trigger = "item",
+                    formatter = htmlwidgets::JS("
+                    function(params){
+                        return(
+                            '<strong>' + 'Age: ' + '</strong>' + params.name + ' years' + '<br />' +
+                            '<strong>' + 'Population: ' + '</strong>' + Math.abs(params.value[0])
+                        )
+                    }
+                    ")
+                ) |>
+                e_legend(
+                    top = 10,
+                    left = "center",
+                    data = c("Female", "Male")
+                ) |>
+                e_title(self[["title"]]())
         },
-        population_trend_data = function(gender = "All") {
+        population_trend_data = function() {
             self[["data"]]() |>
+                filter(.data[["Sex"]] != "All") |>
                 select("Date", "GPPracticeName", "Gender" = "Sex",
                     "Population" = "AllAges") |>
                 distinct() |>
-                filter(Gender == gender)
+                group_by(.data[["Gender"]])
         },
-        population_trend = function(gender = "All", ...) {
-            plot <- dat <- self[["plot_data"]]("population_trend", gender, ...) |>
-                ggplot(
-                    aes(
-                        x = .data[["Date"]],
-                        y = .data[["Population"]],
-                        group = .data[["Gender"]]
-                    )
-                ) +
-                    geom_line() +
-                    theme_bw() +
-                    theme(axis.text.x = element_text(angle = 90))
-            ggplotly(plot, tooltip = c("Date", "Gender", "Population"))
+        population_trend_y_range = function() {
+            pop <- self[["data"]]() |>
+                filter(.data[["Sex"]] != "All") |>
+                pull("AllAges")
+            c(floor(min(pop) * 0.99), ceiling(max(pop) * 1.01))
+        },
+        population_trend = function(...) {
+            y_range <- private[["population_trend_y_range"]]()
+            self[["plot_data"]]("population_trend", ...) |>
+                e_charts(Date) |>
+                e_line(Population) |>
+                e_tooltip(trigger = "axis") |>
+                e_y_axis(min = y_range[1], max = y_range[2]) |>
+                e_title(self[["title"]]())
         }
     ),
     public = list(
@@ -137,21 +153,10 @@ gp <- R6Class("gp",
                             bs_icon("question-circle"),
                             "This line chart shows the population trend for
                             the selected GP practice over time. Settings can
-                            be used to show trends for selected genders (
-                            default shows all combined)."
+                            be used to show trends for selected genders."
                         ),
-                        popover(
-                            id = ns("pop_trend_settings"),
-                            bs_icon("gear", class = "ms-auto"),
-                            selectInput(
-                                ns("pop_trend_select"),
-                                label = "Select gender",
-                                choices = unique(self[["data"]]()[["Sex"]]),
-                                selected = "All"
-                            )
-                        )
                     ),
-                    spinner(plotlyOutput(ns("pop_trend")))
+                    spinner(echarts4rOutput(ns("pop_trend")))
                 ),
                 card(
                     full_screen = TRUE,
@@ -162,20 +167,10 @@ gp <- R6Class("gp",
                             bs_icon("question-circle"),
                             "This bar chart shows a population pyramid of
                             the selected GP practice. Settings can be used to
-                            show data for selected time frames (default is
-                            the most recent)."
-                        ),
-                        popover(
-                            id = ns("pop_pryramid_settings"),
-                            bs_icon("gear", class = "ms-auto"),
-                            selectInput(
-                                ns("pop_pyramid_select"),
-                                label = "Select time frame",
-                                choices = unique(self[["data"]]()[["Date"]])
-                            )
+                            show data for selected time frames"
                         )
                     ),
-                    spinner(plotlyOutput(ns("pop_pyramid")))
+                    spinner(echarts4rOutput(ns("pop_pyramid")))
                 ),
                 card(downloadButton(ns("download")))
             )
@@ -186,17 +181,11 @@ gp <- R6Class("gp",
             moduleServer(
                 self[["ID"]](),
                 function(input, output, session) {
-                    output[["pop_trend"]] <- renderPlotly(
-                        self[["plot"]](
-                            type = "population_trend",
-                            gender = req(input[["pop_trend_select"]])
-                        )
+                    output[["pop_trend"]] <- renderEcharts4r(
+                        self[["plot"]](type = "population_trend")
                     )
-                    output[["pop_pyramid"]] <- renderPlotly(
-                        self[["plot"]](
-                            type = "population_pyramid",
-                            date = req(input[["pop_pyramid_select"]])
-                        )
+                    output[["pop_pyramid"]] <- renderEcharts4r(
+                        self[["plot"]](type = "population_pyramid")
                     )
                     output[["download"]] <- downloadHandler(
                         filename = function() "gp_data.csv",

@@ -1,4 +1,4 @@
-#' @import ggplot2 dplyr shiny shinydashboard leaflet bslib
+#' @import ggplot2 dplyr shiny shinydashboard leaflet bslib echarts4r
 NULL
 
 #' @importFrom R6 R6Class
