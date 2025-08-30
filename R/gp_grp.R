@@ -98,8 +98,7 @@ gp_grp <- R6Class("gp_grp",
                                         `selected-text-format` = "count > 1"
                                     )
                                 )
-                            ),
-                            class = "d-flex align-items-center gap-1"
+                            )
                         ),
                         spinner(uiOutput(outputId = ns("pop_trend")))
                     ),
@@ -130,8 +129,7 @@ gp_grp <- R6Class("gp_grp",
                                         `selected-text-format` = "count > 1"
                                     )
                                 )
-                            ),
-                            class = "d-flex align-items-center gap-1"
+                            )
                         ),
                         spinner(uiOutput(outputId = ns("pop_pyramid")))
                     ),
@@ -159,6 +157,16 @@ gp_grp <- R6Class("gp_grp",
                     )
                     output[["download"]] <- self[["download_handler"]]()
                 }
+            )
+        },
+        group_choices = function() {
+            c("GP cluster", "Health board", "National", "Map")
+        },
+        group_column = function(x) {
+            switch(arg_match(x, self[["group_choices"]]()),
+                "GP cluster" = "GPCluster",
+                "Health board" = "HBName",
+                "National" = "ID"
             )
         }
     )

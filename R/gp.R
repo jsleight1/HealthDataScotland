@@ -102,6 +102,11 @@ gp <- R6Class("gp",
             unique(self[["data"]]()[["TelephoneNumber"]])
         },
         #' @description
+        #' Get GP cluster
+        gp_cluster = function() {
+            unique(self[["data"]]()[["GPCluster"]])
+        },
+        #' @description
         #' Get character vector of available plots for gp unit. Options
         #'   are either "population_pyramid" plot or "population_trend" plot.
         available_plots = function() {

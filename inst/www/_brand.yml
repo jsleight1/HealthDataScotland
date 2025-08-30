@@ -1,0 +1,8 @@
+defaults:
+  bootstrap:
+    rules: |
+      // Customise selectize dropdown to open below input
+      .selectize-dropdown {
+        top: 100% !important;
+        bottom: auto !important;
+      }

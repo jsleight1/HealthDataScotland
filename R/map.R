@@ -36,8 +36,7 @@ map_UI <- function(id, boards) {
                     multiple = TRUE
                 ),
                 title = "Map settings"
-            ),
-            class = "d-flex align-items-center gap-1"
+            )
         ),
         leafletOutput(ns("map"), width = "100%", height = "100%")
     )
@@ -184,46 +183,6 @@ subset_selected_data <- function(x, data) {
     x <- group_split(x, .data[["type"]])
     names(x) <- map_chr(x, ~unique(.x[["type"]]))
     map(x, ~data[[unique(.x[["type"]])]][["subset"]](.x[["ID"]]))
-}
-
-map_comparison_UI <- function(id) {
-    ns <- NS(id)
-    card(
-        full_screen = TRUE,
-        uiOutput(ns("comparison_boxes"))
-    )
-}
-
-map_comparison_server <- function(id, data) {
-     moduleServer(
-        id,
-        function(input, output, session) {
-            ns <- session[["ns"]]
-
-            output[["comparison_boxes"]] <- renderUI({
-                if (is.null(data())) {
-                    show_alert(
-                        title = "Warning",
-                        text = "No data selected",
-                        type = "warning"
-                    )
-                } else {
-                    if (any(purrr::map_lgl(data(), ~length(.x[["ids"]]()) > 10))) {
-                        show_alert(
-                            title = "Warning",
-                            text = "
-                                Please be aware that selecting > 10 datasets can cause
-                                issues with data performance and presentation.
-                            ",
-                            type = "warning"
-                        )
-                    }
-                    purrr::walk(data(), ~.x[["server"]]())
-                    reduce(purrr::map(data(), ~.x[["ui"]](ns)), navset_bar)
-                }
-            })
-        }
-    )
 }
 
 spinner <- function(...) {
