@@ -20,6 +20,8 @@ R6 class storing health statistics for a list of hospital health units.
 \item \href{#method-hospital_grp-summary}{\code{hospital_grp$summary()}}
 \item \href{#method-hospital_grp-ui}{\code{hospital_grp$ui()}}
 \item \href{#method-hospital_grp-server}{\code{hospital_grp$server()}}
+\item \href{#method-hospital_grp-group_choices}{\code{hospital_grp$group_choices()}}
+\item \href{#method-hospital_grp-group_column}{\code{hospital_grp$group_column()}}
 \item \href{#method-hospital_grp-clone}{\code{hospital_grp$clone()}}
 }
 }
@@ -137,6 +139,24 @@ Create UI for hospital group object.
 Create server for hospital group object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital_grp$server()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital_grp-group_choices"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital_grp-group_choices}{}}}
+\subsection{Method \code{group_choices()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$group_choices()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital_grp-group_column"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital_grp-group_column}{}}}
+\subsection{Method \code{group_column()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$group_column(x)}\if{html}{\out{</div>}}
 }
 
 }

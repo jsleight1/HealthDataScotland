@@ -82,22 +82,6 @@ gp_grp <- R6Class("gp_grp",
                                 "This line chart shows the population trend of
                                 selected GP practices over time. Settings can
                                 be used to show trends for selected practices."
-                            ),
-                            popover(
-                                id = ns("pop_trend_settings"),
-                                bs_icon("gear", class = "ms-auto"),
-                                pickerInput(
-                                    inputId = ns("pop_trend_select_practice"),
-                                    label = "Select GP practices",
-                                    choices = private[["id_name_selection"]](),
-                                    selected = private[["id_name_selection"]](),
-                                    inline = TRUE,
-                                    multiple = TRUE,
-                                    options = list(
-                                        `actions-box` = TRUE,
-                                        `selected-text-format` = "count > 1"
-                                    )
-                                )
                             )
                         ),
                         spinner(uiOutput(outputId = ns("pop_trend")))
@@ -113,22 +97,6 @@ gp_grp <- R6Class("gp_grp",
                                 selected GP practices. Settings can be used to
                                 show data for selected time frames (default is
                                 the most recent) and selected practices."
-                            ),
-                            popover(
-                                id = ns("pop_pyramid_settings"),
-                                bs_icon("gear", class = "ms-auto"),
-                                pickerInput(
-                                    inputId = ns("pop_pyramid_select_practice"),
-                                    label = "Select GP practices",
-                                    choices = private[["id_name_selection"]](),
-                                    selected = private[["id_name_selection"]](),
-                                    inline = TRUE,
-                                    multiple = TRUE,
-                                    options = list(
-                                        `actions-box` = TRUE,
-                                        `selected-text-format` = "count > 1"
-                                    )
-                                )
                             )
                         ),
                         spinner(uiOutput(outputId = ns("pop_pyramid")))
@@ -144,16 +112,10 @@ gp_grp <- R6Class("gp_grp",
                 self[["id"]](),
                 function(input, output, session) {
                     output[["pop_trend"]] <- renderUI(
-                        self[["plot"]](
-                            type = "population_trend",
-                            practices = req(input[["pop_trend_select_practice"]])
-                        )
+                        self[["plot"]](type = "population_trend")
                     )
                     output[["pop_pyramid"]] <- renderUI(
-                        self[["plot"]](
-                            type = "population_pyramid",
-                            practices = req(input[["pop_pyramid_select_practice"]])
-                        )
+                        self[["plot"]](type = "population_pyramid")
                     )
                     output[["download"]] <- self[["download_handler"]]()
                 }
