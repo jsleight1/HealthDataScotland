@@ -147,26 +147,13 @@ hospital_grp <- R6Class("hospital_grp",
                             popover(
                                 id = ns("hospital_annual_settings"),
                                 bs_icon("gear", class = "ms-auto"),
-                                pickerInput(
-                                    inputId = ns("hospital_annual_select"),
-                                    label = "Select hospitals",
-                                    choices = private[["id_name_selection"]](),
-                                    selected = private[["id_name_selection"]](),
-                                    inline = TRUE,
-                                    multiple = TRUE,
-                                    options = list(
-                                        `actions-box` = TRUE,
-                                        `selected-text-format` = "count > 1"
-                                    )
-                                ),
                                 selectInput(
                                     ns("specialty_annual_select"),
                                     label = "Select specialty",
                                     choices = private[["specialty_choices"]](),
                                     selected = "All Specialties"
                                 )
-                            ),
-                            class = "d-flex align-items-center gap-1"
+                            )
                         ),
                         spinner(plotlyOutput(ns("annual_beds")))
                     ),
@@ -186,25 +173,12 @@ hospital_grp <- R6Class("hospital_grp",
                             popover(
                                 id = ns("hospital_daily_settings"),
                                 bs_icon("gear", class = "ms-auto"),
-                                pickerInput(
-                                    inputId = ns("hospital_daily_select"),
-                                    label = "Select hospitals",
-                                    choices = private[["id_name_selection"]](),
-                                    selected = private[["id_name_selection"]](),
-                                    inline = TRUE,
-                                    multiple = TRUE,
-                                    options = list(
-                                        `actions-box` = TRUE,
-                                        `selected-text-format` = "count > 1"
-                                    )
-                                ),
                                 selectInput(
                                     ns("specialty_daily_select"),
                                     label = "Select specialty",
                                     choices = private[["specialty_choices"]](),
                                     selected = "All Specialties"
-                                ),
-                                class = "d-flex align-items-center gap-1"
+                                )
                             )
                         ),
                         spinner(plotlyOutput(ns("daily_beds")))
@@ -224,20 +198,27 @@ hospital_grp <- R6Class("hospital_grp",
                         self[["plot"]](
                             type = "specialty_line",
                             data_type = "annual",
-                            specialties = req(input[["specialty_annual_select"]]),
-                            hospitals = req(input[["hospital_annual_select"]])
+                            specialties = req(input[["specialty_annual_select"]])
                         )
                     )
                     output[["daily_beds"]] <- renderPlotly(
                         self[["plot"]](
                             type = "specialty_line",
                             data_type = "daily",
-                            specialties = req(input[["specialty_daily_select"]]),
-                            hospitals = req(input[["hospital_daily_select"]])
+                            specialties = req(input[["specialty_daily_select"]])
                         )
                     )
                     output[["download"]] <- self[["download_handler"]]()
                 }
+            )
+        },
+        group_choices = function() {
+            c("Health board", "National", "Map")
+        },
+        group_column = function(x) {
+            switch(arg_match(x, self[["group_choices"]]()),
+                "Health board" = "HBName",
+                "National" = "ID"
             )
         }
     )

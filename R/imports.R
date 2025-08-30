@@ -8,7 +8,7 @@ NULL
 #' @importFrom purrr imap_dfr map map_chr map_dfr reduce set_names
 #' @importFrom plotly ggplotly plotlyOutput renderPlotly
 #' @importFrom rlang arg_match
-#' @importFrom shinyWidgets addSpinner pickerInput show_alert
+#' @importFrom shinyWidgets addSpinner pickerInput show_alert updateVirtualSelect virtualSelectInput
 #' @importFrom tidyr pivot_longer unite
 #' @importFrom reactable reactable reactableOutput renderReactable
 #' @importFrom httr2 request req_retry req_perform resp_body_json resp_body_string

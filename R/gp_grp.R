@@ -176,21 +176,8 @@ gp_grp <- R6Class("gp_grp",
                                     label = "Select gender",
                                     choices = private[["gender_choices"]](),
                                     selected = "All"
-                                ),
-                                pickerInput(
-                                    inputId = ns("pop_trend_select_practice"),
-                                    label = "Select GP practices",
-                                    choices = private[["id_name_selection"]](),
-                                    selected = private[["id_name_selection"]](),
-                                    inline = TRUE,
-                                    multiple = TRUE,
-                                    options = list(
-                                        `actions-box` = TRUE,
-                                        `selected-text-format` = "count > 1"
-                                    )
                                 )
-                            ),
-                            class = "d-flex align-items-center gap-1"
+                            )
                         ),
                         spinner(plotlyOutput(outputId = ns("pop_trend")))
                     ),
@@ -213,21 +200,8 @@ gp_grp <- R6Class("gp_grp",
                                     inputId = ns("pop_pyramid_select_date"),
                                     label = "Select time frame",
                                     choices = private[["date_choices"]]()
-                                ),
-                                pickerInput(
-                                    inputId = ns("pop_pyramid_select_practice"),
-                                    label = "Select GP practices",
-                                    choices = private[["id_name_selection"]](),
-                                    selected = private[["id_name_selection"]](),
-                                    inline = TRUE,
-                                    multiple = TRUE,
-                                    options = list(
-                                        `actions-box` = TRUE,
-                                        `selected-text-format` = "count > 1"
-                                    )
                                 )
-                            ),
-                            class = "d-flex align-items-center gap-1"
+                            )
                         ),
                         spinner(plotlyOutput(outputId = ns("pop_pyramid")))
                     ),
@@ -245,18 +219,26 @@ gp_grp <- R6Class("gp_grp",
                         self[["plot"]](
                             type = "population_trend",
                             gender = req(input[["pop_trend_select"]]),
-                            practices = req(input[["pop_trend_select_practice"]])
                         )
                     )
                     output[["pop_pyramid"]] <- renderPlotly(
                         self[["plot"]](
                             type = "population_pyramid",
                             date = req(input[["pop_pyramid_select_date"]]),
-                            practices = req(input[["pop_pyramid_select_practice"]])
                         )
                     )
                     output[["download"]] <- self[["download_handler"]]()
                 }
+            )
+        },
+        group_choices = function() {
+            c("GP cluster", "Health board", "National", "Map")
+        },
+        group_column = function(x) {
+            switch(arg_match(x, self[["group_choices"]]()),
+                "GP cluster" = "GPCluster",
+                "Health board" = "HBName",
+                "National" = "ID"
             )
         }
     )

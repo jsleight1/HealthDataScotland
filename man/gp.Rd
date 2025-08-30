@@ -15,6 +15,7 @@ R6 class storing health statistics for a GP practice.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-gp-telephone}{\code{gp$telephone()}}
+\item \href{#method-gp-gp_cluster}{\code{gp$gp_cluster()}}
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
 \item \href{#method-gp-plot_data}{\code{gp$plot_data()}}
@@ -44,6 +45,16 @@ R6 class storing health statistics for a GP practice.
 Get telephone number of GP practice.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp$telephone()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-gp_cluster"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-gp_cluster}{}}}
+\subsection{Method \code{gp_cluster()}}{
+Get GP cluster
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$gp_cluster()}\if{html}{\out{</div>}}
 }
 
 }

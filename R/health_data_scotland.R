@@ -15,6 +15,9 @@ health_data_scotland <- function(...) {
         })
 
     ui <- page_navbar(
+        theme = bs_theme(
+            brand = system.file("www", "_brand.yml", package = "HealthDataScotland")
+        ),
         title = "Health Data Scotland",
         id = "main",
         nav_panel(
@@ -50,24 +53,18 @@ health_data_scotland <- function(...) {
             title = "Map",
             full_screen = TRUE,
             height = "600px",
-            navset_bar(
-                id = "map-nav",
-                nav_panel(
-                    title = "Interactive map",
-                    map_UI(
-                        id = "map",
-                        boards = get_sf("board") |>
-                            as_tibble() |>
-                            select("HBName", "ID") |>
-                            tibble::deframe()
-                    )
-                ),
-                nav_panel(
-                    title = "Comparison between selected health centres",
-                    map_comparison_UI(id = "map_comparison")
+            nav_panel(
+                title = "Interactive map",
+                map_UI(
+                    id = "map",
+                    boards = get_sf("board") |>
+                        as_tibble() |>
+                        select("HBName", "ID") |>
+                        tibble::deframe()
                 )
             )
         ),
+        nav_panel(title = "Comparison", comparison_UI("comparison", data)),
         nav_panel(title = "Downloads", download_UI("downloads")),
         nav_panel(
             title = "Resources",
@@ -103,8 +100,8 @@ health_data_scotland <- function(...) {
         observeEvent(input[["enter"]], {
             nav_select(id = "main", selected = "Map")
         })
-        selected_data <- map_server("map", data, get_sf("board"))
-        map_comparison_server("map_comparison", selected_data)
+        map_selected_data <- map_server("map", data, get_sf("board"))
+        comparison_server("comparison", data)
         download_server("downloads", data)
     }
 
