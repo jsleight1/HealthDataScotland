@@ -17,6 +17,20 @@ gp_grp <- R6Class("gp_grp",
                 append(c(rows = length(out), cols = 1)) %>%
                 do.call(e_arrange, .)
         },
+        population_bar = function(practices = self[["ids"]](), ...) {
+            private[["map_combine"]](func = "data") |>
+                filter(.data[["ID"]] %in% practices, .data[["Sex"]] != "All") |>
+                select("Date", "GPPracticeName", "Sex", "AllAges") |>
+                distinct() |>
+                pivot_wider(names_from = "Sex", values_from = "AllAges") |>
+                group_by(.data[["Date"]]) |>
+                e_charts(x = GPPracticeName, timeline = TRUE) |>
+                e_bar(Male, stack = "quantity") |>
+                e_bar(Female, stack = "quantity") |>
+                e_flip_coords() |>
+                e_tooltip(trigger = "axis") |>
+                e_timeline_opts(autoPlay = TRUE)
+        },
         date_choices = function() {
             private[["map_combine"]](func = "data") |>
                 pull("Date") |>
@@ -33,7 +47,7 @@ gp_grp <- R6Class("gp_grp",
         #' Get character vector of available plots for gp grp. Options
         #'   are either "population_pyramid" plot or "population_trend" plot.
         available_plots = function() {
-            c("population_pyramid", "population_trend")
+            c("population_pyramid", "population_trend", "population_bar")
         },
         #' @description
         #' Plot gp grp.
@@ -45,7 +59,8 @@ gp_grp <- R6Class("gp_grp",
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
                 "population_pyramid" = private[["population_pyramid"]](...),
-                "population_trend" = private[["population_trend"]](...)
+                "population_trend" = private[["population_trend"]](...),
+                "population_bar" = private[["population_bar"]](...)
             )
         },
         #' @description
@@ -72,6 +87,11 @@ gp_grp <- R6Class("gp_grp",
             nav_panel(
                 title = "General practice",
                 div(
+                    card(
+                        full_screen = TRUE,
+                        card_header("Population bar plot"),
+                        uiOutput(outputId = ns("pop_bar"))
+                    ),
                     card(
                         full_screen = TRUE,
                         card_header(
@@ -111,6 +131,9 @@ gp_grp <- R6Class("gp_grp",
             moduleServer(
                 self[["id"]](),
                 function(input, output, session) {
+                    output[["pop_bar"]] <- renderUI(
+                        self[["plot"]](type = "population_bar")
+                    )
                     output[["pop_trend"]] <- renderUI(
                         self[["plot"]](type = "population_trend")
                     )

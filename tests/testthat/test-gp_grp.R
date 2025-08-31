@@ -47,7 +47,7 @@ test_that("gp_grp class works", {
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("10002"), gp_unit)
     expect_identical(out[["available_plots"]](),
-        c("population_pyramid", "population_trend"))
+        c("population_pyramid", "population_trend", "population_bar"))
 })
 
 test_that("gp_grp class can be plotted", {
@@ -56,6 +56,8 @@ test_that("gp_grp class can be plotted", {
         expect_s3_class("shiny.tag")
     gp_grp_unit[["plot"]](type = "population_trend") |>
         expect_s3_class("shiny.tag")
+    gp_grp_unit[["plot"]](type = "population_bar") |>
+        expect_s3_class("echarts4r")
 })
 
 test_that("gp_grp subset works", {
