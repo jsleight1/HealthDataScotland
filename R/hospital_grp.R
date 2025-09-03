@@ -2,34 +2,6 @@
 hospital_grp <- R6Class("hospital_grp",
     inherit = health_unitgrp,
     private = list(
-        specialty_data = function(hospitals = self[["ids"]](), ...) {
-            private[["map_combine"]](
-                    func = "plot_data",
-                    type = "specialty_bar",
-                    ...
-                ) |>
-                filter(.data[["ID"]] %in% hospitals)
-        },
-        specialty_bar = function(...) {
-            dat <- self[["plot_data"]]("specialty_bar", ...)
-            labels <- private[["id_name_labels"]](dat, "HospitalName")
-            plot <- ggplot(
-                dat,
-                aes(
-                    x = .data[["FinancialYear"]],
-                    y = .data[["AllStaffedBeds"]],
-                    fill = .data[["SpecialtyName"]],
-                    ID = .data[["ID"]],
-                    HospitalName = .data[["HospitalName"]]
-                )
-            ) +
-                geom_bar(stat = "identity") +
-                theme_bw() +
-                theme(axis.text.x = element_text(angle = 90)) +
-                facet_wrap(~.data[["ID"]], labeller = labeller(ID = labels))
-            ggplotly(plot, tooltip = c("FinancialYear", "SpecialtyName",
-                "AllStaffedBeds", "ID", "HospitalName"))
-        },
         specialty_line_data = function(hospitals = self[["ids"]](), ...) {
             out <- private[["map_combine"]](
                     func = "plot_data",
@@ -43,31 +15,19 @@ hospital_grp <- R6Class("hospital_grp",
             out
         },
         specialty_line = function(...) {
-            dat <- self[["plot_data"]]("specialty_line", ...)
-            labels <- private[["id_name_labels"]](dat, "HospitalName")
-            plot <- ggplot(
-                dat,
-                aes(
-                    x = .data[["FinancialYear"]],
-                    y = .data[["value"]],
-                    color = .data[["name"]],
-                    text = .data[["text"]]
-                )
-            ) +
-                geom_point(aes(group = .data[["name"]])) +
-                geom_line(aes(group = .data[["name"]])) +
-                theme_bw() +
-                theme(
-                    axis.text.x = element_text(angle = 90),
-                    legend.position = "bottom",
-                    legend.title = element_blank()
-                ) +
-                labs(color = "Category") +
-                xlab(NULL) +
-                ylab(NULL) +
-                facet_wrap(~.data[["ID"]], labeller = labeller(ID = labels))
-            ggplotly(plot, tooltip = "text") |>
-                plotly::layout(legend = list(orientation = "h", x = 0.4, y = -0.4))
+            data <- self[["plot_data"]]("specialty_line", ...)
+            data |>
+                group_split(.data[["HospitalName"]]) |>
+                map(function(i) {
+                    i |>
+                        group_by(name) |>
+                        e_charts(FinancialYear) |>
+                        e_line(value) |>
+                        e_tooltip(trigger = "axis") |>
+                        e_title(unique(i[["HospitalName"]]))
+                }) |>
+                append(c(rows = length(unique(data[["HospitalName"]])), cols = 1)) %>%
+                do.call(e_arrange, .)
         },
         specialty_choices = function() {
             self[["data"]]() |>
@@ -83,7 +43,7 @@ hospital_grp <- R6Class("hospital_grp",
         #' Get character vector of available plots for hospital grp. Options
         #'   are either "specialty_bar" or "specialty_line" plot.
         available_plots = function() {
-            c("specialty_bar", "specialty_line")
+            c("specialty_line")
         },
         #' @description
         #' Plot hospital grp.
@@ -93,7 +53,6 @@ hospital_grp <- R6Class("hospital_grp",
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
-                "specialty_bar" = private[["specialty_bar"]],
                 "specialty_line" = private[["specialty_line"]]
             )(...)
         },
@@ -105,7 +64,6 @@ hospital_grp <- R6Class("hospital_grp",
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
-                "specialty_bar" = private[["specialty_data"]],
                 "specialty_line" = private[["specialty_line_data"]]
             )(...)
         },
@@ -142,7 +100,8 @@ hospital_grp <- R6Class("hospital_grp",
                                 available staffed beds and the number occupied
                                 in the selected hospitals. Settings can be used
                                 to show data for selected hospitals and specialities
-                                (default is to present data for all specialities)."
+                                (default is to present collated data for all
+                                specialities)."
                             ),
                             popover(
                                 id = ns("hospital_annual_settings"),
@@ -155,7 +114,7 @@ hospital_grp <- R6Class("hospital_grp",
                                 )
                             )
                         ),
-                        spinner(plotlyOutput(ns("annual_beds")))
+                        spinner(uiOutput(ns("annual_beds")))
                     ),
                     card(
                         full_screen = TRUE,
@@ -168,7 +127,8 @@ hospital_grp <- R6Class("hospital_grp",
                                 available staffed beds and the number occupied
                                 in the selected hospitals. Settings can be used
                                 to show data for selected hospitals and specialities
-                                (default is to present data for all specialities)."
+                                (default is to present collated data for all
+                                specialities)."
                             ),
                             popover(
                                 id = ns("hospital_daily_settings"),
@@ -181,7 +141,7 @@ hospital_grp <- R6Class("hospital_grp",
                                 )
                             )
                         ),
-                        spinner(plotlyOutput(ns("daily_beds")))
+                        spinner(uiOutput(ns("daily_beds")))
                     ),
                     card(downloadButton(ns("download")))
                 )
@@ -194,14 +154,14 @@ hospital_grp <- R6Class("hospital_grp",
                 self[["id"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
-                    output[["annual_beds"]] <- renderPlotly(
+                    output[["annual_beds"]] <- renderUI(
                         self[["plot"]](
                             type = "specialty_line",
                             data_type = "annual",
                             specialties = req(input[["specialty_annual_select"]])
                         )
                     )
-                    output[["daily_beds"]] <- renderPlotly(
+                    output[["daily_beds"]] <- renderUI(
                         self[["plot"]](
                             type = "specialty_line",
                             data_type = "daily",

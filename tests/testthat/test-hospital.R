@@ -27,26 +27,14 @@ test_that("hospital class works", {
     expect_identical(out[["title"]](), "Arran War Memorial Hospital")
     expect_identical(out[["address"]](),
         "Lamlash, Isle of Arran, KA278LF")
-    expect_identical(
-        out[["available_plots"]](),
-        c("specialty_bar", "specialty_line")
-    )
+    expect_identical(out[["available_plots"]](), "specialty_line")
 })
 
 test_that("hospital class can be plotted", {
-    expect_s3_class(hosp_unit[["plot"]](type = "specialty_bar"), "plotly")
-    expect_s3_class(hosp_unit[["plot"]](type = "specialty_line"), "plotly")
+    expect_s3_class(hosp_unit[["plot"]](type = "specialty_line"), "shiny.tag")
 })
 
 test_that("hospital plot data works", {
-    out <- hosp_unit[["plot_data"]](
-            type = "specialty_bar",
-            c("All Specialties", "General Medicine")
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
-
     out <- hosp_unit[["plot_data"]](
             type = "specialty_line",
             "annual",

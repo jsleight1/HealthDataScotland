@@ -50,27 +50,14 @@ test_that("hospital_grp class works", {
     expect_identical(out[["data"]](), list(hosp_unit, hosp_unit2))
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("A101H"), hosp_unit)
-    expect_identical(
-        out[["available_plots"]](),
-        c("specialty_bar", "specialty_line")
-    )
+    expect_identical(out[["available_plots"]](), "specialty_line")
 })
 
 test_that("hospital_grp class can be plotted", {
-    expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_bar"), "plotly")
-    expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_line"), "plotly")
+    expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_line"), "shiny.tag")
 })
 
 test_that("hospital_grp plot data works", {
-    out <- hosp_grp_unit[["plot_data"]](
-            type = "specialty_bar",
-            hospitals = "A101H",
-            specialties = c("All Specialties", "General Medicine")
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
-
     out <- hosp_grp_unit[["plot_data"]](
             type = "specialty_line",
             data_type = "annual",

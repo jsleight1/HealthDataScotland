@@ -33,10 +33,10 @@ test_that("gp class works", {
 })
 
 test_that("gp class can be plotted", {
-    gp_unit[["plot"]](type = "population_pyramid", date = 20240401) |>
+    gp_unit[["plot"]](type = "population_pyramid") |>
         suppressWarnings() |>
-        expect_s3_class("plotly")
-    expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "plotly")
+        expect_s3_class("echarts4r")
+    expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "echarts4r")
 })
 
 test_that("gp ui works", {

@@ -1,4 +1,4 @@
-#' @import ggplot2 dplyr shiny shinydashboard leaflet bslib
+#' @import ggplot2 dplyr shiny shinydashboard leaflet bslib echarts4r
 NULL
 
 #' @importFrom R6 R6Class
@@ -9,7 +9,7 @@ NULL
 #' @importFrom plotly ggplotly plotlyOutput renderPlotly
 #' @importFrom rlang arg_match
 #' @importFrom shinyWidgets addSpinner pickerInput show_alert updateVirtualSelect virtualSelectInput
-#' @importFrom tidyr pivot_longer unite
+#' @importFrom tidyr pivot_longer pivot_wider unite
 #' @importFrom reactable reactable reactableOutput renderReactable
 #' @importFrom httr2 request req_retry req_perform resp_body_json resp_body_string
 #' @importFrom glue glue
