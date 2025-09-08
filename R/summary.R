@@ -1,23 +1,4 @@
-comparison_UI <- function(id, data) {
-    ns <- NS(id)
-    navset_card_tab(
-        comparison_unit_UI(ns("gp"), "GP", data[["General practice"]]),
-        comparison_unit_UI(ns("hospital"), "Hospital", data[["Hospital"]])
-    )
-}
-
-comparison_server <- function(id, data) {
-     moduleServer(
-        id,
-        function(input, output, session) {
-            ns <- session[["ns"]]
-            comparison_unit_server("gp", "GP", data[["General practice"]])
-            comparison_unit_server("hospital", "Hospital", data[["Hospital"]])
-        }
-    )
-}
-
-comparison_unit_UI <- function(id, title, data) {
+summary_UI <- function(id, title, data) {
     ns <- NS(id)
     nav_panel(
         full_screen = TRUE,
@@ -35,12 +16,12 @@ comparison_unit_UI <- function(id, title, data) {
                     label = "Create comparisons"
                 )
             ),
-            uiOutput(ns("comparison_boxes"))
+            uiOutput(ns("summary_boxes"))
         )
     )
 }
 
-comparison_unit_server <- function(id, title, data) {
+summary_server <- function(id, title, data) {
     moduleServer(
         id,
         function(input, output, session) {
@@ -164,7 +145,7 @@ comparison_unit_server <- function(id, title, data) {
                         type = "warning"
                     )
                 } else {
-                    output[["comparison_boxes"]] <- renderUI({
+                    output[["summary_boxes"]] <- renderUI({
                         selected_data()[["server"]]()
                         selected_data()[["ui"]](ns)
                     })
@@ -174,7 +155,7 @@ comparison_unit_server <- function(id, title, data) {
 
             observe({
                 if (input[["confirm_comparison"]]) {
-                    output[["comparison_boxes"]] <- renderUI({
+                    output[["summary_boxes"]] <- renderUI({
                         selected_data()[["server"]]()
                         selected_data()[["ui"]](ns)
                     })
