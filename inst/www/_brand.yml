@@ -1,8 +1,39 @@
+color:
+  palette:
+    # Derived from default plotly discrete colors
+    blue: "#1f77b4"
+    orange: "#ff7f0e"
+    green: "#2ca02c"
+    red: "#d62728"
+    purple: "#9467bd"
+    pink: "#e377c2"
+    teal: "#17becf"
+    black: "#000"
+    white: "#fff"
+    gray: "#7f7f7f"
+  primary: "#636EFA"
+  secondary: "#636EFA"
+  light: "#f3f3f3"
+  dark: "#212529"
+
 defaults:
   bootstrap:
     rules: |
+      .bslib-card {
+        border-color: var(--brand-blue) !important;
+      }
+      .popover-header {
+        color: var(--brand-white);
+        background-color: var(--brand-blue);
+      }
       // Customise selectize dropdown to open below input
       .selectize-dropdown {
         top: 100% !important;
         bottom: auto !important;
+      }
+      // Customise style of footer
+      .footer {
+        background-color: var(--brand-blue);
+        color: var(--brand-white);
+        text-align: center;
       }

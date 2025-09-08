@@ -33,21 +33,7 @@ health_data_scotland <- function(...) {
                     download (see Downloads page).")
                 )
             ),
-            reduce(value_boxes, layout_column_wrap),
-            card(
-                shinyWidgets::actionBttn(
-                    inputId = "enter",
-                    label = "Explore Map",
-                    icons = bs_icon("search")
-                )
-            ),
-            card(
-                p("Please note that this application was built as a hobby project.
-                Therefore informed decisions based on the presented data should
-                only be made after consulating the relevant published data sets.
-                These can be accessed in the references section.",
-                style = "color:red; padding-top:10px;")
-            )
+            reduce(value_boxes, layout_column_wrap)
         ),
         nav_panel(
             title = "Map",
@@ -64,12 +50,14 @@ health_data_scotland <- function(...) {
                 )
             )
         ),
-        nav_panel(title = "Comparison", comparison_UI("comparison", data)),
-        nav_panel(title = "Downloads", download_UI("downloads")),
+        nav_menu(
+            title = "Summary",
+            summary_UI("gp_summary", "GP", data[["General practice"]]),
+            summary_UI("hospital_summary", "Hospital", data[["Hospital"]])
+        ),
         nav_panel(
-            title = "Resources",
+            title = "Notes",
             card(
-                card_header("References"),
                 h4("Data sources"),
                 p(tags$a(href = "https://www.opendata.nhs.scot/dataset/f23655c3-6e23-4103-a511-a80d998adb90", " - GP metadata")),
                 p(tags$a(href = "https://www.opendata.nhs.scot/dataset/e3300e98-cdd2-4f4e-a24e-06ee14fcc66c", " - GP demography data")),
@@ -78,7 +66,6 @@ health_data_scotland <- function(...) {
                 p(tags$a(href = "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d", " - Hospital specialty data")),
                 p(tags$a(href = "https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b", " - Hospital spatial data")),
                 p(tags$a(href = "https://data.gov.uk/dataset/27d0fe5f-79bb-4116-aec9-a8e565ff756a/nhs-health-boards", " - Health board spatial data")),
-                h4("Notes"),
                 p("Please note that GP practices and hospitals included in this application
                 are only those present in all three of the metadata, demography/specialty data
                 and spatial data. Where missing appears to be missing please refer to the
@@ -88,21 +75,29 @@ health_data_scotland <- function(...) {
         nav_spacer(),
         nav_item(
             a(
-                href="https://github.com/jsleight1/HealthDataScotland",
+                href = "https://www.linkedin.com/in/jack-sleight-461a6699/",
+                target = "_blank",
+                bs_icon("linkedin")
+            )
+        ),
+        nav_item(
+            a(
+                href = "https://github.com/jsleight1/HealthDataScotland",
                 target = "_blank",
                 bs_icon("github")
             )
+        ),
+        footer = div(
+            class = "footer",
+            "Created by Jack Sleight"
         )
     )
 
     server <- function(input, output) {
         requireNamespace("sf", quietly = TRUE)
-        observeEvent(input[["enter"]], {
-            nav_select(id = "main", selected = "Map")
-        })
         map_selected_data <- map_server("map", data, get_sf("board"))
-        comparison_server("comparison", data)
-        download_server("downloads", data)
+        summary_server("gp_summary", "GP", data[["General practice"]])
+        summary_server("hospital_summary", "Hospital", data[["Hospital"]])
     }
 
     shinyApp(ui, server, ...)

@@ -3,6 +3,7 @@ map_UI <- function(id, boards) {
     card(
         full_screen = TRUE,
         card_header(
+            "Interactive map",
             popover(
                 bs_icon("question-circle"),
                 "The interactive map below can be used to
