@@ -21,7 +21,7 @@ health_data_scotland <- function(...) {
         title = "Health Data Scotland",
         id = "main",
         nav_panel(
-            title = bs_icon("house"),
+            title = bs_icon("house-fill"),
             card(
                 full_screen = TRUE,
                 card_body(

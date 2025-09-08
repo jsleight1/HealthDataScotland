@@ -19,6 +19,17 @@ color:
 defaults:
   bootstrap:
     rules: |
+      .navbar {
+        --bslib-navbar-light-bg: var(--brand-blue);
+        --bslib-navbar-dark-bg: var(--brand-blue);
+        --bs-navbar-color: var(--brand-white);
+      }
+      .navbar-brand {
+        color: var(--brand-white);
+      }
+      .bi-house-fill {
+        color: var(--brand-white);
+      }
       .bslib-card {
         border-color: var(--brand-blue) !important;
       }
