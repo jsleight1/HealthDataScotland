@@ -4,23 +4,29 @@ gp_grp <- R6Class("gp_grp",
     inherit = health_unitgrp,
     private = list(
         date_choices = function() {
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 pull("Date") |>
                 unique()
         },
         gender_choices = function() {
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 pull("Sex") |>
                 unique()
         },
         health_board_choices = function() {
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 pull("HBName") |>
                 unique()
         },
         gp_choices = function() {
             paste(self[["ids"]](), "-", self[["titles"]]()) |>
                 unique()
+        },
+        trend_echart = function(x) {
+            super$trend_echart(x, "Date", "Population")
+        },
+        bar_echart = function(x) {
+            super$bar_echart(x, "Age", "Age", "Population")
         },
         factor_age = function(x) {
             x |>
@@ -39,23 +45,22 @@ gp_grp <- R6Class("gp_grp",
                 )
             )
         },
-        trend_echart = function(x) {
-            super$trend_echart(x, "Date", "Population")
+        factor_gender = function(x) {
+            x |>
+                mutate(Gender = factor(.data[["Gender"]], levels = c("Male", "Female")))
         },
-        bar_echart = function(x) {
-            super$bar_echart(x, "Age", "Age", "Population")
+        summarise_population = function(x, groups) {
+            x |>
+                group_by_at(groups) |>
+                summarise(Population = sum(.data[["Population"]], na.rm = TRUE))
         },
         national_trend_data = function() {
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["Sex"]] != "All") |>
-                select("Date", "GPPracticeName", "Gender" = "Sex",
-                    "Population" = "AllAges") |>
                 distinct() |>
-                group_by_at(c("Date", "Gender")) |>
-                summarise(
-                    Population = sum(.data[["Population"]], na.rm = TRUE)
-                ) |>
-                mutate(Gender = factor(Gender, levels = c("Male", "Female"))) |>
+                rename("Population" = "AllAges", "Gender" = "Sex") |>
+                private[["summarise_population"]](c("Date", "Gender")) |>
+                private[["factor_gender"]]() |>
                 group_by(.data[["Gender"]])
         },
         national_trend = function(...) {
@@ -63,7 +68,7 @@ gp_grp <- R6Class("gp_grp",
                 private[["trend_echart"]]()
         },
         national_pyramid_data = function() {
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["Sex"]] != "All") |>
                 select("Date", "Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
                     -"AllAges") |>
@@ -72,10 +77,7 @@ gp_grp <- R6Class("gp_grp",
                     names_to = "Age",
                     values_to = "Population"
                 ) |>
-                group_by_at(c("Date", "Gender", "Age")) |>
-                summarise(
-                    Population = sum(.data[["Population"]], na.rm = TRUE)
-                ) |>
+                private[["summarise_population"]](c("Date", "Gender", "Age")) |>
                 pivot_wider(names_from = "Gender", values_from = "Population") |>
                 private[["factor_age"]]() |>
                 mutate(Female = Female * -1) |>
@@ -121,16 +123,12 @@ gp_grp <- R6Class("gp_grp",
             ) {
             health_board <- arg_match(health_board, multiple = TRUE)
             gender <- arg_match(gender)
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["Sex"]] %in% gender) |>
                 filter(.data[["HBName"]] %in% health_board) |>
-                select("Date", "GPPracticeName", "Gender" = "Sex",
-                    "HBName", "Population" = "AllAges") |>
+                rename("Population" = "AllAges", "Gender" = "Sex") |>
                 distinct() |>
-                group_by_at(c("Date", "Gender", "HBName")) |>
-                summarise(
-                    Population = sum(.data[["Population"]], na.rm = TRUE)
-                ) |>
+                private[["summarise_population"]](c("Date", "Gender", "HBName")) |>
                 group_by(.data[["HBName"]])
         },
         health_board_trend = function(...) {
@@ -143,20 +141,16 @@ gp_grp <- R6Class("gp_grp",
             ) {
             health_board <- arg_match(health_board, multiple = TRUE)
             gender <- arg_match(gender)
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["Sex"]] %in% gender) |>
                 filter(.data[["HBName"]] %in% health_board) |>
-                select("Date", matches("Ages\\d"), -contains("QF"),
-                    -"AllAges", "HBName") |>
+                select("Date", "HBName", matches("^Ages\\d"), -matches("QF$")) |>
                 pivot_longer(
-                    -c("HBName", "Date"),
+                    -c("Date", "HBName"),
                     names_to = "Age",
                     values_to = "Population"
                 ) |>
-                group_by_at(c("Date", "Age", "HBName")) |>
-                summarise(
-                    Population = sum(.data[["Population"]], na.rm = TRUE)
-                ) |>
+                private[["summarise_population"]](c("Date", "Age", "HBName")) |>
                 private[["factor_age"]]() |>
                 pivot_wider(names_from = "HBName", values_from = "Population") |>
                 group_by(.data[["Date"]])
@@ -171,7 +165,7 @@ gp_grp <- R6Class("gp_grp",
             ) {
             gp <- arg_match(gp, multiple = TRUE)
             gender <- arg_match(gender)
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["Sex"]] == gender) |>
                 mutate(
                     ID = paste(
@@ -197,7 +191,7 @@ gp_grp <- R6Class("gp_grp",
             ) {
             gp <- arg_match(gp, multiple = TRUE)
             gender <- arg_match(gender)
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["Sex"]] == gender) |>
                 mutate(
                     ID = paste(
@@ -207,8 +201,7 @@ gp_grp <- R6Class("gp_grp",
                     )
                 ) |>
                 filter(.data[["ID"]] %in% gp) |>
-                select("Date", matches("Ages\\d"), -contains("QF"),
-                    -"AllAges", "ID") |>
+                select("Date", "ID", matches("^Ages\\d"), -contains("QF")) |>
                 pivot_longer(
                     -c("ID", "Date"),
                     names_to = "Age",
@@ -265,25 +258,10 @@ gp_grp <- R6Class("gp_grp",
             )(...)
         },
         #' @description
-        #' Summarise gp grp.
-        #' @param type (character(1))\cr
-        #'     Character specifying summary type. See `available_plots`.
-        #' @param id (character(1))\cr
-        #'     Character specifying the ID to assign to output data.frame
-        #' @param ... Passed to plot_data functions.
-        summary = function(type, id = "Scotland national", ...) {
-            type <- arg_match(type, values = self[["available_plots"]]())
-            self[["plot_data"]](type, ...) |>
-                mutate(ID = id) |>
-                group_by(across(any_of(c("ID", "Date", "Gender", "Age")))) |>
-                summarise_if(is.numeric, sum, na.rm = TRUE) |>
-                ungroup()
-        },
-        #' @description
         #' Create UI for general practice group object.
         ui = function() {
             ns <- NS(self[["id"]]())
-            data <- private[["map_combine"]](func = "data")
+            data <- self[["get_download"]]()
             nav_panel(
                 title = "General practice",
                 class = "overflow-auto",
@@ -401,7 +379,7 @@ gp_grp <- R6Class("gp_grp",
                 self[["id"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
-                    data <- private[["map_combine"]](func = "data")
+                    data <- self[["get_download"]]()
 
                     output[["national_pop_trend"]] <- renderUI({
                         self[["plot"]](type = "national_trend")

@@ -15,20 +15,32 @@ hospital_grp <- R6Class("hospital_grp",
                 unique()
         },
         health_board_choices = function() {
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 pull("HBName") |>
                 unique()
         },
         trend_echart = function(x) {
-            super$trend_echart(x, "FinancialYear", "PercentageOccupancy")
+            super$trend_echart(x, "FinancialYear", "PercentageOccupancy") |>
+                e_y_axis(min = 0, max = 100)
         },
         bar_echart = function(
                 x,
                 group = "HBName",
                 x_axis = "",
-                y_axis = "Percentage occupancy"
+                y_axis = "PercentageOccupancy"
             ) {
-            super$bar_echart(x, group, x_axis, y_axis)
+            super$bar_echart(x, group, x_axis, y_axis) |>
+                e_y_axis(min = 0, max = 100)
+        },
+        summarise_percentage_occupancy = function(x, groups) {
+            x |>
+                group_by_at(groups) |>
+                summarise(
+                    PercentageOccupancy = mean(
+                        .data[["PercentageOccupancy"]],
+                        na.rm = TRUE
+                    )
+                )
         },
         national_trend_data = function(specialties = "All Specialties") {
             specialties <- arg_match(
@@ -36,20 +48,12 @@ hospital_grp <- R6Class("hospital_grp",
                 values = private[["specialty_choices"]](),
                 multiple = TRUE
             )
-            private[["map_combine"]](func = "data") |>
+            self[["get_download"]]() |>
                 filter(.data[["SpecialtyName"]] %in% specialties) |>
-                select(
-                    "FinancialYear",
-                    "SpecialtyName",
-                    "PercentageOccupancy"
-                ) |>
+                select("FinancialYear", "SpecialtyName", "PercentageOccupancy") |>
                 distinct() |>
-                group_by_at(c("FinancialYear", "SpecialtyName")) |>
-                summarise(
-                    PercentageOccupancy = mean(
-                        .data[["PercentageOccupancy"]],
-                        na.rm = TRUE
-                    )
+                private[["summarise_percentage_occupancy"]](
+                    c("FinancialYear", "SpecialtyName")
                 ) |>
                 group_by(.data[["SpecialtyName"]])
         },
@@ -67,24 +71,7 @@ hospital_grp <- R6Class("hospital_grp",
                 values = private[["specialty_choices"]]()
             )
             health_boards <- arg_match(health_boards, multiple = TRUE)
-            private[["map_combine"]](func = "data") |>
-                filter(.data[["SpecialtyName"]] %in% specialties) |>
-                filter(.data[["HBName"]] %in% health_boards) |>
-                select(
-                    "FinancialYear",
-                    "HBName",
-                    "ID",
-                    "HospitalName",
-                    "SpecialtyName",
-                    "PercentageOccupancy"
-                ) |>
-                group_by_at(c("FinancialYear", "HBName", "SpecialtyName")) |>
-                summarise(
-                    PercentageOccupancy = mean(
-                        .data[["PercentageOccupancy"]],
-                        na.rm = TRUE
-                    )
-                ) |>
+            private[["health_board_data"]](specialties, health_boards) |>
                 group_by(.data[["HBName"]])
 
         },
@@ -104,30 +91,21 @@ hospital_grp <- R6Class("hospital_grp",
                 multiple = TRUE
             )
             health_boards <- arg_match(health_boards, multiple = TRUE)
-            private[["map_combine"]](func = "data") |>
-                filter(.data[["SpecialtyName"]] %in% specialties) |>
-                filter(.data[["HBName"]] %in% health_boards) |>
-                select(
-                    "FinancialYear",
-                    "HBName",
-                    "ID",
-                    "HospitalName",
-                    "SpecialtyName",
-                    "PercentageOccupancy"
-                ) |>
-                group_by_at(c("FinancialYear", "HBName", "SpecialtyName")) |>
-                summarise(
-                    PercentageOccupancy = mean(
-                        .data[["PercentageOccupancy"]],
-                        na.rm = TRUE
-                    )
-                ) |>
+            private[["health_board_data"]](specialties, health_boards) |>
                 pivot_wider(
                     names_from = "SpecialtyName",
                     values_from = "PercentageOccupancy"
                 ) |>
                 group_by(.data[["FinancialYear"]])
-
+        },
+        health_board_data = function(specialties, health_boards) {
+            self[["get_download"]]() |>
+                filter(.data[["SpecialtyName"]] %in% specialties) |>
+                filter(.data[["HBName"]] %in% health_boards) |>
+                distinct() |>
+                private[["summarise_percentage_occupancy"]](
+                    c("FinancialYear", "HBName", "SpecialtyName")
+                )
         },
         health_board_bar = function(...) {
             self[["plot_data"]](type = "health_board_bar", ...) |>
@@ -143,12 +121,7 @@ hospital_grp <- R6Class("hospital_grp",
                 values = private[["specialty_choices"]]()
             )
             hospitals <- arg_match(hospitals, multiple = TRUE)
-            private[["map_combine"]](func = "data") |>
-                mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
-                filter(
-                    .data[["SpecialtyName"]] == specialties,
-                    .data[["ID"]] %in% hospitals
-                ) |>
+            private[["hospital_data"]](specialties, hospitals) |>
                 select(
                     "FinancialYear",
                     "ID",
@@ -169,16 +142,7 @@ hospital_grp <- R6Class("hospital_grp",
             ) {
             specialties <- arg_match(specialties, multiple = TRUE)
             hospitals <- arg_match(hospitals, multiple = TRUE)
-            private[["map_combine"]](func = "data") |>
-                mutate(ID = paste(
-                    .data[["ID"]],
-                    "-",
-                    .data[["HospitalName"]]
-                )) |>
-                filter(
-                    .data[["SpecialtyName"]] %in% specialties,
-                    .data[["ID"]] %in% hospitals
-                ) |>
+            private[["hospital_data"]](specialties, hospitals) |>
                 select(
                     "FinancialYear",
                     "ID",
@@ -191,6 +155,14 @@ hospital_grp <- R6Class("hospital_grp",
                 ) |>
                 group_by(.data[["FinancialYear"]])
 
+        },
+        hospital_data = function(specialties, hospitals) {
+            self[["get_download"]]() |>
+                mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
+                filter(
+                    .data[["SpecialtyName"]] %in% specialties,
+                    .data[["ID"]] %in% hospitals
+                )
         },
         hospital_bar = function(...) {
             x <- self[["plot_data"]](type = "hospital_bar", ...) |>
@@ -233,19 +205,6 @@ hospital_grp <- R6Class("hospital_grp",
                 "hospital_trend" = private[["hospital_trend_data"]],
                 "hospital_bar" = private[["hospital_bar_data"]]
             )(...)
-        },
-        #' @description
-        #' Summarise hospital grp unit.
-        #' @param id (character(1))\cr
-        #'     Character specifying the ID to assign to output data.frame.
-        #' @param ... Passed to plot_data.
-        summary = function(id = "Scotland national", ...) {
-            self[["plot_data"]]("specialty_bar", ...) |>
-                mutate(ID = id) |>
-                select("ID", "FinancialYear", "SpecialtyName", "AllStaffedBeds") |>
-                group_by_if(is.character) |>
-                summarise_if(is.numeric, sum, na.rm = TRUE) |>
-                ungroup()
         },
         #' @description
         #' Create UI for hospital group object.
