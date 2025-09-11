@@ -17,7 +17,7 @@ R6 class storing health statistics for a list of gp health units.
 \item \href{#method-gp_grp-available_plots}{\code{gp_grp$available_plots()}}
 \item \href{#method-gp_grp-plot}{\code{gp_grp$plot()}}
 \item \href{#method-gp_grp-plot_data}{\code{gp_grp$plot_data()}}
-\item \href{#method-gp_grp-summary}{\code{gp_grp$summary()}}
+\item \href{#method-gp_grp-plot_info}{\code{gp_grp$plot_info()}}
 \item \href{#method-gp_grp-ui}{\code{gp_grp$ui()}}
 \item \href{#method-gp_grp-server}{\code{gp_grp$server()}}
 \item \href{#method-gp_grp-clone}{\code{gp_grp$clone()}}
@@ -28,8 +28,6 @@ R6 class storing health statistics for a list of gp health units.
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_handler'><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_server"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_server'><code>HealthDataScotland::health_unitgrp$download_server()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_ui"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_ui'><code>HealthDataScotland::health_unitgrp$download_ui()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-get_download'><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="id"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-id'><code>HealthDataScotland::health_unitgrp$id()</code></a></span></li>
@@ -46,8 +44,7 @@ R6 class storing health statistics for a list of gp health units.
 \if{html}{\out{<a id="method-gp_grp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-gp_grp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get character vector of available plots for gp grp. Options
-are either "population_pyramid" plot or "population_trend" plot.
+Get character vector of available plots for gp grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp_grp$available_plots()}\if{html}{\out{</div>}}
 }
@@ -78,7 +75,7 @@ for options.}
 \if{html}{\out{<a id="method-gp_grp-plot_data"></a>}}
 \if{latex}{\out{\hypertarget{method-gp_grp-plot_data}{}}}
 \subsection{Method \code{plot_data()}}{
-Generate plot data for gp grp.
+Get plot data for gp grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp_grp$plot_data(type, ...)}\if{html}{\out{</div>}}
 }
@@ -90,30 +87,28 @@ Generate plot data for gp grp.
 Character specifying plot type. See \code{available_plots}
 for options.}
 
-\item{\code{...}}{Passed to plot_data functions.}
+\item{\code{...}}{Passed to plot data functions.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gp_grp-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-gp_grp-summary}{}}}
-\subsection{Method \code{summary()}}{
-Summarise gp grp.
+\if{html}{\out{<a id="method-gp_grp-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-gp_grp-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for gp grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$summary(type, id = "Scotland national", ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$plot_info(type, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying summary type. See \code{available_plots}.}
+Character specifying plot type. See \code{available_plots}
+for options.}
 
-\item{\code{id}}{(character(1))\cr
-Character specifying the ID to assign to output data.frame}
-
-\item{\code{...}}{Passed to plot_data functions.}
+\item{\code{...}}{Passed to plot info functions.}
 }
 \if{html}{\out{</div>}}
 }
@@ -124,16 +119,9 @@ Character specifying the ID to assign to output data.frame}
 \subsection{Method \code{ui()}}{
 Create UI for general practice group object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui(ns)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{ns}}{Namespace of shiny application page.}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp_grp-server"></a>}}

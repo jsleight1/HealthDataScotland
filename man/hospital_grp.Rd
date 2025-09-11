@@ -17,7 +17,7 @@ R6 class storing health statistics for a list of hospital health units.
 \item \href{#method-hospital_grp-available_plots}{\code{hospital_grp$available_plots()}}
 \item \href{#method-hospital_grp-plot}{\code{hospital_grp$plot()}}
 \item \href{#method-hospital_grp-plot_data}{\code{hospital_grp$plot_data()}}
-\item \href{#method-hospital_grp-summary}{\code{hospital_grp$summary()}}
+\item \href{#method-hospital_grp-plot_info}{\code{hospital_grp$plot_info()}}
 \item \href{#method-hospital_grp-ui}{\code{hospital_grp$ui()}}
 \item \href{#method-hospital_grp-server}{\code{hospital_grp$server()}}
 \item \href{#method-hospital_grp-clone}{\code{hospital_grp$clone()}}
@@ -28,8 +28,6 @@ R6 class storing health statistics for a list of hospital health units.
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_handler'><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_server"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_server'><code>HealthDataScotland::health_unitgrp$download_server()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_ui"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_ui'><code>HealthDataScotland::health_unitgrp$download_ui()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-get_download'><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="id"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-id'><code>HealthDataScotland::health_unitgrp$id()</code></a></span></li>
@@ -46,8 +44,7 @@ R6 class storing health statistics for a list of hospital health units.
 \if{html}{\out{<a id="method-hospital_grp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-hospital_grp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get character vector of available plots for hospital grp. Options
-are either "specialty_bar" or "specialty_line" plot.
+Get character vector of available plots for hospital grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital_grp$available_plots()}\if{html}{\out{</div>}}
 }
@@ -88,27 +85,28 @@ Generate plot data for hospital grp.
 \item{\code{type}}{(character(1))\cr
 Character specifying plot type. See \code{available_plots} for options.}
 
-\item{\code{...}}{Passed to plot functions.}
+\item{\code{...}}{Passed to plot data functions.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hospital_grp-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-hospital_grp-summary}{}}}
-\subsection{Method \code{summary()}}{
-Summarise hospital grp unit.
+\if{html}{\out{<a id="method-hospital_grp-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital_grp-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for hospital grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$summary(id = "Scotland national", ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$plot_info(type, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{(character(1))\cr
-Character specifying the ID to assign to output data.frame.}
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots}
+for options.}
 
-\item{\code{...}}{Passed to plot_data.}
+\item{\code{...}}{Passed to plot info functions.}
 }
 \if{html}{\out{</div>}}
 }

@@ -15,9 +15,11 @@ R6 class storing health statistics for a GP practice.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-gp-telephone}{\code{gp$telephone()}}
+\item \href{#method-gp-gp_cluster}{\code{gp$gp_cluster()}}
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
 \item \href{#method-gp-plot_data}{\code{gp$plot_data()}}
+\item \href{#method-gp-plot_info}{\code{gp$plot_info()}}
 \item \href{#method-gp-ui}{\code{gp$ui()}}
 \item \href{#method-gp-server}{\code{gp$server()}}
 \item \href{#method-gp-clone}{\code{gp$clone()}}
@@ -44,6 +46,16 @@ R6 class storing health statistics for a GP practice.
 Get telephone number of GP practice.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp$telephone()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-gp_cluster"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-gp_cluster}{}}}
+\subsection{Method \code{gp_cluster()}}{
+Get GP cluster
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$gp_cluster()}\if{html}{\out{</div>}}
 }
 
 }
@@ -95,7 +107,28 @@ Generate plot data for gp unit.
 Character specifying plot type. See \code{available_plots}
 for options.}
 
-\item{\code{...}}{Passed to plot_data functions.}
+\item{\code{...}}{Passed to plot data functions.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for gp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$plot_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots}
+for options.}
+
+\item{\code{...}}{Passed to plot info functions.}
 }
 \if{html}{\out{</div>}}
 }
