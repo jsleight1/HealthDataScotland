@@ -19,16 +19,7 @@ gp_grp <- R6Class("gp_grp",
                 unique()
         },
         gp_choices = function() {
-            private[["map_combine"]](func = "data") |>
-                select("ID", "GPPracticeName") |>
-                mutate(
-                    ID = paste(
-                        .data[["ID"]],
-                        "-",
-                        .data[["GPPracticeName"]]
-                    )
-                ) |>
-                pull("ID") |>
+            paste(self[["ids"]](), "-", self[["titles"]]()) |>
                 unique()
         },
         factor_age = function(x) {
@@ -48,23 +39,21 @@ gp_grp <- R6Class("gp_grp",
                 )
             )
         },
-        trend_echart = function(x, title) {
+        trend_echart = function(x) {
             x |>
                 e_charts(Date) |>
                 e_line(Population) |>
                 e_tooltip(trigger = "axis") |>
-                e_title(title, left = "center") |>
                 e_legend(show = FALSE)
         },
-        bar_echart = function(x, title) {
+        bar_echart = function(x) {
             plt <- x |>
                 e_charts(Age, timeline = TRUE) |>
                 e_timeline_opts(autoPlay = TRUE) |>
                 e_tooltip(trigger = "axis") |>
-                e_legend(show = FALSE) |>
-                e_title(title)
-            for (hb in setdiff(colnames(x), c("Date", "Age"))) {
-                plt <- e_bar_(plt, hb)
+                e_legend(show = FALSE)
+            for (col in setdiff(colnames(x), c("Date", "Age"))) {
+                plt <- e_bar_(plt, col)
             }
             plt
         },
@@ -83,7 +72,7 @@ gp_grp <- R6Class("gp_grp",
         },
         national_trend = function(...) {
             self[["plot_data"]](type = "national_trend", ...) |>
-                private[["trend_echart"]]("National GP population trend")
+                private[["trend_echart"]]()
         },
         national_pyramid_data = function() {
             private[["map_combine"]](func = "data") |>
@@ -136,7 +125,6 @@ gp_grp <- R6Class("gp_grp",
                     left = "center",
                     data = c("Female", "Male")
                 ) |>
-                e_title("National GP population pyramid", left = "center") |>
                 e_y_axis(axisLabel = list(fontSize = 10))
         },
         health_board_trend_data = function(
@@ -159,7 +147,7 @@ gp_grp <- R6Class("gp_grp",
         },
         health_board_trend = function(...) {
             self[["plot_data"]](type = "health_board_trend", ...) |>
-                private[["trend_echart"]]("Health board GP population")
+                private[["trend_echart"]]()
         },
         health_board_bar_data = function(
                 health_board = private[["health_board_choices"]](),
@@ -187,9 +175,7 @@ gp_grp <- R6Class("gp_grp",
         },
         health_board_bar = function(...) {
             self[["plot_data"]](type = "health_board_bar", ...) |>
-                private[["bar_echart"]](
-                    title = "Health board GP population per group"
-                )
+                private[["bar_echart"]]()
         },
         gp_trend_data = function(
                 gp = private[["gp_choices"]](),
@@ -215,7 +201,7 @@ gp_grp <- R6Class("gp_grp",
         },
         gp_trend = function(...) {
             self[["plot_data"]](type = "gp_trend", ...) |>
-                private[["trend_echart"]]("GP population")
+                private[["trend_echart"]]()
         },
         gp_bar_data = function(
                 gp = private[["gp_choices"]](),
@@ -246,9 +232,7 @@ gp_grp <- R6Class("gp_grp",
         },
         gp_bar = function(...) {
             self[["plot_data"]](type = "gp_bar", ...) |>
-                private[["bar_echart"]](
-                    title = "Population per GP practice"
-                )
+                private[["bar_echart"]]()
         }
     ),
     public = list(
@@ -322,10 +306,12 @@ gp_grp <- R6Class("gp_grp",
                         layout_column_wrap(
                             card(
                                 full_screen = TRUE,
+                                card_header("National GP population trend"),
                                 uiOutput(outputId = ns("national_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
+                                card_header("National GP population per gender and age group"),
                                 uiOutput(outputId = ns("national_pop_pyramid"))
                             )
                         )
@@ -342,23 +328,33 @@ gp_grp <- R6Class("gp_grp",
                                     label = "Select health boards",
                                     multiple = TRUE,
                                     choices = unique(data[["HBName"]]),
-                                    selected = unique(data[["HBName"]])
+                                    selected = unique(data[["HBName"]]),
+                                    search = TRUE,
+                                    html = TRUE,
+                                    showSelectedOptionsFirst = TRUE,
+                                    updateOn = "close"
                                 ),
                                 virtualSelectInput(
                                     inputId = ns("select_hb_gender"),
                                     label = "Select gender",
                                     choices = c("All", "Male", "Female"),
-                                    selected = "All"
+                                    selected = "All",
+                                    search = TRUE,
+                                    html = TRUE,
+                                    showSelectedOptionsFirst = TRUE,
+                                    updateOn = "close"
                                 )
                             ),
                         ),
                         layout_column_wrap(
                             card(
                                 full_screen = TRUE,
+                                card_header("Health board GP population"),
                                 uiOutput(outputId = ns("hb_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
+                                card_header("Health board GP population per age group"),
                                 uiOutput(outputId = ns("hb_pop_bar"))
                             )
                         )
@@ -374,17 +370,10 @@ gp_grp <- R6Class("gp_grp",
                                     inputId = ns("select_gp"),
                                     label = "Select individual GP practices",
                                     multiple = TRUE,
-                                    choices = paste(
-                                        self[["ids"]](),
-                                        "-",
-                                        self[["titles"]]()
-                                    ),
-                                    selected = paste(
-                                        self[["ids"]](),
-                                        "-",
-                                        self[["titles"]]()
-                                    )[1],
+                                    choices = private[["gp_choices"]](),
+                                    selected = private[["gp_choices"]]()[1],
                                     search = TRUE,
+                                    html = TRUE,
                                     showSelectedOptionsFirst = TRUE,
                                     updateOn = "close"
                                 ),
@@ -392,17 +381,23 @@ gp_grp <- R6Class("gp_grp",
                                     inputId = ns("select_gp_gender"),
                                     label = "Select gender",
                                     choices = c("All", "Male", "Female"),
-                                    selected = "All"
+                                    selected = "All",
+                                    search = TRUE,
+                                    html = TRUE,
+                                    showSelectedOptionsFirst = TRUE,
+                                    updateOn = "close"
                                 )
                             )
                         ),
                         layout_column_wrap(
                             card(
                                 full_screen = TRUE,
+                                card_header("GP population for selected practice and gender"),
                                 uiOutput(outputId = ns("gp_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
+                                card_header("GP population for selected practice and gender per age group"),
                                 uiOutput(outputId = ns("gp_pop_bar"))
                             )
                         )

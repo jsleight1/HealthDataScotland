@@ -59,6 +59,11 @@ test_that("gp_grp class can be plotted", {
     }
 })
 
+test_that("gp_grp plot data errors if wrong type", {
+    gp_grp_unit[["plot_data"]](type = "p") |>
+        expect_error("`type` must be one.+")
+})
+
 test_that("national_trend_data works", {
     output <- gp_grp_unit[["plot_data"]](type = "national_trend") |>
         expect_no_error()
@@ -80,7 +85,7 @@ test_that("health_board_trend_data works", {
     expect_snapshot_json(output, "health_board_trend_data")
 })
 
-test_that("health_baord_bar_data works", {
+test_that("health_board_bar_data works", {
     output <- gp_grp_unit[["plot_data"]](type = "health_board_bar") |>
         expect_no_error()
     expect_s3_class(output, "data.frame")

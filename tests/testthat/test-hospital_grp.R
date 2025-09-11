@@ -50,43 +50,59 @@ test_that("hospital_grp class works", {
     expect_identical(out[["data"]](), list(hosp_unit, hosp_unit2))
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("A101H"), hosp_unit)
-    expect_identical(out[["available_plots"]](), "specialty_line")
+    expect_identical(
+        out[["available_plots"]](),
+        c("national_trend", "health_board_trend", "health_board_bar",
+            "hospital_trend", "hospital_bar")
+    )
 })
 
 test_that("hospital_grp class can be plotted", {
-    expect_s3_class(hosp_grp_unit[["plot"]](type = "specialty_line"), "shiny.tag")
+    for (plt in hosp_grp_unit[["available_plots"]]()) {
+        output <- hosp_grp_unit[["plot"]](type = plt) |>
+            expect_no_error()
+        expect_s3_class(output, "echarts4r")
+    }
 })
 
-test_that("hospital_grp plot data works", {
-    out <- hosp_grp_unit[["plot_data"]](
-            type = "specialty_line",
-            data_type = "annual",
-            hospitals = "A101H"
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
-
-    out <- hosp_grp_unit[["plot_data"]](
-            type = "specialty_line",
-            data_type = "daily",
-            hospitals = "A101H"
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
-
-    hosp_grp_unit[["plot_data"]](type = "specialty_line", data_type = "d") |>
-        expect_error("`data_type` must be one of.+")
-
-    hosp_grp_unit[["plot_data"]](
-            type = "specialty_line",
-            specialties = c("General Medicine", "Cardiology")
-        ) |>
-        expect_error("`hospital_grp` line plots can only display one specialty")
-
+test_that("hospital_grp plot data errors if wrong type", {
     hosp_grp_unit[["plot_data"]](type = "p") |>
         expect_error("`type` must be one.+")
+})
+
+test_that("national_trend_data works", {
+    output <- hosp_grp_unit[["plot_data"]](type = "national_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "national_trend_data")
+})
+
+test_that("health_board_trend_data works", {
+    output <- hosp_grp_unit[["plot_data"]](type = "health_board_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "health_board_trend_data")
+})
+
+test_that("health_board_bar_data works", {
+    output <- hosp_grp_unit[["plot_data"]](type = "health_board_bar") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "health_board_bar_data")
+})
+
+test_that("hospital_trend_data works", {
+    output <- hosp_grp_unit[["plot_data"]](type = "hospital_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "hospital_trend_data")
+})
+
+test_that("hospital_bar_data works", {
+    output <- hosp_grp_unit[["plot_data"]](type = "hospital_bar") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "hospital_bar_data")
 })
 
 test_that("hospital_grp subset works", {

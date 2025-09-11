@@ -2,33 +2,6 @@
 hospital_grp <- R6Class("hospital_grp",
     inherit = health_unitgrp,
     private = list(
-        specialty_line_data = function(hospitals = self[["ids"]](), ...) {
-            out <- private[["map_combine"]](
-                    func = "plot_data",
-                    type = "specialty_line",
-                    ...
-                ) |>
-                filter(.data[["ID"]] %in% hospitals)
-            assert_that(length(unique(out[["SpecialtyName"]])) == 1,
-                msg = "`hospital_grp` line plots can only display one specialty"
-            )
-            out
-        },
-        specialty_line = function(...) {
-            data <- self[["plot_data"]]("specialty_line", ...)
-            data |>
-                group_split(.data[["HospitalName"]]) |>
-                map(function(i) {
-                    i |>
-                        group_by(name) |>
-                        e_charts(FinancialYear) |>
-                        e_line(value) |>
-                        e_tooltip(trigger = "axis") |>
-                        e_title(unique(i[["HospitalName"]]))
-                }) |>
-                append(c(rows = length(unique(data[["HospitalName"]])), cols = 1)) %>%
-                do.call(e_arrange, .)
-        },
         specialty_choices = function() {
             self[["data"]]() |>
                 map(~.x[["data"]]()) |>
@@ -36,14 +9,221 @@ hospital_grp <- R6Class("hospital_grp",
                 unlist() |>
                 unique() |>
                 sort()
+        },
+        hospital_choices = function() {
+            paste(self[["ids"]](), "-", self[["titles"]]()) |>
+                unique()
+        },
+        health_board_choices = function() {
+            private[["map_combine"]](func = "data") |>
+                pull("HBName") |>
+                unique()
+        },
+        bar_echart = function(x) {
+            plt <- x |>
+                e_charts(HBName, timeline = TRUE) |>
+                e_timeline_opts(autoPlay = TRUE, top = 0) |>
+                e_tooltip(trigger = "axis") |>
+                e_legend(show = FALSE) |>
+                e_y_axis(name = "Percentage occupancy") |>
+                e_x_axis(name = "Time")
+            for (col in setdiff(colnames(x), c("Date", "HBName"))) {
+                plt <- e_bar_(plt, col)
+            }
+            plt
+        },
+        trend_echart = function(x) {
+            x |>
+                e_charts(FinancialYear) |>
+                e_line(PercentageOccupancy) |>
+                e_tooltip(trigger = "axis") |>
+                e_legend(show = FALSE) |>
+                e_y_axis(name = "Percentage occupancy") |>
+                e_x_axis(name = "Time")
+        },
+        national_trend_data = function(specialties = "All Specialties") {
+            specialties <- arg_match(
+                specialties,
+                values = private[["specialty_choices"]](),
+                multiple = TRUE
+            )
+            private[["map_combine"]](func = "data") |>
+                filter(.data[["SpecialtyName"]] %in% specialties) |>
+                select(
+                    "FinancialYear",
+                    "SpecialtyName",
+                    "PercentageOccupancy"
+                ) |>
+                distinct() |>
+                group_by_at(c("FinancialYear", "SpecialtyName")) |>
+                summarise(
+                    PercentageOccupancy = mean(
+                        .data[["PercentageOccupancy"]],
+                        na.rm = TRUE
+                    )
+                ) |>
+                group_by(.data[["SpecialtyName"]])
+        },
+        national_trend = function(...) {
+            self[["plot_data"]](type = "national_trend", ...) |>
+                private[["trend_echart"]]()
+
+        },
+        health_board_trend_data = function(
+                specialties = "All Specialties",
+                health_boards = private[["health_board_choices"]]()
+            ) {
+            specialties <- arg_match(
+                specialties,
+                values = private[["specialty_choices"]]()
+            )
+            health_boards <- arg_match(health_boards, multiple = TRUE)
+            private[["map_combine"]](func = "data") |>
+                filter(.data[["SpecialtyName"]] %in% specialties) |>
+                filter(.data[["HBName"]] %in% health_boards) |>
+                select(
+                    "FinancialYear",
+                    "HBName",
+                    "ID",
+                    "HospitalName",
+                    "SpecialtyName",
+                    "PercentageOccupancy"
+                ) |>
+                group_by_at(c("FinancialYear", "HBName", "SpecialtyName")) |>
+                summarise(
+                    PercentageOccupancy = mean(
+                        .data[["PercentageOccupancy"]],
+                        na.rm = TRUE
+                    )
+                ) |>
+                group_by(.data[["HBName"]])
+
+        },
+        health_board_trend = function(...) {
+            data <- self[["plot_data"]](type = "health_board_trend", ...)
+            data |>
+                private[["trend_echart"]]() |>
+                e_title(unique(data[["SpecialtyName"]]), left = "center")
+        },
+        health_board_bar_data = function(
+                specialties = "All Specialties",
+                health_boards = private[["health_board_choices"]]()
+            ) {
+            specialties <- arg_match(
+                specialties,
+                values = private[["specialty_choices"]](),
+                multiple = TRUE
+            )
+            health_boards <- arg_match(health_boards, multiple = TRUE)
+            private[["map_combine"]](func = "data") |>
+                filter(.data[["SpecialtyName"]] %in% specialties) |>
+                filter(.data[["HBName"]] %in% health_boards) |>
+                select(
+                    "FinancialYear",
+                    "HBName",
+                    "ID",
+                    "HospitalName",
+                    "SpecialtyName",
+                    "PercentageOccupancy"
+                ) |>
+                group_by_at(c("FinancialYear", "HBName", "SpecialtyName")) |>
+                summarise(
+                    PercentageOccupancy = mean(
+                        .data[["PercentageOccupancy"]],
+                        na.rm = TRUE
+                    )
+                ) |>
+                pivot_wider(
+                    names_from = "SpecialtyName",
+                    values_from = "PercentageOccupancy"
+                ) |>
+                group_by(.data[["FinancialYear"]])
+
+        },
+        health_board_bar = function(...) {
+            self[["plot_data"]](type = "health_board_bar", ...) |>
+                private[["bar_echart"]]() |>
+                e_x_axis(axisLabel = list(rotate = 35))
+        },
+        hospital_trend_data = function(
+                specialties = "All Specialties",
+                hospitals = private[["hospital_choices"]]()
+            ) {
+            specialties <- arg_match(
+                specialties,
+                values = private[["specialty_choices"]]()
+            )
+            hospitals <- arg_match(hospitals, multiple = TRUE)
+            private[["map_combine"]](func = "data") |>
+                mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
+                filter(
+                    .data[["SpecialtyName"]] == specialties,
+                    .data[["ID"]] %in% hospitals
+                ) |>
+                select(
+                    "FinancialYear",
+                    "ID",
+                    "SpecialtyName",
+                    "PercentageOccupancy"
+                ) |>
+                group_by(.data[["ID"]])
+        },
+        hospital_trend = function(...) {
+            data <- self[["plot_data"]](type = "hospital_trend", ...)
+            data |>
+                private[["trend_echart"]]() |>
+                e_title(unique(data[["SpecialtyName"]]), left = "center")
+        },
+        hospital_bar_data = function(
+                specialties = private[["specialty_choices"]](),
+                hospitals = private[["hospital_choices"]]()
+            ) {
+            specialties <- arg_match(specialties, multiple = TRUE)
+            hospitals <- arg_match(hospitals, multiple = TRUE)
+            private[["map_combine"]](func = "data") |>
+                mutate(ID = paste(
+                    .data[["ID"]],
+                    "-",
+                    .data[["HospitalName"]]
+                )) |>
+                filter(
+                    .data[["SpecialtyName"]] %in% specialties,
+                    .data[["ID"]] %in% hospitals
+                ) |>
+                select(
+                    "FinancialYear",
+                    "ID",
+                    "SpecialtyName",
+                    "PercentageOccupancy"
+                ) |>
+                pivot_wider(
+                    names_from = "SpecialtyName",
+                    values_from = "PercentageOccupancy"
+                ) |>
+                group_by(.data[["FinancialYear"]])
+
+        },
+        hospital_bar = function(...) {
+            x <- self[["plot_data"]](type = "hospital_bar", ...)
+            plt <- x |>
+                e_charts(ID, timeline = TRUE) |>
+                e_timeline_opts(autoPlay = TRUE, top = 0) |>
+                e_tooltip(trigger = "axis") |>
+                e_legend(show = FALSE) |>
+                e_y_axis(name = "Percentage occupancy") |>
+                e_x_axis(name = "Time")
+            for (col in setdiff(colnames(x), c("Date", "ID"))) {
+                plt <- e_bar_(plt, col)
+            }
+            plt
         }
     ),
     public = list(
         #' @description
-        #' Get character vector of available plots for hospital grp. Options
-        #'   are either "specialty_bar" or "specialty_line" plot.
+        #' Get character vector of available plots for hospital grp.
         available_plots = function() {
-            c("specialty_line")
+            c("national_trend", "health_board_trend", "health_board_bar",
+              "hospital_trend", "hospital_bar")
         },
         #' @description
         #' Plot hospital grp.
@@ -53,7 +233,11 @@ hospital_grp <- R6Class("hospital_grp",
         plot = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
-                "specialty_line" = private[["specialty_line"]]
+                "national_trend" = private[["national_trend"]],
+                "health_board_trend" = private[["health_board_trend"]],
+                "health_board_bar" = private[["health_board_bar"]],
+                "hospital_trend" = private[["hospital_trend"]],
+                "hospital_bar" = private[["hospital_bar"]]
             )(...)
         },
         #' @description
@@ -64,7 +248,11 @@ hospital_grp <- R6Class("hospital_grp",
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
-                "specialty_line" = private[["specialty_line_data"]]
+                "national_trend" = private[["national_trend_data"]],
+                "health_board_trend" = private[["health_board_trend_data"]],
+                "health_board_bar" = private[["health_board_bar_data"]],
+                "hospital_trend" = private[["hospital_trend_data"]],
+                "hospital_bar" = private[["hospital_bar_data"]]
             )(...)
         },
         #' @description
@@ -85,63 +273,174 @@ hospital_grp <- R6Class("hospital_grp",
         #' @param ns
         #'     Namespace of shiny application page.
         ui = function(ns) {
-            ns <- NS(ns(self[["id"]]()))
+            ns <- NS(self[["id"]]())
             nav_panel(
                 title = "Hospital",
+                class = "overflow-auto",
                 div(
-                    card(
-                    full_screen = TRUE,
-                        card_header(
-                            "Annually Available Staffed Beds",
-                            popover(
-                                id = ns("hospital_annual_help"),
-                                bs_icon("question-circle"),
-                                "This line chart shows the annual number of
-                                available staffed beds and the number occupied
-                                in the selected hospitals. Settings can be used
-                                to show data for selected hospitals and specialities
-                                (default is to present collated data for all
-                                specialities)."
-                            ),
-                            popover(
-                                id = ns("hospital_annual_settings"),
-                                bs_icon("gear", class = "ms-auto"),
-                                selectInput(
-                                    ns("specialty_annual_select"),
-                                    label = "Select specialty",
-                                    choices = private[["specialty_choices"]](),
-                                    selected = "All Specialties"
-                                )
-                            )
-                        ),
-                        spinner(uiOutput(ns("annual_beds")))
-                    ),
                     card(
                         full_screen = TRUE,
                         card_header(
-                            "Daily Average Available Staffed Beds",
+                            "National average bed occupancy per specialty",
                             popover(
-                                id = ns("hospital_daily_help"),
-                                bs_icon("question-circle"),
-                                "This line chart shows the daily average number of
-                                available staffed beds and the number occupied
-                                in the selected hospitals. Settings can be used
-                                to show data for selected hospitals and specialities
-                                (default is to present collated data for all
-                                specialities)."
-                            ),
-                            popover(
-                                id = ns("hospital_daily_settings"),
+                                id = ns("national_settings"),
                                 bs_icon("gear", class = "ms-auto"),
-                                selectInput(
-                                    ns("specialty_daily_select"),
+                                virtualSelectInput(
+                                    ns("select_national_specialty"),
                                     label = "Select specialty",
                                     choices = private[["specialty_choices"]](),
-                                    selected = "All Specialties"
+                                    multiple = TRUE,
+                                    selected = "All Specialties",
+                                    search = TRUE,
+                                    html = TRUE,
+                                    showSelectedOptionsFirst = TRUE,
+                                    updateOn = "close"
                                 )
                             )
                         ),
-                        spinner(uiOutput(ns("daily_beds")))
+                        uiOutput(outputId = ns("national_trend"))
+                    ),
+                    card(
+                        full_screen = TRUE,
+                        card_header("Health board summary"),
+                        layout_column_wrap(
+                            card(
+                                full_screen = TRUE,
+                                card_header(
+                                    "Average bed occupancy per health board for selected specialty",
+                                    popover(
+                                        id = ns("hb_trend_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            ns("select_hb_trend_specialty"),
+                                            label = "Select specialty",
+                                            choices = private[["specialty_choices"]](),
+                                            selected = "All Specialties",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            inputId = ns("select_hb_trend_hb"),
+                                            label = "Select health boards",
+                                            multiple = TRUE,
+                                            choices = private[["health_board_choices"]](),
+                                            selected = private[["health_board_choices"]](),
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
+                                uiOutput(outputId = ns("hb_trend"))
+                            ),
+                            card(
+                                full_screen = TRUE,
+                                card_header(
+                                    "Average bed occupancy per health board and specialty",
+                                    popover(
+                                        id = ns("hb_bar_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            ns("select_hb_bar_specialty"),
+                                            label = "Select specialty",
+                                            choices = private[["specialty_choices"]](),
+                                            multiple = TRUE,
+                                            selected = "All Specialties",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            inputId = ns("select_hb_bar_hb"),
+                                            label = "Select health boards",
+                                            multiple = TRUE,
+                                            choices = private[["health_board_choices"]](),
+                                            selected = private[["health_board_choices"]](),
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
+                                uiOutput(outputId = ns("hb_bar"))
+                            )
+                        )
+                    ),
+                    card(
+                        full_screen = TRUE,
+                        card_header("Individual hospital summary"),
+                        layout_column_wrap(
+                            card(
+                                full_screen = TRUE,
+                                card_header(
+                                    "Average bed occupancy per hospital for selected specialty",
+                                    popover(
+                                        id = ns("hosp_trend_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            ns("select_hosp_trend_specialty"),
+                                            label = "Select specialty",
+                                            choices = private[["specialty_choices"]](),
+                                            selected = "All Specialties",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            ns("select_hosp_trend_hosp"),
+                                            label = "Select hospital",
+                                            choices = private[["hospital_choices"]](),
+                                            selected = private[["hospital_choices"]]()[1],
+                                            multiple = TRUE,
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
+                                uiOutput(outputId = ns("hosp_trend"))
+                            ),
+                            card(
+                                full_screen = TRUE,
+                                card_header(
+                                    "Average bed occupancy per hospital per specialty",
+                                    popover(
+                                        id = ns("hosp_bar_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            ns("select_hosp_bar_specialty"),
+                                            label = "Select specialty",
+                                            choices = private[["specialty_choices"]](),
+                                            selected = "All Specialties",
+                                            multiple = TRUE,
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            ns("select_hosp_bar_hosp"),
+                                            label = "Select hospital",
+                                            choices = private[["hospital_choices"]](),
+                                            selected = private[["hospital_choices"]]()[1],
+                                            multiple = TRUE,
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
+                                uiOutput(outputId = ns("hosp_bar"))
+                            )
+                        )
                     ),
                     card(downloadButton(ns("download")))
                 )
@@ -154,31 +453,76 @@ hospital_grp <- R6Class("hospital_grp",
                 self[["id"]](),
                 function(input, output, session) {
                     ns <- session[["ns"]]
-                    output[["annual_beds"]] <- renderUI(
+
+
+                    national_trend_plt <- reactive({
                         self[["plot"]](
-                            type = "specialty_line",
-                            data_type = "annual",
-                            specialties = req(input[["specialty_annual_select"]])
+                            type = "national_trend",
+                            specialties = input[["select_national_specialty"]]
                         )
-                    )
-                    output[["daily_beds"]] <- renderUI(
+                    }) |>
+                    bindEvent(input[["select_national_specialty"]])
+
+                    output[["national_trend"]] <- renderUI(national_trend_plt())
+
+                    hb_trend_plt <- reactive({
                         self[["plot"]](
-                            type = "specialty_line",
-                            data_type = "daily",
-                            specialties = req(input[["specialty_daily_select"]])
+                            type = "health_board_trend",
+                            specialties = input[["select_hb_trend_specialty"]],
+                            health_boards = input[["select_hb_trend_hb"]]
                         )
+                    }) |>
+                    bindEvent(
+                        input[["select_hb_trend_specialty"]],
+                        input[["select_hb_trend_hb"]]
                     )
+
+                    output[["hb_trend"]] <- renderUI(hb_trend_plt())
+
+                    hb_bar_plt <- reactive({
+                        self[["plot"]](
+                            type = "health_board_bar",
+                            specialties = input[["select_hb_bar_specialty"]],
+                            health_boards = input[["select_hb_bar_hb"]]
+                        )
+                    }) |>
+                    bindEvent(
+                        input[["select_hb_bar_specialty"]],
+                        input[["select_hb_bar_hb"]]
+                    )
+
+                    output[["hb_bar"]] <- renderUI(hb_bar_plt())
+
+                    hosp_trend_plt <- reactive({
+                        self[["plot"]](
+                            type = "hospital_trend",
+                            specialties = input[["select_hosp_trend_specialty"]],
+                            hospitals = input[["select_hosp_trend_hosp"]]
+                        )
+                    }) |>
+                    bindEvent(
+                        input[["select_hosp_trend_specialty"]],
+                        input[["select_hosp_trend_hosp"]]
+                    )
+
+                    output[["hosp_trend"]] <- renderUI(hosp_trend_plt())
+
+                    hosp_bar_plt <- reactive({
+                        self[["plot"]](
+                            type = "hospital_bar",
+                            specialties = input[["select_hosp_bar_specialty"]],
+                            hospitals = input[["select_hosp_bar_hosp"]]
+                        )
+                    }) |>
+                    bindEvent(
+                        input[["select_hosp_bar_specialty"]],
+                        input[["select_hosp_bar_hosp"]]
+                    )
+
+                    output[["hosp_bar"]] <- renderUI(hosp_bar_plt())
+
                     output[["download"]] <- self[["download_handler"]]()
                 }
-            )
-        },
-        group_choices = function() {
-            c("Health board", "National", "Map")
-        },
-        group_column = function(x) {
-            switch(arg_match(x, self[["group_choices"]]()),
-                "Health board" = "HBName",
-                "National" = "ID"
             )
         }
     )
