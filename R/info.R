@@ -1,3 +1,41 @@
+intro_card <- function() {
+    card(
+        h3("Welcome to HealthDataScotland"),
+        p(
+            "
+            HealthDataScotland is an R shiny application that presents
+            GP practice demographic data and hospital bed capacity data
+            across Scotland. The data presented has been obtained from various
+            sources (see 'Notes' page) and is available for download in the
+            summary pages.
+            "
+        ),
+        p(
+            "
+            The application is broadly split into two parts: 'Map' and
+            'Summary'.
+            "
+        ),
+        p(
+            "
+            The 'Map' page contains an interactive map visualising
+            GP practices and hospitals across Scotland. This map
+            can be interogated by clicking a selected GP or hospital. This will
+            trigger a pop-up visualising its respective data set.
+            "
+        ),
+        p(
+            "
+            The 'Summary' tab contains two pages; 'General practice' and
+            'Hospital'. Each of these pages visualises the respective data
+            set at a national, health board and individual practice
+            level. This can be used to compare GP demography or hospital
+            bed capacity data across the country.
+            "
+        )
+    )
+}
+
 notes_card <- function() {
     card(
         h4("Data sources"),
@@ -21,15 +59,25 @@ notes_card <- function() {
             "
             Please note the following caveats when interpreting data
             in the application:
-
+            "
+        ),
+        p(
+            "
             - Only GP practices and hospitals with matching IDs between
             the metadata and the demography and occupancy data respectively,
             are presented.
+            "
+        ),
+        p(
+            "
             - Only GP practices and hospitals with matching IDs between
             the metadata and the spatial data are presented.
+            "
+        ),
+        p(
+            "
             - Where data appears to be missing please refer to the original
             published data sets listed above.
-
             "
         ),
         h4("HealthDataScotland package"),

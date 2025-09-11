@@ -22,17 +22,7 @@ health_data_scotland <- function(...) {
         id = "main",
         nav_panel(
             title = bs_icon("house-fill"),
-            card(
-                full_screen = TRUE,
-                card_body(
-                    h3("Welcome to HealthDataScotland"),
-                    h4("This application presents a summary of demographics
-                    information for GP practices and a summary of bed capacity
-                    for hospitals across Scotland. Data has been obtained from
-                    various sources (see References page) and is avaiable for
-                    download (see Downloads page).")
-                )
-            ),
+            intro_card(),
             reduce(value_boxes, layout_column_wrap)
         ),
         nav_panel(
