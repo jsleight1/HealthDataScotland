@@ -40,22 +40,10 @@ gp_grp <- R6Class("gp_grp",
             )
         },
         trend_echart = function(x) {
-            x |>
-                e_charts(Date) |>
-                e_line(Population) |>
-                e_tooltip(trigger = "axis") |>
-                e_legend(show = FALSE)
+            super$trend_echart(x, "Date", "Population")
         },
         bar_echart = function(x) {
-            plt <- x |>
-                e_charts(Age, timeline = TRUE) |>
-                e_timeline_opts(autoPlay = TRUE) |>
-                e_tooltip(trigger = "axis") |>
-                e_legend(show = FALSE)
-            for (col in setdiff(colnames(x), c("Date", "Age"))) {
-                plt <- e_bar_(plt, col)
-            }
-            plt
+            super$bar_echart(x, "Age", "Age", "Population")
         },
         national_trend_data = function() {
             private[["map_combine"]](func = "data") |>

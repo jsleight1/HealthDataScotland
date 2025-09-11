@@ -19,27 +19,16 @@ hospital_grp <- R6Class("hospital_grp",
                 pull("HBName") |>
                 unique()
         },
-        bar_echart = function(x) {
-            plt <- x |>
-                e_charts(HBName, timeline = TRUE) |>
-                e_timeline_opts(autoPlay = TRUE, top = 0) |>
-                e_tooltip(trigger = "axis") |>
-                e_legend(show = FALSE) |>
-                e_y_axis(name = "Percentage occupancy") |>
-                e_x_axis(name = "Time")
-            for (col in setdiff(colnames(x), c("Date", "HBName"))) {
-                plt <- e_bar_(plt, col)
-            }
-            plt
-        },
         trend_echart = function(x) {
-            x |>
-                e_charts(FinancialYear) |>
-                e_line(PercentageOccupancy) |>
-                e_tooltip(trigger = "axis") |>
-                e_legend(show = FALSE) |>
-                e_y_axis(name = "Percentage occupancy") |>
-                e_x_axis(name = "Time")
+            super$trend_echart(x, "FinancialYear", "PercentageOccupancy")
+        },
+        bar_echart = function(
+                x,
+                group = "HBName",
+                x_axis = "",
+                y_axis = "Percentage occupancy"
+            ) {
+            super$bar_echart(x, group, x_axis, y_axis)
         },
         national_trend_data = function(specialties = "All Specialties") {
             specialties <- arg_match(
@@ -204,18 +193,8 @@ hospital_grp <- R6Class("hospital_grp",
 
         },
         hospital_bar = function(...) {
-            x <- self[["plot_data"]](type = "hospital_bar", ...)
-            plt <- x |>
-                e_charts(ID, timeline = TRUE) |>
-                e_timeline_opts(autoPlay = TRUE, top = 0) |>
-                e_tooltip(trigger = "axis") |>
-                e_legend(show = FALSE) |>
-                e_y_axis(name = "Percentage occupancy") |>
-                e_x_axis(name = "Time")
-            for (col in setdiff(colnames(x), c("Date", "ID"))) {
-                plt <- e_bar_(plt, col)
-            }
-            plt
+            x <- self[["plot_data"]](type = "hospital_bar", ...) |>
+                private[["bar_echart"]]("ID", "Hospital")
         }
     ),
     public = list(

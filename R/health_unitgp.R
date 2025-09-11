@@ -15,6 +15,28 @@ health_unitgrp <- R6Class(
         },
         id_name_selection = function() {
             set_names(self[["ids"]](), self[["titles"]]())
+        },
+        trend_echart = function(x, x_axis, y_axis) {
+            x |>
+                e_charts_(x_axis) |>
+                e_line_(y_axis) |>
+                e_tooltip(trigger = "axis") |>
+                e_legend(show = FALSE) |>
+                e_y_axis(name = y_axis) |>
+                e_x_axis(name = x_axis)
+        },
+        bar_echart = function(x, group, x_axis, y_axis) {
+            plt <- x |>
+                e_charts_(group, timeline = TRUE) |>
+                e_timeline_opts(autoPlay = TRUE, top = 0) |>
+                e_tooltip(trigger = "axis") |>
+                e_legend(show = FALSE) |>
+                e_y_axis(name = y_axis) |>
+                e_x_axis(name = x_axis)
+            for (col in setdiff(colnames(x), c("Date", group))) {
+                plt <- e_bar_(plt, col)
+            }
+            plt
         }
     ),
     public = list(
