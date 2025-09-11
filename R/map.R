@@ -8,11 +8,7 @@ map_UI <- function(id, boards) {
                 bs_icon("question-circle"),
                 "The interactive map below can be used to
                 click on indivdual GP practice and hospital to view associated
-                data for that particular health centre. The map draw functions
-                (top left pentagon and square icons) can be used to draw an area
-                around particular health centres. Comparisons between the selected
-                health centres can then be viewed in the comparisons tab.",
-                placement = "right"
+                data for that particular health centre."
             ),
             popover(
                 bs_icon("gear", class = "ms-auto"),
