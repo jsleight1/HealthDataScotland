@@ -62,8 +62,7 @@ process_data <- function(type, meta_func, data_func, sf_func) {
     sf <- get_sf(type)
     meta <- rename(meta_func(), "PHS metadata ID" = "datasetID")
     data <- rename(data_func(), "PHS data ID" = "datasetID")
-    master_ids <- list(sf[["ID"]], meta[["ID"]], data[["ID"]]) |>
-        reduce(intersect)
+    master_ids <- intersect(meta[["ID"]], data[["ID"]])
     sf <- sf_func(sf, master_ids, meta)
     meta <- filter(meta, .data[["ID"]] %in% master_ids)
     data <- filter(data, .data[["ID"]] %in% master_ids)

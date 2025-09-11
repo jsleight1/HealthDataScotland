@@ -23,9 +23,9 @@ test_that("gp_grp class works", {
 
     tst_sf <- sf[sf[["ID"]] == "10002", ]
 
-    list(gp_unit, gp_unit2) |>
+    list(gp_unit2) |>
         gp_grp[["new"]](.sf = tst_sf, .id = "gp") |>
-        expect_error("Are all health units present in sf")
+        expect_error("Are all ids in map sf found in object")
 
     list(gp_unit, gp_unit2) |>
         gp_grp[["new"]](.sf = sf, .id = 1) |>

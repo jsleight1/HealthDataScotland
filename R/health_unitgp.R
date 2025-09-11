@@ -84,12 +84,8 @@ health_unitgrp <- R6Class(
                 inherits(self[["sf"]](), "sf"),
                 msg = "sf must be sf object"
             )
-            assert_that(
-                identical(
-                    sort(self[["ids"]]()),
-                    sort(self[["sf"]]()[["ID"]])
-                ),
-                msg = "Are all health units present in sf"
+            assert_that(all(self[["sf"]]()[["ID"]] %in% self[["ids"]]()),
+                msg = "Are all ids in map sf found in object"
             )
             assert_that(!any(duplicated(self[["ids"]]())),
                 msg = "Health units must not be duplicated"
