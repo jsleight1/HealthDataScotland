@@ -59,8 +59,19 @@ test_that("gp_grp class can be plotted", {
     }
 })
 
-test_that("gp_grp plot data errors if wrong type", {
+test_that("gp_grp plot info works", {
+    for (plt in gp_grp_unit[["available_plots"]]()) {
+        gp_grp_unit[["plot_info"]](type = plt) |>
+            expect_snapshot()
+    }
+})
+
+test_that("gp_grp plot functions error if wrong type", {
+    gp_grp_unit[["plot"]](type = "p") |>
+        expect_error("`type` must be one.+")
     gp_grp_unit[["plot_data"]](type = "p") |>
+        expect_error("`type` must be one.+")
+    gp_grp_unit[["plot_info"]](type = "p") |>
         expect_error("`type` must be one.+")
 })
 

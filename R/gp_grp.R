@@ -214,6 +214,39 @@ gp_grp <- R6Class("gp_grp",
         gp_bar = function(...) {
             self[["plot_data"]](type = "gp_bar", ...) |>
                 private[["bar_echart"]]()
+        },
+        national_trend_info = function() {
+            "This line chart shows the total number of GP registered patients
+            in Scotland (y-axis) across time (x-axis) for each gender (colour)."
+        },
+        national_pyramid_info = function() {
+            "This bar chart shows a population pyramid of the total number of
+            GP registered patients in Scotland (x-axis) across age category
+            (y-axis) for each gender (colour)."
+        },
+        health_board_trend_info = function() {
+            "This line chart shows the total number of GP registered patients
+            (y-axis) for each health board (colour) across time (x-axis) for
+            the selected gender. Settings can be used to show data for different
+            health boards and genders."
+        },
+        health_board_bar_info = function() {
+            "This bar chart shows the total number of GP registered patients
+            (y-axis) for each health board (colour) across age categories
+            (x-axis). Settings can be used to show data for different health
+            boards and genders."
+        },
+        gp_trend_info = function() {
+            "This line chart shows the total number of GP registered patients
+            (y-axis) for each individal GP practice (colour) across time (x-axis)
+            for the selected gender. Settings can be used to show data for
+            different GP practices and genders."
+        },
+        gp_bar_info = function() {
+            "This bar chart shows the total number of GP registered patients
+            (y-axis) for each individal GP practice (colour) across
+            age categories (x-axis). Settings can be used to show data for
+            different GP practices and genders."
         }
     ),
     public = list(
@@ -258,6 +291,23 @@ gp_grp <- R6Class("gp_grp",
             )(...)
         },
         #' @description
+        #' Get plot info for gp grp.
+        #' @param type (character(1))\cr
+        #'     Character specifying plot type. See `available_plots`
+        #'   for options.
+        #' @param ... Passed to plot info functions.
+        plot_info = function(type, ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            switch(type,
+                "national_trend" = private[["national_trend_info"]],
+                "national_pyramid" = private[["national_pyramid_info"]],
+                "health_board_trend" = private[["health_board_trend_info"]],
+                "health_board_bar" = private[["health_board_bar_info"]],
+                "gp_trend" = private[["gp_trend_info"]],
+                "gp_bar" = private[["gp_bar_info"]]
+            )(...)
+        },
+        #' @description
         #' Create UI for general practice group object.
         ui = function() {
             ns <- NS(self[["id"]]())
@@ -272,13 +322,27 @@ gp_grp <- R6Class("gp_grp",
                         layout_column_wrap(
                             card(
                                 full_screen = TRUE,
-                                card_header("National GP population trend"),
-                                uiOutput(outputId = ns("national_pop_trend"))
+                                card_header(
+                                    "National GP population trend",
+                                    popover(
+                                        id = ns("national_trend_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("national_trend")
+                                    )
+                                ),
+                                echarts4rOutput(outputId = ns("national_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
-                                card_header("National GP population per gender and age group"),
-                                uiOutput(outputId = ns("national_pop_pyramid"))
+                                card_header(
+                                    "National GP population per gender and age group",
+                                    popover(
+                                        id = ns("national_pyramid_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("national_pyramid")
+                                    )
+                                ),
+                                echarts4rOutput(outputId = ns("national_pop_pyramid"))
                             )
                         )
                     ),
@@ -290,6 +354,11 @@ gp_grp <- R6Class("gp_grp",
                                 full_screen = TRUE,
                                 card_header(
                                     "Health board GP population",
+                                    popover(
+                                        id = ns("hb_trend_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("health_board_trend")
+                                    ),
                                     popover(
                                         id = ns("hb_trend_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -316,12 +385,17 @@ gp_grp <- R6Class("gp_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("hb_pop_trend"))
+                                echarts4rOutput(outputId = ns("hb_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
                                 card_header(
                                     "Health board GP population per age group",
+                                    popover(
+                                        id = ns("hb_bar_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("health_board_bar")
+                                    ),
                                     popover(
                                         id = ns("hb_bar_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -348,7 +422,7 @@ gp_grp <- R6Class("gp_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("hb_pop_bar"))
+                                echarts4rOutput(outputId = ns("hb_pop_bar"))
                             )
                         )
                     ),
@@ -360,6 +434,11 @@ gp_grp <- R6Class("gp_grp",
                                 full_screen = TRUE,
                                 card_header(
                                     "GP population for selected practice and gender",
+                                    popover(
+                                        id = ns("gp_trend_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("gp_trend")
+                                    ),
                                     popover(
                                         id = ns("gp_trend_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -386,12 +465,17 @@ gp_grp <- R6Class("gp_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("gp_pop_trend"))
+                                echarts4rOutput(outputId = ns("gp_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
                                 card_header(
                                     "GP population for selected practice and gender per age group",
+                                    popover(
+                                        id = ns("gp_bar_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("gp_bar")
+                                    ),
                                     popover(
                                         id = ns("gp_bar_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -418,7 +502,7 @@ gp_grp <- R6Class("gp_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("gp_pop_bar"))
+                                echarts4rOutput(outputId = ns("gp_pop_bar"))
                             )
                         )
                     ),
@@ -435,10 +519,10 @@ gp_grp <- R6Class("gp_grp",
                     ns <- session[["ns"]]
                     data <- self[["get_download"]]()
 
-                    output[["national_pop_trend"]] <- renderUI({
+                    output[["national_pop_trend"]] <- renderEcharts4r({
                         self[["plot"]](type = "national_trend")
                     })
-                    output[["national_pop_pyramid"]] <- renderUI({
+                    output[["national_pop_pyramid"]] <- renderEcharts4r({
                         self[["plot"]](type = "national_pyramid")
                     })
 
@@ -466,9 +550,9 @@ gp_grp <- R6Class("gp_grp",
                         input[["select_hb_bar_gender"]]
                     )
 
-                    output[["hb_pop_trend"]] <- renderUI(hb_pop_trend_plt())
+                    output[["hb_pop_trend"]] <- renderEcharts4r(hb_pop_trend_plt())
 
-                    output[["hb_pop_bar"]] <- renderUI(hb_pop_bar_plt())
+                    output[["hb_pop_bar"]] <- renderEcharts4r(hb_pop_bar_plt())
 
                     gp_pop_trend_plt <- reactive({
                         self[["plot"]](
@@ -482,7 +566,7 @@ gp_grp <- R6Class("gp_grp",
                         input[["select_gp_trend_gender"]]
                     )
 
-                    output[["gp_pop_trend"]] <- renderUI(gp_pop_trend_plt())
+                    output[["gp_pop_trend"]] <- renderEcharts4r(gp_pop_trend_plt())
 
                     gp_pop_bar_plt <- reactive({
                         self[["plot"]](
@@ -495,7 +579,7 @@ gp_grp <- R6Class("gp_grp",
                         input[["select_gp_bar_gp"]],
                         input[["select_gp_bar_gender"]]
                     )
-                    output[["gp_pop_bar"]] <- renderUI(gp_pop_bar_plt())
+                    output[["gp_pop_bar"]] <- renderEcharts4r(gp_pop_bar_plt())
 
                     output[["download"]] <- self[["download_handler"]]()
                 }

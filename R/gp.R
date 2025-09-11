@@ -94,6 +94,15 @@ gp <- R6Class("gp",
                 e_tooltip(trigger = "axis") |>
                 e_y_axis(min = y_range[1], max = y_range[2]) |>
                 e_title(self[["title"]]())
+        },
+        population_pyramid_info = function() {
+            "This bar chart shows a population pyramid of the total number of
+            GP registered patients (x-axis) across age category
+            (y-axis) for each gender (colour)."
+        },
+        population_trend_info = function() {
+            "This line chart shows the number of registered GP patients (y-axis)
+            across time (x-axis) for each gender (colour)."
         }
     ),
     public = list(
@@ -131,12 +140,25 @@ gp <- R6Class("gp",
         #' @param type (character(1))\cr
         #'     Character specifying plot type. See `available_plots`
         #'   for options.
-        #' @param ... Passed to plot_data functions.
+        #' @param ... Passed to plot data functions.
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
-                "population_pyramid" = private[["population_pyramid_data"]](...),
-                "population_trend" = private[["population_trend_data"]](...)
+                "population_pyramid" = private[["population_pyramid_data"]],
+                "population_trend" = private[["population_trend_data"]]
+            )(...)
+        },
+        #' @description
+        #' Get plot info for gp unit.
+        #' @param type (character(1))\cr
+        #'     Character specifying plot type. See `available_plots`
+        #'   for options.
+        #' @param ... Passed to plot info functions.
+        plot_info = function(type, ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            switch(type,
+                "population_pyramid" = private[["population_pyramid_info"]](),
+                "population_trend" = private[["population_trend_info"]]()
             )
         },
         #' @description
@@ -157,12 +179,10 @@ gp <- R6Class("gp",
                         popover(
                             id = ns("pop_trend_help"),
                             bs_icon("question-circle"),
-                            "This line chart shows the population trend for
-                            the selected GP practice over time. Settings can
-                            be used to show trends for selected genders."
+                            self[["plot_info"]]("population_trend")
                         ),
                     ),
-                    spinner(echarts4rOutput(ns("pop_trend")))
+                    echarts4rOutput(ns("pop_trend"))
                 ),
                 card(
                     full_screen = TRUE,
@@ -171,12 +191,10 @@ gp <- R6Class("gp",
                         popover(
                             id = ns("pop_pyramid_help"),
                             bs_icon("question-circle"),
-                            "This bar chart shows a population pyramid of
-                            the selected GP practice. Settings can be used to
-                            show data for selected time frames"
+                            self[["plot_info"]]("population_pyramid")
                         )
                     ),
-                    spinner(echarts4rOutput(ns("pop_pyramid")))
+                    echarts4rOutput(ns("pop_pyramid"))
                 ),
                 card(downloadButton(ns("download")))
             )

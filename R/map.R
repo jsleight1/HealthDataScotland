@@ -185,7 +185,3 @@ subset_selected_data <- function(x, data) {
     names(x) <- map_chr(x, ~unique(.x[["type"]]))
     map(x, ~data[[unique(.x[["type"]])]][["subset"]](.x[["ID"]]))
 }
-
-spinner <- function(...) {
-    addSpinner(..., spin = "bounce", color = "#377EB8")
-}

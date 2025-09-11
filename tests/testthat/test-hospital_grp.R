@@ -65,8 +65,19 @@ test_that("hospital_grp class can be plotted", {
     }
 })
 
-test_that("hospital_grp plot data errors if wrong type", {
+test_that("hospital_grp plot info works", {
+    for (plt in hosp_grp_unit[["available_plots"]]()) {
+        hosp_grp_unit[["plot_info"]](type = plt) |>
+            expect_snapshot()
+    }
+})
+
+test_that("hospital_grp plot functions error if wrong type", {
+    hosp_grp_unit[["plot"]](type = "p") |>
+        expect_error("`type` must be one.+")
     hosp_grp_unit[["plot_data"]](type = "p") |>
+        expect_error("`type` must be one.+")
+    hosp_grp_unit[["plot_info"]](type = "p") |>
         expect_error("`type` must be one.+")
 })
 

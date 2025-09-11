@@ -71,6 +71,18 @@ hospital <- R6Class("hospital",
         },
         specialty_choices = function() {
             sort(unique(self[["data"]]()[["SpecialtyName"]]))
+        },
+        specialty_line_info = function(data_type = c("annual", "daily")) {
+            switch(arg_match(data_type),
+                "annual" = "This line chart shows the annual number of
+                    available staffed beds and the number occupied (y-axis)
+                    across time (x-axis). Settings can be used to show data for
+                    different specialties (default is all specialities).",
+                "daily" = "This line chart shows the daily average number of
+                    available staffed beds and the number occupied (y-axis)
+                    across time (x-axis). Settings can be used to show data for
+                    different specialties (default is all specialities).",
+            )
         }
     ),
     public = list(
@@ -94,11 +106,22 @@ hospital <- R6Class("hospital",
         #' Generate plot data for hospital unit.
         #' @param type (character(1))\cr
         #'     Character specifying plot type. See `available_plots` for options.
-        #' @param ... Passed to plot functions.
+        #' @param ... Passed to plot data functions.
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
                 "specialty_line" = private[["specialty_line_data"]]
+            )(...)
+        },
+        #' @description
+        #' Get plot info for hospital unit.
+        #' @param type (character(1))\cr
+        #'     Character specifying plot type. See `available_plots` for options.
+        #' @param ... Passed to plot info functions.
+        plot_info = function(type, ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            switch(type,
+                "specialty_line" = private[["specialty_line_info"]]
             )(...)
         },
         #' @description
@@ -118,11 +141,7 @@ hospital <- R6Class("hospital",
                         popover(
                             id = ns("annual_beds_help"),
                             bs_icon("question-circle"),
-                            "This line chart shows the annual number of
-                            available staffed beds and the number occupied
-                            in the selected hospital. Settings can be used
-                            to show data for specialities (default is to present
-                            collated data for all specialities)."
+                            self[["plot_info"]]("specialty_line", "annual")
                         ),
                         popover(
                             id = ns("annual_beds_settings"),
@@ -136,7 +155,7 @@ hospital <- R6Class("hospital",
                             )
                         )
                     ),
-                    spinner(uiOutput(ns("annual_beds")))
+                    uiOutput(ns("annual_beds"))
                 ),
                 card(
                     full_screen = TRUE,
@@ -145,11 +164,7 @@ hospital <- R6Class("hospital",
                         popover(
                             id = ns("daily_beds_help"),
                             bs_icon("question-circle"),
-                            "This line chart shows the daily average number of
-                            available staffed beds and the number occupied
-                            in the selected hospital. Settings can be used
-                            to show data for selected specialities (default is)
-                            present collated data for all specialities)."
+                            self[["plot_info"]]("specialty_line", "daily")
                         ),
                         popover(
                             id = ns("daily_beds_settings"),
@@ -163,7 +178,7 @@ hospital <- R6Class("hospital",
                             )
                         )
                     ),
-                    spinner(uiOutput(ns("daily_beds")))
+                    uiOutput(ns("daily_beds"))
                 ),
                 card(downloadButton(ns("download")))
             )

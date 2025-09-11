@@ -17,11 +17,9 @@ R6 class storing health statistics for a list of hospital health units.
 \item \href{#method-hospital_grp-available_plots}{\code{hospital_grp$available_plots()}}
 \item \href{#method-hospital_grp-plot}{\code{hospital_grp$plot()}}
 \item \href{#method-hospital_grp-plot_data}{\code{hospital_grp$plot_data()}}
-\item \href{#method-hospital_grp-summary}{\code{hospital_grp$summary()}}
+\item \href{#method-hospital_grp-plot_info}{\code{hospital_grp$plot_info()}}
 \item \href{#method-hospital_grp-ui}{\code{hospital_grp$ui()}}
 \item \href{#method-hospital_grp-server}{\code{hospital_grp$server()}}
-\item \href{#method-hospital_grp-group_choices}{\code{hospital_grp$group_choices()}}
-\item \href{#method-hospital_grp-group_column}{\code{hospital_grp$group_column()}}
 \item \href{#method-hospital_grp-clone}{\code{hospital_grp$clone()}}
 }
 }
@@ -46,8 +44,7 @@ R6 class storing health statistics for a list of hospital health units.
 \if{html}{\out{<a id="method-hospital_grp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-hospital_grp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get character vector of available plots for hospital grp. Options
-are either "specialty_bar" or "specialty_line" plot.
+Get character vector of available plots for hospital grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital_grp$available_plots()}\if{html}{\out{</div>}}
 }
@@ -88,27 +85,28 @@ Generate plot data for hospital grp.
 \item{\code{type}}{(character(1))\cr
 Character specifying plot type. See \code{available_plots} for options.}
 
-\item{\code{...}}{Passed to plot functions.}
+\item{\code{...}}{Passed to plot data functions.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hospital_grp-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-hospital_grp-summary}{}}}
-\subsection{Method \code{summary()}}{
-Summarise hospital grp unit.
+\if{html}{\out{<a id="method-hospital_grp-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital_grp-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for hospital grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$summary(id = "Scotland national", ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$plot_info(type, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{(character(1))\cr
-Character specifying the ID to assign to output data.frame.}
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots}
+for options.}
 
-\item{\code{...}}{Passed to plot_data.}
+\item{\code{...}}{Passed to plot info functions.}
 }
 \if{html}{\out{</div>}}
 }
@@ -137,24 +135,6 @@ Create UI for hospital group object.
 Create server for hospital group object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital_grp$server()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hospital_grp-group_choices"></a>}}
-\if{latex}{\out{\hypertarget{method-hospital_grp-group_choices}{}}}
-\subsection{Method \code{group_choices()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$group_choices()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hospital_grp-group_column"></a>}}
-\if{latex}{\out{\hypertarget{method-hospital_grp-group_column}{}}}
-\subsection{Method \code{group_column()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$group_column(x)}\if{html}{\out{</div>}}
 }
 
 }

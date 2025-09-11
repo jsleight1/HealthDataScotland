@@ -17,6 +17,7 @@ R6 class storing health statistics for a Hospital.
 \item \href{#method-hospital-available_plots}{\code{hospital$available_plots()}}
 \item \href{#method-hospital-plot}{\code{hospital$plot()}}
 \item \href{#method-hospital-plot_data}{\code{hospital$plot_data()}}
+\item \href{#method-hospital-plot_info}{\code{hospital$plot_info()}}
 \item \href{#method-hospital-ui}{\code{hospital$ui()}}
 \item \href{#method-hospital-server}{\code{hospital$server()}}
 \item \href{#method-hospital-clone}{\code{hospital$clone()}}
@@ -81,7 +82,27 @@ Generate plot data for hospital unit.
 \item{\code{type}}{(character(1))\cr
 Character specifying plot type. See \code{available_plots} for options.}
 
-\item{\code{...}}{Passed to plot functions.}
+\item{\code{...}}{Passed to plot data functions.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for hospital unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$plot_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots} for options.}
+
+\item{\code{...}}{Passed to plot info functions.}
 }
 \if{html}{\out{</div>}}
 }

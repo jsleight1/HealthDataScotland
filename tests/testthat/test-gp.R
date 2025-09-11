@@ -33,10 +33,41 @@ test_that("gp class works", {
 })
 
 test_that("gp class can be plotted", {
-    gp_unit[["plot"]](type = "population_pyramid") |>
-        suppressWarnings() |>
-        expect_s3_class("echarts4r")
-    expect_s3_class(gp_unit[["plot"]](type = "population_trend"), "echarts4r")
+    for (plt in gp_unit[["available_plots"]]()) {
+        output <- gp_unit[["plot"]](type = plt) |>
+            expect_no_error()
+        expect_s3_class(output, "echarts4r")
+    }
+})
+
+test_that("gp plot info works", {
+    for (plt in gp_unit[["available_plots"]]()) {
+        gp_unit[["plot_info"]](type = plt) |>
+            expect_snapshot()
+    }
+})
+
+test_that("gp plot functions error if wrong type", {
+    gp_unit[["plot"]](type = "p") |>
+        expect_error("`type` must be one.+")
+    gp_unit[["plot_data"]](type = "p") |>
+        expect_error("`type` must be one.+")
+    gp_unit[["plot_info"]](type = "p") |>
+        expect_error("`type` must be one.+")
+})
+
+test_that("population_pyramid_data works", {
+    output <- gp_unit[["plot_data"]](type = "population_pyramid") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "population_pyramid_data")
+})
+
+test_that("population_trend_data works", {
+    output <- gp_unit[["plot_data"]](type = "population_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "population_trend_data")
 })
 
 test_that("gp ui works", {

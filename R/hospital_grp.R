@@ -167,6 +167,36 @@ hospital_grp <- R6Class("hospital_grp",
         hospital_bar = function(...) {
             x <- self[["plot_data"]](type = "hospital_bar", ...) |>
                 private[["bar_echart"]]("ID", "Hospital")
+        },
+        national_trend_info = function() {
+            "This line chart shows the national average hospital bed
+            occupancy (y-axis) across time (x-axis) for the selected
+            specialty. Settings can be used to show data for different
+            specialties (default is all specialities)."
+        },
+        health_board_trend_info = function() {
+            "This line chart shows the average hospital bed occupancy (y-axis)
+            across time (x-axis) per health board (colour) for the selected
+            specialty. Settings can be used to show data for different
+            specialties (default is all specialties) and health boards."
+        },
+        health_board_bar_info = function() {
+            "This bar chart shows the average hospital bed occupancy (y-axis)
+            across health boards (x-axis) for each specialty (colour).
+            Settings can be used to show data for different specialties
+            (default is all specialties) and health boards."
+        },
+        hospital_trend_info = function() {
+            "This line chart shows the average hospital bed occupancy (y-axis)
+            across time (x-axis) per hospital (colour) for the selected
+            specialty. Settings can be used to show data for different
+            specialties (default is all specialties) and hospitals."
+        },
+        hospital_bar_info = function() {
+            "This bar chart shows the average hospital bed occupancy (y-axis)
+            per hospital (x-axis) for each specialty (colour). Seetings can be
+            used to show data for different specialties (default is all
+            specialties) and hospitals."
         }
     ),
     public = list(
@@ -195,7 +225,7 @@ hospital_grp <- R6Class("hospital_grp",
         #' Generate plot data for hospital grp.
         #' @param type (character(1))\cr
         #'     Character specifying plot type. See `available_plots` for options.
-        #' @param ... Passed to plot functions.
+        #' @param ... Passed to plot data functions.
         plot_data = function(type, ...) {
             type <- arg_match(type, values = self[["available_plots"]]())
             switch(type,
@@ -204,6 +234,22 @@ hospital_grp <- R6Class("hospital_grp",
                 "health_board_bar" = private[["health_board_bar_data"]],
                 "hospital_trend" = private[["hospital_trend_data"]],
                 "hospital_bar" = private[["hospital_bar_data"]]
+            )(...)
+        },
+        #' @description
+        #' Get plot info for hospital grp.
+        #' @param type (character(1))\cr
+        #'     Character specifying plot type. See `available_plots`
+        #'   for options.
+        #' @param ... Passed to plot info functions.
+        plot_info = function(type, ...) {
+            type <- arg_match(type, values = self[["available_plots"]]())
+            switch(type,
+                "national_trend" = private[["national_trend_info"]],
+                "health_board_trend" = private[["health_board_trend_info"]],
+                "health_board_bar" = private[["health_board_bar_info"]],
+                "hospital_trend" = private[["hospital_trend_info"]],
+                "hospital_bar" = private[["hospital_bar_info"]]
             )(...)
         },
         #' @description
@@ -221,6 +267,11 @@ hospital_grp <- R6Class("hospital_grp",
                         card_header(
                             "National average bed occupancy per specialty",
                             popover(
+                                id = ns("national_help"),
+                                bs_icon("question-circle"),
+                                self[["plot_info"]]("national_trend")
+                            ),
+                            popover(
                                 id = ns("national_settings"),
                                 bs_icon("gear", class = "ms-auto"),
                                 virtualSelectInput(
@@ -236,7 +287,7 @@ hospital_grp <- R6Class("hospital_grp",
                                 )
                             )
                         ),
-                        uiOutput(outputId = ns("national_trend"))
+                        echarts4rOutput(outputId = ns("national_trend"))
                     ),
                     card(
                         full_screen = TRUE,
@@ -246,6 +297,11 @@ hospital_grp <- R6Class("hospital_grp",
                                 full_screen = TRUE,
                                 card_header(
                                     "Average bed occupancy per health board for selected specialty",
+                                    popover(
+                                        id = ns("hb_trend_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("health_board_trend")
+                                    ),
                                     popover(
                                         id = ns("hb_trend_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -272,12 +328,17 @@ hospital_grp <- R6Class("hospital_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("hb_trend"))
+                                echarts4rOutput(outputId = ns("hb_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
                                 card_header(
                                     "Average bed occupancy per health board and specialty",
+                                    popover(
+                                        id = ns("hb_bar_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("health_board_bar")
+                                    ),
                                     popover(
                                         id = ns("hb_bar_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -305,7 +366,7 @@ hospital_grp <- R6Class("hospital_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("hb_bar"))
+                                echarts4rOutput(outputId = ns("hb_bar"))
                             )
                         )
                     ),
@@ -317,6 +378,11 @@ hospital_grp <- R6Class("hospital_grp",
                                 full_screen = TRUE,
                                 card_header(
                                     "Average bed occupancy per hospital for selected specialty",
+                                    popover(
+                                        id = ns("hosp_trend_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("hospital_trend")
+                                    ),
                                     popover(
                                         id = ns("hosp_trend_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -343,12 +409,17 @@ hospital_grp <- R6Class("hospital_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("hosp_trend"))
+                                echarts4rOutput(outputId = ns("hosp_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
                                 card_header(
                                     "Average bed occupancy per hospital per specialty",
+                                    popover(
+                                        id = ns("hosp_bar_help"),
+                                        bs_icon("question-circle"),
+                                        self[["plot_info"]]("hospital_bar")
+                                    ),
                                     popover(
                                         id = ns("hosp_bar_settings"),
                                         bs_icon("gear", class = "ms-auto"),
@@ -376,7 +447,7 @@ hospital_grp <- R6Class("hospital_grp",
                                         )
                                     )
                                 ),
-                                uiOutput(outputId = ns("hosp_bar"))
+                                echarts4rOutput(outputId = ns("hosp_bar"))
                             )
                         )
                     ),
@@ -401,7 +472,7 @@ hospital_grp <- R6Class("hospital_grp",
                     }) |>
                     bindEvent(input[["select_national_specialty"]])
 
-                    output[["national_trend"]] <- renderUI(national_trend_plt())
+                    output[["national_trend"]] <- renderEcharts4r(national_trend_plt())
 
                     hb_trend_plt <- reactive({
                         self[["plot"]](
@@ -415,7 +486,7 @@ hospital_grp <- R6Class("hospital_grp",
                         input[["select_hb_trend_hb"]]
                     )
 
-                    output[["hb_trend"]] <- renderUI(hb_trend_plt())
+                    output[["hb_trend"]] <- renderEcharts4r(hb_trend_plt())
 
                     hb_bar_plt <- reactive({
                         self[["plot"]](
@@ -429,7 +500,7 @@ hospital_grp <- R6Class("hospital_grp",
                         input[["select_hb_bar_hb"]]
                     )
 
-                    output[["hb_bar"]] <- renderUI(hb_bar_plt())
+                    output[["hb_bar"]] <- renderEcharts4r(hb_bar_plt())
 
                     hosp_trend_plt <- reactive({
                         self[["plot"]](
@@ -443,7 +514,7 @@ hospital_grp <- R6Class("hospital_grp",
                         input[["select_hosp_trend_hosp"]]
                     )
 
-                    output[["hosp_trend"]] <- renderUI(hosp_trend_plt())
+                    output[["hosp_trend"]] <- renderEcharts4r(hosp_trend_plt())
 
                     hosp_bar_plt <- reactive({
                         self[["plot"]](
@@ -457,7 +528,7 @@ hospital_grp <- R6Class("hospital_grp",
                         input[["select_hosp_bar_hosp"]]
                     )
 
-                    output[["hosp_bar"]] <- renderUI(hosp_bar_plt())
+                    output[["hosp_bar"]] <- renderEcharts4r(hosp_bar_plt())
 
                     output[["download"]] <- self[["download_handler"]]()
                 }
