@@ -284,86 +284,140 @@ gp_grp <- R6Class("gp_grp",
                     ),
                     card(
                         full_screen = TRUE,
-                        card_header(
-                            "Health board summary",
-                            popover(
-                                id = ns("hb_summary_settings"),
-                                bs_icon("gear", class = "ms-auto"),
-                                virtualSelectInput(
-                                    inputId = ns("select_hb"),
-                                    label = "Select health boards",
-                                    multiple = TRUE,
-                                    choices = unique(data[["HBName"]]),
-                                    selected = unique(data[["HBName"]]),
-                                    search = TRUE,
-                                    html = TRUE,
-                                    showSelectedOptionsFirst = TRUE,
-                                    updateOn = "close"
-                                ),
-                                virtualSelectInput(
-                                    inputId = ns("select_hb_gender"),
-                                    label = "Select gender",
-                                    choices = c("All", "Male", "Female"),
-                                    selected = "All",
-                                    search = TRUE,
-                                    html = TRUE,
-                                    showSelectedOptionsFirst = TRUE,
-                                    updateOn = "close"
-                                )
-                            ),
-                        ),
+                        card_header("Health board summary"),
                         layout_column_wrap(
                             card(
                                 full_screen = TRUE,
-                                card_header("Health board GP population"),
+                                card_header(
+                                    "Health board GP population",
+                                    popover(
+                                        id = ns("hb_trend_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            inputId = ns("select_hb_trend_hb"),
+                                            label = "Select health boards",
+                                            multiple = TRUE,
+                                            choices = unique(data[["HBName"]]),
+                                            selected = unique(data[["HBName"]]),
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            inputId = ns("select_hb_trend_gender"),
+                                            label = "Select gender",
+                                            choices = c("All", "Male", "Female"),
+                                            selected = "All",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
                                 uiOutput(outputId = ns("hb_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
-                                card_header("Health board GP population per age group"),
+                                card_header(
+                                    "Health board GP population per age group",
+                                    popover(
+                                        id = ns("hb_bar_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            inputId = ns("select_hb_bar_hb"),
+                                            label = "Select health boards",
+                                            multiple = TRUE,
+                                            choices = unique(data[["HBName"]]),
+                                            selected = unique(data[["HBName"]]),
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            inputId = ns("select_hb_bar_gender"),
+                                            label = "Select gender",
+                                            choices = c("All", "Male", "Female"),
+                                            selected = "All",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
                                 uiOutput(outputId = ns("hb_pop_bar"))
                             )
                         )
                     ),
                     card(
                         full_screen = TRUE,
-                        card_header(
-                            "Individual practice summary",
-                            popover(
-                                id = ns("gp_summary_settings"),
-                                bs_icon("gear", class = "ms-auto"),
-                                virtualSelectInput(
-                                    inputId = ns("select_gp"),
-                                    label = "Select individual GP practices",
-                                    multiple = TRUE,
-                                    choices = private[["gp_choices"]](),
-                                    selected = private[["gp_choices"]]()[1],
-                                    search = TRUE,
-                                    html = TRUE,
-                                    showSelectedOptionsFirst = TRUE,
-                                    updateOn = "close"
-                                ),
-                                virtualSelectInput(
-                                    inputId = ns("select_gp_gender"),
-                                    label = "Select gender",
-                                    choices = c("All", "Male", "Female"),
-                                    selected = "All",
-                                    search = TRUE,
-                                    html = TRUE,
-                                    showSelectedOptionsFirst = TRUE,
-                                    updateOn = "close"
-                                )
-                            )
-                        ),
+                        card_header("Individual practice summary"),
                         layout_column_wrap(
                             card(
                                 full_screen = TRUE,
-                                card_header("GP population for selected practice and gender"),
+                                card_header(
+                                    "GP population for selected practice and gender",
+                                    popover(
+                                        id = ns("gp_trend_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            inputId = ns("select_gp_trend_gp"),
+                                            label = "Select individual GP practices",
+                                            multiple = TRUE,
+                                            choices = private[["gp_choices"]](),
+                                            selected = private[["gp_choices"]]()[1],
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            inputId = ns("select_gp_trend_gender"),
+                                            label = "Select gender",
+                                            choices = c("All", "Male", "Female"),
+                                            selected = "All",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
                                 uiOutput(outputId = ns("gp_pop_trend"))
                             ),
                             card(
                                 full_screen = TRUE,
-                                card_header("GP population for selected practice and gender per age group"),
+                                card_header(
+                                    "GP population for selected practice and gender per age group",
+                                    popover(
+                                        id = ns("gp_bar_settings"),
+                                        bs_icon("gear", class = "ms-auto"),
+                                        virtualSelectInput(
+                                            inputId = ns("select_gp_bar_gp"),
+                                            label = "Select individual GP practices",
+                                            multiple = TRUE,
+                                            choices = private[["gp_choices"]](),
+                                            selected = private[["gp_choices"]]()[1],
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        ),
+                                        virtualSelectInput(
+                                            inputId = ns("select_gp_bar_gender"),
+                                            label = "Select gender",
+                                            choices = c("All", "Male", "Female"),
+                                            selected = "All",
+                                            search = TRUE,
+                                            html = TRUE,
+                                            showSelectedOptionsFirst = TRUE,
+                                            updateOn = "close"
+                                        )
+                                    )
+                                ),
                                 uiOutput(outputId = ns("gp_pop_bar"))
                             )
                         )
@@ -391,20 +445,26 @@ gp_grp <- R6Class("gp_grp",
                     hb_pop_trend_plt <- reactive({
                         self[["plot"]](
                             type = "health_board_trend",
-                            health_board = input[["select_hb"]],
-                            gender = input[["select_hb_gender"]]
+                            health_board = input[["select_hb_trend_hb"]],
+                            gender = input[["select_hb_trend_gender"]]
                         )
                     }) |>
-                    bindEvent(input[["select_hb"]], input[["select_hb_gender"]])
+                    bindEvent(
+                        input[["select_hb_trend_hb"]],
+                        input[["select_hb_trend_gender"]]
+                    )
 
                     hb_pop_bar_plt <- reactive({
                         self[["plot"]](
                             type = "health_board_bar",
-                            health_board = input[["select_hb"]],
-                            gender = input[["select_hb_gender"]]
+                            health_board = input[["select_hb_bar_hb"]],
+                            gender = input[["select_hb_bar_gender"]]
                         )
                     }) |>
-                    bindEvent(input[["select_hb"]], input[["select_hb_gender"]])
+                    bindEvent(
+                        input[["select_hb_bar_hb"]],
+                        input[["select_hb_bar_gender"]]
+                    )
 
                     output[["hb_pop_trend"]] <- renderUI(hb_pop_trend_plt())
 
@@ -413,23 +473,28 @@ gp_grp <- R6Class("gp_grp",
                     gp_pop_trend_plt <- reactive({
                         self[["plot"]](
                             type = "gp_trend",
-                            gp = input[["select_gp"]],
-                            gender = input[["select_gp_gender"]]
+                            gp = input[["select_gp_trend_gp"]],
+                            gender = input[["select_gp_trend_gender"]]
                         )
                     }) |>
-                    bindEvent(input[["select_gp"]], input[["select_gp_gender"]])
+                    bindEvent(
+                        input[["select_gp_trend_gp"]],
+                        input[["select_gp_trend_gender"]]
+                    )
 
                     output[["gp_pop_trend"]] <- renderUI(gp_pop_trend_plt())
 
                     gp_pop_bar_plt <- reactive({
                         self[["plot"]](
                             type = "gp_bar",
-                            gp = input[["select_gp"]],
-                            gender = input[["select_gp_gender"]]
+                            gp = input[["select_gp_bar_gp"]],
+                            gender = input[["select_gp_bar_gender"]]
                         )
-                    }) |>
-                    bindEvent(input[["select_gp"]], input[["select_gp_gender"]])
-
+                    })  |>
+                    bindEvent(
+                        input[["select_gp_bar_gp"]],
+                        input[["select_gp_bar_gender"]]
+                    )
                     output[["gp_pop_bar"]] <- renderUI(gp_pop_bar_plt())
 
                     output[["download"]] <- self[["download_handler"]]()
