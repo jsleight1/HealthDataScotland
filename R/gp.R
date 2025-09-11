@@ -41,6 +41,7 @@ gp <- R6Class("gp",
         population_pyramid = function(...) {
             self[["plot_data"]]("population_pyramid", ...) |>
                 e_charts(Age, timeline = TRUE) |>
+                e_timeline_opts(autoPlay = TRUE) |>
                 e_bar(Male, stack = "quantity") |>
                 e_bar(Female, stack = "quantity") |>
                 e_flip_coords() |>

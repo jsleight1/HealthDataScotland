@@ -47,17 +47,58 @@ test_that("gp_grp class works", {
     expect_identical(out[["sf"]](), sf)
     expect_identical(out[["health_unit"]]("10002"), gp_unit)
     expect_identical(out[["available_plots"]](),
-        c("population_pyramid", "population_trend", "population_bar"))
+        c("national_trend", "national_pyramid", "health_board_trend",
+        "health_board_bar", "gp_trend", "gp_bar"))
 })
 
 test_that("gp_grp class can be plotted", {
-    gp_grp_unit[["plot"]](type = "population_pyramid") |>
-        suppressWarnings() |>
-        expect_s3_class("shiny.tag")
-    gp_grp_unit[["plot"]](type = "population_trend") |>
-        expect_s3_class("shiny.tag")
-    gp_grp_unit[["plot"]](type = "population_bar") |>
-        expect_s3_class("echarts4r")
+    for (plt in gp_grp_unit[["available_plots"]]()) {
+        output <- gp_grp_unit[["plot"]](type = plt) |>
+            expect_no_error()
+        expect_s3_class(output, "echarts4r")
+    }
+})
+
+test_that("national_trend_data works", {
+    output <- gp_grp_unit[["plot_data"]](type = "national_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "national_trend_data")
+})
+
+test_that("national_pyramid_data works", {
+    output <- gp_grp_unit[["plot_data"]](type = "national_pyramid") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "national_pyramid_data")
+})
+
+test_that("health_board_trend_data works", {
+    output <- gp_grp_unit[["plot_data"]](type = "health_board_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "health_board_trend_data")
+})
+
+test_that("health_baord_bar_data works", {
+    output <- gp_grp_unit[["plot_data"]](type = "health_board_bar") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "health_board_bar_data")
+})
+
+test_that("gp_trend_data works", {
+    output <- gp_grp_unit[["plot_data"]](type = "gp_trend") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "gp_trend_data")
+})
+
+test_that("gp_bar_data works", {
+    output <- gp_grp_unit[["plot_data"]](type = "gp_bar") |>
+        expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, "gp_bar_data")
 })
 
 test_that("gp_grp subset works", {

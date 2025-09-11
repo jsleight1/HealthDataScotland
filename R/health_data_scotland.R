@@ -52,7 +52,7 @@ health_data_scotland <- function(...) {
         ),
         nav_menu(
             title = "Summary",
-            summary_UI("gp_summary", "GP", data[["General practice"]]),
+            data[["General practice"]][["ui"]](),
             summary_UI("hospital_summary", "Hospital", data[["Hospital"]])
         ),
         nav_panel(
@@ -96,6 +96,7 @@ health_data_scotland <- function(...) {
     server <- function(input, output) {
         requireNamespace("sf", quietly = TRUE)
         map_selected_data <- map_server("map", data, get_sf("board"))
+        data[["General practice"]][["server"]]()
         summary_server("gp_summary", "GP", data[["General practice"]])
         summary_server("hospital_summary", "Hospital", data[["Hospital"]])
     }
