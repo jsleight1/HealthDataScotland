@@ -96,10 +96,20 @@ notes_card <- function() {
     h4("About the author"),
     p(
       "
-            I am a Scottish R software developer with a background in
-            Bioinformatic and Health data science. I am currently working as an
-            R/R shiny developer at Audit Scotland.
-            "
+            I am an R software developer from Glasgow, Scotland. I have a
+            background in bioinformatics and an currently working as an
+            R/R shiny developer at Audit Scotland. I have always had a keen interested in public health and am an avid R developer with a particular focus in R shiny.
+            The aim of HealthDataScotland was to act as a hobby project to develop my skills in R shiny, whilst also acting as dashboard collating key public health metrics in Scotland that may prove interesting to a wider audience.
+
+        ",
+    ),
+    p("Please feel free to connect with me on linkedin."),
+    p(
+      style = "color: var(--brand-red);",
+      "Please note that this application is primarily a hobby project.
+      Therefore any decisions should not be made using the data presented
+      without consulting the original published data sets.
+    "
     )
   )
 }
