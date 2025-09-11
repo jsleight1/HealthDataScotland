@@ -79,6 +79,12 @@ notes_card <- function() {
             published data sets listed above.
             "
     ),
+    p(
+      "
+            - Both spatial data sets are out-dated. Until newer versions are avaiable
+            the data presented in the interactive map may be sparse.
+            "
+    ),
     h4("HealthDataScotland package"),
     p(
       "
