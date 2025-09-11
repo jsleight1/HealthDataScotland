@@ -10,15 +10,6 @@ hospital_grp <- R6Class("hospital_grp",
                 unique() |>
                 sort()
         },
-        hospital_choices = function() {
-            paste(self[["ids"]](), "-", self[["titles"]]()) |>
-                unique()
-        },
-        health_board_choices = function() {
-            self[["get_download"]]() |>
-                pull("HBName") |>
-                unique()
-        },
         trend_echart = function(x) {
             super$trend_echart(x, "FinancialYear", "PercentageOccupancy") |>
                 e_y_axis(min = 0, max = 100)
@@ -114,7 +105,7 @@ hospital_grp <- R6Class("hospital_grp",
         },
         hospital_trend_data = function(
                 specialties = "All Specialties",
-                hospitals = private[["hospital_choices"]]()
+                hospitals = private[["unit_choices"]]()
             ) {
             specialties <- arg_match(
                 specialties,
@@ -138,7 +129,7 @@ hospital_grp <- R6Class("hospital_grp",
         },
         hospital_bar_data = function(
                 specialties = private[["specialty_choices"]](),
-                hospitals = private[["hospital_choices"]]()
+                hospitals = private[["unit_choices"]]()
             ) {
             specialties <- arg_match(specialties, multiple = TRUE)
             hospitals <- arg_match(hospitals, multiple = TRUE)
@@ -399,8 +390,8 @@ hospital_grp <- R6Class("hospital_grp",
                                         virtualSelectInput(
                                             ns("select_hosp_trend_hosp"),
                                             label = "Select hospital",
-                                            choices = private[["hospital_choices"]](),
-                                            selected = private[["hospital_choices"]]()[1],
+                                            choices = private[["unit_choices"]](),
+                                            selected = private[["unit_choices"]]()[1],
                                             multiple = TRUE,
                                             search = TRUE,
                                             html = TRUE,
@@ -437,8 +428,8 @@ hospital_grp <- R6Class("hospital_grp",
                                         virtualSelectInput(
                                             ns("select_hosp_bar_hosp"),
                                             label = "Select hospital",
-                                            choices = private[["hospital_choices"]](),
-                                            selected = private[["hospital_choices"]]()[1],
+                                            choices = private[["unit_choices"]](),
+                                            selected = private[["unit_choices"]]()[1],
                                             multiple = TRUE,
                                             search = TRUE,
                                             html = TRUE,

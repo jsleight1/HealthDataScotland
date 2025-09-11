@@ -37,6 +37,14 @@ health_unitgrp <- R6Class(
                 plt <- e_bar_(plt, col)
             }
             plt
+        },
+        health_board_choices = function() {
+            self[["get_download"]]() |>
+                pull("HBName") |>
+                unique()
+        },
+        unit_choices = function() {
+            unique(paste(self[["ids"]](), "-", self[["titles"]]()))
         }
     ),
     public = list(

@@ -3,23 +3,9 @@
 gp_grp <- R6Class("gp_grp",
     inherit = health_unitgrp,
     private = list(
-        date_choices = function() {
-            self[["get_download"]]() |>
-                pull("Date") |>
-                unique()
-        },
         gender_choices = function() {
             self[["get_download"]]() |>
                 pull("Sex") |>
-                unique()
-        },
-        health_board_choices = function() {
-            self[["get_download"]]() |>
-                pull("HBName") |>
-                unique()
-        },
-        gp_choices = function() {
-            paste(self[["ids"]](), "-", self[["titles"]]()) |>
                 unique()
         },
         trend_echart = function(x) {
@@ -160,7 +146,7 @@ gp_grp <- R6Class("gp_grp",
                 private[["bar_echart"]]()
         },
         gp_trend_data = function(
-                gp = private[["gp_choices"]](),
+                gp = private[["unit_choices"]](),
                 gender = private[["gender_choices"]]()
             ) {
             gp <- arg_match(gp, multiple = TRUE)
@@ -186,7 +172,7 @@ gp_grp <- R6Class("gp_grp",
                 private[["trend_echart"]]()
         },
         gp_bar_data = function(
-                gp = private[["gp_choices"]](),
+                gp = private[["unit_choices"]](),
                 gender = private[["gender_choices"]]()
             ) {
             gp <- arg_match(gp, multiple = TRUE)
@@ -446,8 +432,8 @@ gp_grp <- R6Class("gp_grp",
                                             inputId = ns("select_gp_trend_gp"),
                                             label = "Select individual GP practices",
                                             multiple = TRUE,
-                                            choices = private[["gp_choices"]](),
-                                            selected = private[["gp_choices"]]()[1],
+                                            choices = private[["unit_choices"]](),
+                                            selected = private[["unit_choices"]]()[1],
                                             search = TRUE,
                                             html = TRUE,
                                             showSelectedOptionsFirst = TRUE,
@@ -483,8 +469,8 @@ gp_grp <- R6Class("gp_grp",
                                             inputId = ns("select_gp_bar_gp"),
                                             label = "Select individual GP practices",
                                             multiple = TRUE,
-                                            choices = private[["gp_choices"]](),
-                                            selected = private[["gp_choices"]]()[1],
+                                            choices = private[["unit_choices"]](),
+                                            selected = private[["unit_choices"]]()[1],
                                             search = TRUE,
                                             html = TRUE,
                                             showSelectedOptionsFirst = TRUE,
