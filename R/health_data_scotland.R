@@ -50,6 +50,7 @@ health_data_scotland <- function(...) {
             notes_card()
         ),
         nav_spacer(),
+        nav_item(input_dark_mode(id = "dark_mode", mode = "light")),
         nav_item(
             a(
                 href = "https://www.linkedin.com/in/jack-sleight-461a6699/",
