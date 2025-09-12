@@ -22,6 +22,8 @@ hospital_grp <- R6Class("hospital_grp",
         e_y_axis(min = 0, max = 100)
     },
     summarise_percentage_occupancy = function(x, groups) {
+      # TODO: need to check 'PercentageOccupancyQF' column
+      # Might need to remove 'PercentageOccupancyQF' == "z"
       x |>
         group_by_at(groups) |>
         summarise(

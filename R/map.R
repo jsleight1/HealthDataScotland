@@ -27,8 +27,8 @@ map_UI <- function(id, boards) {
         virtualSelectInput(
           ns("health_select"),
           label = "Display health centre types",
-          choices = c("General practice", "Hospital"),
-          selected = c("General practice", "Hospital"),
+          choices = c("General practice" = "gp", "Hospital" = "hospital"),
+          selected = c("gp", "hospital"),
           inline = TRUE,
           multiple = TRUE,
           search = TRUE,
@@ -99,7 +99,7 @@ pin_icon <- function(type, ...) {
     icon = "ios-close",
     iconColor = "white",
     library = "ion",
-    markerColor = ifelse(type == "General practice", "blue", "red"),
+    markerColor = ifelse(type == "gp", "blue", "red"),
     ...
   )
 }

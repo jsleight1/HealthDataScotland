@@ -29,7 +29,7 @@ test_that("get_hospital_data works", {
   expect_args(m, 1, "annual-hospital-beds-information")
 })
 
-test_that("get_hospital_data works", {
+test_that("get_hospital_meta works", {
   m <- mock()
   with_mocked_bindings(
     get_phs_dataset = m,
