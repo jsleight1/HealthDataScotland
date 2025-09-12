@@ -5,16 +5,21 @@ gp <- R6Class("gp",
     title_col = function() {
       "GPPracticeName"
     },
-    required_cols = function() {
+    required_metadata_cols = function() {
       c(
-        "GPPracticeName", "PracticeListSize",
-        "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4",
-        "Postcode", "TelephoneNumber", "PracticeType", "GPCluster",
-        "Date"
+        "GPPracticeName", "PracticeListSize", "AddressLine1", "AddressLine2",
+        "AddressLine3", "AddressLine4", "Postcode", "TelephoneNumber",
+        "PracticeType", "GPCluster", "HBName"
+      )
+    },
+    required_data_cols = function() {
+      c(
+        "Date", "Sex", "AllAges", "Ages85plus", "Ages75to84", "Ages65to74",
+        "Ages45to64", "Ages25to44", "Ages15to24", "Ages5to14", "Ages0to4"
       )
     },
     population_pyramid_data = function() {
-      self[["data"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] != "All") |>
         select("Date",
           "Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
@@ -76,7 +81,7 @@ gp <- R6Class("gp",
         e_title(self[["title"]]())
     },
     population_trend_data = function() {
-      self[["data"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] != "All") |>
         select("Date", "GPPracticeName",
           "Gender" = "Sex",
@@ -86,7 +91,7 @@ gp <- R6Class("gp",
         group_by(.data[["Gender"]])
     },
     population_trend_y_range = function() {
-      pop <- self[["data"]]() |>
+      pop <- self[["combine_data"]]() |>
         filter(.data[["Sex"]] != "All") |>
         pull("AllAges")
       c(floor(min(pop) * 0.99), ceiling(max(pop) * 1.01))
@@ -114,12 +119,12 @@ gp <- R6Class("gp",
     #' @description
     #' Get telephone number of GP practice.
     telephone = function() {
-      unique(self[["data"]]()[["TelephoneNumber"]])
+      self[["metadata"]]()[["TelephoneNumber"]]
     },
     #' @description
     #' Get GP cluster
     gp_cluster = function() {
-      unique(self[["data"]]()[["GPCluster"]])
+      self[["metadata"]]()[["GPCluster"]]
     },
     #' @description
     #' Get character vector of available plots for gp unit. Options
@@ -227,3 +232,17 @@ gp <- R6Class("gp",
     }
   )
 )
+
+#' Get example gp health unit object.
+#' @param id Character ID of GP practice to get. Default is "10002".
+#' @export
+example_gp_unit <- function(id = "10002") {
+  meta <- HealthDataScotland::example_gp_metadata |>
+    rename("ID" = "PracticeCode", "HBName" = "HB") |>
+    filter(.data[["ID"]] == id)
+  data <- HealthDataScotland::example_gp_data |>
+    select(-"datasetID", -"HSCP") |>
+    rename("ID" = "PracticeCode") |>
+    filter(.data[["ID"]] == id)
+  gp[["new"]](meta, data)
+}

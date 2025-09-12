@@ -93,7 +93,7 @@ process_gp_sf <- function(x, ids, meta, ...) {
   x |>
     filter(.data[["ID"]] %in% ids) |>
     mutate_at("uprn", as.character) |>
-    left_join(meta, by = c("ID" = "ID")) |>
+    left_join(meta, by = "ID") |>
     rename("hbcode" = "HB")
 }
 
@@ -121,33 +121,27 @@ process_hospital_sf <- function(x, ids, ...) {
 }
 
 create_process_lst <- function(meta, data, sf) {
-  out <- meta |>
-    inner_join(data, by = "ID") |>
-    group_split(.data[["ID"]])
-  names(out) <- map_chr(out, ~ unique(.x[["ID"]]))
-  list("x" = out, "sf" = sf)
+  check_ids(meta, data, sf)
+  list( "meta" = meta, "data" = data, "sf" = sf)
+}
+
+check_ids <- function(meta, data, sf) {
+  stopifnot(identical(sort(unique(meta[["ID"]])), sort(unique(data[["ID"]]))))
+  stopifnot(all(sf[["ID"]] %in% meta[["ID"]]))
 }
 
 create_data_objects <- function(x) {
-  purrr::imap(x, ~ {
-    switch(.y,
-      "General practice" = create_gp_grp,
-      "Hospital" = create_hospital_grp
-    ) |>
-      do.call(.x)
-  })
-}
-
-create_gp_grp <- function(x, sf) {
   x |>
-    map(gp[["new"]]) |>
-    gp_grp[["new"]](.sf = sf, .id = "gp")
-}
-
-create_hospital_grp <- function(x, sf) {
-  x |>
-    map(hospital[["new"]]) |>
-    hospital_grp[["new"]](.sf = sf, .id = "hospital")
+    purrr::imap(function(i, nm) {
+      check_ids(i[["meta"]], i[["data"]], i[["sf"]])
+      unit_method <- get(nm)
+      unit_grp_method <- get(glue("{nm}_grp"))
+      list("meta" = i[["meta"]], "data" = i[["data"]]) |>
+        map(group_split, .data[["ID"]]) |>
+        purrr::transpose() |>
+        map(function(j) unit_method[["new"]]( j[["meta"]], j[["data"]])) |>
+        unit_grp_method[["new"]](.sf = i[["sf"]], .id = nm)
+    })
 }
 
 save_processed_data <- function(out = "processed_health_data.RDS") {
@@ -157,6 +151,6 @@ save_processed_data <- function(out = "processed_health_data.RDS") {
     "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
   ) |>
     purrr::pmap(process_data) |>
-    set_names(c("General practice", "Hospital")) |>
+    set_names(c("gp", "hospital")) |>
     saveRDS(out)
 }

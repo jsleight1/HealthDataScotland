@@ -42,8 +42,8 @@ health_data_scotland <- function(...) {
     ),
     nav_menu(
       title = "Summary",
-      data[["General practice"]][["ui"]](),
-      data[["Hospital"]][["ui"]]()
+      data[["gp"]][["ui"]](),
+      data[["hospital"]][["ui"]]()
     ),
     nav_panel(
       title = "Notes",
@@ -74,8 +74,8 @@ health_data_scotland <- function(...) {
   server <- function(input, output) {
     requireNamespace("sf", quietly = TRUE)
     map_server("map", data, get_sf("board"))
-    data[["General practice"]][["server"]]()
-    data[["Hospital"]][["server"]]()
+    data[["gp"]][["server"]]()
+    data[["hospital"]][["server"]]()
   }
 
   shinyApp(ui, server, ...)

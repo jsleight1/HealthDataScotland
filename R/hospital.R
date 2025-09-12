@@ -5,15 +5,20 @@ hospital <- R6Class("hospital",
     title_col = function() {
       "HospitalName"
     },
-    required_cols = function() {
+    required_metadata_cols = function() {
       c(
-        "HospitalName", "FinancialYear", "SpecialtyName", "SpecialtyNameQF",
-        "AllStaffedBeds", "AllStaffedBeds", "AverageAvailableStaffedBeds",
-        "AverageOccupiedBeds", "Postcode"
+        "HospitalName", "Postcode", "HBName", "AddressLine1", "AddressLine2",
+        "AddressLine3", "AddressLine4")
+    },
+    required_data_cols = function() {
+      c(
+        "FinancialYear", "SpecialtyName", "SpecialtyNameQF", "AllStaffedBeds",
+        "TotalOccupiedBeds", "AverageAvailableStaffedBeds", "AverageOccupiedBeds",
+        "PercentageOccupancy", "PercentageOccupancyQF"
       )
     },
     specialty_data = function(specialties = "All Specialties") {
-      self[["data"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["SpecialtyName"]] %in% specialties)
     },
     specialty_line_data = function(data_type = c("annual", "daily"),
@@ -209,3 +214,17 @@ hospital <- R6Class("hospital",
     }
   )
 )
+
+#' Get example hospital health unit object.
+#' @param id Character ID of Hospital to get. Default is "A101H".
+#' @export
+example_hospital_unit <- function(id = "A101H") {
+  meta <- HealthDataScotland::example_hospital_metadata |>
+    rename("ID" = "HospitalCode", "HBName" = "HealthBoard") |>
+    filter(.data[["ID"]] == id)
+  data <- HealthDataScotland::example_hospital_data |>
+    rename("ID" = "Location") |>
+    filter(.data[["ID"]] == id)
+  hospital[["new"]](meta, data)
+}
+

@@ -295,7 +295,6 @@ gp_grp <- R6Class("gp_grp",
     #' Create UI for general practice group object.
     ui = function() {
       ns <- NS(self[["id"]]())
-      data <- self[["get_download"]]()
       nav_panel(
         title = "General practice",
         class = "overflow-auto",
@@ -569,3 +568,13 @@ gp_grp <- R6Class("gp_grp",
     }
   )
 )
+
+#' Get example gp health unit grp object.
+#' @param ids Character IDs of GP practice to get. Default is c("10002", "10017").
+#' @export
+example_gp_grp_unit <- function(ids = c("10002", "10017")) {
+  gps <- map(ids, example_gp_unit)
+  sf <- get_sf()
+  sf <- sf[sf[["ID"]] %in% ids, ]
+  gp_grp[["new"]](gps, sf, .id = "gp")
+}

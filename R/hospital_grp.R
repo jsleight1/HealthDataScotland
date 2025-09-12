@@ -515,3 +515,13 @@ hospital_grp <- R6Class("hospital_grp",
     }
   )
 )
+
+#' Get example gp health unit grp object.
+#' @param ids Character ID of Hospital to get. Default is c("A101H", "A201H").
+#' @export
+example_hospital_grp_unit <- function(ids = c("A101H", "A201H")) {
+  hospitals <- map(ids, example_hospital_unit)
+  sf <- get_sf("hospital")
+  sf <- sf[sf[["ID"]] %in% ids, ]
+  hospital_grp[["new"]](hospitals, sf, .id = "hospital")
+}

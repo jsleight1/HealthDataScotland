@@ -1,16 +1,8 @@
-gp_unit <- gp_data |>
-  filter(.data[["ID"]] == "10002") |>
-  gp[["new"]]()
-
-gp_unit2 <- gp_data |>
-  filter(.data[["ID"]] == "10017") |>
-  gp[["new"]]()
-
-capture_output(sf <- get_sf())
-
+gp_unit <- example_gp_unit(id = "10002")
+gp_unit2 <- example_gp_unit(id = "10017")
+gp_grp_unit <- example_gp_grp_unit()
+sf <- get_sf()
 sf <- sf[sf[["ID"]] %in% c("10002", "10017"), ]
-
-gp_grp_unit <- gp_grp[["new"]](list(gp_unit, gp_unit2), .sf = sf, .id = "gp")
 
 test_that("gp_grp class works", {
   list(gp_unit, "gp_unit") |>
@@ -35,19 +27,19 @@ test_that("gp_grp class works", {
     gp_grp[["new"]](.sf = bind_rows(tst_sf, tst_sf), .id = "gp") |>
     expect_error("Health units must not be duplicated")
 
-  out <- list(gp_unit, gp_unit2) |>
+  output <- list(gp_unit, gp_unit2) |>
     gp_grp[["new"]](.sf = sf, .id = "gp") |>
     expect_no_error()
 
-  expect_true(inherits(out, "gp_grp"))
-  expect_identical(out[["id"]](), "gp")
-  expect_identical(out[["ids"]](), c("10002", "10017"))
-  expect_identical(out[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
-  expect_identical(out[["data"]](), list(gp_unit, gp_unit2))
-  expect_identical(out[["sf"]](), sf)
-  expect_identical(out[["health_unit"]]("10002"), gp_unit)
+  expect_true(inherits(output, "gp_grp"))
+  expect_identical(output[["id"]](), "gp")
+  expect_identical(output[["ids"]](), c("10002", "10017"))
+  expect_identical(output[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
+  expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
+  expect_identical(output[["sf"]](), sf)
+  expect_identical(output[["health_unit"]]("10002"), gp_unit)
   expect_identical(
-    out[["available_plots"]](),
+    output[["available_plots"]](),
     c(
       "national_trend", "national_pyramid", "health_board_trend",
       "health_board_bar", "gp_trend", "gp_bar"
@@ -125,17 +117,17 @@ test_that("gp_grp subset works", {
   gp_grp_unit[["subset"]]("ID") |>
     expect_error("ids are not found in health unit group")
 
-  out <- gp_grp_unit[["subset"]]("10002") |>
+  output <- gp_grp_unit[["subset"]]("10002") |>
     expect_no_error()
 
-  expect_true(inherits(out, "gp_grp"))
-  expect_identical(out[["ids"]](), "10002")
-  expect_identical(out[["sf"]]()[["ID"]], "10002")
+  expect_true(inherits(output, "gp_grp"))
+  expect_identical(output[["ids"]](), "10002")
+  expect_identical(output[["sf"]]()[["ID"]], "10002")
 })
 
 test_that("gp_grp get_download works", {
-  out <- gp_grp_unit[["get_download"]]() |>
+  output <- gp_grp_unit[["get_download"]]() |>
     expect_no_error()
-  expect_s3_class(out, "data.frame")
-  expect_identical(gp_grp_unit[["ids"]](), unique(out[["ID"]]))
+  expect_s3_class(output, "data.frame")
+  expect_identical(gp_grp_unit[["ids"]](), unique(output[["ID"]]))
 })

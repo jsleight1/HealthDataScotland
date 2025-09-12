@@ -139,7 +139,7 @@ health_unitgrp <- R6Class(
     #' @description
     #' Get downloadable data.frame of health unit group.
     get_download = function() {
-      private[["map_combine"]](func = "data")
+      private[["map_combine"]](func = "combine_data")
     },
     #' @description
     #' Get download handler function of health unit group.

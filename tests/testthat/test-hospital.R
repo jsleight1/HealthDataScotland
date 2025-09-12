@@ -1,35 +1,38 @@
-hosp_unit <- hospital_data |>
-  filter(.data[["ID"]] == "A101H") |>
-  hospital[["new"]]()
+hosp_unit <- example_hospital_unit()
 
 test_that("hospital class works", {
-  "hospital_data" |>
-    hospital[["new"]]() |>
+  metadata <- hosp_unit[["metadata"]]()
+  data <- hosp_unit[["data"]]()
+
+  hospital[["new"]]("metadata", "data") |>
+    expect_error("Metadata set must be in data.frame")
+
+  hospital[["new"]](metadata, "data") |>
     expect_error("Data set must be in data.frame")
 
-  hospital_data |>
-    hospital[["new"]]() |>
-    expect_error("Data set must contain only one unique ID")
+  hospital[["new"]](bind_rows(metadata, metadata), data) |>
+    expect_error("Metadata set must contain only one unique ID")
 
-  hospital_data |>
-    select(-"FinancialYear") |>
-    hospital[["new"]]() |>
+  metadata |>
+    select(-"HospitalName") |>
+    hospital[["new"]](data) |>
+    expect_error("HospitalName column missing from metadata")
+
+  hospital[["new"]](metadata, select(data, -"FinancialYear")) |>
     expect_error("FinancialYear column missing from data")
 
-  out <- hospital_data |>
-    filter(.data[["ID"]] == "A101H") |>
-    hospital[["new"]]() |>
+  output <- hospital[["new"]](metadata, data) |>
     expect_no_error()
 
-  expect_true(inherits(out, "hospital"))
-  expect_identical(out[["ID"]](), "A101H")
-  expect_identical(out[["health_board"]](), "Ayrshire and Arran")
-  expect_identical(out[["title"]](), "Arran War Memorial Hospital")
+  expect_true(inherits(output, "hospital"))
+  expect_identical(output[["ID"]](), "A101H")
+  expect_identical(output[["health_board"]](), "S08000015")
+  expect_identical(output[["title"]](), "Arran War Memorial Hospital")
   expect_identical(
-    out[["address"]](),
+    output[["address"]](),
     "Lamlash, Isle of Arran, KA278LF"
   )
-  expect_identical(out[["available_plots"]](), "specialty_line")
+  expect_identical(output[["available_plots"]](), "specialty_line")
 })
 
 test_that("hospital class can be plotted", {
@@ -51,30 +54,30 @@ test_that("hospital plot functions error if wrong type", {
 })
 
 test_that("hospital plot data works", {
-  out <- hosp_unit[["plot_data"]](
+  output <- hosp_unit[["plot_data"]](
     type = "specialty_line",
     "annual",
     c("All Specialties", "General Medicine")
   ) |>
     expect_no_error()
-  expect_s3_class(out, "data.frame")
-  expect_snapshot_output(as.data.frame(out))
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "annual_specialty_data")
 
-  out <- hosp_unit[["plot_data"]](
+  output <- hosp_unit[["plot_data"]](
     type = "specialty_line",
     "daily",
     c("All Specialties", "General Medicine")
   ) |>
     expect_no_error()
-  expect_s3_class(out, "data.frame")
-  expect_snapshot_output(as.data.frame(out))
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "daily_specialty_data")
 
   hosp_unit[["plot_data"]](type = "p") |>
     expect_error("`type` must be one.+")
 })
 
 test_that("hospital ui works", {
-  out <- hosp_unit[["ui"]](function(i) "ns") |>
+  output <- hosp_unit[["ui"]](function(i) "ns") |>
     expect_no_error()
-  expect_s3_class(out, "shiny.tag")
+  expect_s3_class(output, "shiny.tag")
 })
