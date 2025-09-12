@@ -53,6 +53,16 @@ map_server <- function(id, data, boards) {
         map(~ .x[["sf"]]()) |>
         reduce(bind_rows)
 
+      observe({
+        leafletProxy(id) |> clearPopups()
+        event <- input[[paste0(id, "_marker_click")]]
+        if (is.null(event)) return()
+        id <- strsplit(event[["id"]], ":")[[1]][[1]]
+        type <- strsplit(event[["id"]], ":")[[1]][[2]]
+        obj <- data[[type]][["health_unit"]](id)
+        isolate(obj[["popup_modal"]](ns))
+      })
+
       pin_data <- reactive({
         health_boards <- input[["board_select"]]
         centre_types <- input[["health_select"]]
