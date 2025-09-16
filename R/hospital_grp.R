@@ -1,4 +1,5 @@
 #' R6 class storing health statistics for a list of hospital health units.
+#' @export
 hospital_grp <- R6Class("hospital_grp",
   inherit = health_unitgrp,
   private = list(

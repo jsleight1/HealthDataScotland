@@ -1,4 +1,5 @@
 #' R6 class storing health statistics for a GP practice.
+#' @export
 gp <- R6Class("gp",
   inherit = health_unit,
   private = list(
