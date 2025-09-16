@@ -109,11 +109,11 @@ test_that("process_gp_sf works", {
     meta <- process_gp_meta()
   )
   output <- get_sf() |>
-    process_gp_sf(c("30030", "30059"), meta) |>
+    process_gp_sf(c("10002", "10017"), meta) |>
     expect_no_error()
   expect_called(m, 1)
   expect_s3_class(output, "sf")
-  expect_identical(output[["ID"]], c("30030", "30059"))
+  expect_identical(output[["ID"]], c("10002", "10017"))
 })
 
 test_that("process_hopsital_meta works", {
@@ -147,9 +147,9 @@ test_that("process_hospital_sf works", {
     meta <- process_hospital_meta()
   )
   output <- get_sf("hospital") |>
-    process_hospital_sf(c("A013G", "A026B"), meta) |>
+    process_hospital_sf(c("A101H", "A201H"), meta) |>
     expect_no_error()
   expect_called(m, 1)
   expect_s3_class(output, "sf")
-  expect_identical(output[["ID"]], c("A013G", "A026B"))
+  expect_identical(output[["ID"]], c("A101H", "A201H"))
 })
