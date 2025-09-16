@@ -39,7 +39,7 @@ hospital_grp <- R6Class("hospital_grp",
         values = private[["specialty_choices"]](),
         multiple = TRUE
       )
-      self[["get_download"]]() |>
+      private[["map_combine"]]("data") |>
         filter(.data[["SpecialtyName"]] %in% specialties) |>
         select("FinancialYear", "SpecialtyName", "PercentageOccupancy") |>
         distinct() |>
@@ -84,7 +84,7 @@ hospital_grp <- R6Class("hospital_grp",
         group_by(.data[["FinancialYear"]])
     },
     health_board_data = function(specialties, health_boards) {
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["SpecialtyName"]] %in% specialties) |>
         filter(.data[["HBName"]] %in% health_boards) |>
         distinct() |>
@@ -137,7 +137,7 @@ hospital_grp <- R6Class("hospital_grp",
         group_by(.data[["FinancialYear"]])
     },
     hospital_data = function(specialties, hospitals) {
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
         filter(
           .data[["SpecialtyName"]] %in% specialties,

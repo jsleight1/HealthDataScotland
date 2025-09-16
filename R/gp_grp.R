@@ -3,15 +3,15 @@ gp_grp <- R6Class("gp_grp",
   inherit = health_unitgrp,
   private = list(
     gender_choices = function() {
-      self[["get_download"]]() |>
+      private[["map_combine"]]("data") |>
         pull("Sex") |>
         unique()
     },
     trend_echart = function(x) {
-      super$trend_echart(x, "Date", "Population")
+      super[["trend_echart"]](x, "Date", "Population")
     },
     bar_echart = function(x) {
-      super$bar_echart(x, "Age", "Age", "Population")
+      super[["bar_echart"]](x, "Age", "Age", "Population")
     },
     factor_age = function(x) {
       x |>
@@ -41,7 +41,7 @@ gp_grp <- R6Class("gp_grp",
         summarise(Population = sum(.data[["Population"]], na.rm = TRUE))
     },
     national_trend_data = function() {
-      self[["get_download"]]() |>
+      private[["map_combine"]]("data") |>
         filter(.data[["Sex"]] != "All") |>
         distinct() |>
         rename("Population" = "AllAges", "Gender" = "Sex") |>
@@ -54,7 +54,7 @@ gp_grp <- R6Class("gp_grp",
         private[["trend_echart"]]()
     },
     national_pyramid_data = function() {
-      self[["get_download"]]() |>
+      private[["map_combine"]]("data") |>
         filter(.data[["Sex"]] != "All") |>
         select("Date",
           "Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
@@ -109,7 +109,7 @@ gp_grp <- R6Class("gp_grp",
                                        gender = private[["gender_choices"]]()) {
       health_board <- arg_match(health_board, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] %in% gender) |>
         filter(.data[["HBName"]] %in% health_board) |>
         rename("Population" = "AllAges", "Gender" = "Sex") |>
@@ -125,7 +125,7 @@ gp_grp <- R6Class("gp_grp",
                                      gender = private[["gender_choices"]]()) {
       health_board <- arg_match(health_board, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] %in% gender) |>
         filter(.data[["HBName"]] %in% health_board) |>
         select("Date", "HBName", matches("^Ages\\d"), -matches("QF$")) |>
@@ -147,7 +147,7 @@ gp_grp <- R6Class("gp_grp",
                              gender = private[["gender_choices"]]()) {
       gp <- arg_match(gp, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] == gender) |>
         mutate(
           ID = paste(
@@ -173,7 +173,7 @@ gp_grp <- R6Class("gp_grp",
                            gender = private[["gender_choices"]]()) {
       gp <- arg_match(gp, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] == gender) |>
         mutate(
           ID = paste(

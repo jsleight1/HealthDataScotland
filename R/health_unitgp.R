@@ -100,6 +100,13 @@ health_unitgrp <- R6Class(
       self[[".data"]]
     },
     #' @description
+    #' Get combined metadata and data in single data.frame.
+    combine_data = function() {
+      private[["map_combine"]]("data") |>
+        inner_join(self[["metadata"]](), by = "ID") |>
+        distinct()
+    },
+    #' @description
     #' Get sf of health unit grp.
     sf = function() {
       self[[".sf"]]
