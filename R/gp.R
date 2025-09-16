@@ -215,12 +215,14 @@ gp <- R6Class("gp",
       moduleServer(
         self[["ID"]](),
         function(input, output, session) {
-          output[["pop_trend"]] <- renderEcharts4r(
+          output[["pop_trend"]] <- renderEcharts4r({
+            log_info("Creating GP population trend plot")
             self[["plot"]](type = "population_trend")
-          )
-          output[["pop_pyramid"]] <- renderEcharts4r(
+          })
+          output[["pop_pyramid"]] <- renderEcharts4r({
+            log_info("Creating GP population pyramid plot")
             self[["plot"]](type = "population_pyramid")
-          )
+          })
           output[["download"]] <- downloadHandler(
             filename = function() "gp_data.csv",
             content = function(con) {

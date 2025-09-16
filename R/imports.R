@@ -12,6 +12,7 @@ NULL
 #' @importFrom httr2 request req_retry req_perform resp_body_json resp_body_string
 #' @importFrom glue glue
 #' @importFrom tibble as_tibble deframe
+#' @importFrom logger log_info
 NULL
 
 utils::globalVariables(".")

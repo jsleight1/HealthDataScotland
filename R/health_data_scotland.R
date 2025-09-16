@@ -3,7 +3,9 @@
 #' @export
 health_data_scotland <- function(...) {
   requireNamespace("sf", quietly = TRUE)
+  log_info("Creating data objects")
   data <- create_data_objects(readRDS("processed_health_data.RDS"))
+  log_info("Created data objects")
 
   value_boxes <- data |>
     purrr::imap(function(x, nm) {

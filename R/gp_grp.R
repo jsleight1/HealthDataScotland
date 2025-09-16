@@ -501,13 +501,16 @@ gp_grp <- R6Class("gp_grp",
         function(input, output, session) {
           ns <- session[["ns"]]
           output[["national_pop_trend"]] <- renderEcharts4r({
+            log_info("Creating GP national trend plot")
             self[["plot"]](type = "national_trend")
           })
           output[["national_pop_pyramid"]] <- renderEcharts4r({
+            log_info("Creating GP national pyramid plot")
             self[["plot"]](type = "national_pyramid")
           })
 
           hb_pop_trend_plt <- reactive({
+            log_info("Creating GP health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
               health_board = input[["select_hb_trend_hb"]],
@@ -520,6 +523,7 @@ gp_grp <- R6Class("gp_grp",
             )
 
           hb_pop_bar_plt <- reactive({
+            log_info("Creating GP health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
               health_board = input[["select_hb_bar_hb"]],
@@ -536,6 +540,7 @@ gp_grp <- R6Class("gp_grp",
           output[["hb_pop_bar"]] <- renderEcharts4r(hb_pop_bar_plt())
 
           gp_pop_trend_plt <- reactive({
+            log_info("Creating GP trend plot")
             self[["plot"]](
               type = "gp_trend",
               gp = input[["select_gp_trend_gp"]],
@@ -550,6 +555,7 @@ gp_grp <- R6Class("gp_grp",
           output[["gp_pop_trend"]] <- renderEcharts4r(gp_pop_trend_plt())
 
           gp_pop_bar_plt <- reactive({
+            log_info("Creating GP bar plot")
             self[["plot"]](
               type = "gp_bar",
               gp = input[["select_gp_bar_gp"]],

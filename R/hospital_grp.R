@@ -446,6 +446,7 @@ hospital_grp <- R6Class("hospital_grp",
           ns <- session[["ns"]]
 
           national_trend_plt <- reactive({
+            log_info("Creating hospital national trend plot")
             self[["plot"]](
               type = "national_trend",
               specialties = input[["select_national_specialty"]]
@@ -456,6 +457,7 @@ hospital_grp <- R6Class("hospital_grp",
           output[["national_trend"]] <- renderEcharts4r(national_trend_plt())
 
           hb_trend_plt <- reactive({
+            log_info("Creating hospital health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
               specialties = input[["select_hb_trend_specialty"]],
@@ -470,6 +472,7 @@ hospital_grp <- R6Class("hospital_grp",
           output[["hb_trend"]] <- renderEcharts4r(hb_trend_plt())
 
           hb_bar_plt <- reactive({
+            log_info("Creating hospital health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
               specialties = input[["select_hb_bar_specialty"]],
@@ -484,6 +487,7 @@ hospital_grp <- R6Class("hospital_grp",
           output[["hb_bar"]] <- renderEcharts4r(hb_bar_plt())
 
           hosp_trend_plt <- reactive({
+            log_info("Creating hospital trend plot")
             self[["plot"]](
               type = "hospital_trend",
               specialties = input[["select_hosp_trend_specialty"]],
@@ -498,6 +502,7 @@ hospital_grp <- R6Class("hospital_grp",
           output[["hosp_trend"]] <- renderEcharts4r(hosp_trend_plt())
 
           hosp_bar_plt <- reactive({
+            log_info("Creating hospital bar plot")
             self[["plot"]](
               type = "hospital_bar",
               specialties = input[["select_hosp_bar_specialty"]],

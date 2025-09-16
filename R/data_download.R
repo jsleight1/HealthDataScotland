@@ -122,7 +122,7 @@ process_hospital_sf <- function(x, ids, ...) {
 
 create_process_lst <- function(meta, data, sf) {
   check_ids(meta, data, sf)
-  list( "meta" = meta, "data" = data, "sf" = sf)
+  list("meta" = meta, "data" = data, "sf" = sf)
 }
 
 check_ids <- function(meta, data, sf) {
@@ -139,7 +139,7 @@ create_data_objects <- function(x) {
       list("meta" = i[["meta"]], "data" = i[["data"]]) |>
         map(group_split, .data[["ID"]]) |>
         purrr::transpose() |>
-        map(function(j) unit_method[["new"]]( j[["meta"]], j[["data"]])) |>
+        map(function(j) unit_method[["new"]](j[["meta"]], j[["data"]])) |>
         unit_grp_method[["new"]](.sf = i[["sf"]], .id = nm)
     })
 }

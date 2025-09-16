@@ -8,7 +8,8 @@ hospital <- R6Class("hospital",
     required_metadata_cols = function() {
       c(
         "HospitalName", "Postcode", "HBName", "AddressLine1", "AddressLine2",
-        "AddressLine3", "AddressLine4")
+        "AddressLine3", "AddressLine4"
+      )
     },
     required_data_cols = function() {
       c(
@@ -187,21 +188,23 @@ hospital <- R6Class("hospital",
         function(input, output, session) {
           ns <- session[["ns"]]
 
-          output[["annual_beds"]] <- renderUI(
+          output[["annual_beds"]] <- renderUI({
+            log_info("Creating hospital annual specialty line plot")
             self[["plot"]](
               type = "specialty_line",
               data_type = "annual",
               specialties = req(input[["specialty_annual_select"]])
             )
-          )
+          })
 
-          output[["daily_beds"]] <- renderUI(
+          output[["daily_beds"]] <- renderUI({
+            log_info("Creating hospital daily specialty line plot")
             self[["plot"]](
               type = "specialty_line",
               data_type = "daily",
               specialties = req(input[["specialty_daily_select"]])
             )
-          )
+          })
 
           output[["download"]] <- downloadHandler(
             filename = function() "hospital_data.csv",
@@ -227,4 +230,3 @@ example_hospital_unit <- function(id = "A101H") {
     filter(.data[["ID"]] == id)
   hospital[["new"]](meta, data)
 }
-

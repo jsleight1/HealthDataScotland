@@ -54,9 +54,12 @@ map_server <- function(id, data, boards) {
         reduce(bind_rows)
 
       observe({
+        log_info("Creating selected map pin pop-up")
         leafletProxy(id) |> clearPopups()
         event <- input[[paste0(id, "_marker_click")]]
-        if (is.null(event)) return()
+        if (is.null(event)) {
+          return()
+        }
         id <- strsplit(event[["id"]], ":")[[1]][[1]]
         type <- strsplit(event[["id"]], ":")[[1]][[2]]
         obj <- data[[type]][["health_unit"]](id)
@@ -70,6 +73,7 @@ map_server <- function(id, data, boards) {
       })
 
       output[["map"]] <- renderLeaflet({
+        log_info("Creating interactive map")
         leaflet() |>
           addTiles() |>
           addAwesomeMarkers(

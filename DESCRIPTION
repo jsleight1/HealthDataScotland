@@ -21,6 +21,7 @@ Imports:
     glue,
     httr2,
     leaflet,
+    logger,
     purrr,
     R6,
     readr,

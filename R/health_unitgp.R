@@ -38,9 +38,7 @@ health_unitgrp <- R6Class(
       plt
     },
     health_board_choices = function() {
-      self[["get_download"]]() |>
-        pull("HBName") |>
-        unique()
+      unique(self[["metadata"]]()[["HBName"]])
     },
     unit_choices = function() {
       unique(paste(self[["ids"]](), "-", self[["titles"]]()))
@@ -90,6 +88,11 @@ health_unitgrp <- R6Class(
         msg = "Health units must not be duplicated"
       )
       self
+    },
+    #' @description
+    #' Get combine metadata of health unit grp.
+    metadata = function() {
+      private[["map_combine"]]("metadata")
     },
     #' @description
     #' Get data of health unit grp.
