@@ -29,7 +29,7 @@ test_that("get_hospital_data works", {
   expect_args(m, 1, "annual-hospital-beds-information")
 })
 
-test_that("get_hospital_data works", {
+test_that("get_hospital_meta works", {
   m <- mock()
   with_mocked_bindings(
     get_phs_dataset = m,
@@ -39,17 +39,17 @@ test_that("get_hospital_data works", {
 })
 
 test_that("get_sf works", {
-  out <- get_sf() |>
+  output <- get_sf() |>
     expect_no_error()
-  expect_s3_class(out, "sf")
+  expect_s3_class(output, "sf")
 
-  out <- get_sf("hospital") |>
+  output <- get_sf("hospital") |>
     expect_no_error()
-  expect_s3_class(out, "sf")
+  expect_s3_class(output, "sf")
 
-  out <- get_sf("board") |>
+  output <- get_sf("board") |>
     expect_no_error()
-  expect_s3_class(out, "sf")
+  expect_s3_class(output, "sf")
 
   expect_error(get_sf("sf"), "`type` must be one of .+")
 })
@@ -65,7 +65,7 @@ test_that("process_data works", {
     get_gp_data = m2,
     data <- process_gp_data()
   )
-  out <- process_data(
+  output <- process_data(
     "gp",
     function() meta,
     function() data,
@@ -74,32 +74,32 @@ test_that("process_data works", {
     expect_no_error()
   expect_called(m1, 1)
   expect_called(m2, 1)
-  expect_true(inherits(out, "list"))
-  expect_identical(names(out), c("x", "sf"))
+  expect_true(inherits(output, "list"))
+  expect_identical(names(output), c("meta", "data", "sf"))
 })
 
 test_that("process_gp_meta works", {
   m <- mock(HealthDataScotland::example_gp_metadata)
   with_mocked_bindings(
     get_gp_meta = m,
-    out <- process_gp_meta() |>
+    output <- process_gp_meta() |>
       expect_no_error()
   )
   expect_called(m, 1)
-  expect_s3_class(out, "data.frame")
-  expect_snapshot_output(head(as.data.frame(out)))
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "process_gp_meta")
 })
 
 test_that("process_gp_data works", {
   m <- mock(HealthDataScotland::example_gp_data)
   with_mocked_bindings(
     get_gp_data = m,
-    out <- process_gp_data() |>
+    output <- process_gp_data() |>
       expect_no_error()
   )
   expect_called(m, 1)
-  expect_s3_class(out, "data.frame")
-  expect_snapshot_output(head(as.data.frame(out)))
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "process_gp_data")
 })
 
 test_that("process_gp_sf works", {
@@ -108,36 +108,36 @@ test_that("process_gp_sf works", {
     get_gp_meta = m,
     meta <- process_gp_meta()
   )
-  out <- get_sf() |>
+  output <- get_sf() |>
     process_gp_sf(c("30030", "30059"), meta) |>
     expect_no_error()
   expect_called(m, 1)
-  expect_s3_class(out, "sf")
-  expect_identical(out[["ID"]], c("30030", "30059"))
+  expect_s3_class(output, "sf")
+  expect_identical(output[["ID"]], c("30030", "30059"))
 })
 
 test_that("process_hopsital_meta works", {
   m <- mock(HealthDataScotland::example_hospital_metadata)
   with_mocked_bindings(
     get_hospital_meta = m,
-    out <- process_hospital_meta() |>
+    output <- process_hospital_meta() |>
       expect_no_error()
   )
   expect_called(m, 1)
-  expect_s3_class(out, "data.frame")
-  expect_snapshot_output(head(as.data.frame(out)))
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "process_hospital_meta")
 })
 
 test_that("process_hopsital_data works", {
   m <- mock(HealthDataScotland::example_hospital_data)
   with_mocked_bindings(
     get_hospital_data = m,
-    out <- process_hospital_data() |>
+    output <- process_hospital_data() |>
       expect_no_error()
   )
   expect_called(m, 1)
-  expect_s3_class(out, "data.frame")
-  expect_snapshot_output(head(as.data.frame(out)))
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "process_hospital_data")
 })
 
 test_that("process_hospital_sf works", {
@@ -146,10 +146,10 @@ test_that("process_hospital_sf works", {
     get_hospital_meta = m,
     meta <- process_hospital_meta()
   )
-  out <- get_sf("hospital") |>
+  output <- get_sf("hospital") |>
     process_hospital_sf(c("A013G", "A026B"), meta) |>
     expect_no_error()
   expect_called(m, 1)
-  expect_s3_class(out, "sf")
-  expect_identical(out[["ID"]], c("A013G", "A026B"))
+  expect_s3_class(output, "sf")
+  expect_identical(output[["ID"]], c("A013G", "A026B"))
 })

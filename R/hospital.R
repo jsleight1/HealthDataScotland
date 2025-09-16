@@ -1,19 +1,26 @@
 #' R6 class storing health statistics for a Hospital.
+#' @export
 hospital <- R6Class("hospital",
   inherit = health_unit,
   private = list(
     title_col = function() {
       "HospitalName"
     },
-    required_cols = function() {
+    required_metadata_cols = function() {
       c(
-        "HospitalName", "FinancialYear", "SpecialtyName", "SpecialtyNameQF",
-        "AllStaffedBeds", "AllStaffedBeds", "AverageAvailableStaffedBeds",
-        "AverageOccupiedBeds", "Postcode"
+        "HospitalName", "Postcode", "HBName", "AddressLine1", "AddressLine2",
+        "AddressLine3", "AddressLine4"
+      )
+    },
+    required_data_cols = function() {
+      c(
+        "FinancialYear", "SpecialtyName", "SpecialtyNameQF", "AllStaffedBeds",
+        "TotalOccupiedBeds", "AverageAvailableStaffedBeds", "AverageOccupiedBeds",
+        "PercentageOccupancy", "PercentageOccupancyQF"
       )
     },
     specialty_data = function(specialties = "All Specialties") {
-      self[["data"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["SpecialtyName"]] %in% specialties)
     },
     specialty_line_data = function(data_type = c("annual", "daily"),
@@ -52,9 +59,7 @@ hospital <- R6Class("hospital",
         map(function(i) {
           i |>
             group_by(name) |>
-            e_charts(FinancialYear) |>
-            e_line(value) |>
-            e_tooltip(trigger = "axis") |>
+            e_trend("FinancialYear", "value") |>
             e_title(subtext = unique(i[["SpecialtyName"]]))
         }) |>
         append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
@@ -129,15 +134,13 @@ hospital <- R6Class("hospital",
           full_screen = TRUE,
           card_header(
             "Annually Available Staffed Beds",
-            popover(
+            help_popover(
               id = ns("annual_beds_help"),
-              bs_icon("question-circle"),
               self[["plot_info"]]("specialty_line", "annual")
             ),
-            popover(
+            settings_popover(
               id = ns("annual_beds_settings"),
-              bs_icon("gear", class = "ms-auto"),
-              selectInput(
+              virtual_select_input(
                 ns("specialty_annual_select"),
                 label = "Select specialty",
                 choices = private[["specialty_choices"]](),
@@ -146,21 +149,19 @@ hospital <- R6Class("hospital",
               )
             )
           ),
-          uiOutput(ns("annual_beds"))
+          withSpinner(uiOutput(ns("annual_beds")))
         ),
         card(
           full_screen = TRUE,
           card_header(
             "Daily Average Available Staffed Beds",
-            popover(
+            help_popover(
               id = ns("daily_beds_help"),
-              bs_icon("question-circle"),
               self[["plot_info"]]("specialty_line", "daily")
             ),
-            popover(
+            settings_popover(
               id = ns("daily_beds_settings"),
-              bs_icon("gear", class = "ms-auto"),
-              selectInput(
+              virtual_select_input(
                 ns("specialty_daily_select"),
                 label = "Select specialty",
                 choices = private[["specialty_choices"]](),
@@ -169,7 +170,7 @@ hospital <- R6Class("hospital",
               )
             )
           ),
-          uiOutput(ns("daily_beds"))
+          withSpinner(uiOutput(ns("daily_beds")))
         ),
         card(downloadButton(ns("download")))
       )
@@ -180,24 +181,22 @@ hospital <- R6Class("hospital",
       moduleServer(
         self[["ID"]](),
         function(input, output, session) {
-          ns <- session[["ns"]]
-
-          output[["annual_beds"]] <- renderUI(
+          output[["annual_beds"]] <- renderUI({
+            log_info("Creating hospital annual specialty line plot")
             self[["plot"]](
               type = "specialty_line",
               data_type = "annual",
               specialties = req(input[["specialty_annual_select"]])
             )
-          )
-
-          output[["daily_beds"]] <- renderUI(
+          })
+          output[["daily_beds"]] <- renderUI({
+            log_info("Creating hospital daily specialty line plot")
             self[["plot"]](
               type = "specialty_line",
               data_type = "daily",
               specialties = req(input[["specialty_daily_select"]])
             )
-          )
-
+          })
           output[["download"]] <- downloadHandler(
             filename = function() "hospital_data.csv",
             content = function(con) {
@@ -209,3 +208,16 @@ hospital <- R6Class("hospital",
     }
   )
 )
+
+#' Get example hospital health unit object.
+#' @param id Character ID of Hospital to get. Default is "A101H".
+#' @export
+example_hospital_unit <- function(id = "A101H") {
+  meta <- HealthDataScotland::example_hospital_metadata |>
+    rename("ID" = "HospitalCode", "HBName" = "HealthBoard") |>
+    filter(.data[["ID"]] == id)
+  data <- HealthDataScotland::example_hospital_data |>
+    rename("ID" = "Location") |>
+    filter(.data[["ID"]] == id)
+  hospital[["new"]](meta, data)
+}

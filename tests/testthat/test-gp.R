@@ -1,39 +1,49 @@
-gp_unit <- gp_data |>
-  filter(.data[["ID"]] == 10002) |>
-  gp[["new"]]()
+gp_unit <- example_gp_unit()
 
 test_that("gp class works", {
-  "gp_data" |>
-    gp[["new"]]() |>
+  metadata <- gp_unit[["metadata"]]()
+  data <- gp_unit[["data"]]()
+
+  gp[["new"]]("metadata", "data") |>
+    expect_error("Metadata set must be in data.frame")
+
+  gp[["new"]](metadata, "data") |>
     expect_error("Data set must be in data.frame")
 
-  gp_data |>
-    gp[["new"]]() |>
-    expect_error("Data set must contain only one unique ID")
+  gp[["new"]](bind_rows(metadata, metadata), data) |>
+    expect_error("Metadata set must contain only one unique ID")
 
-  gp_data |>
+  metadata |>
     select(-"GPPracticeName") |>
-    gp[["new"]]() |>
-    expect_error("GPPracticeName column missing from data")
+    gp[["new"]](data) |>
+    expect_error("GPPracticeName column missing from metadata")
 
-  out <- gp_data |>
-    filter(.data[["ID"]] == "10002") |>
-    gp[["new"]]() |>
+  gp[["new"]](metadata, select(data, -"Date")) |>
+    expect_error("Date column missing from data")
+
+  output <- gp[["new"]](metadata, data) |>
     expect_no_error()
 
-  expect_true(inherits(out, "gp"))
-  expect_identical(out[["ID"]](), "10002")
-  expect_identical(out[["health_board"]](), "Tayside")
-  expect_identical(out[["telephone"]](), "01382   580   264")
-  expect_identical(out[["title"]](), "Muirhead Medical Centre")
+  expect_true(inherits(output, "gp"))
+  expect_identical(output[["ID"]](), "10002")
+  expect_identical(output[["health_board"]](), "S08000030")
+  expect_identical(output[["telephone"]](), "01382   580   264")
+  expect_identical(output[["title"]](), "Muirhead Medical Centre")
   expect_identical(
-    out[["address"]](),
+    output[["address"]](),
     "Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH"
   )
   expect_identical(
-    out[["available_plots"]](),
+    output[["available_plots"]](),
     c("population_pyramid", "population_trend")
   )
+})
+
+test_that("combine_data works", {
+  output <- gp_unit[["combine_data"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "combine_data")
 })
 
 test_that("gp class can be plotted", {
@@ -75,7 +85,7 @@ test_that("population_trend_data works", {
 })
 
 test_that("gp ui works", {
-  out <- gp_unit[["ui"]](function(i) "ns") |>
+  output <- gp_unit[["ui"]](function(i) "ns") |>
     expect_no_error()
-  expect_s3_class(out, "shiny.tag")
+  expect_s3_class(output, "shiny.tag")
 })

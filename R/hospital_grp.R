@@ -1,4 +1,5 @@
 #' R6 class storing health statistics for a list of hospital health units.
+#' @export
 hospital_grp <- R6Class("hospital_grp",
   inherit = health_unitgrp,
   private = list(
@@ -22,7 +23,10 @@ hospital_grp <- R6Class("hospital_grp",
         e_y_axis(min = 0, max = 100)
     },
     summarise_percentage_occupancy = function(x, groups) {
+      # Remove 'PercentageOccupancyQF' == "z" as these are not applicable
+      # See https://www.opendata.nhs.scot/dataset/statistical-qualifiers/resource/b80f9af0-b115-4245-b591-fb22775226c4
       x |>
+        filter(.data[["PercentageOccupancy"]] != "z") |>
         group_by_at(groups) |>
         summarise(
           PercentageOccupancy = mean(
@@ -37,7 +41,7 @@ hospital_grp <- R6Class("hospital_grp",
         values = private[["specialty_choices"]](),
         multiple = TRUE
       )
-      self[["get_download"]]() |>
+      private[["map_combine"]]("data") |>
         filter(.data[["SpecialtyName"]] %in% specialties) |>
         select("FinancialYear", "SpecialtyName", "PercentageOccupancy") |>
         distinct() |>
@@ -82,7 +86,7 @@ hospital_grp <- R6Class("hospital_grp",
         group_by(.data[["FinancialYear"]])
     },
     health_board_data = function(specialties, health_boards) {
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         filter(.data[["SpecialtyName"]] %in% specialties) |>
         filter(.data[["HBName"]] %in% health_boards) |>
         distinct() |>
@@ -135,7 +139,7 @@ hospital_grp <- R6Class("hospital_grp",
         group_by(.data[["FinancialYear"]])
     },
     hospital_data = function(specialties, hospitals) {
-      self[["get_download"]]() |>
+      self[["combine_data"]]() |>
         mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
         filter(
           .data[["SpecialtyName"]] %in% specialties,
@@ -246,28 +250,22 @@ hospital_grp <- R6Class("hospital_grp",
             full_screen = TRUE,
             card_header(
               "National average bed occupancy per specialty",
-              popover(
+              help_popover(
                 id = ns("national_help"),
-                bs_icon("question-circle"),
                 self[["plot_info"]]("national_trend")
               ),
-              popover(
+              settings_popover(
                 id = ns("national_settings"),
-                bs_icon("gear", class = "ms-auto"),
-                virtualSelectInput(
+                virtual_select_input(
                   ns("select_national_specialty"),
                   label = "Select specialty",
                   choices = private[["specialty_choices"]](),
                   multiple = TRUE,
-                  selected = "All Specialties",
-                  search = TRUE,
-                  html = TRUE,
-                  showSelectedOptionsFirst = TRUE,
-                  updateOn = "close"
+                  selected = "All Specialties"
                 )
               )
             ),
-            echarts4rOutput(outputId = ns("national_trend"))
+            e_output_spinner(ns("national_trend"))
           ),
           card(
             full_screen = TRUE,
@@ -277,76 +275,56 @@ hospital_grp <- R6Class("hospital_grp",
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per health board for selected specialty",
-                  popover(
+                  help_popover(
                     id = ns("hb_trend_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("health_board_trend")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hb_trend_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hb_trend_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
-                      selected = "All Specialties",
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = "All Specialties"
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       inputId = ns("select_hb_trend_hb"),
                       label = "Select health boards",
                       multiple = TRUE,
                       choices = private[["health_board_choices"]](),
-                      selected = private[["health_board_choices"]](),
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = private[["health_board_choices"]]()
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hb_trend"))
+                e_output_spinner(ns("hb_trend"))
               ),
               card(
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per health board and specialty",
-                  popover(
+                  help_popover(
                     id = ns("hb_bar_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("health_board_bar")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hb_bar_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hb_bar_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
                       multiple = TRUE,
-                      selected = "All Specialties",
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = "All Specialties"
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       inputId = ns("select_hb_bar_hb"),
                       label = "Select health boards",
                       multiple = TRUE,
                       choices = private[["health_board_choices"]](),
-                      selected = private[["health_board_choices"]](),
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = private[["health_board_choices"]]()
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hb_bar"))
+                e_output_spinner(ns("hb_bar"))
               )
             )
           ),
@@ -358,76 +336,56 @@ hospital_grp <- R6Class("hospital_grp",
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per hospital for selected specialty",
-                  popover(
+                  help_popover(
                     id = ns("hosp_trend_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("hospital_trend")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hosp_trend_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_trend_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
-                      selected = "All Specialties",
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = "All Specialties"
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_trend_hosp"),
                       label = "Select hospital",
                       choices = private[["unit_choices"]](),
                       selected = private[["unit_choices"]]()[1],
-                      multiple = TRUE,
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      multiple = TRUE
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hosp_trend"))
+                e_output_spinner(ns("hosp_trend"))
               ),
               card(
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per hospital per specialty",
-                  popover(
+                  help_popover(
                     id = ns("hosp_bar_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("hospital_bar")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hosp_bar_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_bar_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
                       selected = "All Specialties",
-                      multiple = TRUE,
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      multiple = TRUE
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_bar_hosp"),
                       label = "Select hospital",
                       choices = private[["unit_choices"]](),
                       selected = private[["unit_choices"]]()[1],
-                      multiple = TRUE,
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      multiple = TRUE
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hosp_bar"))
+                e_output_spinner(ns("hosp_bar"))
               )
             )
           ),
@@ -441,77 +399,58 @@ hospital_grp <- R6Class("hospital_grp",
       moduleServer(
         self[["id"]](),
         function(input, output, session) {
-          ns <- session[["ns"]]
-
-          national_trend_plt <- reactive({
+          output[["national_trend"]] <- renderEcharts4r({
+            log_info("Creating hospital national trend plot")
             self[["plot"]](
               type = "national_trend",
               specialties = input[["select_national_specialty"]]
             )
-          }) |>
-            bindEvent(input[["select_national_specialty"]])
-
-          output[["national_trend"]] <- renderEcharts4r(national_trend_plt())
-
-          hb_trend_plt <- reactive({
+          })
+          output[["hb_trend"]] <- renderEcharts4r({
+            log_info("Creating hospital health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
               specialties = input[["select_hb_trend_specialty"]],
               health_boards = input[["select_hb_trend_hb"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hb_trend_specialty"]],
-              input[["select_hb_trend_hb"]]
-            )
-
-          output[["hb_trend"]] <- renderEcharts4r(hb_trend_plt())
-
-          hb_bar_plt <- reactive({
+          })
+           output[["hb_bar"]] <- renderEcharts4r({
+            log_info("Creating hospital health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
               specialties = input[["select_hb_bar_specialty"]],
               health_boards = input[["select_hb_bar_hb"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hb_bar_specialty"]],
-              input[["select_hb_bar_hb"]]
-            )
-
-          output[["hb_bar"]] <- renderEcharts4r(hb_bar_plt())
-
-          hosp_trend_plt <- reactive({
+          })
+          output[["hosp_trend"]] <- renderEcharts4r({
+            log_info("Creating hospital trend plot")
             self[["plot"]](
               type = "hospital_trend",
               specialties = input[["select_hosp_trend_specialty"]],
               hospitals = input[["select_hosp_trend_hosp"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hosp_trend_specialty"]],
-              input[["select_hosp_trend_hosp"]]
-            )
-
-          output[["hosp_trend"]] <- renderEcharts4r(hosp_trend_plt())
-
-          hosp_bar_plt <- reactive({
+          })
+          output[["hosp_bar"]] <- renderEcharts4r({
+            log_info("Creating hospital bar plot")
             self[["plot"]](
               type = "hospital_bar",
               specialties = input[["select_hosp_bar_specialty"]],
               hospitals = input[["select_hosp_bar_hosp"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hosp_bar_specialty"]],
-              input[["select_hosp_bar_hosp"]]
-            )
-
-          output[["hosp_bar"]] <- renderEcharts4r(hosp_bar_plt())
-
+          })
           output[["download"]] <- self[["download_handler"]]()
         }
       )
     }
   )
 )
+
+#' Get example gp health unit grp object.
+#' @param ids Character ID of Hospital to get. Default is c("A101H", "A201H").
+#' @export
+example_hospital_grp_unit <- function(ids = c("A101H", "A201H")) {
+  hospitals <- map(ids, example_hospital_unit)
+  sf <- get_sf("hospital")
+  sf <- sf[sf[["ID"]] %in% ids, ]
+  hospital_grp[["new"]](hospitals, sf, .id = "hospital")
+}

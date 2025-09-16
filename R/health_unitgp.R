@@ -16,13 +16,8 @@ health_unitgrp <- R6Class(
       set_names(self[["ids"]](), self[["titles"]]())
     },
     trend_echart = function(x, x_axis, y_axis) {
-      x |>
-        e_charts_(x_axis) |>
-        e_line_(y_axis) |>
-        e_tooltip(trigger = "axis") |>
-        e_legend(show = FALSE) |>
-        e_y_axis(name = y_axis) |>
-        e_x_axis(name = x_axis)
+      e_trend(x, x_axis, y_axis) |>
+        e_legend(show = FALSE)
     },
     bar_echart = function(x, group, x_axis, y_axis) {
       plt <- x |>
@@ -38,9 +33,7 @@ health_unitgrp <- R6Class(
       plt
     },
     health_board_choices = function() {
-      self[["get_download"]]() |>
-        pull("HBName") |>
-        unique()
+      unique(self[["metadata"]]()[["HBName"]])
     },
     unit_choices = function() {
       unique(paste(self[["ids"]](), "-", self[["titles"]]()))
@@ -92,9 +85,21 @@ health_unitgrp <- R6Class(
       self
     },
     #' @description
+    #' Get combine metadata of health unit grp.
+    metadata = function() {
+      private[["map_combine"]]("metadata")
+    },
+    #' @description
     #' Get data of health unit grp.
     data = function() {
       self[[".data"]]
+    },
+    #' @description
+    #' Get combined metadata and data in single data.frame.
+    combine_data = function() {
+      private[["map_combine"]]("data") |>
+        inner_join(self[["metadata"]](), by = "ID") |>
+        distinct()
     },
     #' @description
     #' Get sf of health unit grp.
@@ -139,7 +144,7 @@ health_unitgrp <- R6Class(
     #' @description
     #' Get downloadable data.frame of health unit group.
     get_download = function() {
-      private[["map_combine"]](func = "data")
+      self[["combine_data"]]()
     },
     #' @description
     #' Get download handler function of health unit group.
