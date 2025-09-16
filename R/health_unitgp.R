@@ -16,13 +16,8 @@ health_unitgrp <- R6Class(
       set_names(self[["ids"]](), self[["titles"]]())
     },
     trend_echart = function(x, x_axis, y_axis) {
-      x |>
-        e_charts_(x_axis) |>
-        e_line_(y_axis) |>
-        e_tooltip(trigger = "axis") |>
-        e_legend(show = FALSE) |>
-        e_y_axis(name = y_axis) |>
-        e_x_axis(name = x_axis)
+      e_trend(x, x_axis, y_axis) |>
+        e_legend(show = FALSE)
     },
     bar_echart = function(x, group, x_axis, y_axis) {
       plt <- x |>
@@ -149,7 +144,7 @@ health_unitgrp <- R6Class(
     #' @description
     #' Get downloadable data.frame of health unit group.
     get_download = function() {
-      private[["map_combine"]](func = "combine_data")
+      self[["combine_data"]]()
     },
     #' @description
     #' Get download handler function of health unit group.

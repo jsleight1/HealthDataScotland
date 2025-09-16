@@ -248,24 +248,18 @@ hospital_grp <- R6Class("hospital_grp",
             full_screen = TRUE,
             card_header(
               "National average bed occupancy per specialty",
-              popover(
+              help_popover(
                 id = ns("national_help"),
-                bs_icon("question-circle"),
                 self[["plot_info"]]("national_trend")
               ),
-              popover(
+              settings_popover(
                 id = ns("national_settings"),
-                bs_icon("gear", class = "ms-auto"),
-                virtualSelectInput(
+                virtual_select_input(
                   ns("select_national_specialty"),
                   label = "Select specialty",
                   choices = private[["specialty_choices"]](),
                   multiple = TRUE,
-                  selected = "All Specialties",
-                  search = TRUE,
-                  html = TRUE,
-                  showSelectedOptionsFirst = TRUE,
-                  updateOn = "close"
+                  selected = "All Specialties"
                 )
               )
             ),
@@ -279,34 +273,24 @@ hospital_grp <- R6Class("hospital_grp",
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per health board for selected specialty",
-                  popover(
+                  help_popover(
                     id = ns("hb_trend_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("health_board_trend")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hb_trend_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hb_trend_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
-                      selected = "All Specialties",
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = "All Specialties"
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       inputId = ns("select_hb_trend_hb"),
                       label = "Select health boards",
                       multiple = TRUE,
                       choices = private[["health_board_choices"]](),
-                      selected = private[["health_board_choices"]](),
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = private[["health_board_choices"]]()
                     )
                   )
                 ),
@@ -316,35 +300,25 @@ hospital_grp <- R6Class("hospital_grp",
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per health board and specialty",
-                  popover(
+                  help_popover(
                     id = ns("hb_bar_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("health_board_bar")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hb_bar_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hb_bar_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
                       multiple = TRUE,
-                      selected = "All Specialties",
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = "All Specialties"
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       inputId = ns("select_hb_bar_hb"),
                       label = "Select health boards",
                       multiple = TRUE,
                       choices = private[["health_board_choices"]](),
-                      selected = private[["health_board_choices"]](),
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = private[["health_board_choices"]]()
                     )
                   )
                 ),
@@ -360,34 +334,24 @@ hospital_grp <- R6Class("hospital_grp",
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per hospital for selected specialty",
-                  popover(
+                  help_popover(
                     id = ns("hosp_trend_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("hospital_trend")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hosp_trend_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_trend_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
-                      selected = "All Specialties",
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      selected = "All Specialties"
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_trend_hosp"),
                       label = "Select hospital",
                       choices = private[["unit_choices"]](),
                       selected = private[["unit_choices"]]()[1],
-                      multiple = TRUE,
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      multiple = TRUE
                     )
                   )
                 ),
@@ -397,35 +361,25 @@ hospital_grp <- R6Class("hospital_grp",
                 full_screen = TRUE,
                 card_header(
                   "Average bed occupancy per hospital per specialty",
-                  popover(
+                  help_popover(
                     id = ns("hosp_bar_help"),
-                    bs_icon("question-circle"),
                     self[["plot_info"]]("hospital_bar")
                   ),
-                  popover(
+                  settings_popover(
                     id = ns("hosp_bar_settings"),
-                    bs_icon("gear", class = "ms-auto"),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_bar_specialty"),
                       label = "Select specialty",
                       choices = private[["specialty_choices"]](),
                       selected = "All Specialties",
-                      multiple = TRUE,
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      multiple = TRUE
                     ),
-                    virtualSelectInput(
+                    virtual_select_input(
                       ns("select_hosp_bar_hosp"),
                       label = "Select hospital",
                       choices = private[["unit_choices"]](),
                       selected = private[["unit_choices"]]()[1],
-                      multiple = TRUE,
-                      search = TRUE,
-                      html = TRUE,
-                      showSelectedOptionsFirst = TRUE,
-                      updateOn = "close"
+                      multiple = TRUE
                     )
                   )
                 ),

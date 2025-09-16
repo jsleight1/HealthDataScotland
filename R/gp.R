@@ -20,65 +20,11 @@ gp <- R6Class("gp",
     },
     population_pyramid_data = function() {
       self[["combine_data"]]() |>
-        filter(.data[["Sex"]] != "All") |>
-        select("Date",
-          "Gender" = "Sex", matches("Ages\\d"), -contains("QF"),
-          -"AllAges", "GPPracticeName"
-        ) |>
-        pivot_longer(
-          -c("Gender", "GPPracticeName", "Date"),
-          names_to = "Age",
-          values_to = "Population"
-        ) |>
-        pivot_wider(names_from = "Gender", values_from = "Population") |>
-        mutate(
-          Age = factor(.data[["Age"]], levels = c(
-            "Ages85plus",
-            "Ages75to84",
-            "Ages65to74",
-            "Ages45to64",
-            "Ages25to44",
-            "Ages15to24",
-            "Ages5to14",
-            "Ages0to4"
-          )),
-          Female = Female * -1
-        ) |>
-        group_by(.data[["Date"]])
+        pyramid_data()
     },
     population_pyramid = function(...) {
       self[["plot_data"]]("population_pyramid", ...) |>
-        e_charts(Age, timeline = TRUE) |>
-        e_timeline_opts(autoPlay = TRUE) |>
-        e_bar(Male, stack = "quantity") |>
-        e_bar(Female, stack = "quantity") |>
-        e_flip_coords() |>
-        e_x_axis(
-          axisLabel = list(
-            formatter = htmlwidgets::JS(
-              "function (value) {
-                                return(Math.abs(value))
-                            }"
-            )
-          )
-        ) |>
-        e_tooltip(
-          trigger = "item",
-          formatter = htmlwidgets::JS("
-                    function(params){
-                        return(
-                            '<strong>' + 'Age: ' + '</strong>' + params.name + ' years' + '<br />' +
-                            '<strong>' + 'Population: ' + '</strong>' + Math.abs(params.value[0])
-                        )
-                    }
-                    ")
-        ) |>
-        e_legend(
-          top = 10,
-          left = "center",
-          data = c("Female", "Male")
-        ) |>
-        e_title(self[["title"]]())
+        e_pyramid()
     },
     population_trend_data = function() {
       self[["combine_data"]]() |>
@@ -99,11 +45,8 @@ gp <- R6Class("gp",
     population_trend = function(...) {
       y_range <- private[["population_trend_y_range"]]()
       self[["plot_data"]]("population_trend", ...) |>
-        e_charts(Date) |>
-        e_line(Population) |>
-        e_tooltip(trigger = "axis") |>
-        e_y_axis(min = y_range[1], max = y_range[2]) |>
-        e_title(self[["title"]]())
+        e_trend("Date", "Population") |>
+        e_y_axis(min = y_range[1], max = y_range[2])
     },
     population_pyramid_info = function() {
       "This bar chart shows a population pyramid of the total number of
@@ -186,9 +129,8 @@ gp <- R6Class("gp",
           full_screen = TRUE,
           card_header(
             "Population trend",
-            popover(
+            help_popover(
               id = ns("pop_trend_help"),
-              bs_icon("question-circle"),
               self[["plot_info"]]("population_trend")
             ),
           ),
@@ -198,9 +140,8 @@ gp <- R6Class("gp",
           full_screen = TRUE,
           card_header(
             "Population pyramid",
-            popover(
+            help_popover(
               id = ns("pop_pyramid_help"),
-              bs_icon("question-circle"),
               self[["plot_info"]]("population_pyramid")
             )
           ),

@@ -24,7 +24,9 @@ R6 class storing health statistics for a list of health units.
 \itemize{
 \item \href{#method-health_unitgrp-new}{\code{health_unitgrp$new()}}
 \item \href{#method-health_unitgrp-validate}{\code{health_unitgrp$validate()}}
+\item \href{#method-health_unitgrp-metadata}{\code{health_unitgrp$metadata()}}
 \item \href{#method-health_unitgrp-data}{\code{health_unitgrp$data()}}
+\item \href{#method-health_unitgrp-combine_data}{\code{health_unitgrp$combine_data()}}
 \item \href{#method-health_unitgrp-sf}{\code{health_unitgrp$sf()}}
 \item \href{#method-health_unitgrp-id}{\code{health_unitgrp$id()}}
 \item \href{#method-health_unitgrp-ids}{\code{health_unitgrp$ids()}}
@@ -72,12 +74,32 @@ Validate structure of health unit grp.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-metadata}{}}}
+\subsection{Method \code{metadata()}}{
+Get combine metadata of health unit grp.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$metadata()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unitgrp-data"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-data}{}}}
 \subsection{Method \code{data()}}{
 Get data of health unit grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$data()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-combine_data"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-combine_data}{}}}
+\subsection{Method \code{combine_data()}}{
+Get combined metadata and data in single data.frame.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$combine_data()}\if{html}{\out{</div>}}
 }
 
 }

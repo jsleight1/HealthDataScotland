@@ -58,9 +58,7 @@ hospital <- R6Class("hospital",
         map(function(i) {
           i |>
             group_by(name) |>
-            e_charts(FinancialYear) |>
-            e_line(value) |>
-            e_tooltip(trigger = "axis") |>
+            e_trend("FinancialYear", "value") |>
             e_title(subtext = unique(i[["SpecialtyName"]]))
         }) |>
         append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
@@ -135,15 +133,13 @@ hospital <- R6Class("hospital",
           full_screen = TRUE,
           card_header(
             "Annually Available Staffed Beds",
-            popover(
+            help_popover(
               id = ns("annual_beds_help"),
-              bs_icon("question-circle"),
               self[["plot_info"]]("specialty_line", "annual")
             ),
-            popover(
+            settings_popover(
               id = ns("annual_beds_settings"),
-              bs_icon("gear", class = "ms-auto"),
-              selectInput(
+              virtual_select_input(
                 ns("specialty_annual_select"),
                 label = "Select specialty",
                 choices = private[["specialty_choices"]](),
@@ -158,15 +154,13 @@ hospital <- R6Class("hospital",
           full_screen = TRUE,
           card_header(
             "Daily Average Available Staffed Beds",
-            popover(
+            help_popover(
               id = ns("daily_beds_help"),
-              bs_icon("question-circle"),
               self[["plot_info"]]("specialty_line", "daily")
             ),
-            popover(
+            settings_popover(
               id = ns("daily_beds_settings"),
-              bs_icon("gear", class = "ms-auto"),
-              selectInput(
+              virtual_select_input(
                 ns("specialty_daily_select"),
                 label = "Select specialty",
                 choices = private[["specialty_choices"]](),

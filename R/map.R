@@ -4,37 +4,29 @@ map_UI <- function(id, boards) {
     full_screen = TRUE,
     card_header(
       "Interactive map",
-      popover(
-        bs_icon("question-circle"),
+      help_popover(
+        id = ns("map-help"),
         "The interactive map below can be used to
                 click on indivdual GP practice and hospital to view associated
                 data for that particular health centre."
       ),
-      popover(
-        bs_icon("gear", class = "ms-auto"),
-        virtualSelectInput(
+      settings_popover(
+        id = ns("map-settings"),
+        virtual_select_input(
           inputId = ns("board_select"),
           label = "Select health board",
           choices = boards,
           selected = boards,
           inline = TRUE,
-          multiple = TRUE,
-          search = TRUE,
-          html = TRUE,
-          showSelectedOptionsFirst = TRUE,
-          updateOn = "close"
+          multiple = TRUE
         ),
-        virtualSelectInput(
+        virtual_select_input(
           ns("health_select"),
           label = "Display health centre types",
           choices = c("General practice" = "gp", "Hospital" = "hospital"),
           selected = c("gp", "hospital"),
           inline = TRUE,
-          multiple = TRUE,
-          search = TRUE,
-          html = TRUE,
-          showSelectedOptionsFirst = TRUE,
-          updateOn = "close"
+          multiple = TRUE
         ),
         title = "Map settings"
       )
