@@ -13,6 +13,7 @@ NULL
 #' @importFrom glue glue
 #' @importFrom tibble as_tibble deframe
 #' @importFrom logger log_info
+#' @importFrom shinycssloaders withSpinner
 NULL
 
 utils::globalVariables(".")

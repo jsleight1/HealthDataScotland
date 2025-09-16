@@ -148,7 +148,7 @@ hospital <- R6Class("hospital",
               )
             )
           ),
-          uiOutput(ns("annual_beds"))
+          withSpinner(uiOutput(ns("annual_beds")))
         ),
         card(
           full_screen = TRUE,
@@ -169,7 +169,7 @@ hospital <- R6Class("hospital",
               )
             )
           ),
-          uiOutput(ns("daily_beds"))
+          withSpinner(uiOutput(ns("daily_beds")))
         ),
         card(downloadButton(ns("download")))
       )

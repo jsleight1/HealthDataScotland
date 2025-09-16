@@ -227,7 +227,7 @@ gp_grp <- R6Class("gp_grp",
                     self[["plot_info"]]("national_trend")
                   )
                 ),
-                echarts4rOutput(outputId = ns("national_pop_trend"))
+                e_output_spinner(ns("national_pop_trend"))
               ),
               card(
                 full_screen = TRUE,
@@ -238,7 +238,7 @@ gp_grp <- R6Class("gp_grp",
                     self[["plot_info"]]("national_pyramid")
                   )
                 ),
-                echarts4rOutput(outputId = ns("national_pop_pyramid"))
+                e_output_spinner(ns("national_pop_pyramid"))
               )
             )
           ),
@@ -271,7 +271,7 @@ gp_grp <- R6Class("gp_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hb_pop_trend"))
+                e_output_spinner(ns("hb_pop_trend"))
               ),
               card(
                 full_screen = TRUE,
@@ -298,7 +298,7 @@ gp_grp <- R6Class("gp_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hb_pop_bar"))
+                e_output_spinner(ns("hb_pop_bar"))
               )
             )
           ),
@@ -331,7 +331,7 @@ gp_grp <- R6Class("gp_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("gp_pop_trend"))
+                e_output_spinner(ns("gp_pop_trend"))
               ),
               card(
                 full_screen = TRUE,
@@ -358,7 +358,7 @@ gp_grp <- R6Class("gp_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("gp_pop_bar"))
+                e_output_spinner(ns("gp_pop_bar"))
               )
             )
           ),

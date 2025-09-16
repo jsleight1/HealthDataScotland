@@ -264,7 +264,7 @@ hospital_grp <- R6Class("hospital_grp",
                 )
               )
             ),
-            echarts4rOutput(outputId = ns("national_trend"))
+            e_output_spinner(ns("national_trend"))
           ),
           card(
             full_screen = TRUE,
@@ -295,7 +295,7 @@ hospital_grp <- R6Class("hospital_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hb_trend"))
+                e_output_spinner(ns("hb_trend"))
               ),
               card(
                 full_screen = TRUE,
@@ -323,7 +323,7 @@ hospital_grp <- R6Class("hospital_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hb_bar"))
+                e_output_spinner(ns("hb_bar"))
               )
             )
           ),
@@ -356,7 +356,7 @@ hospital_grp <- R6Class("hospital_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hosp_trend"))
+                e_output_spinner(ns("hosp_trend"))
               ),
               card(
                 full_screen = TRUE,
@@ -384,7 +384,7 @@ hospital_grp <- R6Class("hospital_grp",
                     )
                   )
                 ),
-                echarts4rOutput(outputId = ns("hosp_bar"))
+                e_output_spinner(ns("hosp_bar"))
               )
             )
           ),

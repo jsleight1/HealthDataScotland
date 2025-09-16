@@ -134,7 +134,7 @@ gp <- R6Class("gp",
               self[["plot_info"]]("population_trend")
             ),
           ),
-          echarts4rOutput(ns("pop_trend"))
+          e_output_spinner(ns("pop_trend"))
         ),
         card(
           full_screen = TRUE,
@@ -145,7 +145,7 @@ gp <- R6Class("gp",
               self[["plot_info"]]("population_pyramid")
             )
           ),
-          echarts4rOutput(ns("pop_pyramid"))
+          e_output_spinner(ns("pop_pyramid"))
         ),
         card(downloadButton(ns("download")))
       )
