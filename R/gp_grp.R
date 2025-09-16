@@ -372,7 +372,6 @@ gp_grp <- R6Class("gp_grp",
       moduleServer(
         self[["id"]](),
         function(input, output, session) {
-          ns <- session[["ns"]]
           output[["national_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP national trend plot")
             self[["plot"]](type = "national_trend")
@@ -381,66 +380,38 @@ gp_grp <- R6Class("gp_grp",
             log_info("Creating GP national pyramid plot")
             self[["plot"]](type = "national_pyramid")
           })
-
-          hb_pop_trend_plt <- reactive({
+          output[["hb_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
               health_board = input[["select_hb_trend_hb"]],
               gender = input[["select_hb_trend_gender"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hb_trend_hb"]],
-              input[["select_hb_trend_gender"]]
-            )
-
-          hb_pop_bar_plt <- reactive({
+          })
+          output[["hb_pop_bar"]] <- renderEcharts4r({
             log_info("Creating GP health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
               health_board = input[["select_hb_bar_hb"]],
               gender = input[["select_hb_bar_gender"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hb_bar_hb"]],
-              input[["select_hb_bar_gender"]]
-            )
-
-          output[["hb_pop_trend"]] <- renderEcharts4r(hb_pop_trend_plt())
-
-          output[["hb_pop_bar"]] <- renderEcharts4r(hb_pop_bar_plt())
-
-          gp_pop_trend_plt <- reactive({
+          })
+          output[["gp_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP trend plot")
             self[["plot"]](
               type = "gp_trend",
               gp = input[["select_gp_trend_gp"]],
               gender = input[["select_gp_trend_gender"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_gp_trend_gp"]],
-              input[["select_gp_trend_gender"]]
-            )
-
-          output[["gp_pop_trend"]] <- renderEcharts4r(gp_pop_trend_plt())
-
-          gp_pop_bar_plt <- reactive({
+          })
+          output[["gp_pop_bar"]] <- renderEcharts4r({
             log_info("Creating GP bar plot")
             self[["plot"]](
               type = "gp_bar",
               gp = input[["select_gp_bar_gp"]],
               gender = input[["select_gp_bar_gender"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_gp_bar_gp"]],
-              input[["select_gp_bar_gender"]]
-            )
-          output[["gp_pop_bar"]] <- renderEcharts4r(gp_pop_bar_plt())
-
+          })
           output[["download"]] <- self[["download_handler"]]()
         }
       )

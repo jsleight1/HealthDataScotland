@@ -398,79 +398,45 @@ hospital_grp <- R6Class("hospital_grp",
       moduleServer(
         self[["id"]](),
         function(input, output, session) {
-          ns <- session[["ns"]]
-
-          national_trend_plt <- reactive({
+          output[["national_trend"]] <- renderEcharts4r({
             log_info("Creating hospital national trend plot")
             self[["plot"]](
               type = "national_trend",
               specialties = input[["select_national_specialty"]]
             )
-          }) |>
-            bindEvent(input[["select_national_specialty"]])
-
-          output[["national_trend"]] <- renderEcharts4r(national_trend_plt())
-
-          hb_trend_plt <- reactive({
+          })
+          output[["hb_trend"]] <- renderEcharts4r({
             log_info("Creating hospital health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
               specialties = input[["select_hb_trend_specialty"]],
               health_boards = input[["select_hb_trend_hb"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hb_trend_specialty"]],
-              input[["select_hb_trend_hb"]]
-            )
-
-          output[["hb_trend"]] <- renderEcharts4r(hb_trend_plt())
-
-          hb_bar_plt <- reactive({
+          })
+           output[["hb_bar"]] <- renderEcharts4r({
             log_info("Creating hospital health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
               specialties = input[["select_hb_bar_specialty"]],
               health_boards = input[["select_hb_bar_hb"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hb_bar_specialty"]],
-              input[["select_hb_bar_hb"]]
-            )
-
-          output[["hb_bar"]] <- renderEcharts4r(hb_bar_plt())
-
-          hosp_trend_plt <- reactive({
+          })
+          output[["hosp_trend"]] <- renderEcharts4r({
             log_info("Creating hospital trend plot")
             self[["plot"]](
               type = "hospital_trend",
               specialties = input[["select_hosp_trend_specialty"]],
               hospitals = input[["select_hosp_trend_hosp"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hosp_trend_specialty"]],
-              input[["select_hosp_trend_hosp"]]
-            )
-
-          output[["hosp_trend"]] <- renderEcharts4r(hosp_trend_plt())
-
-          hosp_bar_plt <- reactive({
+          })
+          output[["hosp_bar"]] <- renderEcharts4r({
             log_info("Creating hospital bar plot")
             self[["plot"]](
               type = "hospital_bar",
               specialties = input[["select_hosp_bar_specialty"]],
               hospitals = input[["select_hosp_bar_hosp"]]
             )
-          }) |>
-            bindEvent(
-              input[["select_hosp_bar_specialty"]],
-              input[["select_hosp_bar_hosp"]]
-            )
-
-          output[["hosp_bar"]] <- renderEcharts4r(hosp_bar_plt())
-
+          })
           output[["download"]] <- self[["download_handler"]]()
         }
       )
