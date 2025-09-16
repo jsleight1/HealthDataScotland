@@ -22,9 +22,10 @@ hospital_grp <- R6Class("hospital_grp",
         e_y_axis(min = 0, max = 100)
     },
     summarise_percentage_occupancy = function(x, groups) {
-      # TODO: need to check 'PercentageOccupancyQF' column
-      # Might need to remove 'PercentageOccupancyQF' == "z"
+      # Remove 'PercentageOccupancyQF' == "z" as these are not applicable
+      # See https://www.opendata.nhs.scot/dataset/statistical-qualifiers/resource/b80f9af0-b115-4245-b591-fb22775226c4
       x |>
+        filter(.data[["PercentageOccupancy"]] != "z") |>
         group_by_at(groups) |>
         summarise(
           PercentageOccupancy = mean(

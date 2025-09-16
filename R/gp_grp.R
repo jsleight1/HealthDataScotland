@@ -17,7 +17,7 @@ gp_grp <- R6Class("gp_grp",
         distinct() |>
         rename("Population" = "AllAges", "Gender" = "Sex") |>
         summarise_population(c("Date", "Gender")) |>
-        factor_gender() |>
+        mutate(Gender = factor(.data[["Gender"]], levels = c("Male", "Female"))) |>
         group_by(.data[["Gender"]])
     },
     national_trend = function(...) {

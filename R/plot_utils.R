@@ -71,11 +71,6 @@ factor_age <- function(x) {
     )
 }
 
-factor_gender <- function(x, levels = c("Male", "Female")) {
-  x |>
-    mutate(Gender = factor(.data[["Gender"]], levels = levels))
-}
-
 summarise_population <- function(x, groups = colnames(x)) {
   x |>
     group_by_at(groups) |>

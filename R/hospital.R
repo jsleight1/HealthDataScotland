@@ -180,8 +180,6 @@ hospital <- R6Class("hospital",
       moduleServer(
         self[["ID"]](),
         function(input, output, session) {
-          ns <- session[["ns"]]
-
           output[["annual_beds"]] <- renderUI({
             log_info("Creating hospital annual specialty line plot")
             self[["plot"]](
@@ -190,7 +188,6 @@ hospital <- R6Class("hospital",
               specialties = req(input[["specialty_annual_select"]])
             )
           })
-
           output[["daily_beds"]] <- renderUI({
             log_info("Creating hospital daily specialty line plot")
             self[["plot"]](
@@ -199,7 +196,6 @@ hospital <- R6Class("hospital",
               specialties = req(input[["specialty_daily_select"]])
             )
           })
-
           output[["download"]] <- downloadHandler(
             filename = function() "hospital_data.csv",
             content = function(con) {
