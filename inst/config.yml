@@ -1,0 +1,4 @@
+default:
+  azure:
+    account_url: !expr keyring::key_get("hds-azure-account-url")
+    account_key: !expr keyring::key_get("hds-azure-account-key")
