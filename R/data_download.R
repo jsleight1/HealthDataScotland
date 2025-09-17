@@ -25,12 +25,8 @@ get_phs_ids <- function(x, max_resources = NULL, ...) {
   ids[seq(min(length(ids), max_resources))]
 }
 
-get_gp_data <- function(max_resources = 10, ...) {
-  get_phs_dataset(
-    "gp-practice-populations",
-    max_resources = max_resources,
-    ...
-  )
+get_gp_data <- function(...) {
+  get_phs_dataset("gp-practice-populations", ...)
 }
 
 get_gp_meta <- function(...) {
