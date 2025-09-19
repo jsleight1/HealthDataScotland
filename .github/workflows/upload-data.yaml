@@ -1,10 +1,6 @@
-# on:
-#   schedule:
-#     - cron: "*/5 * * * *"
-
 on:
-  push:
-    branches: [3-use-external-data-storage]
+  schedule:
+    - cron: "*/5 * * * *"
 
 name: upload-data.yaml
 
@@ -30,7 +26,7 @@ jobs:
           echo -e '.libPaths(c("/usr/local/lib/R/site-library", "/usr/local/lib/R/library"))' > .Rprofile
         shell: bash
 
-      - name: Test environment variables
+      - name: Upload data to Azure blob
         env:
           blob_account_url: ${{ secrets.BLOB_ACCOUNT_URL }}
           blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
