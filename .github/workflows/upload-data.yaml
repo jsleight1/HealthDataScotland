@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 0 1 */6 *"
 
 name: upload-data.yaml
 
@@ -10,7 +10,7 @@ jobs:
   upload-data:
     runs-on: ubuntu-24.04-arm
     container:
-      image: docker.io/jsleight1/healthdatascotland:development
+      image: docker.io/jsleight1/healthdatascotland:latest
       options: --user root
 
     steps:
