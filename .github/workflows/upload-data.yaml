@@ -11,7 +11,7 @@ name: upload-data.yaml
 permissions: read-all
 
 jobs:
-  test-coverage:
+  upload-data:
     runs-on: ubuntu-24.04-arm
     container:
       image: docker.io/jsleight1/healthdatascotland:latest
@@ -31,7 +31,7 @@ jobs:
         shell: bash
 
       - name: Test environment variables
-        env: |
+        env:
           blob_account_url: ${{ secrets.BLOB_ACCOUNT_URL }}
           blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
         run: |
