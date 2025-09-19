@@ -1,5 +1,6 @@
 on:
   schedule:
+    # Upload data to Azure blob every 6 months
     - cron: "0 0 1 */6 *"
 
 name: upload-data.yaml

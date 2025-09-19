@@ -104,6 +104,7 @@ process_hospital_meta <- function() {
 
 process_hospital_data <- function() {
   get_hospital_data() |>
+    # d719af13-5fb3-430f-810e-ab3360961107 is the by location data set
     filter(.data[["datasetID"]] == "d719af13-5fb3-430f-810e-ab3360961107") |>
     rename("ID" = "Location") |>
     select_if(~ !all(is.na(.))) |>
@@ -165,8 +166,7 @@ create_processed_data <- function() {
 
 azure_container <- function(
     account_url = Sys.getenv("blob_account_url"),
-    account_key = Sys.getenv("blob_account_key")
-) {
+    account_key = Sys.getenv("blob_account_key")) {
   container <- "healthdatascotlandstore"
   storage_endpoint(endpoint = account_url, key = account_key) |>
     storage_container(name = container)

@@ -48,8 +48,11 @@ health_data_scotland <- function(...) {
       data[["hospital"]][["ui"]]()
     ),
     nav_panel(
-      title = "Notes",
-      notes_card()
+      title = "About",
+      class = "overflow-auto",
+      about_card(),
+      package_card(),
+      data_workflow_card()
     ),
     nav_spacer(),
     nav_item(input_dark_mode(id = "dark_mode", mode = "light")),
