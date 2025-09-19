@@ -36,8 +36,6 @@ jobs:
           blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
         working-directory: /home/app
         run: |
-          list.files()
-          system("cat DESCRIPTION")
           devtools::load_all()
-          azure_container()
+          save_processed_data()
         shell: Rscript {0}
