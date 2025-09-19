@@ -1,8 +1,12 @@
-on:
-  schedule:
-    - cron: "*/5 * * * *"
+# on:
+#   schedule:
+#     - cron: "*/5 * * * *"
 
-name: test-coverage.yaml
+on:
+  push:
+    branches: [3-use-external-data-storage]
+
+name: upload-data.yaml
 
 permissions: read-all
 
@@ -27,7 +31,11 @@ jobs:
         shell: bash
 
       - name: Test environment variables
+        env: |
+          blob_account_url: ${{ secrets.BLOB_ACCOUNT_URL }}
+          blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
         run: |
-          print(Sys.getenv("blob_account_url"))
-          print(Sys.getenv("blob_account_key"))
+          list.files()
+          devtools::load_all()
+          azure_container()
         shell: Rscript {0}
