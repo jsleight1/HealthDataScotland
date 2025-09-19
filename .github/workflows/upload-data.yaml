@@ -34,12 +34,10 @@ jobs:
         env:
           blob_account_url: ${{ secrets.BLOB_ACCOUNT_URL }}
           blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
+        working-directory: /home/app
         run: |
           list.files()
-          getwd()
-          system("cat renv.lock")
-          list.files("/home/app/")
-          system("cat /home/app/renv.lock")
-          # devtools::load_all()
-          # azure_container()
+          system("cat DESCRIPTION")
+          devtools::load_all()
+          azure_container()
         shell: Rscript {0}
