@@ -41,11 +41,6 @@ RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
 
-# Create data object
-RUN rm -rf .cache
-RUN Rscript -e "devtools::install(dependencies = FALSE)"
-RUN Rscript -e "HealthDataScotland:::save_processed_data()"
-
 # Expose port and run shiny application
 USER app
 EXPOSE 9002
