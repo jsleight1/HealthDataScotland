@@ -163,14 +163,13 @@ create_processed_data <- function() {
     set_names(c("gp", "hospital"))
 }
 
-azure_container <- function(config = default_config()) {
+azure_container <- function(
+    account_url = Sys.getenv("account_url"),
+    account_key = Sys.getenv("account_key")
+) {
   account_url <- config[["azure"]][["account_url"]]
   account_key <- config[["azure"]][["account_key"]]
   container <- "healthdatascotlandstore"
   storage_endpoint(endpoint = account_url, key = account_key) |>
     storage_container(name = container)
-}
-
-default_config <- function() {
-  config::get(file = system.file("config.yml", package = "HealthDataScotland"))
 }

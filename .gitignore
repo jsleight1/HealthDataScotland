@@ -2,3 +2,4 @@
 .httr-oauth
 *_.new.png
 rsconnect/
+.Renviron

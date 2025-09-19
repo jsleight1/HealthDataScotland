@@ -17,7 +17,6 @@ Imports:
     AzureStor,
     bslib,
     bsicons,
-    config,
     dplyr,
     echarts4r,
     glue,
