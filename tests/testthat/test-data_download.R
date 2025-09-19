@@ -6,7 +6,7 @@ test_that("get_gp_data works", {
     get_phs_dataset = m,
     expect_no_error(get_gp_data())
   )
-  expect_args(m, 1, "gp-practice-populations", max_resources = 10)
+  expect_args(m, 1, "gp-practice-populations")
 })
 
 test_that("get_gp_meta works", {

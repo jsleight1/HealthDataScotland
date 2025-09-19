@@ -5,7 +5,7 @@ NULL
 #' @importFrom assertthat assert_that
 #' @importFrom bsicons bs_icon
 #' @importFrom readr read_csv
-#' @importFrom purrr map map_chr reduce set_names
+#' @importFrom purrr map map_chr reduce set_names pmap
 #' @importFrom rlang arg_match
 #' @importFrom shinyWidgets virtualSelectInput
 #' @importFrom tidyr pivot_longer pivot_wider unite
@@ -14,6 +14,7 @@ NULL
 #' @importFrom tibble as_tibble deframe
 #' @importFrom logger log_info
 #' @importFrom shinycssloaders withSpinner
+#' @importFrom AzureStor storage_endpoint storage_container storage_save_rds storage_load_rds
 NULL
 
 utils::globalVariables(".")

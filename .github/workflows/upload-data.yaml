@@ -1,0 +1,37 @@
+on:
+  schedule:
+    - cron: "0 0 1 */6 *"
+
+name: upload-data.yaml
+
+permissions: read-all
+
+jobs:
+  upload-data:
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: docker.io/jsleight1/healthdatascotland:latest
+      options: --user root
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2.11.0
+        with:
+          r-version: '4.4.2'
+          install-r: false
+
+      - name: Add libPaths
+        run: |
+          echo -e '.libPaths(c("/usr/local/lib/R/site-library", "/usr/local/lib/R/library"))' > .Rprofile
+        shell: bash
+
+      - name: Upload data to Azure blob
+        env:
+          blob_account_url: ${{ secrets.BLOB_ACCOUNT_URL }}
+          blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
+        working-directory: /home/app
+        run: |
+          devtools::load_all()
+          save_processed_data()
+        shell: Rscript {0}

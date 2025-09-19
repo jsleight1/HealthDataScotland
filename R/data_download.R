@@ -25,12 +25,8 @@ get_phs_ids <- function(x, max_resources = NULL, ...) {
   ids[seq(min(length(ids), max_resources))]
 }
 
-get_gp_data <- function(max_resources = 10, ...) {
-  get_phs_dataset(
-    "gp-practice-populations",
-    max_resources = max_resources,
-    ...
-  )
+get_gp_data <- function(...) {
+  get_phs_dataset("gp-practice-populations", ...)
 }
 
 get_gp_meta <- function(...) {
@@ -144,13 +140,34 @@ create_data_objects <- function(x) {
     })
 }
 
-save_processed_data <- function(out = "processed_health_data.RDS") {
+load_processed_data <- function(
+    container = azure_container(),
+    file = "processed_health_data.RDS") {
+  storage_load_rds(container = container, file = file)
+}
+
+save_processed_data <- function(
+    container = azure_container(),
+    file = "processed_health_data.RDS") {
+  create_processed_data() |>
+    storage_save_rds(container = azure_container(), file = file)
+}
+
+create_processed_data <- function() {
   tribble(
     ~type,        ~meta_func,            ~data_func,              ~sf_func,
     "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
     "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
   ) |>
-    purrr::pmap(process_data) |>
-    set_names(c("gp", "hospital")) |>
-    saveRDS(out)
+    pmap(process_data) |>
+    set_names(c("gp", "hospital"))
+}
+
+azure_container <- function(
+    account_url = Sys.getenv("blob_account_url"),
+    account_key = Sys.getenv("blob_account_key")
+) {
+  container <- "healthdatascotlandstore"
+  storage_endpoint(endpoint = account_url, key = account_key) |>
+    storage_container(name = container)
 }

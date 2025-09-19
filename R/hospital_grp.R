@@ -414,7 +414,7 @@ hospital_grp <- R6Class("hospital_grp",
               health_boards = input[["select_hb_trend_hb"]]
             )
           })
-           output[["hb_bar"]] <- renderEcharts4r({
+          output[["hb_bar"]] <- renderEcharts4r({
             log_info("Creating hospital health board bar plot")
             self[["plot"]](
               type = "health_board_bar",

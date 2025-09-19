@@ -4,7 +4,7 @@
 health_data_scotland <- function(...) {
   requireNamespace("sf", quietly = TRUE)
   log_info("Creating data objects")
-  data <- create_data_objects(readRDS("processed_health_data.RDS"))
+  data <- create_data_objects(load_processed_data())
   log_info("Created data objects")
 
   value_boxes <- data |>
