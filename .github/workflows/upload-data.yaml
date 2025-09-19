@@ -1,0 +1,33 @@
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+name: test-coverage.yaml
+
+permissions: read-all
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: docker.io/jsleight1/healthdatascotland:latest
+      options: --user root
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2.11.0
+        with:
+          r-version: '4.4.2'
+          install-r: false
+
+      - name: Add libPaths
+        run: |
+          echo -e '.libPaths(c("/usr/local/lib/R/site-library", "/usr/local/lib/R/library"))' > .Rprofile
+        shell: bash
+
+      - name: Test environment variables
+        run: |
+          print(Sys.getenv("blob_account_url"))
+          print(Sys.getenv("blob_account_key"))
+        shell: Rscript {0}

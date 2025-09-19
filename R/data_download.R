@@ -164,8 +164,8 @@ create_processed_data <- function() {
 }
 
 azure_container <- function(
-    account_url = Sys.getenv("account_url"),
-    account_key = Sys.getenv("account_key")
+    account_url = Sys.getenv("blob_account_url"),
+    account_key = Sys.getenv("blob_account_key")
 ) {
   container <- "healthdatascotlandstore"
   storage_endpoint(endpoint = account_url, key = account_key) |>
