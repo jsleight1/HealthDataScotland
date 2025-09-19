@@ -167,8 +167,6 @@ azure_container <- function(
     account_url = Sys.getenv("account_url"),
     account_key = Sys.getenv("account_key")
 ) {
-  account_url <- config[["azure"]][["account_url"]]
-  account_key <- config[["azure"]][["account_key"]]
   container <- "healthdatascotlandstore"
   storage_endpoint(endpoint = account_url, key = account_key) |>
     storage_container(name = container)
