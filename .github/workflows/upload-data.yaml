@@ -36,6 +36,7 @@ jobs:
           blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
         run: |
           list.files()
-          devtools::load_all()
-          azure_container()
+          system("cat renv.lock")
+          # devtools::load_all()
+          # azure_container()
         shell: Rscript {0}
