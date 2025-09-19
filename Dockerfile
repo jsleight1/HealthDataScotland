@@ -35,6 +35,7 @@ WORKDIR /home/app
 
 # Install packages required for HealthDataScotland
 RUN git clone https://github.com/jsleight1/HealthDataScotland.git .
+RUN git config --global --add safe.directory /home/app
 RUN git checkout -b "3-use-external-data-storage" "origin/3-use-external-data-storage"
 RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
