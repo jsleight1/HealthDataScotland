@@ -7,8 +7,8 @@ map_UI <- function(id, boards) {
       help_popover(
         id = ns("map-help"),
         "The interactive map below can be used to
-                click on indivdual GP practice and hospital to view associated
-                data for that particular health centre."
+          click on indivdual GP practice and hospital to view associated
+          data for that particular health centre."
       ),
       settings_popover(
         id = ns("map-settings"),

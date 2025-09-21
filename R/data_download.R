@@ -47,11 +47,28 @@ get_hospital_meta <- function(...) {
 
 get_sf <- function(type = c("gp", "hospital", "board")) {
   requireNamespace("sf", quietly = TRUE)
+  type <- arg_match(type)
+  output <- sf::read_sf(sf_file(type))
+  output[["ID"]] <- as.character(output[[sf_id_col(type)]])
+  output[["type"]] <- type
+  output
+}
+
+sf_id_col <- function(type = c("gp", "hospital", "board")) {
   switch(arg_match(type),
-    "gp" = HealthDataScotland::example_gp_sf,
-    "hospital" = HealthDataScotland::example_hospital_sf,
-    "board" = HealthDataScotland::example_board_sf,
+    "gp" = "prac_code",
+    "hospital" = "sitecode",
+    "board" = "HBCode"
   )
+}
+
+sf_file <- function(type = c("gp", "hospital", "board")) {
+  output <- switch(arg_match(type),
+    "gp" = "extdata/scotland_gps.json",
+    "hospital" = "extdata/scotland_hosps.json",
+    "board" = "extdata/scotland_boards.json"
+  )
+  system.file(output, package = "HealthDataScotland")
 }
 
 process_data <- function(type, meta_func, data_func, sf_func) {
