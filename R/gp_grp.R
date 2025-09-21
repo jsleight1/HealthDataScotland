@@ -13,11 +13,9 @@ gp_grp <- R6Class("gp_grp",
       super[["bar_echart"]](x, "Age", "Age", "Population")
     },
     national_trend_data = function() {
-      private[["map_combine"]]("data") |>
+      self[["combine_data"]]() |>
         filter(.data[["Sex"]] != "All") |>
-        distinct() |>
-        rename("Population" = "AllAges", "Gender" = "Sex") |>
-        summarise_population(c("Date", "Gender")) |>
+        private[["trend_data"]](groups = c("Date", "Gender")) |>
         mutate(Gender = factor(.data[["Gender"]], levels = c("Male", "Female"))) |>
         group_by(.data[["Gender"]])
     },
@@ -41,9 +39,7 @@ gp_grp <- R6Class("gp_grp",
       self[["combine_data"]]() |>
         filter(.data[["Sex"]] %in% gender) |>
         filter(.data[["HBName"]] %in% health_board) |>
-        rename("Population" = "AllAges", "Gender" = "Sex") |>
-        distinct() |>
-        summarise_population(c("Date", "Gender", "HBName")) |>
+        private[["trend_data"]](groups = c("Date", "Gender", "HBName")) |>
         group_by(.data[["HBName"]])
     },
     health_board_trend = function(...) {
@@ -77,12 +73,7 @@ gp_grp <- R6Class("gp_grp",
           )
         ) |>
         filter(.data[["ID"]] %in% gp) |>
-        select("Date", "ID",
-          "Gender" = "Sex",
-          "HBName", "Population" = "AllAges"
-        ) |>
-        distinct() |>
-        group_by_at(c("Date", "Gender")) |>
+        private[["trend_data"]]() |>
         group_by(.data[["ID"]])
     },
     gp_trend = function(...) {
@@ -108,6 +99,15 @@ gp_grp <- R6Class("gp_grp",
         pivot_wider(names_from = all_of(col), values_from = "Population") |>
         arrange(.data[["Date"]], desc(.data[["Age"]])) |>
         group_by(.data[["Date"]])
+    },
+    trend_data = function(x, ...) {
+      x |>
+        select("Date", "ID",
+          "Gender" = "Sex",
+          "HBName", "Population" = "AllAges"
+        ) |>
+        distinct() |>
+        summarise_population(...)
     },
     gp_bar = function(...) {
       self[["plot_data"]](type = "gp_bar", ...) |>
