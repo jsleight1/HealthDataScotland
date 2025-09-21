@@ -9,21 +9,21 @@ e_pyramid <- function(x) {
       axisLabel = list(
         formatter = htmlwidgets::JS(
           "function (value) {
-                                return(Math.abs(value))
-                            }"
+            return(Math.abs(value))
+          }"
         )
       )
     ) |>
     e_tooltip(
       trigger = "item",
       formatter = htmlwidgets::JS("
-                    function(params){
-                        return(
-                            '<strong>' + 'Age: ' + '</strong>' + params.name + ' years' + '<br />' +
-                            '<strong>' + 'Population: ' + '</strong>' + Math.abs(params.value[0])
-                        )
-                    }
-                    ")
+        function(params){
+          return(
+            '<strong>' + 'Age: ' + '</strong>' + params.name + ' years' + '<br />' +
+            '<strong>' + 'Population: ' + '</strong>' + Math.abs(params.value[0])
+          )
+        }
+        ")
     ) |>
     e_legend(
       top = 10,

@@ -6,11 +6,14 @@ gp_grp <- R6Class("gp_grp",
     gender_choices = function() {
       unique(private[["map_combine"]]("data")[["Sex"]])
     },
-    trend_echart = function(x) {
-      super[["trend_echart"]](x, "Date", "Population")
+    national_pyramid = function() {
+      self[["plot_data"]](type = "national_pyramid") |>
+        e_pyramid() |>
+        e_y_axis(axisLabel = list(fontSize = 10))
     },
-    bar_echart = function(x) {
-      super[["bar_echart"]](x, "Age", "Age", "Population")
+    national_trend = function(...) {
+      self[["plot_data"]](type = "national_trend", ...) |>
+        private[["trend_echart"]]()
     },
     national_trend_data = function() {
       self[["combine_data"]]() |>
@@ -19,86 +22,72 @@ gp_grp <- R6Class("gp_grp",
         mutate(Gender = factor(.data[["Gender"]], levels = c("Male", "Female"))) |>
         group_by(.data[["Gender"]])
     },
-    national_trend = function(...) {
-      self[["plot_data"]](type = "national_trend", ...) |>
-        private[["trend_echart"]]()
-    },
     national_pyramid_data = function() {
       private[["map_combine"]]("data") |>
         pyramid_data(groups = c("Date", "Gender", "Age"))
-    },
-    national_pyramid = function() {
-      self[["plot_data"]](type = "national_pyramid") |>
-        e_pyramid() |>
-        e_y_axis(axisLabel = list(fontSize = 10))
-    },
-    health_board_trend_data = function(health_board = private[["health_board_choices"]](),
-                                       gender = private[["gender_choices"]]()) {
-      health_board <- arg_match(health_board, multiple = TRUE)
-      gender <- arg_match(gender)
-      self[["combine_data"]]() |>
-        filter(.data[["Sex"]] %in% gender) |>
-        filter(.data[["HBName"]] %in% health_board) |>
-        private[["trend_data"]](groups = c("Date", "Gender", "HBName")) |>
-        group_by(.data[["HBName"]])
     },
     health_board_trend = function(...) {
       self[["plot_data"]](type = "health_board_trend", ...) |>
         private[["trend_echart"]]()
     },
+    health_board_bar = function(...) {
+      self[["plot_data"]](type = "health_board_bar", ...) |>
+        private[["bar_echart"]]()
+    },
+    health_board_trend_data = function(health_board = private[["health_board_choices"]](),
+                                       gender = private[["gender_choices"]]()) {
+      health_board <- arg_match(health_board, multiple = TRUE)
+      gender <- arg_match(gender)
+      private[["health_board_data"]](health_board, gender) |>
+        private[["trend_data"]](groups = c("Date", "Gender", "HBName")) |>
+        group_by(.data[["HBName"]])
+    },
     health_board_bar_data = function(health_board = private[["health_board_choices"]](),
                                      gender = private[["gender_choices"]]()) {
       health_board <- arg_match(health_board, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["combine_data"]]() |>
-        filter(.data[["Sex"]] %in% gender) |>
-        filter(.data[["HBName"]] %in% health_board) |>
+      private[["health_board_data"]](health_board, gender) |>
         private[["bar_data"]](col = "HBName", groups = c("Date", "Age", "HBName"))
     },
-    health_board_bar = function(...) {
-      self[["plot_data"]](type = "health_board_bar", ...) |>
+    health_board_data = function(health_board, gender) {
+      self[["combine_data"]]() |>
+        filter(.data[["Sex"]] %in% gender) |>
+        filter(.data[["HBName"]] %in% health_board)
+    },
+    gp_trend = function(...) {
+      self[["plot_data"]](type = "gp_trend", ...) |>
+        private[["trend_echart"]]()
+    },
+    gp_bar = function(...) {
+      self[["plot_data"]](type = "gp_bar", ...) |>
         private[["bar_echart"]]()
     },
     gp_trend_data = function(gp = private[["unit_choices"]](),
                              gender = private[["gender_choices"]]()) {
       gp <- arg_match(gp, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["combine_data"]]() |>
-        filter(.data[["Sex"]] == gender) |>
-        mutate(
-          ID = paste(
-            .data[["ID"]],
-            "-",
-            .data[["GPPracticeName"]]
-          )
-        ) |>
-        filter(.data[["ID"]] %in% gp) |>
+      private[["gp_data"]](gp, gender) |>
         private[["trend_data"]]() |>
         group_by(.data[["ID"]])
-    },
-    gp_trend = function(...) {
-      self[["plot_data"]](type = "gp_trend", ...) |>
-        private[["trend_echart"]]()
     },
     gp_bar_data = function(gp = private[["unit_choices"]](),
                            gender = private[["gender_choices"]]()) {
       gp <- arg_match(gp, multiple = TRUE)
       gender <- arg_match(gender)
+      private[["gp_data"]](gp, gender) |>
+        private[["bar_data"]]("ID")
+    },
+    gp_data = function(gp, gender) {
       self[["combine_data"]]() |>
         filter(.data[["Sex"]] == gender) |>
         mutate(ID = paste(.data[["ID"]], "-", .data[["GPPracticeName"]])) |>
-        filter(.data[["ID"]] %in% gp) |>
-        private[["bar_data"]]("ID")
+        filter(.data[["ID"]] %in% gp)
     },
-    bar_data = function(x, col, ...) {
-      x |>
-        select("Date", all_of(col), matches("^Ages\\d"), -matches("QF$")) |>
-        pivot_longer(-c("Date", all_of(col)), names_to = "Age", values_to = "Population") |>
-        summarise_population(...) |>
-        factor_age() |>
-        pivot_wider(names_from = all_of(col), values_from = "Population") |>
-        arrange(.data[["Date"]], desc(.data[["Age"]])) |>
-        group_by(.data[["Date"]])
+    trend_echart = function(x) {
+      super[["trend_echart"]](x, "Date", "Population")
+    },
+    bar_echart = function(x) {
+      super[["bar_echart"]](x, "Age", "Age", "Population")
     },
     trend_data = function(x, ...) {
       x |>
@@ -109,9 +98,15 @@ gp_grp <- R6Class("gp_grp",
         distinct() |>
         summarise_population(...)
     },
-    gp_bar = function(...) {
-      self[["plot_data"]](type = "gp_bar", ...) |>
-        private[["bar_echart"]]()
+    bar_data = function(x, col, ...) {
+      x |>
+        select("Date", all_of(col), matches("^Ages\\d"), -matches("QF$")) |>
+        pivot_longer(-c("Date", all_of(col)), names_to = "Age", values_to = "Population") |>
+        summarise_population(...) |>
+        factor_age() |>
+        pivot_wider(names_from = all_of(col), values_from = "Population") |>
+        arrange(.data[["Date"]], desc(.data[["Age"]])) |>
+        group_by(.data[["Date"]])
     },
     national_trend_info = function() {
       "This line chart shows the total number of GP registered patients
