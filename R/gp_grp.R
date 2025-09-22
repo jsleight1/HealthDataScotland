@@ -1,4 +1,26 @@
 #' R6 class storing health statistics for a list of gp health units.
+#'
+#' This R6 class is designed to store population demography data for multiple
+#' GP practices. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' gps <- lapply(c("10002", "10017"), example_gp_unit)
+#' sf <- get_sf()[get_sf()[["ID"]] %in% c("10002", "100017"), ]
+#' x <- gp_grp[["new"]](gps, sf, .id = "gp")
+#' x[["ID"]]()
+#' x[["IDs"]]()
+#' x[["titles"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["subset"]](id = "10002")
+#' x[["plot"]](type = "national_pyramid")
+#' x[["plot_data"]](type = "national_pyramid")
+#' x[["plot_info"]](type = "national_pyramid")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 gp_grp <- R6Class("gp_grp",
   inherit = health_unitgrp,
@@ -157,6 +179,9 @@ gp_grp <- R6Class("gp_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["plot"]](type = "gp_bar")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -174,6 +199,9 @@ gp_grp <- R6Class("gp_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["plot_data"]](type = "gp_bar")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -191,6 +219,9 @@ gp_grp <- R6Class("gp_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["plot_info"]](type = "gp_bar")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -205,7 +236,7 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Create UI for general practice group object.
     ui = function() {
-      ns <- NS(self[["id"]]())
+      ns <- NS(self[["ID"]]())
       nav_panel(
         title = "General practice",
         class = "overflow-auto",
@@ -366,7 +397,7 @@ gp_grp <- R6Class("gp_grp",
     #' Create server for general practice group object.
     server = function() {
       moduleServer(
-        self[["id"]](),
+        self[["ID"]](),
         function(input, output, session) {
           output[["national_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP national trend plot")

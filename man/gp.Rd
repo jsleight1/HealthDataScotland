@@ -2,11 +2,62 @@
 % Please edit documentation in R/gp.R
 \name{gp}
 \alias{gp}
-\title{R6 class storing health statistics for a GP practice.}
+\title{R6 class storing health statistics for a single GP practice.}
 \description{
-R6 class storing health statistics for a GP practice.
+R6 class storing health statistics for a single GP practice.
 
-R6 class storing health statistics for a GP practice.
+R6 class storing health statistics for a single GP practice.
+}
+\details{
+This R6 class is designed to store population demography data for a single
+GP practice. This class can be used to plot summary statistics and
+create shiny UI/server objects.
+}
+\examples{
+library(dplyr)
+meta <- HealthDataScotland::example_gp_metadata |>
+  rename("ID" = "PracticeCode", "HBName" = "HB") |>
+  filter(.data[["ID"]] == "10002")
+data <- HealthDataScotland::example_gp_data |>
+  select(-"datasetID", -"HSCP") |>
+  rename("ID" = "PracticeCode") |>
+  filter(.data[["ID"]] == "10002")
+x <- gp[["new"]](meta, data)
+x[["ID"]]()
+x[["title"]]()
+x[["address"]]()
+x[["telephone"]]()
+x[["health_board"]]()
+x[["metadata"]]()
+x[["data"]]()
+x[["plot"]](type = "population_pyramid")
+x[["plot_data"]](type = "population_pyramid")
+x[["plot_info"]](type = "population_pyramid")
+\dontrun{
+x[["ui"]]()
+x[["server"]]()
+}
+
+## ------------------------------------------------
+## Method `gp$plot`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["plot"]](type = "population_pyramid")
+
+## ------------------------------------------------
+## Method `gp$plot_data`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["plot_data"]](type = "population_pyramid")
+
+## ------------------------------------------------
+## Method `gp$plot_info`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["plot_info"]](type = "population_pyramid")
 }
 \section{Super class}{
 \code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{gp}
@@ -15,7 +66,6 @@ R6 class storing health statistics for a GP practice.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-gp-telephone}{\code{gp$telephone()}}
-\item \href{#method-gp-gp_cluster}{\code{gp$gp_cluster()}}
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
 \item \href{#method-gp-plot_data}{\code{gp$plot_data()}}
@@ -52,16 +102,6 @@ Get telephone number of GP practice.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gp-gp_cluster"></a>}}
-\if{latex}{\out{\hypertarget{method-gp-gp_cluster}{}}}
-\subsection{Method \code{gp_cluster()}}{
-Get GP cluster
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp$gp_cluster()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-gp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
@@ -92,6 +132,15 @@ for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["plot"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-plot_data"></a>}}
@@ -113,6 +162,15 @@ for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["plot_data"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-plot_info"></a>}}
@@ -134,6 +192,15 @@ for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["plot_info"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-ui"></a>}}

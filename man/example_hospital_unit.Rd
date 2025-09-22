@@ -12,3 +12,6 @@ example_hospital_unit(id = "A101H")
 \description{
 Get example hospital health unit object.
 }
+\examples{
+example_hospital_unit()
+}

@@ -12,7 +12,7 @@ health_data_scotland <- function(...) {
       value_box(
         title = glue("Number of {tolower(nm)}s analysed"),
         showcase = bs_icon("bar-chart"),
-        value = length(x[["ids"]]())
+        value = length(x[["IDs"]]())
       )
     })
 

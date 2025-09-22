@@ -17,7 +17,7 @@ test_that("gp_grp class works", {
 
   list(gp_unit2) |>
     gp_grp[["new"]](.sf = tst_sf, .id = "gp") |>
-    expect_error("Are all ids in map sf found in object")
+    expect_error("Are all IDs in map sf found in object")
 
   list(gp_unit, gp_unit2) |>
     gp_grp[["new"]](.sf = sf, .id = 1) |>
@@ -32,8 +32,8 @@ test_that("gp_grp class works", {
     expect_no_error()
 
   expect_true(inherits(output, "gp_grp"))
-  expect_identical(output[["id"]](), "gp")
-  expect_identical(output[["ids"]](), c("10002", "10017"))
+  expect_identical(output[["ID"]](), "gp")
+  expect_identical(output[["IDs"]](), c("10002", "10017"))
   expect_identical(output[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
   expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
   expect_identical(output[["sf"]](), sf)
@@ -115,13 +115,13 @@ test_that("gp_bar_data works", {
 
 test_that("gp_grp subset works", {
   gp_grp_unit[["subset"]]("ID") |>
-    expect_error("ids are not found in health unit group")
+    expect_error("IDs are not found in health unit group")
 
   output <- gp_grp_unit[["subset"]]("10002") |>
     expect_no_error()
 
   expect_true(inherits(output, "gp_grp"))
-  expect_identical(output[["ids"]](), "10002")
+  expect_identical(output[["IDs"]](), "10002")
   expect_identical(output[["sf"]]()[["ID"]], "10002")
 })
 
@@ -129,5 +129,5 @@ test_that("gp_grp get_download works", {
   output <- gp_grp_unit[["get_download"]]() |>
     expect_no_error()
   expect_s3_class(output, "data.frame")
-  expect_identical(gp_grp_unit[["ids"]](), unique(output[["ID"]]))
+  expect_identical(gp_grp_unit[["IDs"]](), unique(output[["ID"]]))
 })

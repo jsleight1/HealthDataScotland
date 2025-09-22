@@ -20,6 +20,7 @@ Imports:
     dplyr,
     echarts4r,
     glue,
+    htmlwidgets,
     httr2,
     leaflet,
     logger,

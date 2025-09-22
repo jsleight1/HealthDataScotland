@@ -28,8 +28,8 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-data}{\code{health_unitgrp$data()}}
 \item \href{#method-health_unitgrp-combine_data}{\code{health_unitgrp$combine_data()}}
 \item \href{#method-health_unitgrp-sf}{\code{health_unitgrp$sf()}}
-\item \href{#method-health_unitgrp-id}{\code{health_unitgrp$id()}}
-\item \href{#method-health_unitgrp-ids}{\code{health_unitgrp$ids()}}
+\item \href{#method-health_unitgrp-ID}{\code{health_unitgrp$ID()}}
+\item \href{#method-health_unitgrp-IDs}{\code{health_unitgrp$IDs()}}
 \item \href{#method-health_unitgrp-titles}{\code{health_unitgrp$titles()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
@@ -114,22 +114,22 @@ Get sf of health unit grp.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-id"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-id}{}}}
-\subsection{Method \code{id()}}{
+\if{html}{\out{<a id="method-health_unitgrp-ID"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-ID}{}}}
+\subsection{Method \code{ID()}}{
 Get ID of health unit grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$id()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$ID()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-ids"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-ids}{}}}
-\subsection{Method \code{ids()}}{
-Get ids of stored health units
+\if{html}{\out{<a id="method-health_unitgrp-IDs"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-IDs}{}}}
+\subsection{Method \code{IDs()}}{
+Get IDs of stored health units
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$ids()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$IDs()}\if{html}{\out{</div>}}
 }
 
 }

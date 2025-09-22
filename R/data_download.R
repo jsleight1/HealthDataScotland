@@ -45,6 +45,10 @@ get_hospital_meta <- function(...) {
   get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
+#' Get SF spatial data.frame for selected data type.
+#' @param type Character type of spatial data. Options are
+#'   "gp", "hospital", or "board".
+#' @export
 get_sf <- function(type = c("gp", "hospital", "board")) {
   requireNamespace("sf", quietly = TRUE)
   type <- arg_match(type)

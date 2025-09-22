@@ -17,7 +17,7 @@ test_that("hospital_grp class works", {
 
   list(hosp_unit2) |>
     hospital_grp[["new"]](.sf = tst_sf, .id = "hospital") |>
-    expect_error("Are all ids in map sf found in object")
+    expect_error("Are all IDs in map sf found in object")
 
   output <- list(hosp_unit, hosp_unit2) |>
     hospital_grp[["new"]](.sf = sf, .id = 1) |>
@@ -32,8 +32,8 @@ test_that("hospital_grp class works", {
     expect_no_error()
 
   expect_true(inherits(output, "hospital_grp"))
-  expect_identical(output[["id"]](), "hospital")
-  expect_identical(output[["ids"]](), c("A101H", "A201H"))
+  expect_identical(output[["ID"]](), "hospital")
+  expect_identical(output[["IDs"]](), c("A101H", "A201H"))
   expect_identical(output[["titles"]](), c("Arran War Memorial Hospital", "Ailsa Hospital"))
   expect_identical(output[["data"]](), list(hosp_unit, hosp_unit2))
   expect_identical(output[["sf"]](), sf)
@@ -108,13 +108,13 @@ test_that("hospital_bar_data works", {
 
 test_that("hospital_grp subset works", {
   hosp_grp_unit[["subset"]]("ID") |>
-    expect_error("ids are not found in health unit group")
+    expect_error("IDs are not found in health unit group")
 
   output <- hosp_grp_unit[["subset"]]("A101H") |>
     expect_no_error()
 
   expect_true(inherits(output, "hospital_grp"))
-  expect_identical(output[["ids"]](), "A101H")
+  expect_identical(output[["IDs"]](), "A101H")
   expect_identical(output[["sf"]]()[["ID"]], "A101H")
 })
 
@@ -122,5 +122,5 @@ test_that("hospital_grp get_download works", {
   output <- hosp_grp_unit[["get_download"]]() |>
     expect_no_error()
   expect_s3_class(output, "data.frame")
-  expect_identical(hosp_grp_unit[["ids"]](), unique(output[["ID"]]))
+  expect_identical(hosp_grp_unit[["IDs"]](), unique(output[["ID"]]))
 })

@@ -2,11 +2,60 @@
 % Please edit documentation in R/hospital.R
 \name{hospital}
 \alias{hospital}
-\title{R6 class storing health statistics for a Hospital.}
+\title{R6 class storing health statistics for a single hospital.}
 \description{
-R6 class storing health statistics for a Hospital.
+R6 class storing health statistics for a single hospital.
 
-R6 class storing health statistics for a Hospital.
+R6 class storing health statistics for a single hospital.
+}
+\details{
+This R6 class is designed to store bed occupancy statistics for a single
+hospital location. This class can be used to plot summary statistics and
+create shiny UI/server objects.
+}
+\examples{
+library(dplyr)
+meta <- HealthDataScotland::example_hospital_metadata |>
+  rename("ID" = "HospitalCode", "HBName" = "HealthBoard") |>
+  filter(.data[["ID"]] == "A101H")
+data <- HealthDataScotland::example_hospital_data |>
+  rename("ID" = "Location") |>
+  filter(.data[["ID"]] == "A101H")
+x <- hospital[["new"]](meta, data)
+x[["ID"]]()
+x[["title"]]()
+x[["address"]]()
+x[["health_board"]]()
+x[["metadata"]]()
+x[["data"]]()
+x[["plot"]](type = "specialty_line")
+x[["plot_data"]](type = "specialty_line")
+x[["plot_info"]](type = "specialty_line")
+\dontrun{
+x[["ui"]]()
+x[["server"]]()
+}
+
+## ------------------------------------------------
+## Method `hospital$plot`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["plot"]](type = "specialty_line", data_type = "annual")
+
+## ------------------------------------------------
+## Method `hospital$plot_data`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["plot_data"]](type = "specialty_line", data_type = "annual")
+
+## ------------------------------------------------
+## Method `hospital$plot_info`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["plot_info"]](type = "specialty_line", data_type = "annual")
 }
 \section{Super class}{
 \code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{hospital}
@@ -68,6 +117,15 @@ Character specifying plot type. See \code{available_plots} for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["plot"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-plot_data"></a>}}
@@ -88,6 +146,15 @@ Character specifying plot type. See \code{available_plots} for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["plot_data"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-plot_info"></a>}}
@@ -108,6 +175,15 @@ Character specifying plot type. See \code{available_plots} for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["plot_info"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-ui"></a>}}

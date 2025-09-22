@@ -1,4 +1,31 @@
-#' R6 class storing health statistics for a Hospital.
+#' R6 class storing health statistics for a single hospital.
+#'
+#' This R6 class is designed to store bed occupancy statistics for a single
+#' hospital location. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' library(dplyr)
+#' meta <- HealthDataScotland::example_hospital_metadata |>
+#'   rename("ID" = "HospitalCode", "HBName" = "HealthBoard") |>
+#'   filter(.data[["ID"]] == "A101H")
+#' data <- HealthDataScotland::example_hospital_data |>
+#'   rename("ID" = "Location") |>
+#'   filter(.data[["ID"]] == "A101H")
+#' x <- hospital[["new"]](meta, data)
+#' x[["ID"]]()
+#' x[["title"]]()
+#' x[["address"]]()
+#' x[["health_board"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["plot"]](type = "specialty_line")
+#' x[["plot_data"]](type = "specialty_line")
+#' x[["plot_info"]](type = "specialty_line")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 hospital <- R6Class("hospital",
   inherit = health_unit,
@@ -92,6 +119,9 @@ hospital <- R6Class("hospital",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["plot"]](type = "specialty_line", data_type = "annual")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -103,6 +133,9 @@ hospital <- R6Class("hospital",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["plot_data"]](type = "specialty_line", data_type = "annual")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -114,6 +147,9 @@ hospital <- R6Class("hospital",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["plot_info"]](type = "specialty_line", data_type = "annual")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -211,6 +247,8 @@ hospital <- R6Class("hospital",
 
 #' Get example hospital health unit object.
 #' @param id Character ID of Hospital to get. Default is "A101H".
+#' @examples
+#' example_hospital_unit()
 #' @export
 example_hospital_unit <- function(id = "A101H") {
   meta <- HealthDataScotland::example_hospital_metadata |>

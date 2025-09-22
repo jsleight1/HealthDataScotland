@@ -1,4 +1,26 @@
 #' R6 class storing health statistics for a list of hospital health units.
+#'
+#' This R6 class is designed to store bed occupancy statistics for multiple
+#' hospitals. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' gps <- lapply(c("A101H", "A201H"), example_hospital_unit)
+#' sf <- get_sf("hospital")[get_sf("hospital")[["ID"]] %in% c("A101H", "A201H"), ]
+#' x <- hospital_grp[["new"]](gps, sf, .id = "gp")
+#' x[["ID"]]()
+#' x[["IDs"]]()
+#' x[["titles"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["subset"]](id = "A201H")
+#' x[["plot"]](type = "hospital_bar")
+#' x[["plot_data"]](type = "hospital_bar")
+#' x[["plot_info"]](type = "hospital_bar")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 hospital_grp <- R6Class("hospital_grp",
   inherit = health_unitgrp,
@@ -203,6 +225,9 @@ hospital_grp <- R6Class("hospital_grp",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_hospital_grp_unit()
+    #' x[["plot"]](type = "hospital_bar")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -218,6 +243,9 @@ hospital_grp <- R6Class("hospital_grp",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_hospital_grp_unit()
+    #' x[["plot_data"]](type = "hospital_bar")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -234,6 +262,9 @@ hospital_grp <- R6Class("hospital_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_hospital_grp_unit()
+    #' x[["plot_info"]](type = "hospital_bar")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -249,7 +280,7 @@ hospital_grp <- R6Class("hospital_grp",
     #' @param ns
     #'     Namespace of shiny application page.
     ui = function(ns) {
-      ns <- NS(self[["id"]]())
+      ns <- NS(self[["ID"]]())
       nav_panel(
         title = "Hospital",
         class = "overflow-auto",
@@ -405,7 +436,7 @@ hospital_grp <- R6Class("hospital_grp",
     #' Create server for hospital group object.
     server = function() {
       moduleServer(
-        self[["id"]](),
+        self[["ID"]](),
         function(input, output, session) {
           output[["national_trend"]] <- renderEcharts4r({
             log_info("Creating hospital national trend plot")

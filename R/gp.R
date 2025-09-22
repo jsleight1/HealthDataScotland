@@ -1,4 +1,33 @@
-#' R6 class storing health statistics for a GP practice.
+#' R6 class storing health statistics for a single GP practice.
+#'
+#' This R6 class is designed to store population demography data for a single
+#' GP practice. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' library(dplyr)
+#' meta <- HealthDataScotland::example_gp_metadata |>
+#'   rename("ID" = "PracticeCode", "HBName" = "HB") |>
+#'   filter(.data[["ID"]] == "10002")
+#' data <- HealthDataScotland::example_gp_data |>
+#'   select(-"datasetID", -"HSCP") |>
+#'   rename("ID" = "PracticeCode") |>
+#'   filter(.data[["ID"]] == "10002")
+#' x <- gp[["new"]](meta, data)
+#' x[["ID"]]()
+#' x[["title"]]()
+#' x[["address"]]()
+#' x[["telephone"]]()
+#' x[["health_board"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["plot"]](type = "population_pyramid")
+#' x[["plot_data"]](type = "population_pyramid")
+#' x[["plot_info"]](type = "population_pyramid")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 gp <- R6Class("gp",
   inherit = health_unit,
@@ -66,11 +95,6 @@ gp <- R6Class("gp",
       self[["metadata"]]()[["TelephoneNumber"]]
     },
     #' @description
-    #' Get GP cluster
-    gp_cluster = function() {
-      self[["metadata"]]()[["GPCluster"]]
-    },
-    #' @description
     #' Get character vector of available plots for gp unit. Options
     #'   are either "population_pyramid" plot or "population_trend" plot.
     available_plots = function() {
@@ -82,6 +106,9 @@ gp <- R6Class("gp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_gp_unit()
+    #' x[["plot"]](type = "population_pyramid")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -95,6 +122,9 @@ gp <- R6Class("gp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_gp_unit()
+    #' x[["plot_data"]](type = "population_pyramid")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -108,6 +138,9 @@ gp <- R6Class("gp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_gp_unit()
+    #' x[["plot_info"]](type = "population_pyramid")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -179,6 +212,8 @@ gp <- R6Class("gp",
 
 #' Get example gp health unit object.
 #' @param id Character ID of GP practice to get. Default is "10002".
+#' @examples
+#' example_gp_unit()
 #' @export
 example_gp_unit <- function(id = "10002") {
   meta <- HealthDataScotland::example_gp_metadata |>
