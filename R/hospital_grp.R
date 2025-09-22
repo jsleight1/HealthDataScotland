@@ -43,13 +43,9 @@ hospital_grp <- R6Class("hospital_grp",
         values = private[["specialty_choices"]](),
         multiple = TRUE
       )
-      private[["map_combine"]]("data") |>
+      self[["combine_data"]]() |>
         filter(.data[["SpecialtyName"]] %in% specialties) |>
-        select("FinancialYear", "SpecialtyName", "PercentageOccupancy") |>
-        distinct() |>
-        private[["summarise_percentage_occupancy"]](
-          c("FinancialYear", "SpecialtyName")
-        ) |>
+        private[["trend_data"]](groups = c("FinancialYear", "SpecialtyName")) |>
         group_by(.data[["SpecialtyName"]])
     },
     health_board_trend = function(...) {
