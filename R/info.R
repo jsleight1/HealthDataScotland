@@ -87,19 +87,18 @@ data_workflow_card <- function() {
       data sets are used:
       "
     ),
-    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/f23655c3-6e23-4103-a511-a80d998adb90", target = "_blank", "GP metadata")),
-    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/e3300e98-cdd2-4f4e-a24e-06ee14fcc66c", target = "_blank", "GP demography data")),
-    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/cbd1802e-0e04-4282-88eb-d7bdcfb120f0", target = "_blank", "Hospital metadata")),
-    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/7e21f62c-64a1-4aa7-b160-60cbdd8a700d", target = "_blank", "Hospital bed occupancy data")),
+    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/gp-practice-contact-details-and-list-sizes", target = "_blank", "GP metadata")),
+    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/gp-practice-populations", target = "_blank", "GP demography data")),
+    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/hospital-codes", target = "_blank", "Hospital metadata")),
+    p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/annual-hospital-beds-information", target = "_blank", "Hospital bed occupancy data")),
     p("In addition, spatial data is derived from the Spatial hub at the following links:"),
     p("- ", tags$a(href = "https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b", target = "_blank", "Hospital spatial data")),
     p("- ", tags$a(href = "https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd", target = "_blank", "GP spatial data")),
     p(
-      "In an attempt to be a transparent as possible, I have outlined how
+      "To aide with data transparency and reproducibility, I have outlined how
       the above data sets are retrieved and manipulated into a usable format
-      by HealthDataScotland. The processed data set is stored in an Azure blob
-      that is used by the application. This blob is updated periodically using
-      a GitHub action."
+      by HealthDataScotland. The processed data set is stored in an Azure blob.
+      This blob is updated periodically using a GitHub action."
     ),
     HTML("<b>GP data processing</b>"),
     p(
@@ -131,7 +130,7 @@ data_workflow_card <- function() {
       at the national and health board level by grouping all GP practices
       within a particular group (e.g. the health board 'Greater Glasgow and Clyde') and summing
       the total number of registered patients. Please note that there may be
-      certain unknown caveats with this approach.Therefore please refer to the
+      unknown caveats with this approach. Therefore please refer to the
       published data sets before making any conclusions."
     ),
     HTML("<b>Hospital data processing</b>"),
@@ -144,7 +143,7 @@ data_workflow_card <- function() {
       "- Hospital bed occupancy data: Hospital bed occupancy data was obtained from the NHS open data set
       titled 'annual-hospital-beds-information'. This data set was filtered to the PHS
       data set ID 'd719af13-5fb3-430f-810e-ab3360961107' to obtain bed
-      capacity per hospital location."
+      capacity per specialty per hospital location."
     ),
     p(
       "- Combined data: The intersection of hospital codes between the metadata
@@ -165,13 +164,13 @@ data_workflow_card <- function() {
       data at the national and health board level per specialty by grouping all hospitals
       within a particular group (e.g. the health board 'Greater Glasgow and Clyde') and taking the
       average percentage bed occupancy for a selected specialty (whilst filering
-      non-applicable data points). Please note that there may be certain unknown
+      non-applicable data points). Please note that there may be unknown
       caveats with this approach. Therefore please refer to the published data sets
       before making any conclusions."
     ),
     p(
       style = "color: var(--brand-red);",
-      "Hopefully the workflows outlined provide a rough guide as to which public
+      "The workflows outlined provide a rough guide as to which public
       data sets are being used and how they are being manipulated. It is worth
       emphasising once more, however, that this application is primarily a hobby
       project. Therefore any decisions should not be made using the data
