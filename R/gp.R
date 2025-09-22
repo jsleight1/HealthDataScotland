@@ -48,13 +48,19 @@ gp <- R6Class("gp",
         "Ages45to64", "Ages25to44", "Ages15to24", "Ages5to14", "Ages0to4"
       )
     },
+    population_pyramid = function(...) {
+      self[["plot_data"]]("population_pyramid", ...) |>
+        e_pyramid()
+    },
     population_pyramid_data = function() {
       self[["combine_data"]]() |>
         pyramid_data()
     },
-    population_pyramid = function(...) {
-      self[["plot_data"]]("population_pyramid", ...) |>
-        e_pyramid()
+    population_trend = function(...) {
+      y_range <- private[["population_trend_y_range"]]()
+      self[["plot_data"]]("population_trend", ...) |>
+        e_trend("Date", "Population") |>
+        e_y_axis(min = y_range[1], max = y_range[2])
     },
     population_trend_data = function() {
       self[["combine_data"]]() |>
@@ -71,12 +77,6 @@ gp <- R6Class("gp",
         filter(.data[["Sex"]] != "All") |>
         pull("AllAges")
       c(floor(min(pop) * 0.99), ceiling(max(pop) * 1.01))
-    },
-    population_trend = function(...) {
-      y_range <- private[["population_trend_y_range"]]()
-      self[["plot_data"]]("population_trend", ...) |>
-        e_trend("Date", "Population") |>
-        e_y_axis(min = y_range[1], max = y_range[2])
     },
     population_pyramid_info = function() {
       "This bar chart shows a population pyramid of the total number of

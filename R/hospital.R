@@ -46,17 +46,34 @@ hospital <- R6Class("hospital",
         "PercentageOccupancy", "PercentageOccupancyQF"
       )
     },
-    specialty_data = function(specialties = "All Specialties") {
-      self[["combine_data"]]() |>
-        filter(.data[["SpecialtyName"]] %in% specialties)
+    specialty_line = function(...) {
+      data <- self[["plot_data"]](type = "specialty_line", ...)
+      data |>
+        group_split(.data[["SpecialtyName"]]) |>
+        map(function(i) {
+          i |>
+            group_by(name) |>
+            e_trend("FinancialYear", "value") |>
+            e_title(subtext = unique(i[["SpecialtyName"]]))
+        }) |>
+        append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
+        do.call(e_arrange, .)
     },
-    specialty_line_data = function(data_type = c("annual", "daily"),
-                                   ...) {
+    specialty_line_data = function(
+        data_type = c("annual", "daily"),
+        specialties = "All Specialties"
+      ) {
       cols <- switch(arg_match(data_type),
         "annual" = private[["annual_cols"]],
         "daily" = private[["daily_cols"]]
       )()
-      private[["specialty_data"]](...) |>
+      specialties <- arg_match(
+        specialties,
+        values = private[["specialty_choices"]](),
+        multiple = TRUE
+      )
+      self[["combine_data"]]() |>
+        filter(.data[["SpecialtyName"]] %in% specialties) |>
         select(
           "ID",
           "FinancialYear",
@@ -78,19 +95,6 @@ hospital <- R6Class("hospital",
         "Daily average number of available staffed beds" = "AverageAvailableStaffedBeds",
         "Daily average number of occupied beds" = "AverageOccupiedBeds"
       )
-    },
-    specialty_line = function(...) {
-      data <- self[["plot_data"]](type = "specialty_line", ...)
-      data |>
-        group_split(.data[["SpecialtyName"]]) |>
-        map(function(i) {
-          i |>
-            group_by(name) |>
-            e_trend("FinancialYear", "value") |>
-            e_title(subtext = unique(i[["SpecialtyName"]]))
-        }) |>
-        append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
-        do.call(e_arrange, .)
     },
     specialty_choices = function() {
       sort(unique(self[["data"]]()[["SpecialtyName"]]))
