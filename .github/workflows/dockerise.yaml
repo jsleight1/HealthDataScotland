@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main]
+    branches: [version2-development]
 
 name: dockerise.yaml
 
@@ -48,6 +48,6 @@ jobs:
         build-args: |
           RVERSION=${{ env.RVERSION }}
         tags: |
-          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:latest
-          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-latest
-          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-${{ env.DATE }}
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:development
+# ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-latest
+# ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-${{ env.DATE }}
