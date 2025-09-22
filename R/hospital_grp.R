@@ -178,33 +178,42 @@ hospital_grp <- R6Class("hospital_grp",
     },
     national_trend_info = function() {
       "This line chart shows the national average hospital bed
-            occupancy (y-axis) across time (x-axis) for the selected
-            specialty. Settings can be used to show data for different
-            specialties (default is all specialities)."
+        occupancy (y-axis) across time (x-axis) for the selected
+        specialty. Specifically, this plot combines data for all available
+        hospital locations across Scotland and calculates the average
+        percentage bed occupancy for the selected specialty. Settings
+        can be used to show data for different specialties (default is
+        all specialities)."
     },
     health_board_trend_info = function() {
       "This line chart shows the average hospital bed occupancy (y-axis)
-            across time (x-axis) per health board (colour) for the selected
-            specialty. Settings can be used to show data for different
-            specialties (default is all specialties) and health boards."
+        across time (x-axis) per health board (colour) for the selected
+        specialty. Specifically, this plot combines data for all
+        available hospital locations for the selected health boards
+        and specialty, and calculates the average percentage bed occupancy.
+        Settings can be used to show data for different
+        specialties (default is all specialties) and health boards."
     },
     health_board_bar_info = function() {
       "This bar chart shows the average hospital bed occupancy (y-axis)
-            across health boards (x-axis) for each specialty (colour).
-            Settings can be used to show data for different specialties
-            (default is all specialties) and health boards."
+        across health boards (x-axis) for each specialty (colour).
+        Specifically, this plot combines data for all
+        available hospital locations for the selected health boards and
+        speciality, and calculates the average percentage bed occupancy.
+        Settings can be used to show data for different
+        specialties (default is all specialties) and health boards."
     },
     hospital_trend_info = function() {
       "This line chart shows the average hospital bed occupancy (y-axis)
-            across time (x-axis) per hospital (colour) for the selected
-            specialty. Settings can be used to show data for different
-            specialties (default is all specialties) and hospitals."
+        across time (x-axis) per hospital (colour) for the selected
+        specialty. Settings can be used to show data for different
+        specialties (default is all specialties) and hospitals."
     },
     hospital_bar_info = function() {
       "This bar chart shows the average hospital bed occupancy (y-axis)
-            per hospital (x-axis) for each specialty (colour). Seetings can be
-            used to show data for different specialties (default is all
-            specialties) and hospitals."
+        per hospital (x-axis) for each specialty (colour). Seetings can be
+        used to show data for different specialties (default is all
+        specialties) and hospitals."
     }
   ),
   public = list(

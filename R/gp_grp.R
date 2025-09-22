@@ -132,36 +132,46 @@ gp_grp <- R6Class("gp_grp",
     },
     national_trend_info = function() {
       "This line chart shows the total number of GP registered patients
-            in Scotland (y-axis) across time (x-axis) for each gender (colour)."
+        in Scotland (y-axis) across time (x-axis) for each gender (colour).
+        Specifically, this plot combines data for all available GP practices
+        across Scotland and calculates the total number of GP registered
+        patients per gender."
     },
     national_pyramid_info = function() {
       "This bar chart shows a population pyramid of the total number of
-            GP registered patients in Scotland (x-axis) across age category
-            (y-axis) for each gender (colour)."
+        GP registered patients in Scotland (x-axis) across age category
+        (y-axis) for each gender (colour). Specifically, this plot combines data for all available GP practices
+        across Scotland and calculates the total number of GP registered
+        patients per age and gender."
     },
     health_board_trend_info = function() {
       "This line chart shows the total number of GP registered patients
-            (y-axis) for each health board (colour) across time (x-axis) for
-            the selected gender. Settings can be used to show data for different
-            health boards and genders."
+        (y-axis) for each health board (colour) across time (x-axis) for
+        the selected gender. Specifically, this plot combines data for all
+        available GP practices across the selected health boards and gender,
+        and calculates the total number of GP registered patients.
+        Settings can be used to show data for different health boards and
+        genders."
     },
     health_board_bar_info = function() {
       "This bar chart shows the total number of GP registered patients
-            (y-axis) for each health board (colour) across age categories
-            (x-axis). Settings can be used to show data for different health
-            boards and genders."
+        (y-axis) for each health board (colour) across age categories
+        (x-axis). Specifically, this plot combines data for all available
+        GP practices across the selected health boards and gender, and
+        calculates the total number of GP registered patients. Settings can
+        be used to show data for different health boards and genders."
     },
     gp_trend_info = function() {
       "This line chart shows the total number of GP registered patients
-            (y-axis) for each individal GP practice (colour) across time (x-axis)
-            for the selected gender. Settings can be used to show data for
-            different GP practices and genders."
+        (y-axis) for each individal GP practice (colour) across time (x-axis)
+        for the selected gender. Settings can be used to show data for
+        different GP practices and genders."
     },
     gp_bar_info = function() {
       "This bar chart shows the total number of GP registered patients
-            (y-axis) for each individal GP practice (colour) across
-            age categories (x-axis). Settings can be used to show data for
-            different GP practices and genders."
+        (y-axis) for each individal GP practice (colour) across
+        age categories (x-axis). Settings can be used to show data for
+        different GP practices and genders."
     }
   ),
   public = list(

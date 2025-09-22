@@ -59,10 +59,8 @@ hospital <- R6Class("hospital",
         append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
         do.call(e_arrange, .)
     },
-    specialty_line_data = function(
-        data_type = c("annual", "daily"),
-        specialties = "All Specialties"
-      ) {
+    specialty_line_data = function(data_type = c("annual", "daily"),
+                                   specialties = "All Specialties") {
       cols <- switch(arg_match(data_type),
         "annual" = private[["annual_cols"]],
         "daily" = private[["daily_cols"]]
