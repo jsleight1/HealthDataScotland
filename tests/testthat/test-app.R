@@ -7,10 +7,10 @@ object_ui <- function(x) {
 }
 
 with_mocked_bindings(
-  get_gp_meta = function() HealthDataScotland::example_gp_metadata,
-  get_gp_data = function() HealthDataScotland::example_gp_data,
-  get_hospital_meta = function() HealthDataScotland::example_hospital_metadata,
-  get_hospital_data = function() HealthDataScotland::example_hospital_data,
+  get_gp_meta = function() example_gp_metadata,
+  get_gp_data = function() example_gp_data,
+  get_hospital_meta = function() example_hospital_metadata,
+  get_hospital_data = function() example_hospital_data,
   {
     gp_meta <- process_gp_meta()
     gp_data <- process_gp_data()
@@ -18,13 +18,13 @@ with_mocked_bindings(
     hospital_data <- process_hospital_data()
     data_objects <- create_data_objects(
       list(
-        "General practice" = process_data(
+        "gp" = process_data(
           "gp",
           function() gp_meta,
           function() gp_data,
           process_gp_sf
         ),
-        "Hospital" = process_data(
+        "hospital" = process_data(
           "hospital",
           function() hospital_meta,
           function() hospital_data,

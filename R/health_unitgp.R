@@ -2,7 +2,7 @@
 health_unitgrp <- R6Class(
   "health_unitgrp",
   private = list(
-    map_combine = function(func, nms = self[["ids"]](), id = "ID", ...) {
+    map_combine = function(func, nms = self[["IDs"]](), id = "ID", ...) {
       args <- list(...)
       self[["data"]]() |>
         map(~ do.call(.x[[func]], args)) |>
@@ -13,7 +13,7 @@ health_unitgrp <- R6Class(
       deframe(distinct(select(x, "ID", all_of(name))))
     },
     id_name_selection = function() {
-      set_names(self[["ids"]](), self[["titles"]]())
+      set_names(self[["IDs"]](), self[["titles"]]())
     },
     trend_echart = function(x, x_axis, y_axis) {
       e_trend(x, x_axis, y_axis) |>
@@ -36,7 +36,7 @@ health_unitgrp <- R6Class(
       unique(self[["metadata"]]()[["HBName"]])
     },
     unit_choices = function() {
-      unique(paste(self[["ids"]](), "-", self[["titles"]]()))
+      unique(paste(self[["IDs"]](), "-", self[["titles"]]()))
     }
   ),
   public = list(
@@ -65,7 +65,7 @@ health_unitgrp <- R6Class(
     #' Validate structure of health unit grp.
     validate = function() {
       assert_that(
-        inherits(self[["id"]](), "character") && length(self[["id"]]()) == 1,
+        inherits(self[["ID"]](), "character") && length(self[["ID"]]()) == 1,
         msg = "ID must be character of length 1"
       )
       assert_that(
@@ -76,10 +76,10 @@ health_unitgrp <- R6Class(
         inherits(self[["sf"]](), "sf"),
         msg = "sf must be sf object"
       )
-      assert_that(all(self[["sf"]]()[["ID"]] %in% self[["ids"]]()),
-        msg = "Are all ids in map sf found in object"
+      assert_that(all(self[["sf"]]()[["ID"]] %in% self[["IDs"]]()),
+        msg = "Are all IDs in map sf found in object"
       )
-      assert_that(!any(duplicated(self[["ids"]]())),
+      assert_that(!any(duplicated(self[["IDs"]]())),
         msg = "Health units must not be duplicated"
       )
       self
@@ -108,12 +108,12 @@ health_unitgrp <- R6Class(
     },
     #' @description
     #' Get ID of health unit grp.
-    id = function() {
+    ID = function() {
       self[[".id"]]
     },
     #' @description
-    #' Get ids of stored health units
-    ids = function() {
+    #' Get IDs of stored health units
+    IDs = function() {
       unname(map_chr(self[["data"]](), ~ .x[["ID"]]()))
     },
     #' @description
@@ -126,7 +126,7 @@ health_unitgrp <- R6Class(
     #' @param id (character(1))\cr
     #'     Character specifying ID of object to obtain from group.
     health_unit = function(id) {
-      self[["data"]]()[[which(self[["ids"]]() == id)]]
+      self[["data"]]()[[which(self[["IDs"]]() == id)]]
     },
     #' @description
     #' Subset health unit group.
@@ -134,10 +134,10 @@ health_unitgrp <- R6Class(
     #'     Character specifying ID (or IDs) of object to obtain from group.
     subset = function(id) {
       out <- self[["clone"]](deep = TRUE)
-      assert_that(all(id %in% out[["ids"]]()),
-        msg = "ids are not found in health unit group"
+      assert_that(all(id %in% out[["IDs"]]()),
+        msg = "IDs are not found in health unit group"
       )
-      out[[".data"]] <- out[[".data"]][which(out[["ids"]]() %in% id)]
+      out[[".data"]] <- out[[".data"]][which(out[["IDs"]]() %in% id)]
       out[[".sf"]] <- out[[".sf"]][out[[".sf"]][["ID"]] %in% id, ]
       out[["validate"]]()
     },
@@ -150,7 +150,7 @@ health_unitgrp <- R6Class(
     #' Get download handler function of health unit group.
     download_handler = function() {
       downloadHandler(
-        filename = function() glue('{self[["id"]]()}_data.csv'),
+        filename = function() glue('{self[["ID"]]()}_data.csv'),
         content = function(con) {
           write.csv(self[["get_download"]](), con)
         }

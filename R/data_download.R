@@ -45,13 +45,34 @@ get_hospital_meta <- function(...) {
   get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
+#' Get SF spatial data.frame for selected data type.
+#' @param type Character type of spatial data. Options are
+#'   "gp", "hospital", or "board".
+#' @export
 get_sf <- function(type = c("gp", "hospital", "board")) {
   requireNamespace("sf", quietly = TRUE)
+  type <- arg_match(type)
+  output <- sf::read_sf(sf_file(type))
+  output[["ID"]] <- as.character(output[[sf_id_col(type)]])
+  output[["type"]] <- type
+  output
+}
+
+sf_id_col <- function(type = c("gp", "hospital", "board")) {
   switch(arg_match(type),
-    "gp" = HealthDataScotland::example_gp_sf,
-    "hospital" = HealthDataScotland::example_hospital_sf,
-    "board" = HealthDataScotland::example_board_sf,
+    "gp" = "prac_code",
+    "hospital" = "sitecode",
+    "board" = "HBCode"
   )
+}
+
+sf_file <- function(type = c("gp", "hospital", "board")) {
+  output <- switch(arg_match(type),
+    "gp" = "extdata/scotland_gps.json",
+    "hospital" = "extdata/scotland_hosps.json",
+    "board" = "extdata/scotland_boards.json"
+  )
+  system.file(output, package = "HealthDataScotland")
 }
 
 process_data <- function(type, meta_func, data_func, sf_func) {
@@ -104,6 +125,7 @@ process_hospital_meta <- function() {
 
 process_hospital_data <- function() {
   get_hospital_data() |>
+    # d719af13-5fb3-430f-810e-ab3360961107 is the by location data set
     filter(.data[["datasetID"]] == "d719af13-5fb3-430f-810e-ab3360961107") |>
     rename("ID" = "Location") |>
     select_if(~ !all(is.na(.))) |>
@@ -165,8 +187,7 @@ create_processed_data <- function() {
 
 azure_container <- function(
     account_url = Sys.getenv("blob_account_url"),
-    account_key = Sys.getenv("blob_account_key")
-) {
+    account_key = Sys.getenv("blob_account_key")) {
   container <- "healthdatascotlandstore"
   storage_endpoint(endpoint = account_url, key = account_key) |>
     storage_container(name = container)

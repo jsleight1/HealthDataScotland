@@ -12,3 +12,6 @@ example_gp_unit(id = "10002")
 \description{
 Get example gp health unit object.
 }
+\examples{
+example_gp_unit()
+}

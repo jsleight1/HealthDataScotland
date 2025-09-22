@@ -1,4 +1,26 @@
 #' R6 class storing health statistics for a list of hospital health units.
+#'
+#' This R6 class is designed to store bed occupancy statistics for multiple
+#' hospitals. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' gps <- lapply(c("A101H", "A201H"), example_hospital_unit)
+#' sf <- get_sf("hospital")[get_sf("hospital")[["ID"]] %in% c("A101H", "A201H"), ]
+#' x <- hospital_grp[["new"]](gps, sf, .id = "gp")
+#' x[["ID"]]()
+#' x[["IDs"]]()
+#' x[["titles"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["subset"]](id = "A201H")
+#' x[["plot"]](type = "hospital_bar")
+#' x[["plot_data"]](type = "hospital_bar")
+#' x[["plot_info"]](type = "hospital_bar")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 hospital_grp <- R6Class("hospital_grp",
   inherit = health_unitgrp,
@@ -11,6 +33,100 @@ hospital_grp <- R6Class("hospital_grp",
         unique() |>
         sort()
     },
+    national_trend = function(...) {
+      self[["plot_data"]](type = "national_trend", ...) |>
+        private[["trend_echart"]]()
+    },
+    national_trend_data = function(specialties = "All Specialties") {
+      specialties <- arg_match(
+        specialties,
+        values = private[["specialty_choices"]](),
+        multiple = TRUE
+      )
+      self[["combine_data"]]() |>
+        filter(.data[["SpecialtyName"]] %in% specialties) |>
+        private[["trend_data"]](groups = c("FinancialYear", "SpecialtyName")) |>
+        group_by(.data[["SpecialtyName"]])
+    },
+    health_board_trend = function(...) {
+      data <- self[["plot_data"]](type = "health_board_trend", ...)
+      data |>
+        private[["trend_echart"]]() |>
+        e_title(unique(data[["SpecialtyName"]]), left = "center")
+    },
+    health_board_bar = function(...) {
+      self[["plot_data"]](type = "health_board_bar", ...) |>
+        private[["bar_echart"]]() |>
+        e_x_axis(axisLabel = list(rotate = 35))
+    },
+    health_board_trend_data = function(specialties = "All Specialties",
+                                       health_boards = private[["health_board_choices"]]()) {
+      specialties <- arg_match(
+        specialties,
+        values = private[["specialty_choices"]]()
+      )
+      health_boards <- arg_match(health_boards, multiple = TRUE)
+      private[["health_board_data"]](specialties, health_boards) |>
+        private[["trend_data"]](
+          groups = c("FinancialYear", "HBName", "SpecialtyName")
+        ) |>
+        group_by(.data[["HBName"]])
+    },
+    health_board_bar_data = function(specialties = "All Specialties",
+                                     health_boards = private[["health_board_choices"]]()) {
+      specialties <- arg_match(
+        specialties,
+        values = private[["specialty_choices"]](),
+        multiple = TRUE
+      )
+      health_boards <- arg_match(health_boards, multiple = TRUE)
+      private[["health_board_data"]](specialties, health_boards) |>
+        private[["bar_data"]](
+          groups = c("FinancialYear", "HBName", "SpecialtyName")
+        )
+    },
+    health_board_data = function(specialties, health_boards) {
+      self[["combine_data"]]() |>
+        filter(.data[["SpecialtyName"]] %in% specialties) |>
+        filter(.data[["HBName"]] %in% health_boards) |>
+        distinct()
+    },
+    hospital_trend = function(...) {
+      data <- self[["plot_data"]](type = "hospital_trend", ...)
+      data |>
+        private[["trend_echart"]]() |>
+        e_title(unique(data[["SpecialtyName"]]), left = "center")
+    },
+    hospital_bar = function(...) {
+      self[["plot_data"]](type = "hospital_bar", ...) |>
+        private[["bar_echart"]]("ID", "Hospital")
+    },
+    hospital_trend_data = function(specialties = "All Specialties",
+                                   hospitals = private[["unit_choices"]]()) {
+      specialties <- arg_match(
+        specialties,
+        values = private[["specialty_choices"]]()
+      )
+      hospitals <- arg_match(hospitals, multiple = TRUE)
+      private[["hospital_data"]](specialties, hospitals) |>
+        private[["trend_data"]]() |>
+        group_by(.data[["ID"]])
+    },
+    hospital_bar_data = function(specialties = private[["specialty_choices"]](),
+                                 hospitals = private[["unit_choices"]]()) {
+      specialties <- arg_match(specialties, multiple = TRUE)
+      hospitals <- arg_match(hospitals, multiple = TRUE)
+      private[["hospital_data"]](specialties, hospitals) |>
+        private[["bar_data"]]()
+    },
+    hospital_data = function(specialties, hospitals) {
+      self[["combine_data"]]() |>
+        mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
+        filter(
+          .data[["SpecialtyName"]] %in% specialties,
+          .data[["ID"]] %in% hospitals
+        )
+    },
     trend_echart = function(x) {
       super$trend_echart(x, "FinancialYear", "PercentageOccupancy") |>
         e_y_axis(min = 0, max = 100)
@@ -22,7 +138,32 @@ hospital_grp <- R6Class("hospital_grp",
       super$bar_echart(x, group, x_axis, y_axis) |>
         e_y_axis(min = 0, max = 100)
     },
-    summarise_percentage_occupancy = function(x, groups) {
+    trend_data = function(x, ...) {
+      x |>
+        select(all_of(private[["req_plot_cols"]]())) |>
+        distinct() |>
+        private[["summarise_percentage_occupancy"]](...)
+    },
+    bar_data = function(x, ...) {
+      x |>
+        private[["trend_data"]](...) |>
+        pivot_wider(
+          names_from = "SpecialtyName",
+          values_from = "PercentageOccupancy"
+        ) |>
+        select(-where(~ all(is.na(.)))) |>
+        group_by(.data[["FinancialYear"]])
+    },
+    req_plot_cols = function() {
+      c(
+        "FinancialYear",
+        "ID",
+        "HBName",
+        "SpecialtyName",
+        "PercentageOccupancy"
+      )
+    },
+    summarise_percentage_occupancy = function(x, groups = colnames(x)) {
       # Remove 'PercentageOccupancyQF' == "z" as these are not applicable
       # See https://www.opendata.nhs.scot/dataset/statistical-qualifiers/resource/b80f9af0-b115-4245-b591-fb22775226c4
       x |>
@@ -35,150 +176,44 @@ hospital_grp <- R6Class("hospital_grp",
           )
         )
     },
-    national_trend_data = function(specialties = "All Specialties") {
-      specialties <- arg_match(
-        specialties,
-        values = private[["specialty_choices"]](),
-        multiple = TRUE
-      )
-      private[["map_combine"]]("data") |>
-        filter(.data[["SpecialtyName"]] %in% specialties) |>
-        select("FinancialYear", "SpecialtyName", "PercentageOccupancy") |>
-        distinct() |>
-        private[["summarise_percentage_occupancy"]](
-          c("FinancialYear", "SpecialtyName")
-        ) |>
-        group_by(.data[["SpecialtyName"]])
-    },
-    national_trend = function(...) {
-      self[["plot_data"]](type = "national_trend", ...) |>
-        private[["trend_echart"]]()
-    },
-    health_board_trend_data = function(specialties = "All Specialties",
-                                       health_boards = private[["health_board_choices"]]()) {
-      specialties <- arg_match(
-        specialties,
-        values = private[["specialty_choices"]]()
-      )
-      health_boards <- arg_match(health_boards, multiple = TRUE)
-      private[["health_board_data"]](specialties, health_boards) |>
-        group_by(.data[["HBName"]])
-    },
-    health_board_trend = function(...) {
-      data <- self[["plot_data"]](type = "health_board_trend", ...)
-      data |>
-        private[["trend_echart"]]() |>
-        e_title(unique(data[["SpecialtyName"]]), left = "center")
-    },
-    health_board_bar_data = function(specialties = "All Specialties",
-                                     health_boards = private[["health_board_choices"]]()) {
-      specialties <- arg_match(
-        specialties,
-        values = private[["specialty_choices"]](),
-        multiple = TRUE
-      )
-      health_boards <- arg_match(health_boards, multiple = TRUE)
-      private[["health_board_data"]](specialties, health_boards) |>
-        pivot_wider(
-          names_from = "SpecialtyName",
-          values_from = "PercentageOccupancy"
-        ) |>
-        group_by(.data[["FinancialYear"]])
-    },
-    health_board_data = function(specialties, health_boards) {
-      self[["combine_data"]]() |>
-        filter(.data[["SpecialtyName"]] %in% specialties) |>
-        filter(.data[["HBName"]] %in% health_boards) |>
-        distinct() |>
-        private[["summarise_percentage_occupancy"]](
-          c("FinancialYear", "HBName", "SpecialtyName")
-        )
-    },
-    health_board_bar = function(...) {
-      self[["plot_data"]](type = "health_board_bar", ...) |>
-        private[["bar_echart"]]() |>
-        e_x_axis(axisLabel = list(rotate = 35))
-    },
-    hospital_trend_data = function(specialties = "All Specialties",
-                                   hospitals = private[["unit_choices"]]()) {
-      specialties <- arg_match(
-        specialties,
-        values = private[["specialty_choices"]]()
-      )
-      hospitals <- arg_match(hospitals, multiple = TRUE)
-      private[["hospital_data"]](specialties, hospitals) |>
-        select(
-          "FinancialYear",
-          "ID",
-          "SpecialtyName",
-          "PercentageOccupancy"
-        ) |>
-        group_by(.data[["ID"]])
-    },
-    hospital_trend = function(...) {
-      data <- self[["plot_data"]](type = "hospital_trend", ...)
-      data |>
-        private[["trend_echart"]]() |>
-        e_title(unique(data[["SpecialtyName"]]), left = "center")
-    },
-    hospital_bar_data = function(specialties = private[["specialty_choices"]](),
-                                 hospitals = private[["unit_choices"]]()) {
-      specialties <- arg_match(specialties, multiple = TRUE)
-      hospitals <- arg_match(hospitals, multiple = TRUE)
-      private[["hospital_data"]](specialties, hospitals) |>
-        select(
-          "FinancialYear",
-          "ID",
-          "SpecialtyName",
-          "PercentageOccupancy"
-        ) |>
-        pivot_wider(
-          names_from = "SpecialtyName",
-          values_from = "PercentageOccupancy"
-        ) |>
-        group_by(.data[["FinancialYear"]])
-    },
-    hospital_data = function(specialties, hospitals) {
-      self[["combine_data"]]() |>
-        mutate(ID = paste(.data[["ID"]], "-", .data[["HospitalName"]])) |>
-        filter(
-          .data[["SpecialtyName"]] %in% specialties,
-          .data[["ID"]] %in% hospitals
-        )
-    },
-    hospital_bar = function(...) {
-      x <- self[["plot_data"]](type = "hospital_bar", ...) |>
-        private[["bar_echart"]]("ID", "Hospital")
-    },
     national_trend_info = function() {
       "This line chart shows the national average hospital bed
-            occupancy (y-axis) across time (x-axis) for the selected
-            specialty. Settings can be used to show data for different
-            specialties (default is all specialities)."
+        occupancy (y-axis) across time (x-axis) for the selected
+        specialty. Specifically, this plot combines data for all available
+        hospital locations across Scotland and calculates the average
+        percentage bed occupancy for the selected specialty. Settings
+        can be used to show data for different specialties (default is
+        all specialities)."
     },
     health_board_trend_info = function() {
       "This line chart shows the average hospital bed occupancy (y-axis)
-            across time (x-axis) per health board (colour) for the selected
-            specialty. Settings can be used to show data for different
-            specialties (default is all specialties) and health boards."
+        across time (x-axis) per health board (colour) for the selected
+        specialty. Specifically, this plot combines data for all
+        available hospital locations for the selected health boards
+        and specialty, and calculates the average percentage bed occupancy.
+        Settings can be used to show data for different
+        specialties (default is all specialties) and health boards."
     },
     health_board_bar_info = function() {
       "This bar chart shows the average hospital bed occupancy (y-axis)
-            across health boards (x-axis) for each specialty (colour).
-            Settings can be used to show data for different specialties
-            (default is all specialties) and health boards."
+        across health boards (x-axis) for each specialty (colour).
+        Specifically, this plot combines data for all
+        available hospital locations for the selected health boards and
+        speciality, and calculates the average percentage bed occupancy.
+        Settings can be used to show data for different
+        specialties (default is all specialties) and health boards."
     },
     hospital_trend_info = function() {
       "This line chart shows the average hospital bed occupancy (y-axis)
-            across time (x-axis) per hospital (colour) for the selected
-            specialty. Settings can be used to show data for different
-            specialties (default is all specialties) and hospitals."
+        across time (x-axis) per hospital (colour) for the selected
+        specialty. Settings can be used to show data for different
+        specialties (default is all specialties) and hospitals."
     },
     hospital_bar_info = function() {
       "This bar chart shows the average hospital bed occupancy (y-axis)
-            per hospital (x-axis) for each specialty (colour). Seetings can be
-            used to show data for different specialties (default is all
-            specialties) and hospitals."
+        per hospital (x-axis) for each specialty (colour). Seetings can be
+        used to show data for different specialties (default is all
+        specialties) and hospitals."
     }
   ),
   public = list(
@@ -195,6 +230,9 @@ hospital_grp <- R6Class("hospital_grp",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_hospital_grp_unit()
+    #' x[["plot"]](type = "hospital_bar")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -210,6 +248,9 @@ hospital_grp <- R6Class("hospital_grp",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_hospital_grp_unit()
+    #' x[["plot_data"]](type = "hospital_bar")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -226,6 +267,9 @@ hospital_grp <- R6Class("hospital_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_hospital_grp_unit()
+    #' x[["plot_info"]](type = "hospital_bar")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -241,7 +285,7 @@ hospital_grp <- R6Class("hospital_grp",
     #' @param ns
     #'     Namespace of shiny application page.
     ui = function(ns) {
-      ns <- NS(self[["id"]]())
+      ns <- NS(self[["ID"]]())
       nav_panel(
         title = "Hospital",
         class = "overflow-auto",
@@ -397,7 +441,7 @@ hospital_grp <- R6Class("hospital_grp",
     #' Create server for hospital group object.
     server = function() {
       moduleServer(
-        self[["id"]](),
+        self[["ID"]](),
         function(input, output, session) {
           output[["national_trend"]] <- renderEcharts4r({
             log_info("Creating hospital national trend plot")

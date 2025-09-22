@@ -44,10 +44,15 @@ example_gp_sf[["ID"]] <- as.character(example_gp_sf[["prac_code"]])
 example_gp_sf[["type"]] <- "gp"
 example_gp_sf <- example_gp_sf[example_gp_sf[["prac_code"]] %in% c("10002", "10017"), ]
 
-example_hospital_sf <- sf::read_sf("inst/extdata/scotland_hosp.json")
+example_hospital_sf <- sf::read_sf("inst/extdata/scotland_hosps.json")
 example_hospital_sf[["ID"]] <- example_hospital_sf[["sitecode"]]
 example_hospital_sf[["type"]] <- "hospital"
 example_hospital_sf <- example_hospital_sf[example_hospital_sf[["sitecode"]] %in% c("A101H", "A201H"), ]
+
+example_board_sf <- sf::read_sf(
+  "inst/extdata/scotland_boards.json"
+)
+example_board_sf[["ID"]] <- example_board_sf[["HBCode"]]
 
 usethis::use_data(
   example_gp_data,
@@ -56,5 +61,6 @@ usethis::use_data(
   example_hospital_metadata,
   example_gp_sf,
   example_hospital_sf,
+  example_board_sf,
   overwrite = TRUE
 )

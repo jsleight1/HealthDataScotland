@@ -1,4 +1,26 @@
 #' R6 class storing health statistics for a list of gp health units.
+#'
+#' This R6 class is designed to store population demography data for multiple
+#' GP practices. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' gps <- lapply(c("10002", "10017"), example_gp_unit)
+#' sf <- get_sf()[get_sf()[["ID"]] %in% c("10002", "100017"), ]
+#' x <- gp_grp[["new"]](gps, sf, .id = "gp")
+#' x[["ID"]]()
+#' x[["IDs"]]()
+#' x[["titles"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["subset"]](id = "10002")
+#' x[["plot"]](type = "national_pyramid")
+#' x[["plot_data"]](type = "national_pyramid")
+#' x[["plot_info"]](type = "national_pyramid")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 gp_grp <- R6Class("gp_grp",
   inherit = health_unitgrp,
@@ -6,98 +28,97 @@ gp_grp <- R6Class("gp_grp",
     gender_choices = function() {
       unique(private[["map_combine"]]("data")[["Sex"]])
     },
-    trend_echart = function(x) {
-      super[["trend_echart"]](x, "Date", "Population")
-    },
-    bar_echart = function(x) {
-      super[["bar_echart"]](x, "Age", "Age", "Population")
-    },
-    national_trend_data = function() {
-      private[["map_combine"]]("data") |>
-        filter(.data[["Sex"]] != "All") |>
-        distinct() |>
-        rename("Population" = "AllAges", "Gender" = "Sex") |>
-        summarise_population(c("Date", "Gender")) |>
-        mutate(Gender = factor(.data[["Gender"]], levels = c("Male", "Female"))) |>
-        group_by(.data[["Gender"]])
-    },
-    national_trend = function(...) {
-      self[["plot_data"]](type = "national_trend", ...) |>
-        private[["trend_echart"]]()
-    },
-    national_pyramid_data = function() {
-      private[["map_combine"]]("data") |>
-        pyramid_data(groups = c("Date", "Gender", "Age"))
-    },
     national_pyramid = function() {
       self[["plot_data"]](type = "national_pyramid") |>
         e_pyramid() |>
         e_y_axis(axisLabel = list(fontSize = 10))
     },
-    health_board_trend_data = function(health_board = private[["health_board_choices"]](),
-                                       gender = private[["gender_choices"]]()) {
-      health_board <- arg_match(health_board, multiple = TRUE)
-      gender <- arg_match(gender)
+    national_trend = function(...) {
+      self[["plot_data"]](type = "national_trend", ...) |>
+        private[["trend_echart"]]()
+    },
+    national_trend_data = function() {
       self[["combine_data"]]() |>
-        filter(.data[["Sex"]] %in% gender) |>
-        filter(.data[["HBName"]] %in% health_board) |>
-        rename("Population" = "AllAges", "Gender" = "Sex") |>
-        distinct() |>
-        summarise_population(c("Date", "Gender", "HBName")) |>
-        group_by(.data[["HBName"]])
+        filter(.data[["Sex"]] != "All") |>
+        private[["trend_data"]](groups = c("Date", "Gender")) |>
+        mutate(Gender = factor(.data[["Gender"]], levels = c("Male", "Female"))) |>
+        group_by(.data[["Gender"]])
+    },
+    national_pyramid_data = function() {
+      private[["map_combine"]]("data") |>
+        pyramid_data(groups = c("Date", "Gender", "Age"))
     },
     health_board_trend = function(...) {
       self[["plot_data"]](type = "health_board_trend", ...) |>
         private[["trend_echart"]]()
     },
+    health_board_bar = function(...) {
+      self[["plot_data"]](type = "health_board_bar", ...) |>
+        private[["bar_echart"]]()
+    },
+    health_board_trend_data = function(health_board = private[["health_board_choices"]](),
+                                       gender = private[["gender_choices"]]()) {
+      health_board <- arg_match(health_board, multiple = TRUE)
+      gender <- arg_match(gender)
+      private[["health_board_data"]](health_board, gender) |>
+        private[["trend_data"]](groups = c("Date", "Gender", "HBName")) |>
+        group_by(.data[["HBName"]])
+    },
     health_board_bar_data = function(health_board = private[["health_board_choices"]](),
                                      gender = private[["gender_choices"]]()) {
       health_board <- arg_match(health_board, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["combine_data"]]() |>
-        filter(.data[["Sex"]] %in% gender) |>
-        filter(.data[["HBName"]] %in% health_board) |>
+      private[["health_board_data"]](health_board, gender) |>
         private[["bar_data"]](col = "HBName", groups = c("Date", "Age", "HBName"))
     },
-    health_board_bar = function(...) {
-      self[["plot_data"]](type = "health_board_bar", ...) |>
+    health_board_data = function(health_board, gender) {
+      self[["combine_data"]]() |>
+        filter(.data[["Sex"]] %in% gender) |>
+        filter(.data[["HBName"]] %in% health_board)
+    },
+    gp_trend = function(...) {
+      self[["plot_data"]](type = "gp_trend", ...) |>
+        private[["trend_echart"]]()
+    },
+    gp_bar = function(...) {
+      self[["plot_data"]](type = "gp_bar", ...) |>
         private[["bar_echart"]]()
     },
     gp_trend_data = function(gp = private[["unit_choices"]](),
                              gender = private[["gender_choices"]]()) {
       gp <- arg_match(gp, multiple = TRUE)
       gender <- arg_match(gender)
-      self[["combine_data"]]() |>
-        filter(.data[["Sex"]] == gender) |>
-        mutate(
-          ID = paste(
-            .data[["ID"]],
-            "-",
-            .data[["GPPracticeName"]]
-          )
-        ) |>
-        filter(.data[["ID"]] %in% gp) |>
-        select("Date", "ID",
-          "Gender" = "Sex",
-          "HBName", "Population" = "AllAges"
-        ) |>
-        distinct() |>
-        group_by_at(c("Date", "Gender")) |>
+      private[["gp_data"]](gp, gender) |>
+        private[["trend_data"]]() |>
         group_by(.data[["ID"]])
-    },
-    gp_trend = function(...) {
-      self[["plot_data"]](type = "gp_trend", ...) |>
-        private[["trend_echart"]]()
     },
     gp_bar_data = function(gp = private[["unit_choices"]](),
                            gender = private[["gender_choices"]]()) {
       gp <- arg_match(gp, multiple = TRUE)
       gender <- arg_match(gender)
+      private[["gp_data"]](gp, gender) |>
+        private[["bar_data"]]("ID")
+    },
+    gp_data = function(gp, gender) {
       self[["combine_data"]]() |>
         filter(.data[["Sex"]] == gender) |>
         mutate(ID = paste(.data[["ID"]], "-", .data[["GPPracticeName"]])) |>
-        filter(.data[["ID"]] %in% gp) |>
-        private[["bar_data"]]("ID")
+        filter(.data[["ID"]] %in% gp)
+    },
+    trend_echart = function(x) {
+      super[["trend_echart"]](x, "Date", "Population")
+    },
+    bar_echart = function(x) {
+      super[["bar_echart"]](x, "Age", "Age", "Population")
+    },
+    trend_data = function(x, ...) {
+      x |>
+        select("Date", "ID",
+          "Gender" = "Sex",
+          "HBName", "Population" = "AllAges"
+        ) |>
+        distinct() |>
+        summarise_population(...)
     },
     bar_data = function(x, col, ...) {
       x |>
@@ -109,42 +130,48 @@ gp_grp <- R6Class("gp_grp",
         arrange(.data[["Date"]], desc(.data[["Age"]])) |>
         group_by(.data[["Date"]])
     },
-    gp_bar = function(...) {
-      self[["plot_data"]](type = "gp_bar", ...) |>
-        private[["bar_echart"]]()
-    },
     national_trend_info = function() {
       "This line chart shows the total number of GP registered patients
-            in Scotland (y-axis) across time (x-axis) for each gender (colour)."
+        in Scotland (y-axis) across time (x-axis) for each gender (colour).
+        Specifically, this plot combines data for all available GP practices
+        across Scotland and calculates the total number of GP registered
+        patients per gender."
     },
     national_pyramid_info = function() {
       "This bar chart shows a population pyramid of the total number of
-            GP registered patients in Scotland (x-axis) across age category
-            (y-axis) for each gender (colour)."
+        GP registered patients in Scotland (x-axis) across age category
+        (y-axis) for each gender (colour). Specifically, this plot combines data for all available GP practices
+        across Scotland and calculates the total number of GP registered
+        patients per age and gender."
     },
     health_board_trend_info = function() {
       "This line chart shows the total number of GP registered patients
-            (y-axis) for each health board (colour) across time (x-axis) for
-            the selected gender. Settings can be used to show data for different
-            health boards and genders."
+        (y-axis) for each health board (colour) across time (x-axis) for
+        the selected gender. Specifically, this plot combines data for all
+        available GP practices across the selected health boards and gender,
+        and calculates the total number of GP registered patients.
+        Settings can be used to show data for different health boards and
+        genders."
     },
     health_board_bar_info = function() {
       "This bar chart shows the total number of GP registered patients
-            (y-axis) for each health board (colour) across age categories
-            (x-axis). Settings can be used to show data for different health
-            boards and genders."
+        (y-axis) for each health board (colour) across age categories
+        (x-axis). Specifically, this plot combines data for all available
+        GP practices across the selected health boards and gender, and
+        calculates the total number of GP registered patients. Settings can
+        be used to show data for different health boards and genders."
     },
     gp_trend_info = function() {
       "This line chart shows the total number of GP registered patients
-            (y-axis) for each individal GP practice (colour) across time (x-axis)
-            for the selected gender. Settings can be used to show data for
-            different GP practices and genders."
+        (y-axis) for each individal GP practice (colour) across time (x-axis)
+        for the selected gender. Settings can be used to show data for
+        different GP practices and genders."
     },
     gp_bar_info = function() {
       "This bar chart shows the total number of GP registered patients
-            (y-axis) for each individal GP practice (colour) across
-            age categories (x-axis). Settings can be used to show data for
-            different GP practices and genders."
+        (y-axis) for each individal GP practice (colour) across
+        age categories (x-axis). Settings can be used to show data for
+        different GP practices and genders."
     }
   ),
   public = list(
@@ -162,6 +189,9 @@ gp_grp <- R6Class("gp_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["plot"]](type = "gp_bar")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -179,6 +209,9 @@ gp_grp <- R6Class("gp_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["plot_data"]](type = "gp_bar")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -196,6 +229,9 @@ gp_grp <- R6Class("gp_grp",
     #'     Character specifying plot type. See `available_plots`
     #'   for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["plot_info"]](type = "gp_bar")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -210,7 +246,7 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Create UI for general practice group object.
     ui = function() {
-      ns <- NS(self[["id"]]())
+      ns <- NS(self[["ID"]]())
       nav_panel(
         title = "General practice",
         class = "overflow-auto",
@@ -371,7 +407,7 @@ gp_grp <- R6Class("gp_grp",
     #' Create server for general practice group object.
     server = function() {
       moduleServer(
-        self[["id"]](),
+        self[["ID"]](),
         function(input, output, session) {
           output[["national_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP national trend plot")

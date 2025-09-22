@@ -1,29 +1,29 @@
 e_pyramid <- function(x) {
   x |>
-    e_charts(Age, timeline = TRUE, reorder = FALSE) |>
+    e_charts_("Age", timeline = TRUE, reorder = FALSE) |>
     e_timeline_opts(autoPlay = TRUE) |>
-    e_bar(Male, stack = "quantity") |>
-    e_bar(Female, stack = "quantity") |>
+    e_bar_("Male", stack = "quantity") |>
+    e_bar_("Female", stack = "quantity") |>
     e_flip_coords() |>
     e_x_axis(
       axisLabel = list(
         formatter = htmlwidgets::JS(
           "function (value) {
-                                return(Math.abs(value))
-                            }"
+            return(Math.abs(value))
+          }"
         )
       )
     ) |>
     e_tooltip(
       trigger = "item",
       formatter = htmlwidgets::JS("
-                    function(params){
-                        return(
-                            '<strong>' + 'Age: ' + '</strong>' + params.name + ' years' + '<br />' +
-                            '<strong>' + 'Population: ' + '</strong>' + Math.abs(params.value[0])
-                        )
-                    }
-                    ")
+        function(params){
+          return(
+            '<strong>' + 'Age: ' + '</strong>' + params.name + ' years' + '<br />' +
+            '<strong>' + 'Population: ' + '</strong>' + Math.abs(params.value[0])
+          )
+        }
+        ")
     ) |>
     e_legend(
       top = 10,

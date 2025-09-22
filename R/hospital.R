@@ -1,4 +1,31 @@
-#' R6 class storing health statistics for a Hospital.
+#' R6 class storing health statistics for a single hospital.
+#'
+#' This R6 class is designed to store bed occupancy statistics for a single
+#' hospital location. This class can be used to plot summary statistics and
+#' create shiny UI/server objects.
+#'
+#' @examples
+#' library(dplyr)
+#' meta <- HealthDataScotland::example_hospital_metadata |>
+#'   rename("ID" = "HospitalCode", "HBName" = "HealthBoard") |>
+#'   filter(.data[["ID"]] == "A101H")
+#' data <- HealthDataScotland::example_hospital_data |>
+#'   rename("ID" = "Location") |>
+#'   filter(.data[["ID"]] == "A101H")
+#' x <- hospital[["new"]](meta, data)
+#' x[["ID"]]()
+#' x[["title"]]()
+#' x[["address"]]()
+#' x[["health_board"]]()
+#' x[["metadata"]]()
+#' x[["data"]]()
+#' x[["plot"]](type = "specialty_line")
+#' x[["plot_data"]](type = "specialty_line")
+#' x[["plot_info"]](type = "specialty_line")
+#' \dontrun{
+#' x[["ui"]]()
+#' x[["server"]]()
+#' }
 #' @export
 hospital <- R6Class("hospital",
   inherit = health_unit,
@@ -19,17 +46,32 @@ hospital <- R6Class("hospital",
         "PercentageOccupancy", "PercentageOccupancyQF"
       )
     },
-    specialty_data = function(specialties = "All Specialties") {
-      self[["combine_data"]]() |>
-        filter(.data[["SpecialtyName"]] %in% specialties)
+    specialty_line = function(...) {
+      data <- self[["plot_data"]](type = "specialty_line", ...)
+      data |>
+        group_split(.data[["SpecialtyName"]]) |>
+        map(function(i) {
+          i |>
+            group_by(name) |>
+            e_trend("FinancialYear", "value") |>
+            e_title(subtext = unique(i[["SpecialtyName"]]))
+        }) |>
+        append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
+        do.call(e_arrange, .)
     },
     specialty_line_data = function(data_type = c("annual", "daily"),
-                                   ...) {
+                                   specialties = "All Specialties") {
       cols <- switch(arg_match(data_type),
         "annual" = private[["annual_cols"]],
         "daily" = private[["daily_cols"]]
       )()
-      private[["specialty_data"]](...) |>
+      specialties <- arg_match(
+        specialties,
+        values = private[["specialty_choices"]](),
+        multiple = TRUE
+      )
+      self[["combine_data"]]() |>
+        filter(.data[["SpecialtyName"]] %in% specialties) |>
         select(
           "ID",
           "FinancialYear",
@@ -51,19 +93,6 @@ hospital <- R6Class("hospital",
         "Daily average number of available staffed beds" = "AverageAvailableStaffedBeds",
         "Daily average number of occupied beds" = "AverageOccupiedBeds"
       )
-    },
-    specialty_line = function(...) {
-      data <- self[["plot_data"]](type = "specialty_line", ...)
-      data |>
-        group_split(.data[["SpecialtyName"]]) |>
-        map(function(i) {
-          i |>
-            group_by(name) |>
-            e_trend("FinancialYear", "value") |>
-            e_title(subtext = unique(i[["SpecialtyName"]]))
-        }) |>
-        append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
-        do.call(e_arrange, .)
     },
     specialty_choices = function() {
       sort(unique(self[["data"]]()[["SpecialtyName"]]))
@@ -92,6 +121,9 @@ hospital <- R6Class("hospital",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["plot"]](type = "specialty_line", data_type = "annual")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -103,6 +135,9 @@ hospital <- R6Class("hospital",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["plot_data"]](type = "specialty_line", data_type = "annual")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -114,6 +149,9 @@ hospital <- R6Class("hospital",
     #' @param type (character(1))\cr
     #'     Character specifying plot type. See `available_plots` for options.
     #' @param ... Passed to plot info functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["plot_info"]](type = "specialty_line", data_type = "annual")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
       switch(type,
@@ -211,6 +249,8 @@ hospital <- R6Class("hospital",
 
 #' Get example hospital health unit object.
 #' @param id Character ID of Hospital to get. Default is "A101H".
+#' @examples
+#' example_hospital_unit()
 #' @export
 example_hospital_unit <- function(id = "A101H") {
   meta <- HealthDataScotland::example_hospital_metadata |>

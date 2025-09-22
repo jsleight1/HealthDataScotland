@@ -42,14 +42,17 @@ test_that("get_sf works", {
   output <- get_sf() |>
     expect_no_error()
   expect_s3_class(output, "sf")
+  expect_equal(dim(output), c(911, 10))
 
   output <- get_sf("hospital") |>
     expect_no_error()
   expect_s3_class(output, "sf")
+  expect_equal(dim(output), c(309, 16))
 
   output <- get_sf("board") |>
     expect_no_error()
   expect_s3_class(output, "sf")
+  expect_equal(dim(output), c(14, 8))
 
   expect_error(get_sf("sf"), "`type` must be one of .+")
 })
@@ -108,7 +111,7 @@ test_that("process_gp_sf works", {
     get_gp_meta = m,
     meta <- process_gp_meta()
   )
-  output <- get_sf() |>
+  output <- HealthDataScotland::example_gp_sf |>
     process_gp_sf(c("10002", "10017"), meta) |>
     expect_no_error()
   expect_called(m, 1)
@@ -146,7 +149,7 @@ test_that("process_hospital_sf works", {
     get_hospital_meta = m,
     meta <- process_hospital_meta()
   )
-  output <- get_sf("hospital") |>
+  output <- HealthDataScotland::example_hospital_sf |>
     process_hospital_sf(c("A101H", "A201H"), meta) |>
     expect_no_error()
   expect_called(m, 1)
