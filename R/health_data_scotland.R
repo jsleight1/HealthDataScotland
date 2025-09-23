@@ -7,6 +7,8 @@ health_data_scotland <- function(...) {
   data <- create_data_objects(load_processed_data())
   log_info("Created data objects")
 
+  log_info(glue::glue_collapse(list.files(), "\n"))
+
   value_boxes <- data |>
     purrr::imap(function(x, nm) {
       value_box(
