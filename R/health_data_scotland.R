@@ -4,12 +4,6 @@
 health_data_scotland <- function(...) {
   requireNamespace("sf", quietly = TRUE)
 
-  log_info(
-    glue("Launching HealthDataScotland v{packageVersion('HealthDataScotland')}")
-  )
-
-  log_info(glue::glue_collapse(list.files(), "\n"))
-
   log_info("Creating data objects")
   data <- create_data_objects(load_processed_data())
   log_info("Created data objects")
@@ -85,6 +79,10 @@ health_data_scotland <- function(...) {
 
   server <- function(input, output) {
     requireNamespace("sf", quietly = TRUE)
+    log_info(
+      glue("Launching HealthDataScotland v{packageVersion('HealthDataScotland')}")
+    )
+    log_info(glue::glue_collapse(list.files(), "\n"))
     map_server("map", data, get_sf("board"))
     data[["gp"]][["server"]]()
     data[["hospital"]][["server"]]()
