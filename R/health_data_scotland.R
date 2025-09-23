@@ -3,11 +3,16 @@
 #' @export
 health_data_scotland <- function(...) {
   requireNamespace("sf", quietly = TRUE)
+
+  log_info(
+    glue("Launching HealthDataScotland v{packageVersion('HealthDataScotland')}")
+  )
+
+  log_info(glue::glue_collapse(list.files(), "\n"))
+
   log_info("Creating data objects")
   data <- create_data_objects(load_processed_data())
   log_info("Created data objects")
-
-  log_info(glue::glue_collapse(list.files(), "\n"))
 
   value_boxes <- data |>
     purrr::imap(function(x, nm) {

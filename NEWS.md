@@ -1,3 +1,15 @@
+# HealthDataScotland 2.0.0
+
+* Refactor UI of shiny application to use `bslib` dashboard structure.
+* Refactor UI to contain home, map, summary and notes pages.
+* Refactor UI to use `brand.yml`.
+* Convert `plotly` outputs to `echarts4r` outputs across all objects.
+* Refactor `hospital_grp` and `gp_grp` objects to summarise health statistics at the national and health board level.
+* Refactor data structure of `health_unit` object to contain separate metadata and data `data.frame` objects.
+* Use `Azure` blob external data store to house processed data set.
+* Remove map pin box selection functionality.
+* Add `example_` gp/gp_grp and hospital/hospital_grp object functions.
+
 # HealthDataScotland 1.1.1
 
 * Build docker image associated with HealthDataScotland shiny application.
@@ -8,5 +20,5 @@
 
 # HealthDataScotland 1.0.0
 
-* First release of HealthDataScotland. This package generates a shiny application for the processing and presentation of GP and Hospital data across Scotland. Data is currently processed locally and saved to an RDS file. The R package and RDS
+* First release of `HealthDataScotland`. This package generates a shiny application for the processing and presentation of GP and Hospital data across Scotland. Data is currently processed locally and saved to an RDS file. The R package and RDS
 file are then hosted on [shinyio](https://jack-sleight.shinyapps.io/healthdatascotland/) using rsconnect.
