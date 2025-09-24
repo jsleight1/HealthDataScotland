@@ -6,6 +6,7 @@
 * Convert `plotly` outputs to `echarts4r` outputs across all objects.
 * Refactor `hospital_grp` and `gp_grp` objects to summarise health statistics at the national and health board level.
 * Refactor data structure of `health_unit` object to contain separate metadata and data `data.frame` objects.
+* Create `map` R6 class for creating interactive map.
 * Use `Azure` blob external data store to house processed data set.
 * Remove map pin box selection functionality.
 * Add `example_` gp/gp_grp and hospital/hospital_grp object functions.

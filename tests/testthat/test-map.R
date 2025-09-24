@@ -1,0 +1,70 @@
+map_object <- example_map_object()
+gp_grp <- example_gp_grp_unit()
+hosp_grp <- example_hospital_grp_unit()
+sf <- list(gp_grp[["sf"]](), hosp_grp[["sf"]](), get_sf("board")) |>
+  lapply(select, "ID", "type") |>
+  bind_rows()
+
+test_that("map class works", {
+  "sf" |>
+    map[["new"]]() |>
+    expect_error("sf must be sf spatial data.frame")
+
+  sf |>
+    select(-"ID") |>
+    map[["new"]]() |>
+    expect_error("ID column missing from sf")
+
+
+  output <- map[["new"]](sf) |>
+    expect_no_error()
+  expect_true(inherits(output, "map"))
+  expect_s3_class(output[["sf"]](), c("sf", "tbl_df"))
+  expect_identical(output[["id"]](), "map")
+  expect_identical(output[["title"]](), "Interactive Map")
+  expect_identical(output[["available_plots"]](), "interactive_map")
+})
+
+test_that("map class can be plotted", {
+  for (plt in map_object[["available_plots"]]()) {
+    output <- map_object[["plot"]](type = plt) |>
+      expect_no_error()
+    expect_s3_class(output, c("leaflet", "htmlwidget"))
+  }
+})
+
+test_that("map plot info works", {
+  for (plt in map_object[["available_plots"]]()) {
+    map_object[["plot_info"]](type = plt) |>
+      expect_snapshot()
+  }
+})
+
+test_that("map plot functions error if wrong type", {
+  map_object[["plot"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  map_object[["plot_data"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  map_object[["plot_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
+
+test_that("interactive_map_data works", {
+    output <- map_object[["plot_data"]](type = "interactive_map") |>
+      expect_no_error()
+    expect_s3_class(output, c("sf", "tbl_df"))
+    expect_false("board" %in% output[["type"]])
+    expect_snapshot_json(output, "interactive_map_data_full")
+
+    output <- map_object[["plot_data"]](type = "interactive_map", "10002") |>
+      expect_no_error()
+    expect_s3_class(output, c("sf", "tbl_df"))
+    expect_false("board" %in% output[["type"]])
+    expect_snapshot_json(output, "interactive_map_data_filtered")
+})
+
+test_that("map ui works", {
+  output <- map_object[["ui"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "shiny.tag")
+})

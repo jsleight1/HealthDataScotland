@@ -32,7 +32,6 @@ Imports:
     shinycssloaders,
     shinyWidgets,
     sf,
-    sp,
     tibble,
     tidyr
 Suggests:
