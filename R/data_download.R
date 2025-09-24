@@ -45,34 +45,47 @@ get_hospital_meta <- function(...) {
   get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
+create_map_object <- function(data) {
+  lapply(data, function(i) i[["sf"]]()) |>
+    c(list(get_sf("board"))) |>
+    lapply(select, "ID", "type") |>
+    bind_rows() |>
+    map[["new"]]()
+}
+
 #' Get SF spatial data.frame for selected data type.
-#' @param type Character type of spatial data. Options are
-#'   "gp", "hospital", or "board".
+#' @param type Character type of spatial data. See `available_sf_types`.
 #' @export
-get_sf <- function(type = c("gp", "hospital", "board")) {
+get_sf <- function(type = available_sf_types()) {
   requireNamespace("sf", quietly = TRUE)
-  type <- arg_match(type)
+  type <- arg_match(type, available_sf_types())
   output <- sf::read_sf(sf_file(type))
   output[["ID"]] <- as.character(output[[sf_id_col(type)]])
   output[["type"]] <- type
   output
 }
 
-sf_id_col <- function(type = c("gp", "hospital", "board")) {
-  switch(arg_match(type),
+sf_id_col <- function(type = available_sf_types()) {
+  switch(arg_match(type, available_sf_types()),
     "gp" = "prac_code",
     "hospital" = "sitecode",
     "board" = "HBCode"
   )
 }
 
-sf_file <- function(type = c("gp", "hospital", "board")) {
-  output <- switch(arg_match(type),
+sf_file <- function(type = available_sf_types()) {
+  output <- switch(arg_match(type, available_sf_types()),
     "gp" = "extdata/scotland_gps.json",
     "hospital" = "extdata/scotland_hosps.json",
     "board" = "extdata/scotland_boards.json"
   )
   system.file(output, package = "HealthDataScotland")
+}
+
+#' Get avaiable sf spatial data types
+#' @export
+available_sf_types <- function() {
+  c("gp", "hospital", "board")
 }
 
 process_data <- function(type, meta_func, data_func, sf_func) {

@@ -4,11 +4,10 @@
 \alias{get_sf}
 \title{Get SF spatial data.frame for selected data type.}
 \usage{
-get_sf(type = c("gp", "hospital", "board"))
+get_sf(type = available_sf_types())
 }
 \arguments{
-\item{type}{Character type of spatial data. Options are
-"gp", "hospital", or "board".}
+\item{type}{Character type of spatial data. See \code{available_sf_types}.}
 }
 \description{
 Get SF spatial data.frame for selected data type.
