@@ -8,7 +8,19 @@ R6 class for creating interactive map of health units.
 
 R6 class for creating interactive map of health units.
 }
+\details{
+This R6 class is designed to store sf spatial data for GP practices,
+hospitals and health boards. This class is used to create a map
+with interactive pins of health centres.
+}
 \examples{
+x <- example_map_object()
+x[["id"]]()
+x[["title"]]()
+x[["sf"]]()
+x[["plot"]](type = "interactive_map")
+x[["plot_data"]](type = "interactive_map")
+x[["plot_info"]](type = "interactive_map")
 
 ## ------------------------------------------------
 ## Method `map$plot`
