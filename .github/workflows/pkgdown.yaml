@@ -2,8 +2,8 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [master]
-    # branches: [25-add-vignette-documentation]
+    # branches: [master]
+    branches: [25-add-vignette-documentation]
   pull_request:
   release:
     types: [published]
@@ -16,9 +16,9 @@ permissions: read-all
 jobs:
   pkgdown:
     runs-on: ubuntu-24.04-arm
-    # container:
-    #   image: docker.io/jsleight1/healthdatascotland:latest
-    #   options: --user root
+    container:
+      image: docker.io/jsleight1/healthdatascotland:latest
+      options: --user root
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
@@ -31,14 +31,14 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r@v2.11.0
-        # with:
-        #   r-version: '4.4.2'
-        #   install-r: false
+        with:
+          r-version: '4.4.2'
+          install-r: false
 
-      # - name: Add libPaths
-      #   run: |
-      #     echo -e '.libPaths(c("/usr/local/lib/R/site-library", "/usr/local/lib/R/library"))' > .Rprofile
-      #   shell: bash
+      - name: Add libPaths
+        run: |
+          echo -e '.libPaths(c("/usr/local/lib/R/site-library", "/usr/local/lib/R/library"))' > .Rprofile
+        shell: bash
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
