@@ -2,8 +2,8 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    # branches: [master]
-    branches: [25-add-vignette-documentation]
+    branches: [master]
+    # branches: [25-add-vignette-documentation]
   pull_request:
   release:
     types: [published]

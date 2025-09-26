@@ -17,6 +17,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     git \
     gnupg \
     pandoc \
+    rsync \
     sudo \
     texlive-latex-base \
     texlive-fonts-extra \
