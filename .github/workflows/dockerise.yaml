@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [25-add-vignette-documentation]
+    # branches: [version2-development]
 
 name: dockerise.yaml
 
