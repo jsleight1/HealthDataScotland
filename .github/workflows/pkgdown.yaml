@@ -6,7 +6,7 @@ on:
     branches: [25-add-vignette-documentation]
   pull_request:
     # branches: [main, master]
-  branches: [25-add-vignette-documentation]
+    branches: [25-add-vignette-documentation]
   release:
     types: [published]
   workflow_dispatch:
