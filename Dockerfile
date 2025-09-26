@@ -41,6 +41,7 @@ RUN git checkout -b "version2-development" "origin/version2-development"
 RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
+RUN Rscript -e "devtools::install()"
 
 # Expose port and run shiny application
 USER app
