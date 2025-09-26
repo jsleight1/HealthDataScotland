@@ -9,3 +9,6 @@
 ^app.R$
 rsconnect/
 _disable_autoload.R
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
