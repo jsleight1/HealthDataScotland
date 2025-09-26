@@ -37,6 +37,11 @@ jobs:
           r-version: '4.4.2'
           install-r: false
 
+      - name: Add libPaths
+        run: |
+          echo -e '.libPaths(c("/usr/local/lib/R/site-library", "/usr/local/lib/R/library"))' > .Rprofile
+        shell: bash
+
       # - uses: r-lib/actions/setup-r-dependencies@v2
       #   with:
       #     extra-packages: any::pkgdown, local::.
