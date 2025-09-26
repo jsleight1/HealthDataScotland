@@ -17,7 +17,7 @@ jobs:
   pkgdown:
     runs-on: ubuntu-24.04-arm
     container:
-      image: docker.io/jsleight1/healthdatascotland:latest
+      image: docker.io/jsleight1/healthdatascotland:development
       options: --user root
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
