@@ -1,0 +1,66 @@
+---
+title: "Introduction to map units"
+vignette: >
+  %\VignetteIndexEntry{map}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r}
+#| label: setup
+library(HealthDataScotland)
+```
+
+# Introduction
+
+HealthDataScotland uses a R6 object to store and present spatial data associated
+with GP practices and hospitals across Scotland. This vignette will outline the
+functionality of these objects and the motivation behind their design.
+
+# Map objects
+
+An R6 map object class is defined to store and present spatial data in
+HealthDataScotland. An example of this can be generated using example_map_unit().
+
+```{r}
+map <- example_map_unit()
+map
+```
+
+## Data
+
+map() objects store a sf data.frame object containing spatial data associated
+with health centres. This can be accessed using the `$sf` getter function.
+
+```{r}
+map$sf()
+```
+
+## Plotting
+
+Visualising spaital data can be achieved using the `$plot` function with an
+appropriate `type` argument. To see which plot types are available to use, the
+`$available_plots` function can be used.
+
+```{r}
+map$available_plots()
+```
+
+```{r}
+#| label: fig-gp_interactive_map
+#| fig-cap: !expr map$plot_info(type = "interactive_map")
+map$plot(type = "interactive_map")
+```
+
+Helper functions `$plot_data` and `$plot_info` can be used to create the data
+associated with each plot and character text describing each plot (alongside
+functionality related to the shiny application) respectively.
+
+```{r}
+map$plot_data(type = "interactive_map")
+map$plot_info(type = "interactive_map")
+```

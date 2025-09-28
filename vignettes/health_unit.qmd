@@ -294,6 +294,6 @@ associated with each plot and character text describing each plot (alongside
 functionality related to the shiny application) respectively.
 
 ```{r}
-hospital_grp_unit$plot_data(type = "gp_bar")
-hospital_grp_unit$plot_info(type = "gp_bar")
+hospital_grp_unit$plot_data(type = "hospital_bar")
+hospital_grp_unit$plot_info(type = "hospital_bar")
 ```

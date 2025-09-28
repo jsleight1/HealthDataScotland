@@ -1,4 +1,4 @@
-map_object <- example_map_object()
+map_unit <- example_map_unit()
 gp_grp <- example_gp_grp_unit()
 hosp_grp <- example_hospital_grp_unit()
 sf <- list(gp_grp[["sf"]](), hosp_grp[["sf"]](), get_sf("board")) |>
@@ -26,37 +26,37 @@ test_that("map class works", {
 })
 
 test_that("map class can be plotted", {
-  for (plt in map_object[["available_plots"]]()) {
-    output <- map_object[["plot"]](type = plt) |>
+  for (plt in map_unit[["available_plots"]]()) {
+    output <- map_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, c("leaflet", "htmlwidget"))
   }
 })
 
 test_that("map plot info works", {
-  for (plt in map_object[["available_plots"]]()) {
-    map_object[["plot_info"]](type = plt) |>
+  for (plt in map_unit[["available_plots"]]()) {
+    map_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }
 })
 
 test_that("map plot functions error if wrong type", {
-  map_object[["plot"]](type = "p") |>
+  map_unit[["plot"]](type = "p") |>
     expect_error("`type` must be one.+")
-  map_object[["plot_data"]](type = "p") |>
+  map_unit[["plot_data"]](type = "p") |>
     expect_error("`type` must be one.+")
-  map_object[["plot_info"]](type = "p") |>
+  map_unit[["plot_info"]](type = "p") |>
     expect_error("`type` must be one.+")
 })
 
 test_that("interactive_map_data works", {
-    output <- map_object[["plot_data"]](type = "interactive_map") |>
+    output <- map_unit[["plot_data"]](type = "interactive_map") |>
       expect_no_error()
     expect_s3_class(output, c("sf", "tbl_df"))
     expect_false("board" %in% output[["type"]])
     expect_snapshot_json(output, "interactive_map_data_full")
 
-    output <- map_object[["plot_data"]](type = "interactive_map", "10002") |>
+    output <- map_unit[["plot_data"]](type = "interactive_map", "10002") |>
       expect_no_error()
     expect_s3_class(output, c("sf", "tbl_df"))
     expect_false("board" %in% output[["type"]])
@@ -64,7 +64,7 @@ test_that("interactive_map_data works", {
 })
 
 test_that("map ui works", {
-  output <- map_object[["ui"]]() |>
+  output <- map_unit[["ui"]]() |>
     expect_no_error()
   expect_s3_class(output, "shiny.tag")
 })

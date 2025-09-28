@@ -5,7 +5,7 @@
 #' with interactive pins of health centres.
 #'
 #' @examples
-#' x <- example_map_object()
+#' x <- example_map_unit()
 #' x[["id"]]()
 #' x[["title"]]()
 #' x[["sf"]]()
@@ -28,6 +28,8 @@ map <- R6Class("map",
           clusterOptions = markerClusterOptions(
             showCoverageOnHover = FALSE
           ),
+          popup = ~as.character(ID),
+          label = ~as.character(ID),
           data = data
         ) |>
         addPolygons(
@@ -123,7 +125,7 @@ map <- R6Class("map",
     #'   for options.
     #' @param ... Passed to plot functions.
     #' @examples
-    #' x <- example_map_object()
+    #' x <- example_map_unit()
     #' x[["plot"]](type = "interactive_map")
     plot = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
@@ -138,7 +140,7 @@ map <- R6Class("map",
     #'   for options.
     #' @param ... Passed to plot data functions.
     #' @examples
-    #' x <- example_map_object()
+    #' x <- example_map_unit()
     #' x[["plot_data"]](type = "interactive_map")
     plot_data = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
@@ -153,7 +155,7 @@ map <- R6Class("map",
     #'   for options.
     #' @param ... Passed to plot data functions.
     #' @examples
-    #' x <- example_map_object()
+    #' x <- example_map_unit()
     #' x[["plot_info"]](type = "interactive_map")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["available_plots"]]())
@@ -232,9 +234,9 @@ map <- R6Class("map",
 
 #' Get example map object.
 #' @examples
-#' example_map_object()
+#' example_map_unit()
 #' @export
-example_map_object <- function() {
+example_map_unit <- function() {
   list("gp" = example_gp_grp_unit(), "hospital" = example_hospital_grp_unit()) |>
-    create_map_object()
+    create_map_unit()
 }

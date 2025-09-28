@@ -45,7 +45,7 @@ get_hospital_meta <- function(...) {
   get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
-create_map_object <- function(data) {
+create_map_unit <- function(data) {
   lapply(data, function(i) i[["sf"]]()) |>
     c(list(get_sf("board"))) |>
     lapply(select, "ID", "type") |>

@@ -6,7 +6,7 @@ health_data_scotland <- function(...) {
 
   log_info("Creating initial objects")
   data <- create_data_objects(load_processed_data())
-  map <- create_map_object(data)
+  map <- create_map_unit(data)
   log_info("Created initial objects")
 
   value_boxes <- data |>
