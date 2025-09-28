@@ -28,8 +28,8 @@ map <- R6Class("map",
           clusterOptions = markerClusterOptions(
             showCoverageOnHover = FALSE
           ),
-          popup = ~as.character(ID),
-          label = ~as.character(ID),
+          popup = ~ as.character(ID),
+          label = ~ as.character(ID),
           data = data
         ) |>
         addPolygons(

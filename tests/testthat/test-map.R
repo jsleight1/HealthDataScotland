@@ -50,17 +50,17 @@ test_that("map plot functions error if wrong type", {
 })
 
 test_that("interactive_map_data works", {
-    output <- map_unit[["plot_data"]](type = "interactive_map") |>
-      expect_no_error()
-    expect_s3_class(output, c("sf", "tbl_df"))
-    expect_false("board" %in% output[["type"]])
-    expect_snapshot_json(output, "interactive_map_data_full")
+  output <- map_unit[["plot_data"]](type = "interactive_map") |>
+    expect_no_error()
+  expect_s3_class(output, c("sf", "tbl_df"))
+  expect_false("board" %in% output[["type"]])
+  expect_snapshot_json(output, "interactive_map_data_full")
 
-    output <- map_unit[["plot_data"]](type = "interactive_map", "10002") |>
-      expect_no_error()
-    expect_s3_class(output, c("sf", "tbl_df"))
-    expect_false("board" %in% output[["type"]])
-    expect_snapshot_json(output, "interactive_map_data_filtered")
+  output <- map_unit[["plot_data"]](type = "interactive_map", "10002") |>
+    expect_no_error()
+  expect_s3_class(output, c("sf", "tbl_df"))
+  expect_false("board" %in% output[["type"]])
+  expect_snapshot_json(output, "interactive_map_data_filtered")
 })
 
 test_that("map ui works", {
