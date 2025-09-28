@@ -1,5 +1,6 @@
 ARG RVERSION=4.4.2
 FROM rocker/r-ver:$RVERSION
+ARG TARGETPLATFORM
 
 # Install various libraries required for R packages
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
@@ -25,9 +26,11 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     texlive-fonts-recommended \
     texlive-latex-extra
 
-# Install Quarto
-RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
-RUN gdebi --non-interactive quarto-linux-amd64.deb
+# Install quarto
+RUN target=$(echo "$TARGETPLATFORM" | sed "s/\//-/") \
+    && quarto_file=$(echo "https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-$target.deb") \
+    && curl -LO "$quarto_file" && \
+    gdebi --non-interactive quarto-1.3.450-$target.deb
 
 # Install brave-browser required for shinytest2
 RUN curl -fsS https://dl.brave.com/install.sh | sh
