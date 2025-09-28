@@ -39,8 +39,10 @@ Suggests:
     covr,
     devtools,
     jsonlite,
+    knitr,
     mockery,
     pkgload,
+    quarto,
     rcmdcheck,
     shinytest2,
     testthat (>= 3.0.0),
@@ -50,3 +52,4 @@ LazyData: true
 Remotes:
     github::rstudio/chromote
 URL: https://jsleight1.github.io/HealthDataScotland/
+VignetteBuilder: quarto

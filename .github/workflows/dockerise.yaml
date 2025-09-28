@@ -1,6 +1,6 @@
 on:
   push:
-    # branches: [version2-development]
+    branches: [version2-development]
 
 name: dockerise.yaml
 

@@ -12,3 +12,5 @@ _disable_autoload.R
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^vignettes/\.quarto$
+^vignettes/*_files$
