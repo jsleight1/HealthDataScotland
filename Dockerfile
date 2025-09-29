@@ -28,9 +28,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 
 # Install quarto
 RUN target=$(echo "$TARGETPLATFORM" | sed "s/\//-/") \
-    && quarto_file=$(echo "https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-$target.deb") \
+    && quarto_file=$(echo "https://github.com/quarto-dev/quarto-cli/releases/download/v1.8.24/quarto-1.8.24-$target.deb") \
     && curl -LO "$quarto_file" && \
-    gdebi --non-interactive quarto-1.3.450-$target.deb
+    gdebi --non-interactive quarto-1.8.24-$target.deb
 
 # Install brave-browser required for shinytest2
 RUN curl -fsS https://dl.brave.com/install.sh | sh
