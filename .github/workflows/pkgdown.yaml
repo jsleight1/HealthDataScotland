@@ -47,7 +47,8 @@ jobs:
 
       - name: Check quarto r
         run: |
-          library(quarot)
+          library(HealthDataScotland)
+          library(quarto)
         shell: Rscript {0}
 
       # - name: Build site
