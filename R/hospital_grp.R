@@ -281,9 +281,8 @@ hospital_grp <- R6Class("hospital_grp",
     },
     #' @description
     #' Create UI for hospital group object.
-    #' @param ns
-    #'     Namespace of shiny application page.
-    ui = function(ns) {
+    #' @param ... Passed to functions.
+    ui = function(...) {
       ns <- NS(self[["ID"]]())
       nav_panel(
         title = "Hospital",
