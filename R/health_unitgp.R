@@ -142,17 +142,12 @@ health_unitgrp <- R6Class(
       out[["validate"]]()
     },
     #' @description
-    #' Get downloadable data.frame of health unit group.
-    get_download = function() {
-      self[["combine_data"]]()
-    },
-    #' @description
     #' Get download handler function of health unit group.
     download_handler = function() {
       downloadHandler(
         filename = function() glue('{self[["ID"]]()}_data.csv'),
         content = function(con) {
-          write.csv(self[["get_download"]](), con)
+          write.csv(self[["combine_data"]](), con)
         }
       )
     }

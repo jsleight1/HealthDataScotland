@@ -24,7 +24,7 @@ design.
 
 # Health units
 
-The lowest common denominator object defined in HealthDataScotland is a
+The object that acts as the lowest common denominator in HealthDataScotland is a
 `health_unit`. These objects store relevant statistics associated with a single
 health centre (GP or hospital). Currently HealthDataScotland has two class of
 health_unit() implemented; gp() and hospital() storing data associated with a
@@ -149,8 +149,8 @@ HealthDataScotland contains functionality that combines several GP practices or
 hospitals to create summary visualisations. This is achieved by using
 health_unitgrp() objects, which house multiple health units. Currently
 HealthDataScotland has two class of health_unitgrp() implemented; gp_grp() and
-hospital_grp(), which store data associated with a single GP practice or
-hospital respectively.
+hospital_grp(), which store data associated with a multiple GP practices or
+hospitals respectively.
 
 ## GP
 

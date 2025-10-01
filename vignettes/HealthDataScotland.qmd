@@ -19,7 +19,7 @@ library(HealthDataScotland)
 
 HealthDataScotland is an R shiny application that presents GP practice
 demographic and hospital bed capacity data across Scotland. This vignette will
-outline the workflow used to downwload, process and store the data used by the
+outline the workflow used to download, process and store the data used by the
 application, and describe the development process used to maintain and host the
 application.
 
@@ -37,10 +37,9 @@ data sets are used:
  - [Hospital spatial data](https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b)
 
 These data sets are downloaded and processed into a series of data.frames that
-are stored in a .RDS housed in an Azure blob. This Azure blob is accessed when
+are stored in a .RDS file in an Azure blob. This Azure blob is accessed when
 the shiny application launches. The data set is periodically updated every 6
-months using a GitHub action enabling complete separation between the data
-processing and the shiny application.
+months using a GitHub action.
 
 ## Deployment
 
@@ -57,7 +56,7 @@ The decision to use containerisation for this shiny application was to ensure
 reproducibility across the entire workflow of the application from the data
 processing to deployment. The docker image is updated every time a pull request
 is merged into the master branch. The latest docker image is then automatically
-pulled into production in the Azure container app service. This aims to fully
+pulled into production by the Azure container app service. This aims to fully
 automated the deployment process allowing developers to develop code and not
 spend unnecessary time fixing deployment issues or package dependencies.
 
