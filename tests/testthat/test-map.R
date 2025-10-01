@@ -1,9 +1,5 @@
 map_unit <- example_map_unit()
-gp_grp <- example_gp_grp_unit()
-hosp_grp <- example_hospital_grp_unit()
-sf <- list(gp_grp[["sf"]](), hosp_grp[["sf"]](), get_sf("board")) |>
-  lapply(select, "ID", "type") |>
-  bind_rows()
+sf <- map_unit[["sf"]]()
 
 test_that("map class works", {
   "sf" |>

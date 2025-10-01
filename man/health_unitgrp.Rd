@@ -13,8 +13,6 @@ R6 class storing health statistics for a list of health units.
 \describe{
 \item{\code{.data}}{A list of health units in health unit grp.}
 
-\item{\code{.sf}}{A sf storing spatial information.}
-
 \item{\code{.id}}{A character ID of object.}
 }
 \if{html}{\out{</div>}}
@@ -27,13 +25,11 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-metadata}{\code{health_unitgrp$metadata()}}
 \item \href{#method-health_unitgrp-data}{\code{health_unitgrp$data()}}
 \item \href{#method-health_unitgrp-combine_data}{\code{health_unitgrp$combine_data()}}
-\item \href{#method-health_unitgrp-sf}{\code{health_unitgrp$sf()}}
 \item \href{#method-health_unitgrp-ID}{\code{health_unitgrp$ID()}}
 \item \href{#method-health_unitgrp-IDs}{\code{health_unitgrp$IDs()}}
 \item \href{#method-health_unitgrp-titles}{\code{health_unitgrp$titles()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
-\item \href{#method-health_unitgrp-get_download}{\code{health_unitgrp$get_download()}}
 \item \href{#method-health_unitgrp-download_handler}{\code{health_unitgrp$download_handler()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
@@ -44,7 +40,7 @@ R6 class storing health statistics for a list of health units.
 \subsection{Method \code{new()}}{
 Create instance of health unit grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$new(.data, .sf, .id)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$new(.data, .id)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -52,10 +48,6 @@ Create instance of health unit grp.
 \describe{
 \item{\code{.data}}{(\code{list})\cr
 A list of health units in health unit grp.}
-
-\item{\code{.sf}}{(\code{sf})
-A sf storing spatial information for
-health units.}
 
 \item{\code{.id}}{(\code{characer})
 A character ID of object.}
@@ -100,16 +92,6 @@ Get data of health unit grp.
 Get combined metadata and data in single data.frame.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$combine_data()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-sf"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-sf}{}}}
-\subsection{Method \code{sf()}}{
-Get sf of health unit grp.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$sf()}\if{html}{\out{</div>}}
 }
 
 }
@@ -178,16 +160,6 @@ Character specifying ID (or IDs) of object to obtain from group.}
 }
 \if{html}{\out{</div>}}
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-get_download"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-get_download}{}}}
-\subsection{Method \code{get_download()}}{
-Get downloadable data.frame of health unit group.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$get_download()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unitgrp-download_handler"></a>}}

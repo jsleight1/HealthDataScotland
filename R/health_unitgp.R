@@ -42,22 +42,16 @@ health_unitgrp <- R6Class(
   public = list(
     #' @field .data A list of health units in health unit grp.
     .data = NA,
-    #' @field .sf A sf storing spatial information.
-    .sf = NA,
     #' @field .id A character ID of object.
     .id = NA,
     #' @description
     #' Create instance of health unit grp.
     #' @param .data (`list`)\cr
     #'     A list of health units in health unit grp.
-    #' @param .sf (`sf`)
-    #'     A sf storing spatial information for
-    #'     health units.
     #' @param .id (`characer`)
     #'     A character ID of object.
-    initialize = function(.data, .sf, .id) {
+    initialize = function(.data, .id) {
       self[[".data"]] <- .data
-      self[[".sf"]] <- .sf
       self[[".id"]] <- .id
       self[["validate"]]()
     },
@@ -71,13 +65,6 @@ health_unitgrp <- R6Class(
       assert_that(
         length(unique(map(self[["data"]](), class))) == 1,
         msg = "group must contain the same class of health units"
-      )
-      assert_that(
-        inherits(self[["sf"]](), "sf"),
-        msg = "sf must be sf object"
-      )
-      assert_that(all(self[["sf"]]()[["ID"]] %in% self[["IDs"]]()),
-        msg = "Are all IDs in map sf found in object"
       )
       assert_that(!any(duplicated(self[["IDs"]]())),
         msg = "Health units must not be duplicated"
@@ -100,11 +87,6 @@ health_unitgrp <- R6Class(
       private[["map_combine"]]("data") |>
         inner_join(self[["metadata"]](), by = "ID") |>
         distinct()
-    },
-    #' @description
-    #' Get sf of health unit grp.
-    sf = function() {
-      self[[".sf"]]
     },
     #' @description
     #' Get ID of health unit grp.
@@ -138,7 +120,6 @@ health_unitgrp <- R6Class(
         msg = "IDs are not found in health unit group"
       )
       out[[".data"]] <- out[[".data"]][which(out[["IDs"]]() %in% id)]
-      out[[".sf"]] <- out[[".sf"]][out[[".sf"]][["ID"]] %in% id, ]
       out[["validate"]]()
     },
     #' @description

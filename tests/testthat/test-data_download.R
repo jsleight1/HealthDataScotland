@@ -156,3 +156,22 @@ test_that("process_hospital_sf works", {
   expect_s3_class(output, "sf")
   expect_identical(output[["ID"]], c("A101H", "A201H"))
 })
+
+test_that("create_processed_data works", {
+  with_mocked_bindings(
+    get_gp_meta = function() HealthDataScotland::example_gp_metadata,
+    get_gp_data = function() HealthDataScotland::example_gp_data,
+    get_hospital_meta = function() HealthDataScotland::example_hospital_metadata,
+    get_hospital_data = function() HealthDataScotland::example_hospital_data,
+    data <- create_processed_data() |>
+      expect_no_error()
+  )
+  expect_true(inherits(data, "list"))
+  expect_identical(names(data), c("gp", "hospital"))
+  expect_true(inherits(data[["gp"]], "list"))
+  expect_identical(names(data[["gp"]]), c("meta", "data", "sf"))
+  expect_no_error(do.call(check_ids, data[["gp"]]))
+  expect_true(inherits(data[["hospital"]], "list"))
+  expect_identical(names(data[["hospital"]]), c("meta", "data", "sf"))
+  expect_no_error(do.call(check_ids, data[["hospital"]]))
+})

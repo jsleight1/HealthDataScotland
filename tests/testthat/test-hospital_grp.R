@@ -1,34 +1,22 @@
 hosp_unit <- example_hospital_unit(id = "A101H")
 hosp_unit2 <- example_hospital_unit(id = "A201H")
 hosp_grp_unit <- example_hospital_grp_unit()
-sf <- get_sf("hospital")
-sf <- sf[sf[["ID"]] %in% c("A101H", "A201H"), ]
 
 test_that("hospital_grp class works", {
   list(hosp_unit, "hosp_unit") |>
-    hospital_grp[["new"]](.sf = sf, .id = "hospital") |>
+    hospital_grp[["new"]](.id = "hospital") |>
     expect_error("group must contain the same class of health units")
 
-  list(hosp_unit, hosp_unit2) |>
-    hospital_grp[["new"]](.sf = "sf", .id = "hospital") |>
-    expect_error("sf must be sf object")
-
-  tst_sf <- sf[sf[["ID"]] == "A101H", ]
-
-  list(hosp_unit2) |>
-    hospital_grp[["new"]](.sf = tst_sf, .id = "hospital") |>
-    expect_error("Are all IDs in map sf found in object")
-
   output <- list(hosp_unit, hosp_unit2) |>
-    hospital_grp[["new"]](.sf = sf, .id = 1) |>
+    hospital_grp[["new"]](.id = 1) |>
     expect_error("ID must be character of length 1")
 
   list(hosp_unit, hosp_unit) |>
-    hospital_grp[["new"]](.sf = bind_rows(tst_sf, tst_sf), .id = "hospital") |>
+    hospital_grp[["new"]](.id = "hospital") |>
     expect_error("Health units must not be duplicated")
 
   output <- list(hosp_unit, hosp_unit2) |>
-    hospital_grp[["new"]](.sf = sf, .id = "hospital") |>
+    hospital_grp[["new"]](.id = "hospital") |>
     expect_no_error()
 
   expect_true(inherits(output, "hospital_grp"))
@@ -36,7 +24,6 @@ test_that("hospital_grp class works", {
   expect_identical(output[["IDs"]](), c("A101H", "A201H"))
   expect_identical(output[["titles"]](), c("Arran War Memorial Hospital", "Ailsa Hospital"))
   expect_identical(output[["data"]](), list(hosp_unit, hosp_unit2))
-  expect_identical(output[["sf"]](), sf)
   expect_identical(output[["health_unit"]]("A101H"), hosp_unit)
   expect_identical(
     output[["available_plots"]](),
@@ -115,11 +102,10 @@ test_that("hospital_grp subset works", {
 
   expect_true(inherits(output, "hospital_grp"))
   expect_identical(output[["IDs"]](), "A101H")
-  expect_identical(output[["sf"]]()[["ID"]], "A101H")
 })
 
-test_that("hospital_grp get_download works", {
-  output <- hosp_grp_unit[["get_download"]]() |>
+test_that("hospital_grp combine_data works", {
+  output <- hosp_grp_unit[["combine_data"]]() |>
     expect_no_error()
   expect_s3_class(output, "data.frame")
   expect_identical(hosp_grp_unit[["IDs"]](), unique(output[["ID"]]))

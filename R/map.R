@@ -28,7 +28,6 @@ map <- R6Class("map",
           clusterOptions = markerClusterOptions(
             showCoverageOnHover = FALSE
           ),
-          popup = ~ as.character(ID),
           label = ~ as.character(ID),
           data = data
         ) |>
@@ -237,6 +236,11 @@ map <- R6Class("map",
 #' example_map_unit()
 #' @export
 example_map_unit <- function() {
-  list("gp" = example_gp_grp_unit(), "hospital" = example_hospital_grp_unit()) |>
-    create_map_unit()
+  filtered_sf <- function(x, type) {
+    sf <- get_sf(type)
+    sf <- sf[sf[["ID"]] %in% x[["IDs"]](), ]
+  }
+  gp_sf <- filtered_sf(example_gp_grp_unit(), "gp")
+  hosp_sf <- filtered_sf(example_hospital_grp_unit(), "hospital")
+  create_map_unit(list(list("sf" = gp_sf), list("sf" = hosp_sf)))
 }
