@@ -6,8 +6,7 @@
 #'
 #' @examples
 #' gps <- lapply(c("A101H", "A201H"), example_hospital_unit)
-#' sf <- get_sf("hospital")[get_sf("hospital")[["ID"]] %in% c("A101H", "A201H"), ]
-#' x <- hospital_grp[["new"]](gps, sf, .id = "gp")
+#' x <- hospital_grp[["new"]](gps, .id = "gp")
 #' x[["ID"]]()
 #' x[["IDs"]]()
 #' x[["titles"]]()
@@ -494,7 +493,5 @@ hospital_grp <- R6Class("hospital_grp",
 #' @export
 example_hospital_grp_unit <- function(ids = c("A101H", "A201H")) {
   hospitals <- map(ids, example_hospital_unit)
-  sf <- get_sf("hospital")
-  sf <- sf[sf[["ID"]] %in% ids, ]
-  hospital_grp[["new"]](hospitals, sf, .id = "hospital")
+  hospital_grp[["new"]](hospitals, .id = "hospital")
 }

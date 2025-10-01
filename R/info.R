@@ -83,7 +83,7 @@ data_workflow_card <- function() {
     card_header("About the data workflow"),
     p(
       "The data used in HealthDataScotland is derived from the NHS open
-      data API, which is maintained by Public Health Scotland. The following
+      data API and is maintained by Public Health Scotland. The following
       data sets are used:
       "
     ),

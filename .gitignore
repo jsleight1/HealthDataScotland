@@ -3,3 +3,6 @@
 *_.new.png
 rsconnect/
 .Renviron
+docs
+inst/doc
+**/.quarto/

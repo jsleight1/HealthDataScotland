@@ -1,34 +1,22 @@
 gp_unit <- example_gp_unit(id = "10002")
 gp_unit2 <- example_gp_unit(id = "10017")
 gp_grp_unit <- example_gp_grp_unit()
-sf <- get_sf()
-sf <- sf[sf[["ID"]] %in% c("10002", "10017"), ]
 
 test_that("gp_grp class works", {
   list(gp_unit, "gp_unit") |>
-    gp_grp[["new"]](.sf = sf, .id = "gp") |>
+    gp_grp[["new"]](.id = "gp") |>
     expect_error("group must contain the same class of health units")
 
   list(gp_unit, gp_unit2) |>
-    gp_grp[["new"]](.sf = "sf", .id = "gp") |>
-    expect_error("sf must be sf object")
-
-  tst_sf <- sf[sf[["ID"]] == "10002", ]
-
-  list(gp_unit2) |>
-    gp_grp[["new"]](.sf = tst_sf, .id = "gp") |>
-    expect_error("Are all IDs in map sf found in object")
-
-  list(gp_unit, gp_unit2) |>
-    gp_grp[["new"]](.sf = sf, .id = 1) |>
+    gp_grp[["new"]](.id = 1) |>
     expect_error("ID must be character of length 1")
 
   list(gp_unit, gp_unit) |>
-    gp_grp[["new"]](.sf = bind_rows(tst_sf, tst_sf), .id = "gp") |>
+    gp_grp[["new"]](.id = "gp") |>
     expect_error("Health units must not be duplicated")
 
   output <- list(gp_unit, gp_unit2) |>
-    gp_grp[["new"]](.sf = sf, .id = "gp") |>
+    gp_grp[["new"]](.id = "gp") |>
     expect_no_error()
 
   expect_true(inherits(output, "gp_grp"))
@@ -36,7 +24,6 @@ test_that("gp_grp class works", {
   expect_identical(output[["IDs"]](), c("10002", "10017"))
   expect_identical(output[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
   expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
-  expect_identical(output[["sf"]](), sf)
   expect_identical(output[["health_unit"]]("10002"), gp_unit)
   expect_identical(
     output[["available_plots"]](),
@@ -122,11 +109,10 @@ test_that("gp_grp subset works", {
 
   expect_true(inherits(output, "gp_grp"))
   expect_identical(output[["IDs"]](), "10002")
-  expect_identical(output[["sf"]]()[["ID"]], "10002")
 })
 
-test_that("gp_grp get_download works", {
-  output <- gp_grp_unit[["get_download"]]() |>
+test_that("gp_grp combine_data works", {
+  output <- gp_grp_unit[["combine_data"]]() |>
     expect_no_error()
   expect_s3_class(output, "data.frame")
   expect_identical(gp_grp_unit[["IDs"]](), unique(output[["ID"]]))

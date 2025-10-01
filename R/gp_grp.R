@@ -6,8 +6,7 @@
 #'
 #' @examples
 #' gps <- lapply(c("10002", "10017"), example_gp_unit)
-#' sf <- get_sf()[get_sf()[["ID"]] %in% c("10002", "100017"), ]
-#' x <- gp_grp[["new"]](gps, sf, .id = "gp")
+#' x <- gp_grp[["new"]](gps, .id = "gp")
 #' x[["ID"]]()
 #' x[["IDs"]]()
 #' x[["titles"]]()
@@ -461,7 +460,5 @@ gp_grp <- R6Class("gp_grp",
 #' @export
 example_gp_grp_unit <- function(ids = c("10002", "10017")) {
   gps <- map(ids, example_gp_unit)
-  sf <- get_sf()
-  sf <- sf[sf[["ID"]] %in% ids, ]
-  gp_grp[["new"]](gps, sf, .id = "gp")
+  gp_grp[["new"]](gps, .id = "gp")
 }

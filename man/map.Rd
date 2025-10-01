@@ -14,7 +14,7 @@ hospitals and health boards. This class is used to create a map
 with interactive pins of health centres.
 }
 \examples{
-x <- example_map_object()
+x <- example_map_unit()
 x[["id"]]()
 x[["title"]]()
 x[["sf"]]()
@@ -26,21 +26,21 @@ x[["plot_info"]](type = "interactive_map")
 ## Method `map$plot`
 ## ------------------------------------------------
 
-x <- example_map_object()
+x <- example_map_unit()
 x[["plot"]](type = "interactive_map")
 
 ## ------------------------------------------------
 ## Method `map$plot_data`
 ## ------------------------------------------------
 
-x <- example_map_object()
+x <- example_map_unit()
 x[["plot_data"]](type = "interactive_map")
 
 ## ------------------------------------------------
 ## Method `map$plot_info`
 ## ------------------------------------------------
 
-x <- example_map_object()
+x <- example_map_unit()
 x[["plot_info"]](type = "interactive_map")
 }
 \section{Public fields}{
@@ -167,7 +167,7 @@ for options.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- example_map_object()
+\preformatted{x <- example_map_unit()
 x[["plot"]](type = "interactive_map")
 }
 \if{html}{\out{</div>}}
@@ -197,7 +197,7 @@ for options.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- example_map_object()
+\preformatted{x <- example_map_unit()
 x[["plot_data"]](type = "interactive_map")
 }
 \if{html}{\out{</div>}}
@@ -227,7 +227,7 @@ for options.}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- example_map_object()
+\preformatted{x <- example_map_unit()
 x[["plot_info"]](type = "interactive_map")
 }
 \if{html}{\out{</div>}}

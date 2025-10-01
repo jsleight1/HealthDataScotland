@@ -45,8 +45,9 @@ get_hospital_meta <- function(...) {
   get_phs_dataset("hospital-codes", max_resources = 1, ...)
 }
 
-create_map_object <- function(data) {
-  lapply(data, function(i) i[["sf"]]()) |>
+create_map_unit <- function(x) {
+  x |>
+    lapply(function(i) i[["sf"]]) |>
     c(list(get_sf("board"))) |>
     lapply(select, "ID", "type") |>
     bind_rows() |>
@@ -86,6 +87,16 @@ sf_file <- function(type = available_sf_types()) {
 #' @export
 available_sf_types <- function() {
   c("gp", "hospital", "board")
+}
+
+create_processed_data <- function() {
+  tribble(
+    ~type,        ~meta_func,            ~data_func,              ~sf_func,
+    "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
+    "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
+  ) |>
+    pmap(process_data) |>
+    set_names(c("gp", "hospital"))
 }
 
 process_data <- function(type, meta_func, data_func, sf_func) {
@@ -171,7 +182,7 @@ create_data_objects <- function(x) {
         map(group_split, .data[["ID"]]) |>
         purrr::transpose() |>
         map(function(j) unit_method[["new"]](j[["meta"]], j[["data"]])) |>
-        unit_grp_method[["new"]](.sf = i[["sf"]], .id = nm)
+        unit_grp_method[["new"]](.id = nm)
     })
 }
 
@@ -186,16 +197,6 @@ save_processed_data <- function(
     file = "processed_health_data.RDS") {
   create_processed_data() |>
     storage_save_rds(container = azure_container(), file = file)
-}
-
-create_processed_data <- function() {
-  tribble(
-    ~type,        ~meta_func,            ~data_func,              ~sf_func,
-    "gp",         process_gp_meta,       process_gp_data,         process_gp_sf,
-    "hospital",   process_hospital_meta, process_hospital_data,   process_hospital_sf
-  ) |>
-    pmap(process_data) |>
-    set_names(c("gp", "hospital"))
 }
 
 azure_container <- function(

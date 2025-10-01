@@ -15,8 +15,7 @@ create shiny UI/server objects.
 }
 \examples{
 gps <- lapply(c("10002", "10017"), example_gp_unit)
-sf <- get_sf()[get_sf()[["ID"]] \%in\% c("10002", "100017"), ]
-x <- gp_grp[["new"]](gps, sf, .id = "gp")
+x <- gp_grp[["new"]](gps, .id = "gp")
 x[["ID"]]()
 x[["IDs"]]()
 x[["titles"]]()
@@ -75,11 +74,9 @@ x[["plot_info"]](type = "gp_bar")
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-combine_data'><code>HealthDataScotland::health_unitgrp$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_handler'><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-get_download'><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-metadata'><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="sf"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-sf'><code>HealthDataScotland::health_unitgrp$sf()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-titles'><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>

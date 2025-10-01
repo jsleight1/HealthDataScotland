@@ -5,11 +5,12 @@ health_data_scotland <- function(...) {
   requireNamespace("sf", quietly = TRUE)
 
   log_info("Creating initial objects")
-  data <- create_data_objects(load_processed_data())
-  map <- create_map_object(data)
+  data <- load_processed_data()
+  health_unit_grps <- create_data_objects(data)
+  map <- create_map_unit(data)
   log_info("Created initial objects")
 
-  value_boxes <- data |>
+  value_boxes <- health_unit_grps |>
     purrr::imap(function(x, nm) {
       value_box(
         title = glue("Number of {tolower(nm)}s analysed"),
@@ -37,8 +38,8 @@ health_data_scotland <- function(...) {
     ),
     nav_menu(
       title = "Summary",
-      data[["gp"]][["ui"]](),
-      data[["hospital"]][["ui"]]()
+      health_unit_grps[["gp"]][["ui"]](),
+      health_unit_grps[["hospital"]][["ui"]]()
     ),
     nav_panel(
       title = "About",
@@ -75,9 +76,9 @@ health_data_scotland <- function(...) {
       glue("Launching HealthDataScotland v{packageVersion('HealthDataScotland')}")
     )
     log_info(glue::glue_collapse(list.files(), "\n"))
-    map[["server"]](data)
-    data[["gp"]][["server"]]()
-    data[["hospital"]][["server"]]()
+    map[["server"]](health_unit_grps)
+    health_unit_grps[["gp"]][["server"]]()
+    health_unit_grps[["hospital"]][["server"]]()
   }
 
   shinyApp(ui, server, ...)
