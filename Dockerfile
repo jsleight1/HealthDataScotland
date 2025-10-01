@@ -45,7 +45,7 @@ WORKDIR /home/app
 # Install packages required for HealthDataScotland
 RUN git clone https://github.com/jsleight1/HealthDataScotland.git .
 RUN git config --global --add safe.directory /home/app
-RUN git checkout -b "25-add-vignette-documentation" "origin/25-add-vignette-documentation"
+RUN git checkout -b "version2-development" "origin/version2-development"
 RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
