@@ -10,10 +10,10 @@
 coverage](https://codecov.io/gh/jsleight1/HealthDataScotland/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jsleight1/HealthDataScotland/?branch=main)
 <!-- badges: end -->
 
-This repository contains an R package which contains the
-HealthDataScotland shiny application. This shiny application downloads,
-processes and presents demographic and bed capacity data related to GP
-practices and hospitals across Scotland, respectively
+This repository contains an R package for the HealthDataScotland shiny
+application. This shiny application downloads, processes and presents
+demographic and bed capacity data related to GP practices and hospitals
+across Scotland, respectively.
 
 ## Installation
 
