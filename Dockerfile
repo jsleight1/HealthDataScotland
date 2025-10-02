@@ -4,21 +4,22 @@ ARG TARGETPLATFORM
 
 # Install various libraries required for R packages
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    binutils \
     curl \
     libfontconfig1-dev \
     libfribidi-dev \
     libharfbuzz-dev \
     libpng-dev \
-    binutils \
     libproj-dev \
     libgdal-dev \
     libudunits2-dev \
-    gdal-bin \
-    gdebi-core \
     libgit2-dev \
     git \
+    gdal-bin \
+    gdebi-core \
     gnupg \
     pandoc \
+    qpdf \
     rsync \
     sudo \
     texlive-latex-base \
