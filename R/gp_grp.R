@@ -244,7 +244,8 @@ gp_grp <- R6Class("gp_grp",
     },
     #' @description
     #' Create UI for general practice group object.
-    ui = function() {
+    #' @param ... Passed to functions.
+    ui = function(...) {
       ns <- NS(self[["ID"]]())
       nav_panel(
         title = "General practice",

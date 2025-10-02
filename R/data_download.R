@@ -186,23 +186,61 @@ create_data_objects <- function(x) {
     })
 }
 
-load_processed_data <- function(
-    container = azure_container(),
-    file = "processed_health_data.RDS") {
+#' Load processed data based on config.
+#' @param config Config object specifying whether to use development or
+#'   or production protocol for loading data.
+#' @param ... Passed to methods.
+#' @export
+load_processed_data <- function(config = get_config(), ...) {
+  switch(config[["type"]],
+    "development" = load_local_processed_data,
+    "production" = load_azure_processed_data
+  )(config, ...)
+}
+
+load_local_processed_data <- function(config = get_config(), ...) {
+  readRDS(config[["processed_data_file"]])
+}
+
+load_azure_processed_data <- function(config = get_config(), ...) {
+  container <- azure_container(config)
+  file <- config[["processed_data_file"]]
   storage_load_rds(container = container, file = file)
 }
 
-save_processed_data <- function(
-    container = azure_container(),
-    file = "processed_health_data.RDS") {
-  create_processed_data() |>
-    storage_save_rds(container = azure_container(), file = file)
+#' Save processed data based on config.
+#' @param config Config object specifying whether to use development or
+#'   or production protocol for loading data.
+#' @param ... Passed to methods.
+#' @export
+save_processed_data <- function(config = get_config(), ...) {
+  switch(config[["type"]],
+    "development" = save_local_processed_data,
+    "production" = save_azure_processed_data
+  )(config, ...)
 }
 
-azure_container <- function(
-    account_url = Sys.getenv("blob_account_url"),
-    account_key = Sys.getenv("blob_account_key")) {
-  container <- "healthdatascotlandstore"
+save_local_processed_data <- function(config = get_config(), ...) {
+  saveRDS(create_processed_data(), config[["processed_data_file"]])
+}
+
+save_azure_processed_data <- function(config = get_config(), ...) {
+  container <- azure_container(config)
+  file <- config[["processed_data_file"]]
+  storage_save_rds(create_processed_data(), container = container, file = file)
+}
+
+azure_container <- function(config = get_config()) {
+  account_url <- config[["blob_account_url"]]
+  account_key <- config[["blob_account_key"]]
+  container <- config[["azure_storage_container"]]
   storage_endpoint(endpoint = account_url, key = account_key) |>
     storage_container(name = container)
+}
+
+get_config <- function(...) {
+  config::get(
+    file = system.file("config.yml", package = "HealthDataScotland"),
+    ...
+  )
 }

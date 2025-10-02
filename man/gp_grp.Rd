@@ -189,9 +189,16 @@ x[["plot_info"]](type = "gp_bar")
 \subsection{Method \code{ui()}}{
 Create UI for general practice group object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Passed to functions.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp_grp-server"></a>}}

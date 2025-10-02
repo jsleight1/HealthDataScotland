@@ -164,7 +164,8 @@ map <- R6Class("map",
     },
     #' @description
     #' Create ui for map object.
-    ui = function() {
+    #' @param ... Passed to methods.
+    ui = function(...) {
       ns <- NS(self[["id"]]())
       card(
         full_screen = TRUE,

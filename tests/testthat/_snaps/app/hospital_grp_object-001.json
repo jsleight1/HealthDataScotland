@@ -1,17 +1,15 @@
 {
   "input": {
-    "ui-hospital_annual_select": [
-      "A101H",
-      "A103H",
-      "A110H"
-    ],
-    "ui-hospital_daily_select": [
-      "A101H",
-      "A103H",
-      "A110H"
-    ],
-    "ui-specialty_annual_select": "All Specialties",
-    "ui-specialty_daily_select": "All Specialties"
+    "hospital-hb_bar_help": false,
+    "hospital-hb_bar_settings": false,
+    "hospital-hb_trend_help": false,
+    "hospital-hb_trend_settings": false,
+    "hospital-hosp_bar_help": false,
+    "hospital-hosp_bar_settings": false,
+    "hospital-hosp_trend_help": false,
+    "hospital-hosp_trend_settings": false,
+    "hospital-national_help": false,
+    "hospital-national_settings": false
   },
   "output": {
 

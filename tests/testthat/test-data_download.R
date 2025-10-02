@@ -175,3 +175,40 @@ test_that("create_processed_data works", {
   expect_identical(names(data[["hospital"]]), c("meta", "data", "sf"))
   expect_no_error(do.call(check_ids, data[["hospital"]]))
 })
+
+test_that("save_processed_data works", {
+  dev_config <- get_config(config = "development")
+  m <- mock()
+  with_mocked_bindings(
+    save_local_processed_data =  function(...) m(...),
+    out <- save_processed_data(dev_config)
+  )
+  expect_args(m, 1, dev_config)
+
+  prod_config <- get_config(config = "production")
+  m <- mock()
+  with_mocked_bindings(
+    save_azure_processed_data =  function(...) m(...),
+    out <- save_processed_data(prod_config)
+  )
+  expect_args(m, 1, prod_config)
+})
+
+test_that("load_processed_data works", {
+  dev_config <- get_config(config = "development")
+  m <- mock()
+  with_mocked_bindings(
+    load_local_processed_data =  function(...) m(...),
+    out <- load_processed_data(dev_config)
+  )
+  expect_args(m, 1, dev_config)
+
+  prod_config <- get_config(config = "production")
+  m <- mock()
+  with_mocked_bindings(
+    load_azure_processed_data =  function(...) m(...),
+    out <- load_processed_data(prod_config)
+  )
+  expect_args(m, 1, prod_config)
+})
+

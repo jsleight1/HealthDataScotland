@@ -1,7 +1,7 @@
 {
   "input": {
-    "ui-pop_pyramid_select": "2024-04-01",
-    "ui-pop_trend_select": "All"
+    "ui-pop_pyramid_help": false,
+    "ui-pop_trend_help": false
   },
   "output": {
 

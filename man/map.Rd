@@ -241,9 +241,16 @@ x[["plot_info"]](type = "interactive_map")
 \subsection{Method \code{ui()}}{
 Create ui for map object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{map$ui()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{map$ui(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Passed to methods.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-map-server"></a>}}

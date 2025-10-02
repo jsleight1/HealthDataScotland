@@ -1,0 +1,11 @@
+default:
+  processed_data_file: "processed_health_data.RDS"
+
+development:
+  type: development
+
+production:
+  type: production
+  azure_storage_container: !expr Sys.getenv("azure_storage_container")
+  blob_account_url: !expr Sys.getenv("blob_account_url")
+  blob_account_key: !expr Sys.getenv("blob_account_key")
