@@ -55,8 +55,6 @@ published on
 The decision to use containerisation for this shiny application was to ensure
 reproducibility across the entire workflow of the application from the data
 processing to deployment. The docker image is updated every time a pull request
-is merged into the master branch. The latest docker image is then automatically
-pulled into production by the Azure container app service. This aims to fully
-automated the deployment process allowing developers to develop code and not
-spend unnecessary time fixing deployment issues or package dependencies.
+is merged into the master branch. The latest docker image is then pulled into
+production by the Azure container app service.
 

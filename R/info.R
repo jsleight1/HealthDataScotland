@@ -70,9 +70,9 @@ package_card <- function() {
       tags$a(href = "https://github.com/jsleight1/HealthDataScotland", target = "_blank", "HealthDataScotland"),
       ". HealthDataScotland also has an associated docker container hosted on",
       tags$a(href = "https://hub.docker.com/r/jsleight1/healthdatascotland", target = "_black", "docker.io"),
-      " which has all dependencies required to launch the application locally.
-      If a clear bug is encounted please file an issue with a minimal reproducible
-      example and I will endeavour to address this."
+      " For more information regarding the R package please refer to the ",
+      tags$a(href = "https://jsleight1.github.io/HealthDataScotland/", target = "_blank", "documentation"),
+      "."
     )
   )
 }
@@ -174,7 +174,7 @@ data_workflow_card <- function() {
       data sets are being used and how they are being manipulated. It is worth
       emphasising once more, however, that this application is primarily a hobby
       project. Therefore any decisions should not be made using the data
-      presented without consulting the original published data sets.
+      without consulting the original published data sets.
       "
     )
   )
