@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [version2-development]
+    branches: [23-investigate-production-and-development-configs]
 
 name: dockerise.yaml
 
