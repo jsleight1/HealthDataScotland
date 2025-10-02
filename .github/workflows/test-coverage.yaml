@@ -32,6 +32,8 @@ jobs:
 
       - name: Test coverage
         run: |
+          devtools::test()
+          devtools::check()
           cov <- covr::package_coverage(
             quiet = FALSE,
             clean = FALSE,

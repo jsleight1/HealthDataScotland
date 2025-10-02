@@ -4,22 +4,21 @@ ARG TARGETPLATFORM
 
 # Install various libraries required for R packages
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    binutils \
     curl \
     libfontconfig1-dev \
     libfribidi-dev \
     libharfbuzz-dev \
     libpng-dev \
+    binutils \
     libproj-dev \
     libgdal-dev \
     libudunits2-dev \
-    libgit2-dev \
-    git \
     gdal-bin \
     gdebi-core \
+    libgit2-dev \
+    git \
     gnupg \
     pandoc \
-    qpdf \
     rsync \
     sudo \
     texlive-latex-base \
@@ -46,7 +45,7 @@ WORKDIR /home/app
 # Install packages required for HealthDataScotland
 RUN git clone https://github.com/jsleight1/HealthDataScotland.git .
 RUN git config --global --add safe.directory /home/app
-RUN git checkout -b "23-investigate-production-and-development-configs" "origin/23-investigate-production-and-development-configs"
+RUN git checkout -b "version2-development" "origin/version2-development"
 RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
