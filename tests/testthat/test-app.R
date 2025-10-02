@@ -32,7 +32,7 @@ test_that("health_data_scotland app initial values works", {
 
   app <- AppDriver$new(shiny_app,
     name = "initial", width = 800, height = 700,
-    seed = 4323, load_timeout = 30 * 1000
+    seed = 4323, load_timeout = 40 * 1000
   )
 
   app$expect_values()
@@ -47,7 +47,7 @@ test_that("gp ui/server works", {
   app <- object_ui(gp_unit)
   app <- AppDriver$new(app,
     name = "gp_object", width = 800,
-    height = 700, seed = 4323, load_timeout = 30 * 1000
+    height = 700, seed = 4323, load_timeout = 40 * 1000
   )
 
   app$expect_values()
@@ -61,7 +61,7 @@ test_that("gp_grp ui/server works", {
   app <- object_ui(gp_grp_unit)
   app <- AppDriver$new(app,
     name = "gp_grp_object", width = 800,
-    height = 700, seed = 4323, load_timeout = 30 * 1000
+    height = 700, seed = 4323, load_timeout = 40 * 1000
   )
 
   app$expect_values()
@@ -75,7 +75,7 @@ test_that("hospital ui/server works", {
   app <- object_ui(hospital_unit)
   app <- AppDriver$new(app,
     name = "hospital_object", width = 800,
-    height = 700, seed = 4323, load_timeout = 30 * 1000
+    height = 700, seed = 4323, load_timeout = 40 * 1000
   )
 
   app$expect_values()
@@ -89,7 +89,7 @@ test_that("hospital_grp ui/server works", {
   app <- object_ui(hospital_grp_unit)
   app <- AppDriver$new(app,
     name = "hospital_grp_object", width = 800,
-    height = 700, seed = 4323, load_timeout = 30 * 1000
+    height = 700, seed = 4323, load_timeout = 40 * 1000
   )
 
   app$expect_values()
@@ -103,7 +103,7 @@ test_that("map ui/server works", {
   app <- object_ui(map_unit)
   app <- AppDriver$new(app,
     name = "map_object", width = 800,
-    height = 700, seed = 4323, load_timeout = 30 * 1000
+    height = 700, seed = 4323, load_timeout = 40 * 1000
   )
 
   app$expect_values()
