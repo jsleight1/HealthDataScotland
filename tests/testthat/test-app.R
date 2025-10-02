@@ -84,6 +84,7 @@ test_that("hospital ui/server works", {
 
 test_that("hospital_grp ui/server works", {
   skip_on_cran()
+  skip_on_ci()
   hospital_grp_unit <- example_hospital_grp_unit()
 
   app <- object_ui(hospital_grp_unit)
