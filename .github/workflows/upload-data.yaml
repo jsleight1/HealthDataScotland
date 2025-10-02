@@ -29,6 +29,7 @@ jobs:
 
       - name: Upload data to Azure blob
         env:
+          R_CONFIG_ACTIVE: production
           blob_account_url: ${{ secrets.BLOB_ACCOUNT_URL }}
           blob_account_key: ${{ secrets.BLOB_ACCOUNT_KEY }}
         working-directory: /home/app

@@ -73,7 +73,7 @@ health_data_scotland <- function(...) {
     log_info(
       glue("Launching HealthDataScotland v{packageVersion('HealthDataScotland')}")
     )
-    log_info(glue::glue_collapse(list.files(), "\n"))
+    log_info(glue("Config type: {get_config()[['type']]}"))
     map[["server"]](health_unit_grps)
     health_unit_grps[["gp"]][["server"]]()
     health_unit_grps[["hospital"]][["server"]]()
