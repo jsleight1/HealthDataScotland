@@ -16,7 +16,7 @@ jobs:
 
     runs-on: ubuntu-24.04-arm
     container:
-      image: docker.io/jsleight1/healthdatascotland:development
+      image: docker.io/jsleight1/healthdatascotland:latest
       options: --user root
 
     steps:
