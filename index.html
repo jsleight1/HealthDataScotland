@@ -31,7 +31,15 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/HealthDataScotland.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/health_unit.html">Introduction to health units</a></li>
+    <li><a class="dropdown-item" href="articles/map.html">Introduction to map units</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -50,28 +58,14 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>This repo contains an R package to create the <a href="https://jack-sleight.shinyapps.io/healthdatascotland/" class="external-link">HealthDataScotland</a> shiny application. The shiny application generates interactive maps showing the locations of GP practices and hospitals across Scotland and presents associated demographic and bed capacity data. These maps can be used to select individual GP practices and hospitals to interogate the data for a single centre. Conversely comparisons can be made across centres by using the map draw function to selected multiple health centres. The processed data is also presented in a table format, which can be filtered and downloaded.</p>
+<p>This repository contains an R package for the HealthDataScotland shiny application. This shiny application downloads, processes and presents demographic and bed capacity data related to GP practices and hospitals across Scotland, respectively.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of HealthDataScotland from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install HealthDataScotland from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jsleight1/HealthDataScotland"</span><span class="op">)</span></span></code></pre></div>
-<p>HealthDataScotland also contains a <code>renv.lock</code> file which can be used to create a reproducible environment using <a href="https://rstudio.github.io/renv/articles/renv.html" class="external-link">renv</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
-</h2>
-<p>The shiny application can be launched locally using:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HealthDataScotland</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/health_data_scotland.html">health_data_scotland</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="data-and-references">Data and references.<a class="anchor" aria-label="anchor" href="#data-and-references"></a>
-</h2>
-<p>GP and Hospital is downloaded from the <a href="https://www.opendata.nhs.scot/" class="external-link">Scottish Health and Social Care Open Data platform</a>. Spatial data for interactive maps are obtained from the <a href="https://data.spatialhub.scot/" class="external-link">Spatial Hub Scotland</a> and from data.gov.uk. For further information please refer to these databases.</p>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jsleight1/HealthDataScotland"</span><span class="op">)</span></span></code></pre></div>
+<p>Please refer to the <a href="https://jsleight1.github.io/HealthDataScotland/">documentation</a> for further details regarding the design and usage of this package.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

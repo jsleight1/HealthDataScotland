@@ -17,7 +17,13 @@ R6 class storing health statistics for a list of hospital health units."><!-- de
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/HealthDataScotland.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/health_unit.html">Introduction to health units</a></li>
+    <li><a class="dropdown-item" href="../articles/map.html">Introduction to map units</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -68,11 +74,9 @@ create shiny UI/server objects.</p>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="combine_data"><a href="health_unitgrp.html#method-combine_data"><code>HealthDataScotland::health_unitgrp$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href="health_unitgrp.html#method-data"><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href="health_unitgrp.html#method-download_handler"><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href="health_unitgrp.html#method-get_download"><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href="health_unitgrp.html#method-health_unit"><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href="health_unitgrp.html#method-initialize"><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href="health_unitgrp.html#method-metadata"><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="sf"><a href="health_unitgrp.html#method-sf"><code>HealthDataScotland::health_unitgrp$sf()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href="health_unitgrp.html#method-subset"><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href="health_unitgrp.html#method-titles"><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href="health_unitgrp.html#method-validate"><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
@@ -170,13 +174,13 @@ for options.</p></dd>
 <h3 id="method-ui-">Method <code>ui()</code><a class="anchor" aria-label="anchor" href="#method-ui-"></a></h3>
 <p>Create UI for hospital group object.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">hospital_grp</span><span class="op">$</span><span class="fu">ui</span><span class="op">(</span><span class="va">ns</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">hospital_grp</span><span class="op">$</span><span class="fu">ui</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>ns</code></dt>
-<dd><p>Namespace of shiny application page.</p></dd>
+<p></p><div class="arguments"><dl><dt><code>...</code></dt>
+<dd><p>Passed to functions.</p></dd>
 
 
 </dl><p></p></div>
@@ -213,8 +217,7 @@ for options.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A101H"</span>, <span class="st">"A201H"</span><span class="op">)</span>, <span class="va">example_hospital_unit</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_sf.html">get_sf</a></span><span class="op">(</span><span class="st">"hospital"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="get_sf.html">get_sf</a></span><span class="op">(</span><span class="st">"hospital"</span><span class="op">)</span><span class="op">[[</span><span class="st">"ID"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A101H"</span>, <span class="st">"A201H"</span><span class="op">)</span>, <span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">hospital_grp</span><span class="op">[[</span><span class="st">"new"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">gps</span>, <span class="va">sf</span>, .id <span class="op">=</span> <span class="st">"gp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">hospital_grp</span><span class="op">[[</span><span class="st">"new"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">gps</span>, .id <span class="op">=</span> <span class="st">"gp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"ID"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gp"</span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"IDs"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -305,7 +308,6 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .data: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .id: gp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     .sf: sf, tbl_df, tbl, data.frame</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     IDs: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
@@ -313,18 +315,16 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     download_handler: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     get_download: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_unit: function (id) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.data, .sf, .id) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.data, .id) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     sf: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subset: function (id) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titles: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (ns) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bar_data: function (x, ...) </span>

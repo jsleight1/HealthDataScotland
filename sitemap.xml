@@ -1,6 +1,10 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/404.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/LICENSE.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/articles/HealthDataScotland.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/articles/health_unit.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/articles/index.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/articles/map.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/authors.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/index.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/news/index.html</loc></url>
@@ -16,7 +20,7 @@
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/example_hospital_metadata.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/example_hospital_sf.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/example_hospital_unit.html</loc></url>
-<url><loc>https://jsleight1.github.io/HealthDataScotland/reference/example_map_object.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/reference/example_map_unit.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/get_sf.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/gp.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/gp_grp.html</loc></url>
@@ -26,6 +30,8 @@
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/hospital.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/hospital_grp.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/index.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/reference/load_processed_data.html</loc></url>
 <url><loc>https://jsleight1.github.io/HealthDataScotland/reference/map.html</loc></url>
+<url><loc>https://jsleight1.github.io/HealthDataScotland/reference/save_processed_data.html</loc></url>
 </urlset>
 
