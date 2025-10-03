@@ -98,7 +98,8 @@ hospital_grp <- R6Class("hospital_grp",
     },
     hospital_bar = function(...) {
       self[["plot_data"]](type = "hospital_bar", ...) |>
-        private[["bar_echart"]]("ID", "Hospital")
+        private[["bar_echart"]]("ID", "Hospital") |>
+        e_x_axis(axisLabel = list(rotate = 15))
     },
     hospital_trend_data = function(specialties = "All Specialties",
                                    hospitals = private[["unit_choices"]]()) {
@@ -445,39 +446,39 @@ hospital_grp <- R6Class("hospital_grp",
             log_info("Creating hospital national trend plot")
             self[["plot"]](
               type = "national_trend",
-              specialties = input[["select_national_specialty"]]
+              specialties = req(input[["select_national_specialty"]])
             )
           })
           output[["hb_trend"]] <- renderEcharts4r({
             log_info("Creating hospital health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
-              specialties = input[["select_hb_trend_specialty"]],
-              health_boards = input[["select_hb_trend_hb"]]
+              specialties = req(input[["select_hb_trend_specialty"]]),
+              health_boards = req(input[["select_hb_trend_hb"]])
             )
           })
           output[["hb_bar"]] <- renderEcharts4r({
             log_info("Creating hospital health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
-              specialties = input[["select_hb_bar_specialty"]],
-              health_boards = input[["select_hb_bar_hb"]]
+              specialties = req(input[["select_hb_bar_specialty"]]),
+              health_boards = req(input[["select_hb_bar_hb"]])
             )
           })
           output[["hosp_trend"]] <- renderEcharts4r({
             log_info("Creating hospital trend plot")
             self[["plot"]](
               type = "hospital_trend",
-              specialties = input[["select_hosp_trend_specialty"]],
-              hospitals = input[["select_hosp_trend_hosp"]]
+              specialties = req(input[["select_hosp_trend_specialty"]]),
+              hospitals = req(input[["select_hosp_trend_hosp"]])
             )
           })
           output[["hosp_bar"]] <- renderEcharts4r({
             log_info("Creating hospital bar plot")
             self[["plot"]](
               type = "hospital_bar",
-              specialties = input[["select_hosp_bar_specialty"]],
-              hospitals = input[["select_hosp_bar_hosp"]]
+              specialties = req(input[["select_hosp_bar_specialty"]]),
+              hospitals = req(input[["select_hosp_bar_hosp"]])
             )
           })
           output[["download"]] <- self[["download_handler"]]()

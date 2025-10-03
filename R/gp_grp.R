@@ -421,32 +421,32 @@ gp_grp <- R6Class("gp_grp",
             log_info("Creating GP health board trend plot")
             self[["plot"]](
               type = "health_board_trend",
-              health_board = input[["select_hb_trend_hb"]],
-              gender = input[["select_hb_trend_gender"]]
+              health_board = req(input[["select_hb_trend_hb"]]),
+              gender = req(input[["select_hb_trend_gender"]])
             )
           })
           output[["hb_pop_bar"]] <- renderEcharts4r({
             log_info("Creating GP health board bar plot")
             self[["plot"]](
               type = "health_board_bar",
-              health_board = input[["select_hb_bar_hb"]],
-              gender = input[["select_hb_bar_gender"]]
+              health_board = req(input[["select_hb_bar_hb"]]),
+              gender = req(input[["select_hb_bar_gender"]])
             )
           })
           output[["gp_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP trend plot")
             self[["plot"]](
               type = "gp_trend",
-              gp = input[["select_gp_trend_gp"]],
-              gender = input[["select_gp_trend_gender"]]
+              gp = req(input[["select_gp_trend_gp"]]),
+              gender = req(input[["select_gp_trend_gender"]])
             )
           })
           output[["gp_pop_bar"]] <- renderEcharts4r({
             log_info("Creating GP bar plot")
             self[["plot"]](
               type = "gp_bar",
-              gp = input[["select_gp_bar_gp"]],
-              gender = input[["select_gp_bar_gender"]]
+              gp = req(input[["select_gp_bar_gp"]]),
+              gender = req(input[["select_gp_bar_gender"]])
             )
           })
           output[["download"]] <- self[["download_handler"]]()

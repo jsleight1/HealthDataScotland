@@ -217,7 +217,7 @@ map <- R6Class("map",
           })
 
           pin_ids <- reactive({
-            centre_types <- input[["health_select"]]
+            centre_types <- req(input[["health_select"]])
             pin_sf <- self[["sf"]]()
             pin_sf[pin_sf[["type"]] %in% centre_types, ][["ID"]]
           })
