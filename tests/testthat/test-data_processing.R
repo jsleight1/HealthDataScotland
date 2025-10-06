@@ -180,7 +180,7 @@ test_that("save_processed_data works", {
   dev_config <- get_config(config = "development")
   m <- mock()
   with_mocked_bindings(
-    save_local_processed_data =  function(...) m(...),
+    save_local_processed_data = function(...) m(...),
     out <- save_processed_data(dev_config)
   )
   expect_args(m, 1, dev_config)
@@ -188,7 +188,7 @@ test_that("save_processed_data works", {
   prod_config <- get_config(config = "production")
   m <- mock()
   with_mocked_bindings(
-    save_azure_processed_data =  function(...) m(...),
+    save_azure_processed_data = function(...) m(...),
     out <- save_processed_data(prod_config)
   )
   expect_args(m, 1, prod_config)
@@ -198,7 +198,7 @@ test_that("load_processed_data works", {
   dev_config <- get_config(config = "development")
   m <- mock()
   with_mocked_bindings(
-    load_local_processed_data =  function(...) m(...),
+    load_local_processed_data = function(...) m(...),
     out <- load_processed_data(dev_config)
   )
   expect_args(m, 1, dev_config)
@@ -206,9 +206,8 @@ test_that("load_processed_data works", {
   prod_config <- get_config(config = "production")
   m <- mock()
   with_mocked_bindings(
-    load_azure_processed_data =  function(...) m(...),
+    load_azure_processed_data = function(...) m(...),
     out <- load_processed_data(prod_config)
   )
   expect_args(m, 1, prod_config)
 })
-

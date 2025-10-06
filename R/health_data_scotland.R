@@ -41,10 +41,11 @@ health_data_scotland <- function(...) {
     ),
     nav_panel(
       title = "About",
-      class = "overflow-auto",
-      about_card(),
-      package_card(),
-      data_workflow_card()
+      navset_card_tab(
+        about_panel(),
+        package_panel(),
+        data_workflow_panel()
+      )
     ),
     nav_spacer(),
     nav_item(input_dark_mode(id = "dark_mode", mode = "light")),
