@@ -24,6 +24,33 @@ with:
 devtools::install_github("jsleight1/HealthDataScotland")
 ```
 
+## Examples
+
+### R6 objects
+
+``` r
+gp_unit <- example_gp_unit()
+plot(gp_unit, type = "population_pyramid")
+```
+
+``` r
+hospital_unit <- example_hospital_unit()
+plot(hospital_unit, type = "specialty_line")
+```
+
+``` r
+map_unit <- example_map_unit()
+plot(map_unit, type = "interactive_map")
+```
+
+### Local shiny usage
+
+``` r
+Sys.setenv("R_CONFIG_ACTIVE" = "development")
+save_processed_data()
+health_data_scotland()
+```
+
 Please refer to the
 [documentation](https://jsleight1.github.io/HealthDataScotland/) for
 further details regarding the design and usage of this package.

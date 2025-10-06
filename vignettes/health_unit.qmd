@@ -27,13 +27,13 @@ design.
 The object that acts as the lowest common denominator in HealthDataScotland is a
 `health_unit`. These objects store relevant statistics associated with a single
 health centre (GP or hospital). Currently HealthDataScotland has two class of
-health_unit() implemented; gp() and hospital() storing data associated with a
-single GP practice or hospital respectively.
+`health_unit()` implemented; `gp()` and `hospital()` storing data associated
+with a single GP practice or hospital respectively.
 
 ## GP
 
-Data associated with a single GP practice is stored in a gp() health unit
-object. example_gp_unit() can be used to render an example object.
+Data associated with a single GP practice is stored in a `gp()` health unit
+object. `example_gp_unit()` can be used to render an example object.
 
 ```{r}
 gp_unit <- example_gp_unit()
@@ -44,7 +44,7 @@ gp_unit
 
 GP health unit objects house a data.frame storing demography statistics and a
 data.frame storing metadata associated with the GP practice. These can be
-obtained using the public functions `$data` and $metadata`.
+obtained using the public functions `$data` and `$metadata`.
 
 ```{r}
 gp_unit$data()
@@ -52,8 +52,8 @@ gp_unit$metadata()
 ```
 
 In addition, to the `$metadata` function returing a data.frame there are also
-relevant helper functions to pull out particular metadata associated with a
-GP practice.
+relevant helper functions to pull out particular metadata associated with a GP
+practice.
 
 ```{r}
 gp_unit$ID()
@@ -89,8 +89,8 @@ gp_unit$plot_info(type = "population_pyramid")
 
 ## Hospital
 
-Data associated with a single hospital is stored in a hospital() health unit
-object. example_hospital_unit() can be used to render an example object.
+Data associated with a single hospital is stored in a `hospital()` health unit
+object. `example_hospital_unit()` can be used to render an example object.
 
 ```{r}
 hospital_unit <- example_hospital_unit()
@@ -99,8 +99,8 @@ hospital_unit <- example_hospital_unit()
 ### Data
 
 Hospital health unit objects house a data.frame storing bed capacity data and a
-data.frame storing metadata associated with the hospital. These can be
-obtained using the public functions `$data` and $metadata`.
+data.frame storing metadata associated with the hospital. These can be obtained
+using the public functions `$data` and `$metadata`.
 
 ```{r}
 hospital_unit$data()
@@ -147,15 +147,15 @@ hospital_unit$plot_info(type = "specialty_line")
 
 HealthDataScotland contains functionality that combines several GP practices or
 hospitals to create summary visualisations. This is achieved by using
-health_unitgrp() objects, which house multiple health units. Currently
-HealthDataScotland has two class of health_unitgrp() implemented; gp_grp() and
-hospital_grp(), which store data associated with a multiple GP practices or
-hospitals respectively.
+`health_unitgrp()` objects, which house multiple health units. Currently
+HealthDataScotland has two class of `health_unitgrp()` implemented; `gp_grp()`
+and `hospital_grp()`, which store data associated with a multiple GP practices
+or hospitals respectively.
 
 ## GP
 
-Data associated with multiple GP practices is stored in gp_grp() objects.
-example_gp_grp_unit() can be used to render an example object.
+Data associated with multiple GP practices is stored in `gp_grp()` objects.
+`example_gp_grp_unit()` can be used to render an example object.
 
 ```{r}
 gp_grp_unit <- example_gp_grp_unit()
@@ -164,37 +164,37 @@ gp_grp_unit
 
 ### Data
 
-gp_grp() objects contain a list of gp() health units. These
-can be accessed using the `$data` function.
+`gp_grp()` objects contain a list of `gp()` health units. These can be accessed
+using the `$data` function.
 
 ```{r}
 gp_grp_unit$data()
 ```
 
-Metadata for all gp() health units within the gp_grp object
-can be summarised using the `$metadata` function.
+Metadata for all `gp()` health units within the gp_grp object can be summarised
+using the `$metadata` function.
 
 ```{r}
 gp_grp_unit$metadata()
 ```
 
-Additionally, selected metadata from the gp() health units can also be obtained
-using relevant getter functions.
+Additionally, selected metadata from the `gp()` health units can also be
+obtained using relevant getter functions.
 
 ```{r}
 gp_grp_unit$IDs()
 gp_grp_unit$titles()
 ```
 
-gp_grp() objects can also be subset to the selected GP practices using `$subset`
-with a set of character IDs.
+`gp_grp()` objects can also be subset to the selected GP practices using
+`$subset` with a set of character IDs.
 
 ```{r}
 gp_grp_unit$subset(id = "10017")
 ```
 
-This will return a gp_grp object. However, a single gp object can be pulled out
-using `$health_unit`.
+This will return a `gp_grp()` object. However, a single gp object can be pulled
+out using `$health_unit`.
 
 ```{r}
 gp_grp_unit$health_unit(id = "10017")
@@ -227,8 +227,8 @@ gp_grp_unit$plot_info(type = "gp_bar")
 
 ## Hospital
 
-Data associated with multiple hospitals is stored in hospital_grp() objects.
-example_hospital_grp_unit() can be used to render an example object.
+Data associated with multiple hospitals is stored in `hospital_grp()` objects.
+`example_hospital_grp_unit()` can be used to render an example object.
 
 ```{r}
 hospital_grp_unit <- example_hospital_grp_unit()
@@ -237,37 +237,37 @@ hospital_grp_unit
 
 ### Data
 
-hospital_grp() objects contain a list of hospital() health units. These
-can be accessed using the `$data` function.
+`hospital_grp()` objects contain a list of `hospital()` health units. These can
+be accessed using the `$data` function.
 
 ```{r}
 hospital_grp_unit$data()
 ```
 
-Metadata for all hospital() health units within the hospital_grp object
-can be summarised using the `$metadata` function.
+Metadata for all `hospital()` health units within the hospital_grp object can be
+summarised using the `$metadata` function.
 
 ```{r}
 hospital_grp_unit$metadata()
 ```
 
-Additionally, selected metadata from the hospital() health units can also be obtained
-using relevant getter functions.
+Additionally, selected metadata from the `hospital()` health units can also be
+obtained using relevant getter functions.
 
 ```{r}
 hospital_grp_unit$IDs()
 hospital_grp_unit$titles()
 ```
 
-hospital_grp() objects can also be subset to the selected hospitals using
+`hospital_grp()` objects can also be subset to the selected hospitals using
 `$subset` with a set of character IDs.
 
 ```{r}
 hospital_grp_unit$subset(id = "A201H")
 ```
 
-This will return a hospital_grp object. However, a single hospital object can be
-pulled out using `$health_unit`.
+This will return a `hospital_grp()` object. However, a single hospital object
+can be pulled out using `$health_unit`.
 
 ```{r}
 hospital_grp_unit$health_unit(id = "A201H")

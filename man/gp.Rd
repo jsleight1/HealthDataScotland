@@ -60,7 +60,7 @@ x <- example_gp_unit()
 x[["plot_info"]](type = "population_pyramid")
 }
 \section{Super class}{
-\code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{gp}
+\code{HealthDataScotland::health_unit} -> \code{gp}
 }
 \section{Methods}{
 \subsection{Public methods}{

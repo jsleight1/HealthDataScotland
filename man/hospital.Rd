@@ -58,7 +58,7 @@ x <- example_hospital_unit()
 x[["plot_info"]](type = "specialty_line", data_type = "annual")
 }
 \section{Super class}{
-\code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{hospital}
+\code{HealthDataScotland::health_unit} -> \code{hospital}
 }
 \section{Methods}{
 \subsection{Public methods}{

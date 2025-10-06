@@ -17,44 +17,30 @@ library(HealthDataScotland)
 
 ## Introduction
 
-HealthDataScotland is an R shiny application that presents GP practice
-demographic and hospital bed capacity data across Scotland. This vignette will
-outline the workflow used to download, process and store the data used by the
-application, and describe the development process used to maintain and host the
-application.
+[HealthDataScotland](www.healthdatascotland.co.uk) is an R shiny application
+that presents GP practice demographic and hospital bed capacity data across
+Scotland. This vignette will outline the workflow used to download, process and
+store the data used by the application, and describe the development process
+used to maintain and host the application.
 
 ## Data workflow and storage
 
-The data used in HealthDataScotland is derived from the NHS open
-data API and is maintained by Public Health Scotland. The following
-data sets are used:
-
- - [GP metadata](https://www.opendata.nhs.scot/dataset/gp-practice-contact-details-and-list-sizes)
- - [GP demography data](https://www.opendata.nhs.scot/dataset/gp-practice-populations)
- - [GP spatial data](https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd)
- - [Hospital metadata](https://www.opendata.nhs.scot/dataset/hospital-codes)
- - [Hospital bed occupancy data](https://www.opendata.nhs.scot/dataset/annual-hospital-beds-information)
- - [Hospital spatial data](https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b)
-
-These data sets are downloaded and processed into a series of data.frames that
-are stored in a .RDS file in an Azure blob. This Azure blob is accessed when
-the shiny application launches. The data set is periodically updated every 6
-months using a GitHub action.
+The data used in HealthDataScotland is derived from a variety of sources on the
+NHS open data API, which is maintained by Public Health Scotland. For more
+information regarding the data workflow, please refer to
+`vignette("data_workflow")`.
 
 ## Deployment
 
-HealthDataScotland is deployed using the Azure container app platform. This uses
+HealthDataScotland is deployed using the Azure container app platform, which uses
 a docker container that is published on
 [docker.io](https://hub.docker.com/repository/docker/jsleight1/healthdatascotland).
 
 ## Reproducibility
 
-As previously mentioned HealthDataScotland has its own docker image that is
-published on
-[docker.io](https://hub.docker.com/repository/docker/jsleight1/healthdatascotland).
 The decision to use containerisation for this shiny application was to ensure
 reproducibility across the entire workflow of the application from the data
-processing to app deployment. The docker image is updated every time a pull request
-is merged into the master branch. The latest docker image is then pulled into
-production by the Azure container app service.
+processing to app deployment. The docker image is updated every time a pull
+request is merged into the master branch. The latest docker image is then pulled
+into production by the Azure container app service.
 

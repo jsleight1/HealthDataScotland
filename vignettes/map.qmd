@@ -24,7 +24,8 @@ functionality of these objects and the motivation behind their design.
 # Map objects
 
 An R6 map object class is defined to store and present spatial data in
-HealthDataScotland. An example of this can be generated using example_map_unit().
+HealthDataScotland. An example of this can be generated using
+`example_map_unit()`.
 
 ```{r}
 map <- example_map_unit()
@@ -33,7 +34,7 @@ map
 
 ## Data
 
-map() objects store a sf data.frame object containing spatial data associated
+`map()` objects store a sf data.frame object containing spatial data associated
 with health centres. This can be accessed using the `$sf` getter function.
 
 ```{r}
