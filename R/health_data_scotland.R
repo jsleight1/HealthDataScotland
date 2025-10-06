@@ -43,8 +43,7 @@ health_data_scotland <- function(...) {
       title = "About",
       navset_card_tab(
         about_panel(),
-        package_panel(),
-        data_workflow_panel()
+        package_panel()
       )
     ),
     nav_spacer(),
