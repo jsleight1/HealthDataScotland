@@ -69,8 +69,9 @@ package_panel <- function() {
         tags$a(href = "https://hub.docker.com/r/jsleight1/healthdatascotland", target = "_black", "docker.io."),
       ),
       p(
-        "The data used in HealthDataScotland is derived from the NHS open
-        data API and is maintained by Public Health Scotland. Data is derived
+        "This application contains public sector information licensed under the Open Government Licence v3.0.
+        The data is derived from a varity of NHS open
+        data API, wcich are maintained by Public Health Scotland. Data is sourced
         from the following links:
         "
       ),
