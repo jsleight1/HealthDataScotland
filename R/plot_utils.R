@@ -84,7 +84,9 @@ e_trend <- function(x, x_axis, y_axis) {
     e_line_(y_axis) |>
     e_tooltip(trigger = "axis") |>
     e_y_axis(name = y_axis) |>
-    e_x_axis(name = x_axis)
+    e_x_axis(name = x_axis) |>
+    e_datazoom() |>
+    e_toolbox(show = FALSE)
 }
 
 e_output_spinner <- function(...) {
