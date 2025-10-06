@@ -32,17 +32,19 @@ devtools::install_github("jsleight1/HealthDataScotland")
 
 ``` r
 gp_unit <- example_gp_unit()
-plot(gp_unit, type = "population_pyramid")
+gp_unit$metadata()
+gp_unit$plot(type = "population_pyramid")
 ```
 
 ``` r
 hospital_unit <- example_hospital_unit()
-plot(hospital_unit, type = "specialty_line")
+hospital_unit$metadata()
+hospital_unit$plot(type = "specialty_line")
 ```
 
 ``` r
 map_unit <- example_map_unit()
-plot(map_unit, type = "interactive_map")
+map_unit$plot(type = "interactive_map")
 ```
 
 ### Local shiny usage
