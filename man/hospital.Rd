@@ -2,14 +2,63 @@
 % Please edit documentation in R/hospital.R
 \name{hospital}
 \alias{hospital}
-\title{R6 class storing health statistics for a Hospital.}
+\title{R6 class storing health statistics for a single hospital.}
 \description{
-R6 class storing health statistics for a Hospital.
+R6 class storing health statistics for a single hospital.
 
-R6 class storing health statistics for a Hospital.
+R6 class storing health statistics for a single hospital.
+}
+\details{
+This R6 class is designed to store bed occupancy statistics for a single
+hospital location. This class can be used to plot summary statistics and
+create shiny UI/server objects.
+}
+\examples{
+library(dplyr)
+meta <- HealthDataScotland::example_hospital_metadata |>
+  rename("ID" = "HospitalCode", "HBName" = "HealthBoard") |>
+  filter(.data[["ID"]] == "A101H")
+data <- HealthDataScotland::example_hospital_data |>
+  rename("ID" = "Location") |>
+  filter(.data[["ID"]] == "A101H")
+x <- hospital[["new"]](meta, data)
+x[["ID"]]()
+x[["title"]]()
+x[["address"]]()
+x[["health_board"]]()
+x[["metadata"]]()
+x[["data"]]()
+x[["plot"]](type = "specialty_line")
+x[["plot_data"]](type = "specialty_line")
+x[["plot_info"]](type = "specialty_line")
+\dontrun{
+x[["ui"]]()
+x[["server"]]()
+}
+
+## ------------------------------------------------
+## Method `hospital$plot`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["plot"]](type = "specialty_line", data_type = "annual")
+
+## ------------------------------------------------
+## Method `hospital$plot_data`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["plot_data"]](type = "specialty_line", data_type = "annual")
+
+## ------------------------------------------------
+## Method `hospital$plot_info`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["plot_info"]](type = "specialty_line", data_type = "annual")
 }
 \section{Super class}{
-\code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{hospital}
+\code{HealthDataScotland::health_unit} -> \code{hospital}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -17,6 +66,7 @@ R6 class storing health statistics for a Hospital.
 \item \href{#method-hospital-available_plots}{\code{hospital$available_plots()}}
 \item \href{#method-hospital-plot}{\code{hospital$plot()}}
 \item \href{#method-hospital-plot_data}{\code{hospital$plot_data()}}
+\item \href{#method-hospital-plot_info}{\code{hospital$plot_info()}}
 \item \href{#method-hospital-ui}{\code{hospital$ui()}}
 \item \href{#method-hospital-server}{\code{hospital$server()}}
 \item \href{#method-hospital-clone}{\code{hospital$clone()}}
@@ -27,9 +77,11 @@ R6 class storing health statistics for a Hospital.
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="ID"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-ID'><code>HealthDataScotland::health_unit$ID()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-combine_data'><code>HealthDataScotland::health_unit$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-health_board'><code>HealthDataScotland::health_unit$health_board()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="metadata"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-metadata'><code>HealthDataScotland::health_unit$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="title"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-title'><code>HealthDataScotland::health_unit$title()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="validate"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-validate'><code>HealthDataScotland::health_unit$validate()</code></a></span></li>
@@ -40,8 +92,7 @@ R6 class storing health statistics for a Hospital.
 \if{html}{\out{<a id="method-hospital-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-hospital-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get character vector of available plots for hospital grp. Options
-are either "specialty_bar" or "specialty_line" plot.
+Get character vector of available plots for hospital grp
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{hospital$available_plots()}\if{html}{\out{</div>}}
 }
@@ -66,6 +117,15 @@ Character specifying plot type. See \code{available_plots} for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["plot"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-plot_data"></a>}}
@@ -82,10 +142,48 @@ Generate plot data for hospital unit.
 \item{\code{type}}{(character(1))\cr
 Character specifying plot type. See \code{available_plots} for options.}
 
-\item{\code{...}}{Passed to plot functions.}
+\item{\code{...}}{Passed to plot data functions.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["plot_data"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for hospital unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$plot_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots} for options.}
+
+\item{\code{...}}{Passed to plot info functions.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["plot_info"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-hospital-ui"></a>}}

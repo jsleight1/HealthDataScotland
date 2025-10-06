@@ -8,6 +8,49 @@ R6 class storing health statistics for a list of gp health units.
 
 R6 class storing health statistics for a list of gp health units.
 }
+\details{
+This R6 class is designed to store population demography data for multiple
+GP practices. This class can be used to plot summary statistics and
+create shiny UI/server objects.
+}
+\examples{
+gps <- lapply(c("10002", "10017"), example_gp_unit)
+x <- gp_grp[["new"]](gps, .id = "gp")
+x[["ID"]]()
+x[["IDs"]]()
+x[["titles"]]()
+x[["metadata"]]()
+x[["data"]]()
+x[["subset"]](id = "10002")
+x[["plot"]](type = "national_pyramid")
+x[["plot_data"]](type = "national_pyramid")
+x[["plot_info"]](type = "national_pyramid")
+\dontrun{
+x[["ui"]]()
+x[["server"]]()
+}
+
+## ------------------------------------------------
+## Method `gp_grp$plot`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["plot"]](type = "gp_bar")
+
+## ------------------------------------------------
+## Method `gp_grp$plot_data`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["plot_data"]](type = "gp_bar")
+
+## ------------------------------------------------
+## Method `gp_grp$plot_info`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["plot_info"]](type = "gp_bar")
+}
 \section{Super class}{
 \code{\link[HealthDataScotland:health_unitgrp]{HealthDataScotland::health_unitgrp}} -> \code{gp_grp}
 }
@@ -17,7 +60,7 @@ R6 class storing health statistics for a list of gp health units.
 \item \href{#method-gp_grp-available_plots}{\code{gp_grp$available_plots()}}
 \item \href{#method-gp_grp-plot}{\code{gp_grp$plot()}}
 \item \href{#method-gp_grp-plot_data}{\code{gp_grp$plot_data()}}
-\item \href{#method-gp_grp-summary}{\code{gp_grp$summary()}}
+\item \href{#method-gp_grp-plot_info}{\code{gp_grp$plot_info()}}
 \item \href{#method-gp_grp-ui}{\code{gp_grp$ui()}}
 \item \href{#method-gp_grp-server}{\code{gp_grp$server()}}
 \item \href{#method-gp_grp-clone}{\code{gp_grp$clone()}}
@@ -26,16 +69,14 @@ R6 class storing health statistics for a list of gp health units.
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ID"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ID'><code>HealthDataScotland::health_unitgrp$ID()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="IDs"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-IDs'><code>HealthDataScotland::health_unitgrp$IDs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-combine_data'><code>HealthDataScotland::health_unitgrp$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_handler'><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_server"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_server'><code>HealthDataScotland::health_unitgrp$download_server()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_ui"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_ui'><code>HealthDataScotland::health_unitgrp$download_ui()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="get_download"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-get_download'><code>HealthDataScotland::health_unitgrp$get_download()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="id"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-id'><code>HealthDataScotland::health_unitgrp$id()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ids"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ids'><code>HealthDataScotland::health_unitgrp$ids()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="sf"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-sf'><code>HealthDataScotland::health_unitgrp$sf()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-metadata'><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-titles'><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
@@ -46,8 +87,7 @@ R6 class storing health statistics for a list of gp health units.
 \if{html}{\out{<a id="method-gp_grp-available_plots"></a>}}
 \if{latex}{\out{\hypertarget{method-gp_grp-available_plots}{}}}
 \subsection{Method \code{available_plots()}}{
-Get character vector of available plots for gp grp. Options
-are either "population_pyramid" plot or "population_trend" plot.
+Get character vector of available plots for gp grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp_grp$available_plots()}\if{html}{\out{</div>}}
 }
@@ -73,12 +113,21 @@ for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["plot"]](type = "gp_bar")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp_grp-plot_data"></a>}}
 \if{latex}{\out{\hypertarget{method-gp_grp-plot_data}{}}}
 \subsection{Method \code{plot_data()}}{
-Generate plot data for gp grp.
+Get plot data for gp grp.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{gp_grp$plot_data(type, ...)}\if{html}{\out{</div>}}
 }
@@ -90,33 +139,49 @@ Generate plot data for gp grp.
 Character specifying plot type. See \code{available_plots}
 for options.}
 
-\item{\code{...}}{Passed to plot_data functions.}
+\item{\code{...}}{Passed to plot data functions.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["plot_data"]](type = "gp_bar")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gp_grp-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-gp_grp-summary}{}}}
-\subsection{Method \code{summary()}}{
-Summarise gp grp.
+\if{html}{\out{<a id="method-gp_grp-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-gp_grp-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for gp grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$summary(type, id = "Scotland national", ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$plot_info(type, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying summary type. See \code{available_plots}.}
+Character specifying plot type. See \code{available_plots}
+for options.}
 
-\item{\code{id}}{(character(1))\cr
-Character specifying the ID to assign to output data.frame}
-
-\item{\code{...}}{Passed to plot_data functions.}
+\item{\code{...}}{Passed to plot info functions.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["plot_info"]](type = "gp_bar")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp_grp-ui"></a>}}
@@ -124,13 +189,13 @@ Character specifying the ID to assign to output data.frame}
 \subsection{Method \code{ui()}}{
 Create UI for general practice group object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui(ns)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$ui(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{ns}}{Namespace of shiny application page.}
+\item{\code{...}}{Passed to functions.}
 }
 \if{html}{\out{</div>}}
 }

@@ -13,8 +13,6 @@ R6 class storing health statistics for a list of health units.
 \describe{
 \item{\code{.data}}{A list of health units in health unit grp.}
 
-\item{\code{.sf}}{A sf storing spatial information.}
-
 \item{\code{.id}}{A character ID of object.}
 }
 \if{html}{\out{</div>}}
@@ -24,17 +22,15 @@ R6 class storing health statistics for a list of health units.
 \itemize{
 \item \href{#method-health_unitgrp-new}{\code{health_unitgrp$new()}}
 \item \href{#method-health_unitgrp-validate}{\code{health_unitgrp$validate()}}
+\item \href{#method-health_unitgrp-metadata}{\code{health_unitgrp$metadata()}}
 \item \href{#method-health_unitgrp-data}{\code{health_unitgrp$data()}}
-\item \href{#method-health_unitgrp-sf}{\code{health_unitgrp$sf()}}
-\item \href{#method-health_unitgrp-id}{\code{health_unitgrp$id()}}
-\item \href{#method-health_unitgrp-ids}{\code{health_unitgrp$ids()}}
+\item \href{#method-health_unitgrp-combine_data}{\code{health_unitgrp$combine_data()}}
+\item \href{#method-health_unitgrp-ID}{\code{health_unitgrp$ID()}}
+\item \href{#method-health_unitgrp-IDs}{\code{health_unitgrp$IDs()}}
 \item \href{#method-health_unitgrp-titles}{\code{health_unitgrp$titles()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
-\item \href{#method-health_unitgrp-get_download}{\code{health_unitgrp$get_download()}}
 \item \href{#method-health_unitgrp-download_handler}{\code{health_unitgrp$download_handler()}}
-\item \href{#method-health_unitgrp-download_ui}{\code{health_unitgrp$download_ui()}}
-\item \href{#method-health_unitgrp-download_server}{\code{health_unitgrp$download_server()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
 }
@@ -44,7 +40,7 @@ R6 class storing health statistics for a list of health units.
 \subsection{Method \code{new()}}{
 Create instance of health unit grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$new(.data, .sf, .id)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$new(.data, .id)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -52,10 +48,6 @@ Create instance of health unit grp.
 \describe{
 \item{\code{.data}}{(\code{list})\cr
 A list of health units in health unit grp.}
-
-\item{\code{.sf}}{(\code{sf})
-A sf storing spatial information for
-health units.}
 
 \item{\code{.id}}{(\code{characer})
 A character ID of object.}
@@ -74,6 +66,16 @@ Validate structure of health unit grp.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-metadata}{}}}
+\subsection{Method \code{metadata()}}{
+Get combine metadata of health unit grp.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$metadata()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unitgrp-data"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-data}{}}}
 \subsection{Method \code{data()}}{
@@ -84,32 +86,32 @@ Get data of health unit grp.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-sf"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-sf}{}}}
-\subsection{Method \code{sf()}}{
-Get sf of health unit grp.
+\if{html}{\out{<a id="method-health_unitgrp-combine_data"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-combine_data}{}}}
+\subsection{Method \code{combine_data()}}{
+Get combined metadata and data in single data.frame.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$sf()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$combine_data()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-id"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-id}{}}}
-\subsection{Method \code{id()}}{
+\if{html}{\out{<a id="method-health_unitgrp-ID"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-ID}{}}}
+\subsection{Method \code{ID()}}{
 Get ID of health unit grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$id()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$ID()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-ids"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-ids}{}}}
-\subsection{Method \code{ids()}}{
-Get ids of stored health units
+\if{html}{\out{<a id="method-health_unitgrp-IDs"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-IDs}{}}}
+\subsection{Method \code{IDs()}}{
+Get IDs of stored health units
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$ids()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$IDs()}\if{html}{\out{</div>}}
 }
 
 }
@@ -160,51 +162,12 @@ Character specifying ID (or IDs) of object to obtain from group.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-get_download"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-get_download}{}}}
-\subsection{Method \code{get_download()}}{
-Get downloadable data.frame of health unit group.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$get_download()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unitgrp-download_handler"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-download_handler}{}}}
 \subsection{Method \code{download_handler()}}{
 Get download handler function of health unit group.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$download_handler()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-download_ui"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-download_ui}{}}}
-\subsection{Method \code{download_ui()}}{
-Create UI for health unit group object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$download_ui(ns, title = "Health data")}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{ns}}{Namespace of shiny application page.}
-
-\item{\code{title}}{Character title of box. Default is "Health data"}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-download_server"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-download_server}{}}}
-\subsection{Method \code{download_server()}}{
-Create server for health unit group object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$download_server()}\if{html}{\out{</div>}}
 }
 
 }

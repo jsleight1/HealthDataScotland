@@ -2,14 +2,65 @@
 % Please edit documentation in R/gp.R
 \name{gp}
 \alias{gp}
-\title{R6 class storing health statistics for a GP practice.}
+\title{R6 class storing health statistics for a single GP practice.}
 \description{
-R6 class storing health statistics for a GP practice.
+R6 class storing health statistics for a single GP practice.
 
-R6 class storing health statistics for a GP practice.
+R6 class storing health statistics for a single GP practice.
+}
+\details{
+This R6 class is designed to store population demography data for a single
+GP practice. This class can be used to plot summary statistics and
+create shiny UI/server objects.
+}
+\examples{
+library(dplyr)
+meta <- HealthDataScotland::example_gp_metadata |>
+  rename("ID" = "PracticeCode", "HBName" = "HB") |>
+  filter(.data[["ID"]] == "10002")
+data <- HealthDataScotland::example_gp_data |>
+  select(-"datasetID", -"HSCP") |>
+  rename("ID" = "PracticeCode") |>
+  filter(.data[["ID"]] == "10002")
+x <- gp[["new"]](meta, data)
+x[["ID"]]()
+x[["title"]]()
+x[["address"]]()
+x[["telephone"]]()
+x[["health_board"]]()
+x[["metadata"]]()
+x[["data"]]()
+x[["plot"]](type = "population_pyramid")
+x[["plot_data"]](type = "population_pyramid")
+x[["plot_info"]](type = "population_pyramid")
+\dontrun{
+x[["ui"]]()
+x[["server"]]()
+}
+
+## ------------------------------------------------
+## Method `gp$plot`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["plot"]](type = "population_pyramid")
+
+## ------------------------------------------------
+## Method `gp$plot_data`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["plot_data"]](type = "population_pyramid")
+
+## ------------------------------------------------
+## Method `gp$plot_info`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["plot_info"]](type = "population_pyramid")
 }
 \section{Super class}{
-\code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{gp}
+\code{HealthDataScotland::health_unit} -> \code{gp}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -18,6 +69,7 @@ R6 class storing health statistics for a GP practice.
 \item \href{#method-gp-available_plots}{\code{gp$available_plots()}}
 \item \href{#method-gp-plot}{\code{gp$plot()}}
 \item \href{#method-gp-plot_data}{\code{gp$plot_data()}}
+\item \href{#method-gp-plot_info}{\code{gp$plot_info()}}
 \item \href{#method-gp-ui}{\code{gp$ui()}}
 \item \href{#method-gp-server}{\code{gp$server()}}
 \item \href{#method-gp-clone}{\code{gp$clone()}}
@@ -28,9 +80,11 @@ R6 class storing health statistics for a GP practice.
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="ID"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-ID'><code>HealthDataScotland::health_unit$ID()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-combine_data'><code>HealthDataScotland::health_unit$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-health_board'><code>HealthDataScotland::health_unit$health_board()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="metadata"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-metadata'><code>HealthDataScotland::health_unit$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="popup_modal"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-popup_modal'><code>HealthDataScotland::health_unit$popup_modal()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="title"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-title'><code>HealthDataScotland::health_unit$title()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="validate"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-validate'><code>HealthDataScotland::health_unit$validate()</code></a></span></li>
@@ -78,6 +132,15 @@ for options.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["plot"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-plot_data"></a>}}
@@ -95,10 +158,49 @@ Generate plot data for gp unit.
 Character specifying plot type. See \code{available_plots}
 for options.}
 
-\item{\code{...}}{Passed to plot_data functions.}
+\item{\code{...}}{Passed to plot data functions.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["plot_data"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-plot_info"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-plot_info}{}}}
+\subsection{Method \code{plot_info()}}{
+Get plot info for gp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$plot_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying plot type. See \code{available_plots}
+for options.}
+
+\item{\code{...}}{Passed to plot info functions.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["plot_info"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-gp-ui"></a>}}

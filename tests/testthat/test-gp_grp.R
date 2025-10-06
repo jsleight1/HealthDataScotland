@@ -1,99 +1,119 @@
-gp_unit <- gp_data |>
-    filter(.data[["ID"]] == "10002") |>
-    gp[["new"]]()
-
-gp_unit2 <- gp_data |>
-    filter(.data[["ID"]] == "10017") |>
-    gp[["new"]]()
-
-capture_output(sf <- get_sf())
-
-sf <- sf[sf[["ID"]] %in% c("10002", "10017"), ]
-
-gp_grp_unit <- gp_grp[["new"]](list(gp_unit, gp_unit2), .sf = sf, .id = "gp")
+gp_unit <- example_gp_unit(id = "10002")
+gp_unit2 <- example_gp_unit(id = "10017")
+gp_grp_unit <- example_gp_grp_unit()
 
 test_that("gp_grp class works", {
-    list(gp_unit, "gp_unit") |>
-        gp_grp[["new"]](.sf = sf, .id = "gp") |>
-        expect_error("group must contain the same class of health units")
+  list(gp_unit, "gp_unit") |>
+    gp_grp[["new"]](.id = "gp") |>
+    expect_error("group must contain the same class of health units")
 
-    list(gp_unit, gp_unit2) |>
-        gp_grp[["new"]](.sf = "sf", .id = "gp") |>
-        expect_error("sf must be sf object")
+  list(gp_unit, gp_unit2) |>
+    gp_grp[["new"]](.id = 1) |>
+    expect_error("ID must be character of length 1")
 
-    tst_sf <- sf[sf[["ID"]] == "10002", ]
+  list(gp_unit, gp_unit) |>
+    gp_grp[["new"]](.id = "gp") |>
+    expect_error("Health units must not be duplicated")
 
-    list(gp_unit, gp_unit2) |>
-        gp_grp[["new"]](.sf = tst_sf, .id = "gp") |>
-        expect_error("Are all health units present in sf")
+  output <- list(gp_unit, gp_unit2) |>
+    gp_grp[["new"]](.id = "gp") |>
+    expect_no_error()
 
-    list(gp_unit, gp_unit2) |>
-        gp_grp[["new"]](.sf = sf, .id = 1) |>
-        expect_error("ID must be character of length 1")
-
-    list(gp_unit, gp_unit) |>
-        gp_grp[["new"]](.sf = bind_rows(tst_sf, tst_sf), .id = "gp") |>
-        expect_error("Health units must not be duplicated")
-
-    out <- list(gp_unit, gp_unit2) |>
-        gp_grp[["new"]](.sf = sf, .id = "gp") |>
-        expect_no_error()
-
-    expect_true(inherits(out, "gp_grp"))
-    expect_identical(out[["id"]](), "gp")
-    expect_identical(out[["ids"]](), c("10002", "10017"))
-    expect_identical(out[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
-    expect_identical(out[["data"]](), list(gp_unit, gp_unit2))
-    expect_identical(out[["sf"]](), sf)
-    expect_identical(out[["health_unit"]]("10002"), gp_unit)
-    expect_identical(out[["available_plots"]](),
-        c("population_pyramid", "population_trend"))
+  expect_true(inherits(output, "gp_grp"))
+  expect_identical(output[["ID"]](), "gp")
+  expect_identical(output[["IDs"]](), c("10002", "10017"))
+  expect_identical(output[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
+  expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
+  expect_identical(output[["health_unit"]]("10002"), gp_unit)
+  expect_identical(
+    output[["available_plots"]](),
+    c(
+      "national_trend", "national_pyramid", "health_board_trend",
+      "health_board_bar", "gp_trend", "gp_bar"
+    )
+  )
 })
 
 test_that("gp_grp class can be plotted", {
-    gp_grp_unit[["plot"]](type = "population_pyramid", date = 20240401) |>
-        suppressWarnings() |>
-        expect_s3_class("plotly")
-    expect_s3_class(gp_grp_unit[["plot"]](type = "population_trend"), "plotly")
+  for (plt in gp_grp_unit[["available_plots"]]()) {
+    output <- gp_grp_unit[["plot"]](type = plt) |>
+      expect_no_error()
+    expect_s3_class(output, "echarts4r")
+  }
 })
 
-test_that("gp_grp plot data works", {
-    out <- gp_grp_unit[["plot_data"]](
-            type = "population_trend",
-            practices = "10002"
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
+test_that("gp_grp plot info works", {
+  for (plt in gp_grp_unit[["available_plots"]]()) {
+    gp_grp_unit[["plot_info"]](type = plt) |>
+      expect_snapshot()
+  }
+})
 
-    out <- gp_grp_unit[["plot_data"]](
-            type = "population_pyramid",
-            date = 20240401,
-            practices = "10002"
-        ) |>
-        expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_snapshot_output(as.data.frame(out))
+test_that("gp_grp plot functions error if wrong type", {
+  gp_grp_unit[["plot"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  gp_grp_unit[["plot_data"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  gp_grp_unit[["plot_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
 
-    gp_grp_unit[["plot_data"]](type = "p") |>
-        expect_error("`type` must be one.+")
+test_that("national_trend_data works", {
+  output <- gp_grp_unit[["plot_data"]](type = "national_trend") |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "national_trend_data")
+})
+
+test_that("national_pyramid_data works", {
+  output <- gp_grp_unit[["plot_data"]](type = "national_pyramid") |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "national_pyramid_data")
+})
+
+test_that("health_board_trend_data works", {
+  output <- gp_grp_unit[["plot_data"]](type = "health_board_trend") |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "health_board_trend_data")
+})
+
+test_that("health_board_bar_data works", {
+  output <- gp_grp_unit[["plot_data"]](type = "health_board_bar") |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "health_board_bar_data")
+})
+
+test_that("gp_trend_data works", {
+  output <- gp_grp_unit[["plot_data"]](type = "gp_trend") |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "gp_trend_data")
+})
+
+test_that("gp_bar_data works", {
+  output <- gp_grp_unit[["plot_data"]](type = "gp_bar") |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "gp_bar_data")
 })
 
 test_that("gp_grp subset works", {
-    gp_grp_unit[["subset"]]("ID") |>
-        expect_error("ids are not found in health unit group")
+  gp_grp_unit[["subset"]]("ID") |>
+    expect_error("IDs are not found in health unit group")
 
-    out <- gp_grp_unit[["subset"]]("10002") |>
-        expect_no_error()
+  output <- gp_grp_unit[["subset"]]("10002") |>
+    expect_no_error()
 
-    expect_true(inherits(out, "gp_grp"))
-    expect_identical(out[["ids"]](), "10002")
-    expect_identical(out[["sf"]]()[["ID"]], "10002")
+  expect_true(inherits(output, "gp_grp"))
+  expect_identical(output[["IDs"]](), "10002")
 })
 
-test_that("gp_grp get_download works", {
-    out <- gp_grp_unit[["get_download"]]() |>
-       expect_no_error()
-    expect_s3_class(out, "data.frame")
-    expect_identical(gp_grp_unit[["ids"]](), unique(out[["ID"]]))
+test_that("gp_grp combine_data works", {
+  output <- gp_grp_unit[["combine_data"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_identical(gp_grp_unit[["IDs"]](), unique(output[["ID"]]))
 })

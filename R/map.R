@@ -1,214 +1,247 @@
-map_UI <- function(id, boards) {
-    ns <- NS(id)
-    tabPanel(
-        "Map",
-        pickerInput(
-            inputId = ns("board_select"),
-            label =  "Select health board",
-            choices = boards,
-            selected = boards,
-            inline = TRUE,
-            multiple = TRUE,
-            options = list(
-                `actions-box` = TRUE,
-                `selected-text-format` = "count > 1"
-            )
-        ),
-        pickerInput(
-            ns("health_select"),
-            label = "Display health centre types",
-            choices = c("General practice", "Hospital"),
-            selected = c("General practice", "Hospital"),
-            inline = TRUE,
-            multiple = TRUE
-        ),
-        spinner(leafletOutput(ns("map"), height = 700)),
-        width = 12
-    )
-}
-
-map_server <- function(id, data, boards) {
-    moduleServer(
-        id,
-        function(input, output, session) {
-            ns <- session[["ns"]]
-
-            pin_sf <- data |>
-                map(~.x[["sf"]]()) |>
-                reduce(bind_rows)
-
-            observe({
-                leafletProxy(id) |> clearPopups()
-                event <- input[[paste0(id, "_marker_click")]]
-                if (is.null(event)) return()
-                id <- strsplit(event[["id"]], ":")[[1]][[1]]
-                type <- strsplit(event[["id"]], ":")[[1]][[2]]
-                obj <- data[[type]][["health_unit"]](id)
-                isolate(obj[["popup_modal"]](ns))
-            })
-
-            pin_data <- reactive({
-                health_boards <- input[["board_select"]]
-                centre_types <- input[["health_select"]]
-                pin_sf[pin_sf[["type"]] %in% centre_types & pin_sf[["hbcode"]] %in% health_boards, ]
-            })
-
-            selected_pins <- reactiveVal()
-            observeEvent(input[[paste0(id, "_draw_new_feature")]], {
-                out <- find_locations(
-                    shape = input[[paste0(id, "_draw_new_feature")]],
-                    location_coordinates = sf::as_Spatial(pin_data()),
-                    location_id_colnames = c("ID", "type")
-                )
-                if (is.null(selected_pins())) {
-                    selected_pins(out)
-                } else {
-                    selected_pins(bind_rows(out, selected_pins()))
-                }
-            })
-
-            observeEvent(input[[paste0(id, "_draw_deleted_features")]], {
-                selected_pins(NULL)
-            })
-
-            selected_data <- reactiveVal()
-            observe({
-                x <- selected_pins()
-                if (is.null(x) || !length(x)) {
-                    selected_data(NULL)
-                } else {
-                    selected_data(subset_selected_data(x, data))
-                }
-            })
-
-            output[["map"]] <- renderLeaflet({
-                leaflet() |>
-                    addTiles() |>
-                    addAwesomeMarkers(
-                        layerId = ~paste0(as.character(ID), ":", as.character(type)),
-                        icon = ~pin_icon(type),
-                        clusterOptions = markerClusterOptions(
-                            showCoverageOnHover = FALSE
-                        ),
-                        data = pin_data()
-                    ) |>
-                    addPolygons(
-                        fillOpacity = 0.01,
-                        smoothFactor = 0.1,
-                        weight = 2,
-                        color = "#377EB8",
-                        label = as_tibble(boards)[["HBName"]],
-                        layerId = ~as.character(ID),
-                        data = boards
-                    ) |>
-                    leaflet.extras::addDrawToolbar(
-                        polylineOptions = FALSE,
-                        markerOptions = FALSE,
-                        circleMarkerOptions = FALSE,
-                        polygonOptions = leaflet.extras::drawPolygonOptions(
-                            shapeOptions = leaflet.extras::drawShapeOptions(
-                                fillOpacity = 0,
-                                color = "red"
-                            )
-                        ),
-                        rectangleOptions = leaflet.extras::drawRectangleOptions(
-                            shapeOptions = leaflet.extras::drawShapeOptions(
-                                fillOpacity = 0,
-                                color = "red"
-                            )
-                        ),
-                        circleOptions = FALSE,
-                        editOptions = leaflet.extras::editToolbarOptions(
-                            edit = FALSE
-                        )
-                    )
-            })
-
-            return(selected_data)
-        }
-    )
-}
-
-pin_icon <- function(type, ...) {
-    awesomeIcons(
+#' R6 class for creating interactive map of health units.
+#'
+#' This R6 class is designed to store sf spatial data for GP practices,
+#' hospitals and health boards. This class is used to create a map
+#' with interactive pins of health centres.
+#'
+#' @examples
+#' x <- example_map_unit()
+#' x[["id"]]()
+#' x[["title"]]()
+#' x[["sf"]]()
+#' x[["plot"]](type = "interactive_map")
+#' x[["plot_data"]](type = "interactive_map")
+#' x[["plot_info"]](type = "interactive_map")
+map <- R6Class("map",
+  private = list(
+    required_sf_cols = function() {
+      c("ID", "type")
+    },
+    interactive_map = function(...) {
+      data <- self[["plot_data"]](type = "interactive_map", ...)
+      boards <- self[["sf"]]()[self[["sf"]]()[["type"]] == "board", ]
+      leaflet() |>
+        addTiles() |>
+        addAwesomeMarkers(
+          layerId = ~ paste0(as.character(ID), ":", as.character(type)),
+          icon = ~ private[["pin_icon"]](type),
+          clusterOptions = markerClusterOptions(
+            showCoverageOnHover = FALSE
+          ),
+          label = ~ as.character(ID),
+          data = data
+        ) |>
+        addPolygons(
+          fillOpacity = 0.01,
+          smoothFactor = 0.1,
+          weight = 2,
+          color = "#377EB8",
+          label = as_tibble(boards)[["HBName"]],
+          layerId = ~ as.character(ID),
+          data = boards
+        )
+    },
+    pin_icon = function(type, ...) {
+      awesomeIcons(
         icon = "ios-close",
         iconColor = "white",
         library = "ion",
-        markerColor = ifelse(type == "General practice", "blue", "red"),
+        markerColor = ifelse(type == "gp", "blue", "red"),
         ...
-    )
-}
-
-# Based on findLocations in geoshaper (https://github.com/RedOakStrategic/geoshaper/blob/master/R/findLocations.R)
-find_locations <- function(shape, location_coordinates, location_id_colnames) {
-    polygon_coordinates <- shape[["geometry"]][["coordinates"]]
-    feature_type <- shape[["properties"]][["feature_type"]]
-
-    drawn_polygon <- sp::Polygon(
-        do.call(
-            rbind,
-            lapply(polygon_coordinates[[1]], function(x){
-                c(x[[1]][1],x[[2]][1])
-            })
+      )
+    },
+    interactive_map_data = function(ids = private[["all_pin_ids"]]()) {
+      self[["sf"]]()[self[["sf"]]()[["ID"]] %in% ids, ]
+    },
+    all_pin_ids = function() {
+      self[["sf"]]()[self[["sf"]]()[["type"]] != "board", ][["ID"]]
+    },
+    interactive_map_info = function() {
+      "The interactive map below can be used to visualise individual GP
+        practice or hospital data sets"
+    }
+  ),
+  public = list(
+    #' @field .sf A sf spatial data.frame storing spatial data for health units.
+    .sf = NA,
+    #' @field .id Character ID of object.
+    .id = NA,
+    #' @field .title Character title of object.
+    .title = NA,
+    #' @description
+    #' Create instance of map.
+    #' @param .sf (`sf`)\cr
+    #'   A sf spatial data.frame storing spatial data for health units.
+    #' @param .id (character(1))\cr
+    #'   Character id of object. Default is "map".
+    #' @param .title (character(1))\cr
+    #'   Character title of object. Default is "Interactive Map".
+    initialize = function(.sf, .id = "map", .title = "Interactive Map") {
+      self[[".sf"]] <- .sf
+      self[[".id"]] <- .id
+      self[[".title"]] <- .title
+      self[["validate"]]()
+    },
+    #' @description
+    #' Validate structure of map object.
+    validate = function() {
+      assert_that(inherits(self[["sf"]](), "sf"),
+        msg = "sf must be sf spatial data.frame"
+      )
+      col_check <- private[["required_sf_cols"]]() %in% colnames(self[["sf"]]())
+      assert_that(all(col_check),
+        msg = paste(
+          paste(private[["required_sf_cols"]]()[!col_check], collapse = ", "),
+          glue("column missing from sf")
         )
-    )
-
-    selected_locs <- sp::over(
-        location_coordinates,
-        sp::SpatialPolygons(
-            list(sp::Polygons(list(drawn_polygon),"drawn_polygon"))
-        )
-    )
-
-    out <- location_coordinates[which(!is.na(selected_locs)), location_id_colnames]
-    as_tibble(out)
-}
-
-subset_selected_data <- function(x, data) {
-    x <- group_split(x, .data[["type"]])
-    names(x) <- map_chr(x, ~unique(.x[["type"]]))
-    map(x, ~data[[unique(.x[["type"]])]][["subset"]](.x[["ID"]]))
-}
-
-map_comparison_UI <- function(id) {
-    ns <- NS(id)
-    tabPanel(
-        "Comparison",
-        fluidRow(uiOutput(ns("comparison_boxes")))
-    )
-}
-
-map_comparison_server <- function(id, data) {
-     moduleServer(
-        id,
+      )
+      self
+    },
+    #' @description
+    #' Get sf spatial data.frame of map object.
+    sf = function() {
+      self[[".sf"]]
+    },
+    #' @description
+    #' Get id of map object.
+    id = function() {
+      self[[".id"]]
+    },
+    #' @description
+    #' Get title of map object.
+    title = function() {
+      self[[".title"]]
+    },
+    #' @description
+    #' Get character vector of available plots for map object.
+    available_plots = function() {
+      "interactive_map"
+    },
+    #' @description
+    #' Plot map object.
+    #' @param type (character(1))\cr
+    #'     Character specifying plot type. See `available_plots`
+    #'   for options.
+    #' @param ... Passed to plot functions.
+    #' @examples
+    #' x <- example_map_unit()
+    #' x[["plot"]](type = "interactive_map")
+    plot = function(type, ...) {
+      type <- arg_match(type, values = self[["available_plots"]]())
+      switch(type,
+        "interactive_map" = private[["interactive_map"]](...)
+      )
+    },
+    #' @description
+    #' Generate plot data for map object.
+    #' @param type (character(1))\cr
+    #'     Character specifying plot type. See `available_plots`
+    #'   for options.
+    #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_map_unit()
+    #' x[["plot_data"]](type = "interactive_map")
+    plot_data = function(type, ...) {
+      type <- arg_match(type, values = self[["available_plots"]]())
+      switch(type,
+        "interactive_map" = private[["interactive_map_data"]]
+      )(...)
+    },
+    #' @description
+    #' Get plot infot for map object.
+    #' @param type (character(1))\cr
+    #'     Character specifying plot type. See `available_plots`
+    #'   for options.
+    #' @param ... Passed to plot data functions.
+    #' @examples
+    #' x <- example_map_unit()
+    #' x[["plot_info"]](type = "interactive_map")
+    plot_info = function(type, ...) {
+      type <- arg_match(type, values = self[["available_plots"]]())
+      switch(type,
+        "interactive_map" = private[["interactive_map_info"]]
+      )(...)
+    },
+    #' @description
+    #' Create ui for map object.
+    #' @param ... Passed to methods.
+    ui = function(...) {
+      ns <- NS(self[["id"]]())
+      card(
+        full_screen = TRUE,
+        card_header(
+          self[["title"]](),
+          help_popover(
+            id = ns("map-help"),
+            self[["plot_info"]](type = "interactive_map")
+          ),
+          settings_popover(
+            id = ns("map-settings"),
+            virtual_select_input(
+              ns("health_select"),
+              label = "Display health centre types",
+              choices = c("General practice" = "gp", "Hospital" = "hospital"),
+              selected = c("gp", "hospital"),
+              inline = TRUE,
+              multiple = TRUE
+            ),
+            title = "Map settings"
+          )
+        ),
+        leafletOutput(ns("map"), width = "100%", height = "100%")
+      )
+    },
+    #' @description
+    #' Create server for map object.
+    #' @param data (list)\cr
+    #'    List of with gp_grp and hospital_grp objects to use for interactive
+    #'    map pop-up modals.
+    server = function(data) {
+      moduleServer(
+        self[["id"]](),
         function(input, output, session) {
-            ns <- session[["ns"]]
-            output[["comparison_boxes"]] <- renderUI({
-                if (is.null(data())) {
-                    show_alert(
-                        title = "Warning",
-                        text = "No data selected",
-                        type = "warning"
-                    )
-                } else {
-                    if (any(purrr::map_lgl(data(), ~length(.x[["ids"]]()) > 10))) {
-                        show_alert(
-                            title = "Warning",
-                            text = "
-                                Please be aware that selecting > 10 datasets can cause
-                                issues with data performance and presentation.
-                            ",
-                            type = "warning"
-                        )
-                    }
-                    purrr::walk(data(), ~.x[["server"]]())
-                    purrr::map(data(), ~.x[["ui"]](ns))
-                }
-            })
-        }
-    )
-}
+          ns <- session[["ns"]]
 
-spinner <- function(...) {
-    addSpinner(..., spin = "bounce", color = "#377EB8")
+          observe({
+            log_info("Creating selected map pin pop-up")
+            id <- self[["id"]]()
+            leafletProxy(id) |> clearPopups()
+            event <- input[[paste0(id, "_marker_click")]]
+            if (is.null(event)) {
+              return()
+            }
+            id <- strsplit(event[["id"]], ":")[[1]][[1]]
+            type <- strsplit(event[["id"]], ":")[[1]][[2]]
+            obj <- data[[type]][["health_unit"]](id)
+            isolate(obj[["popup_modal"]](ns))
+          })
+
+          pin_ids <- reactive({
+            centre_types <- req(input[["health_select"]])
+            pin_sf <- self[["sf"]]()
+            pin_sf[pin_sf[["type"]] %in% centre_types, ][["ID"]]
+          })
+
+          output[["map"]] <- renderLeaflet({
+            log_info("Creating interactive map")
+            self[["plot"]](type = "interactive_map", ids = pin_ids())
+          })
+        }
+      )
+    }
+  )
+)
+
+#' Get example map object.
+#' @examples
+#' example_map_unit()
+#' @export
+example_map_unit <- function() {
+  filtered_sf <- function(x, type) {
+    sf <- get_sf(type)
+    sf <- sf[sf[["ID"]] %in% x[["IDs"]](), ]
+  }
+  gp_sf <- filtered_sf(example_gp_grp_unit(), "gp")
+  hosp_sf <- filtered_sf(example_hospital_grp_unit(), "hospital")
+  create_map_unit(list(list("sf" = gp_sf), list("sf" = hosp_sf)))
 }

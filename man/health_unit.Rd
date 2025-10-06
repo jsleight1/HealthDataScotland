@@ -11,7 +11,9 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{.data}}{A data.frame storing health statistics.}
+\item{\code{.metadata}}{A data.frame storing meatadata for health unit}
+
+\item{\code{.data}}{A data.frame storing health statistics for health unit.}
 }
 \if{html}{\out{</div>}}
 }
@@ -20,7 +22,9 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \itemize{
 \item \href{#method-health_unit-new}{\code{health_unit$new()}}
 \item \href{#method-health_unit-validate}{\code{health_unit$validate()}}
+\item \href{#method-health_unit-metadata}{\code{health_unit$metadata()}}
 \item \href{#method-health_unit-data}{\code{health_unit$data()}}
+\item \href{#method-health_unit-combine_data}{\code{health_unit$combine_data()}}
 \item \href{#method-health_unit-ID}{\code{health_unit$ID()}}
 \item \href{#method-health_unit-title}{\code{health_unit$title()}}
 \item \href{#method-health_unit-address}{\code{health_unit$address()}}
@@ -35,14 +39,17 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \subsection{Method \code{new()}}{
 Create instance of health unit.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unit$new(.data)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$new(.metadata, .data)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{.metadata}}{(\code{data.frame})\cr
+A data.frame storing metadata for health unit.}
+
 \item{\code{.data}}{(\code{data.frame})\cr
-A data.frame storing health statistics.}
+A data.frame storing health statistics for health unit.}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,12 +65,32 @@ Validate structure of health unit.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unit-metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-metadata}{}}}
+\subsection{Method \code{metadata()}}{
+Get metadata of health unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$metadata()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unit-data"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unit-data}{}}}
 \subsection{Method \code{data()}}{
 Get data of health unit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unit$data()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unit-combine_data"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-combine_data}{}}}
+\subsection{Method \code{combine_data()}}{
+Get combined metadata and data in single data.frame.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$combine_data()}\if{html}{\out{</div>}}
 }
 
 }
