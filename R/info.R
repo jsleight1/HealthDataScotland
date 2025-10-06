@@ -83,8 +83,16 @@ package_panel <- function() {
       p("- ", tags$a(href = "https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b", target = "_blank", "Hospital spatial data")),
       p("- ", tags$a(href = "https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd", target = "_blank", "GP spatial data")),
       p(
-        " Further details on the package structure and data workflow can be found using the HealthDataScotland ",
-        tags$a(href = "https://jsleight1.github.io/HealthDataScotland/", target = "_blank", "documentation.")
+        "Details of the full data workflow can be found using the HealthDataScotland",
+        tags$a(href = "https://jsleight1.github.io/HealthDataScotland/articles/data_workflow.html", target = "_blank", "documentation.")
+      ),
+      h3("Disclaimer"),
+      p(
+        "The workflows outlined in the documentation provide a rough guide as to which public data sets are
+        being used and how they are being manipulated. It is worth emphasising, however, that this application is primarily a hobby project. Therefore any
+        decisions should not be made using the data without consulting the original
+        published data sets.",
+        style="color: red"
       )
     )
   )
