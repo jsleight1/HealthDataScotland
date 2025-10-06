@@ -70,7 +70,7 @@ package_panel <- function() {
       ),
       p(
         "This application contains public sector information licensed under the Open Government Licence v3.0.
-        The data is derived from a varity of NHS open
+        The data is derived from a variety of NHS open
         data API, wcich are maintained by Public Health Scotland. Data is sourced
         from the following links:
         "
