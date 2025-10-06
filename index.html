@@ -36,7 +36,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/health_unit.html">Introduction to health units</a></li>
+<li><a class="dropdown-item" href="articles/data_workflow.html">Data workflow</a></li>
+    <li><a class="dropdown-item" href="articles/health_unit.html">Introduction to health units</a></li>
     <li><a class="dropdown-item" href="articles/map.html">Introduction to map units</a></li>
   </ul>
 </li>
@@ -58,14 +59,39 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>This repository contains an R package for the HealthDataScotland shiny application. This shiny application downloads, processes and presents demographic and bed capacity data related to GP practices and hospitals across Scotland, respectively.</p>
+<p>This repository contains an R package for the <a href="https://www.healthdatascotland.co.uk/" target="_blank" class="external-link">HealthDataScotland</a> shiny application. This shiny application downloads, processes and presents demographic and bed capacity data related to GP practices and hospitals across Scotland, respectively.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install HealthDataScotland from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jsleight1/HealthDataScotland"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
+<div class="section level3">
+<h3 id="r6-objects">R6 objects<a class="anchor" aria-label="anchor" href="#r6-objects"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_unit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/example_gp_unit.html">example_gp_unit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">gp_unit</span>, type <span class="op">=</span> <span class="st">"population_pyramid"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_unit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/example_hospital_unit.html">example_hospital_unit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">hospital_unit</span>, type <span class="op">=</span> <span class="st">"specialty_line"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">map_unit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/example_map_unit.html">example_map_unit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">map_unit</span>, type <span class="op">=</span> <span class="st">"interactive_map"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="local-shiny-usage">Local shiny usage<a class="anchor" aria-label="anchor" href="#local-shiny-usage"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"R_CONFIG_ACTIVE"</span> <span class="op">=</span> <span class="st">"development"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/save_processed_data.html">save_processed_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/health_data_scotland.html">health_data_scotland</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Please refer to the <a href="https://jsleight1.github.io/HealthDataScotland/">documentation</a> for further details regarding the design and usage of this package.</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

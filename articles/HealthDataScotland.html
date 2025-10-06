@@ -36,7 +36,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/health_unit.html">Introduction to health units</a></li>
+<li><a class="dropdown-item" href="../articles/data_workflow.html">Data workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/health_unit.html">Introduction to health units</a></li>
     <li><a class="dropdown-item" href="../articles/map.html">Introduction to map units</a></li>
   </ul>
 </li>
@@ -75,25 +76,16 @@
 </div>
 <section class="level2"><h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>HealthDataScotland is an R shiny application that presents GP practice demographic and hospital bed capacity data across Scotland. This vignette will outline the workflow used to download, process and store the data used by the application, and describe the development process used to maintain and host the application.</p>
+<p><a href="https://www.healthdatascotland.co.uk" target="_blank" class="external-link">HealthDataScotland</a> is an R shiny application that presents GP practice demographic and hospital bed capacity data across Scotland. This vignette will outline the workflow used to download, process and store the data used by the application, and describe the development process used to maintain and host the application.</p>
 </section><section class="level2"><h2 id="data-workflow-and-storage">Data workflow and storage<a class="anchor" aria-label="anchor" href="#data-workflow-and-storage"></a>
 </h2>
-<p>The data used in HealthDataScotland is derived from the NHS open data API and is maintained by Public Health Scotland. The following data sets are used:</p>
-<ul>
-<li><a href="https://www.opendata.nhs.scot/dataset/gp-practice-contact-details-and-list-sizes" class="external-link">GP metadata</a></li>
-<li><a href="https://www.opendata.nhs.scot/dataset/gp-practice-populations" class="external-link">GP demography data</a></li>
-<li><a href="https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd" class="external-link">GP spatial data</a></li>
-<li><a href="https://www.opendata.nhs.scot/dataset/hospital-codes" class="external-link">Hospital metadata</a></li>
-<li><a href="https://www.opendata.nhs.scot/dataset/annual-hospital-beds-information" class="external-link">Hospital bed occupancy data</a></li>
-<li><a href="https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b" class="external-link">Hospital spatial data</a></li>
-</ul>
-<p>These data sets are downloaded and processed into a series of data.frames that are stored in a .RDS file in an Azure blob. This Azure blob is accessed when the shiny application launches. The data set is periodically updated every 6 months using a GitHub action.</p>
+<p>This application contains public sector information licensed under the Open Government Licence v3.0. The data used in HealthDataScotland is derived from a variety of sources on the NHS open data API, which is maintained by Public Health Scotland. For more information regarding the data workflow, please refer to <code><a href="../articles/data_workflow.html">vignette("data_workflow")</a></code>.</p>
 </section><section class="level2"><h2 id="deployment">Deployment<a class="anchor" aria-label="anchor" href="#deployment"></a>
 </h2>
-<p>HealthDataScotland is deployed using the Azure container app platform. This uses a docker container that is published on <a href="https://hub.docker.com/repository/docker/jsleight1/healthdatascotland" class="external-link">docker.io</a>.</p>
+<p>HealthDataScotland is deployed using the Azure container app platform, which uses a docker container that is published on <a href="https://hub.docker.com/repository/docker/jsleight1/healthdatascotland" class="external-link">docker.io</a>.</p>
 </section><section class="level2"><h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
 </h2>
-<p>As previously mentioned HealthDataScotland has its own docker image that is published on <a href="https://hub.docker.com/repository/docker/jsleight1/healthdatascotland" class="external-link">docker.io</a>. The decision to use containerisation for this shiny application was to ensure reproducibility across the entire workflow of the application from the data processing to deployment. The docker image is updated every time a pull request is merged into the master branch. The latest docker image is then pulled into production by the Azure container app service.</p>
+<p>The decision to use containerisation for this shiny application was to ensure reproducibility across the entire workflow of the application from the data processing to app deployment. The docker image is updated every time a pull request is merged into the main branch. The latest docker image is then pulled into production by the Azure container app service.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
