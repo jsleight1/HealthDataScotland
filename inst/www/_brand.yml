@@ -48,3 +48,36 @@ defaults:
         color: var(--brand-white);
         text-align: center;
       }
+      // Customise button colour
+      .btn {
+        --bs-btn-bg: transparent;
+        --bs-btn-color: var(--brand-blue);
+        --bs-btn-hover-bg: var(--brand-blue);
+        --bs-btn-border-color: var(--brand-blue);
+      }
+      .btn-outline-default, .btn-default:not(.btn-primary,.btn-secondary,.btn-info,.btn-success,.btn-danger,.btn-warning,.btn-light,.btn-dark,.btn-link,[class*="btn-outline-"]) {
+        --bs-btn-bg: transparent;
+        --bs-btn-color: var(--brand-blue);
+        --bs-btn-hover-bg: var(--brand-blue);
+        --bs-btn-border-color: var(--brand-blue);
+      }
+      // Customise datatable page numbers
+      .pagination {
+        --bs-pagination-color: var(--brand-blue);
+        --bs-pagination-hover-color: var(--brand-blue);
+        --bs-pagination-focus-color: var(--brand-blue);
+        --bs-pagination-active-bg: var(--brand-blue);
+        --bs-pagination-active-border-color: var(--brand-blue);
+        --bs-pagination-disabled-color: var(--brand-blue);
+      }
+      // Customise tab set colours
+      .nav-tabs .nav-link {
+        color: var(--brand-blue);
+      }
+      //Customise nav_menu color
+      .dropdown-item.active {
+        background-color: var(--brand-blue);
+      }
+      .dropdown-menu>li>a:active {
+        background-color: var(--brand-blue);
+      }
