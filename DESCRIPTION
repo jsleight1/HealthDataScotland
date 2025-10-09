@@ -19,6 +19,7 @@ Imports:
     bsicons,
     config,
     dplyr,
+    DT,
     echarts4r,
     glue,
     htmlwidgets,

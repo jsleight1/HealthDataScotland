@@ -23,6 +23,7 @@ test_that("gp_grp class works", {
   expect_identical(output[["ID"]](), "gp")
   expect_identical(output[["IDs"]](), c("10002", "10017"))
   expect_identical(output[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
+  expect_identical(output[["telephones"]](), c("01382   580   264", "01764   652   283"))
   expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
   expect_identical(output[["health_unit"]]("10002"), gp_unit)
   expect_identical(
@@ -116,4 +117,18 @@ test_that("gp_grp combine_data works", {
     expect_no_error()
   expect_s3_class(output, "data.frame")
   expect_identical(gp_grp_unit[["IDs"]](), unique(output[["ID"]]))
+})
+
+test_that("gp_grp summary works", {
+  output <- gp_grp_unit[["summary"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "gp_summary")
+})
+
+test_that("gp_grp datatable works", {
+  output <- gp_grp_unit[["datatable"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "datatables")
+  expect_identical(output[["x"]][["data"]], gp_grp_unit[["summary"]]())
 })

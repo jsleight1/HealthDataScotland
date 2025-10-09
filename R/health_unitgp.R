@@ -37,6 +37,11 @@ health_unitgrp <- R6Class(
     },
     unit_choices = function() {
       unique(paste(self[["IDs"]](), "-", self[["titles"]]()))
+    },
+    dt_btn = function(ns) {
+      map(self[["IDs"]](), function(i) {
+        glue('<button class="btn" onclick="Shiny.onInputChange(\'{ns("dt_button")}\', \'{i}\')">Click</button>')
+      })
     }
   ),
   public = list(
@@ -94,14 +99,24 @@ health_unitgrp <- R6Class(
       self[[".id"]]
     },
     #' @description
-    #' Get IDs of stored health units
+    #' Get character vector of IDs for stored health units
     IDs = function() {
       unname(map_chr(self[["data"]](), ~ .x[["ID"]]()))
     },
     #' @description
-    #' Get names of stored health units
+    #' Get character vector of titles for stored health units
     titles = function() {
       unname(map_chr(self[["data"]](), ~ .x[["title"]]()))
+    },
+    #' @description
+    #' Get character vector of addresses for stored health units
+    addresses = function() {
+      unname(map_chr(self[["data"]](), ~ .x[["address"]]()))
+    },
+    #' @description
+    #' Get character vector of health boards for stored health units
+    health_boards = function() {
+      unname(map_chr(self[["data"]](), ~ .x[["health_board"]]()))
     },
     #' @description
     #' Get stored health unit.
@@ -130,6 +145,31 @@ health_unitgrp <- R6Class(
         content = function(con) {
           write.csv(self[["combine_data"]](), con)
         }
+      )
+    },
+    #' @description
+    #' Create datatable of gp grp data
+    #' @param ns Shiny Namespace. Default is NULL.
+    #' @param ... Passed to method.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["datatable"]]()
+    datatable = function(ns = NULL, ...) {
+      output <- self[["summary"]]()
+      if (!is.null(ns)) {
+        output[["Plot"]] <- private[["dt_btn"]](ns)
+      }
+      datatable(
+        output,
+        rownames = FALSE,
+        escape = FALSE,
+        filter = "top",
+        selection = "none",
+        extensions = "Buttons",
+        options = list(
+          dom = "frtipB",
+          buttons = c("csv", "excel")
+        )
       )
     }
   )

@@ -110,3 +110,17 @@ test_that("hospital_grp combine_data works", {
   expect_s3_class(output, "data.frame")
   expect_identical(hosp_grp_unit[["IDs"]](), unique(output[["ID"]]))
 })
+
+test_that("hospital_grp summary works", {
+  output <- hosp_grp_unit[["summary"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_snapshot_json(output, "hospital_summary")
+})
+
+test_that("hospital_grp datatable works", {
+  output <- hosp_grp_unit[["datatable"]]() |>
+    expect_no_error()
+  expect_s3_class(output, "datatables")
+  expect_identical(output[["x"]][["data"]], hosp_grp_unit[["summary"]]())
+})

@@ -15,6 +15,7 @@ NULL
 #' @importFrom logger log_info
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom AzureStor storage_endpoint storage_container storage_save_rds storage_load_rds
+#' @importFrom DT datatable renderDT DTOutput
 NULL
 
 utils::globalVariables(".")
