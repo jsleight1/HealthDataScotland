@@ -89,6 +89,6 @@ e_trend <- function(x, x_axis, y_axis) {
     e_toolbox(show = FALSE)
 }
 
-e_output_spinner <- function(...) {
-  withSpinner(echarts4rOutput(...))
+e_output_spinner <- function(..., height = "600px") {
+  withSpinner(echarts4rOutput(..., height = height))
 }
