@@ -209,12 +209,14 @@ Get download handler function of health unit group.
 \subsection{Method \code{datatable()}}{
 Create datatable of gp grp data
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$datatable(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$datatable(ns = NULL, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{ns}}{Shiny Namespace. Default is NULL.}
+
 \item{\code{...}}{Passed to method.}
 }
 \if{html}{\out{</div>}}

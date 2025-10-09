@@ -180,8 +180,8 @@ gp_grp <- R6Class("gp_grp",
       unname(map_chr(self[["data"]](), ~ .x[["telephone"]]()))
     },
     #' @description
-    #' Get character vector of available plots for gp grp.
-    available_plots = function() {
+    #' Get character vector of plot types for gp grp.
+    plot_types = function() {
       c(
         "national_trend", "national_pyramid", "health_board_trend",
         "health_board_bar", "gp_trend", "gp_bar"
@@ -190,14 +190,14 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Plot gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["plot"]](type = "gp_bar")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend"]],
         "national_pyramid" = private[["national_pyramid"]],
@@ -210,14 +210,14 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Get plot data for gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["plot_data"]](type = "gp_bar")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend_data"]],
         "national_pyramid" = private[["national_pyramid_data"]],
@@ -230,14 +230,14 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Get plot info for gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["plot_info"]](type = "gp_bar")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend_info"]],
         "national_pyramid" = private[["national_pyramid_info"]],

@@ -64,7 +64,7 @@ x[["summary"]]()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-hospital_grp-available_plots}{\code{hospital_grp$available_plots()}}
+\item \href{#method-hospital_grp-plot_types}{\code{hospital_grp$plot_types()}}
 \item \href{#method-hospital_grp-plot}{\code{hospital_grp$plot()}}
 \item \href{#method-hospital_grp-plot_data}{\code{hospital_grp$plot_data()}}
 \item \href{#method-hospital_grp-plot_info}{\code{hospital_grp$plot_info()}}
@@ -95,12 +95,12 @@ x[["summary"]]()
 </details>
 }}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hospital_grp-available_plots"></a>}}
-\if{latex}{\out{\hypertarget{method-hospital_grp-available_plots}{}}}
-\subsection{Method \code{available_plots()}}{
-Get character vector of available plots for hospital grp.
+\if{html}{\out{<a id="method-hospital_grp-plot_types"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital_grp-plot_types}{}}}
+\subsection{Method \code{plot_types()}}{
+Get character vector of plot types for hospital grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$available_plots()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$plot_types()}\if{html}{\out{</div>}}
 }
 
 }
@@ -117,7 +117,7 @@ Plot hospital grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots} for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot functions.}
 }
@@ -146,7 +146,7 @@ Generate plot data for hospital grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots} for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot data functions.}
 }
@@ -175,7 +175,7 @@ Get plot info for hospital grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot info functions.}

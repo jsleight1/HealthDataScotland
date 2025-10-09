@@ -32,7 +32,7 @@ test_that("hospital class works", {
     output[["address"]](),
     "Lamlash, Isle of Arran, KA278LF"
   )
-  expect_identical(output[["available_plots"]](), "specialty_line")
+  expect_identical(output[["plot_types"]](), "specialty_line")
 })
 
 test_that("hospital class can be plotted", {

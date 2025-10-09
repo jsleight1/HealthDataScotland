@@ -26,7 +26,7 @@ test_that("hospital_grp class works", {
   expect_identical(output[["data"]](), list(hosp_unit, hosp_unit2))
   expect_identical(output[["health_unit"]]("A101H"), hosp_unit)
   expect_identical(
-    output[["available_plots"]](),
+    output[["plot_types"]](),
     c(
       "national_trend", "health_board_trend", "health_board_bar",
       "hospital_trend", "hospital_bar"
@@ -35,7 +35,7 @@ test_that("hospital_grp class works", {
 })
 
 test_that("hospital_grp class can be plotted", {
-  for (plt in hosp_grp_unit[["available_plots"]]()) {
+  for (plt in hosp_grp_unit[["plot_types"]]()) {
     output <- hosp_grp_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, "echarts4r")
@@ -43,7 +43,7 @@ test_that("hospital_grp class can be plotted", {
 })
 
 test_that("hospital_grp plot info works", {
-  for (plt in hosp_grp_unit[["available_plots"]]()) {
+  for (plt in hosp_grp_unit[["plot_types"]]()) {
     hosp_grp_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }

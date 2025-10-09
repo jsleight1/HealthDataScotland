@@ -66,10 +66,10 @@ gp_unit$address()
 
 Visualising data associated with a single GP practice can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-gp_unit$available_plots()
+gp_unit$plot_types()
 ```
 
 ```{r}
@@ -122,10 +122,10 @@ hospital_unit$address()
 
 Visualising data associated with a single hospital can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-hospital_unit$available_plots()
+hospital_unit$plot_types()
 ```
 
 ```{r}
@@ -204,10 +204,10 @@ gp_grp_unit$health_unit(id = "10017")
 
 Visualising data assciated with multiple GP practices can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-gp_grp_unit$available_plots()
+gp_grp_unit$plot_types()
 ```
 
 ```{r}
@@ -277,10 +277,10 @@ hospital_grp_unit$health_unit(id = "A201H")
 
 Visualising data assciated with multiple hospitals can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-hospital_grp_unit$available_plots()
+hospital_grp_unit$plot_types()
 ```
 
 ```{r}

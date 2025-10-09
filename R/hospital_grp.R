@@ -218,8 +218,8 @@ hospital_grp <- R6Class("hospital_grp",
   ),
   public = list(
     #' @description
-    #' Get character vector of available plots for hospital grp.
-    available_plots = function() {
+    #' Get character vector of plot types for hospital grp.
+    plot_types = function() {
       c(
         "national_trend", "health_board_trend", "health_board_bar",
         "hospital_trend", "hospital_bar"
@@ -228,13 +228,13 @@ hospital_grp <- R6Class("hospital_grp",
     #' @description
     #' Plot hospital grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_hospital_grp_unit()
     #' x[["plot"]](type = "hospital_bar")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend"]],
         "health_board_trend" = private[["health_board_trend"]],
@@ -246,13 +246,13 @@ hospital_grp <- R6Class("hospital_grp",
     #' @description
     #' Generate plot data for hospital grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_hospital_grp_unit()
     #' x[["plot_data"]](type = "hospital_bar")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend_data"]],
         "health_board_trend" = private[["health_board_trend_data"]],
@@ -264,14 +264,14 @@ hospital_grp <- R6Class("hospital_grp",
     #' @description
     #' Get plot info for hospital grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_hospital_grp_unit()
     #' x[["plot_info"]](type = "hospital_bar")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend_info"]],
         "health_board_trend" = private[["health_board_trend_info"]],

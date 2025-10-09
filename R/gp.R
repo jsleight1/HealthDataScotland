@@ -95,22 +95,22 @@ gp <- R6Class("gp",
       self[["metadata"]]()[["TelephoneNumber"]]
     },
     #' @description
-    #' Get character vector of available plots for gp unit. Options
+    #' Get character vector of plot types for gp unit. Options
     #'   are either "population_pyramid" plot or "population_trend" plot.
-    available_plots = function() {
+    plot_types = function() {
       c("population_pyramid", "population_trend")
     },
     #' @description
     #' Plot gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_gp_unit()
     #' x[["plot"]](type = "population_pyramid")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "population_pyramid" = private[["population_pyramid"]](...),
         "population_trend" = private[["population_trend"]](...)
@@ -119,14 +119,14 @@ gp <- R6Class("gp",
     #' @description
     #' Generate plot data for gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_gp_unit()
     #' x[["plot_data"]](type = "population_pyramid")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "population_pyramid" = private[["population_pyramid_data"]],
         "population_trend" = private[["population_trend_data"]]
@@ -135,14 +135,14 @@ gp <- R6Class("gp",
     #' @description
     #' Get plot info for gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_gp_unit()
     #' x[["plot_info"]](type = "population_pyramid")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "population_pyramid" = private[["population_pyramid_info"]](),
         "population_trend" = private[["population_trend_info"]]()

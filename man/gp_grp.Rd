@@ -65,7 +65,7 @@ x[["summary"]]()
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-gp_grp-telephones}{\code{gp_grp$telephones()}}
-\item \href{#method-gp_grp-available_plots}{\code{gp_grp$available_plots()}}
+\item \href{#method-gp_grp-plot_types}{\code{gp_grp$plot_types()}}
 \item \href{#method-gp_grp-plot}{\code{gp_grp$plot()}}
 \item \href{#method-gp_grp-plot_data}{\code{gp_grp$plot_data()}}
 \item \href{#method-gp_grp-plot_info}{\code{gp_grp$plot_info()}}
@@ -106,12 +106,12 @@ Get character vector of gp unit telephone numbers.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gp_grp-available_plots"></a>}}
-\if{latex}{\out{\hypertarget{method-gp_grp-available_plots}{}}}
-\subsection{Method \code{available_plots()}}{
-Get character vector of available plots for gp grp.
+\if{html}{\out{<a id="method-gp_grp-plot_types"></a>}}
+\if{latex}{\out{\hypertarget{method-gp_grp-plot_types}{}}}
+\subsection{Method \code{plot_types()}}{
+Get character vector of plot types for gp grp.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$available_plots()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$plot_types()}\if{html}{\out{</div>}}
 }
 
 }
@@ -128,7 +128,7 @@ Plot gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot functions.}
@@ -158,7 +158,7 @@ Get plot data for gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot data functions.}
@@ -188,7 +188,7 @@ Get plot info for gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot info functions.}

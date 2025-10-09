@@ -34,7 +34,7 @@ test_that("gp class works", {
     "Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH"
   )
   expect_identical(
-    output[["available_plots"]](),
+    output[["plot_types"]](),
     c("population_pyramid", "population_trend")
   )
 })
@@ -47,7 +47,7 @@ test_that("combine_data works", {
 })
 
 test_that("gp class can be plotted", {
-  for (plt in gp_unit[["available_plots"]]()) {
+  for (plt in gp_unit[["plot_types"]]()) {
     output <- gp_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, "echarts4r")
@@ -55,7 +55,7 @@ test_that("gp class can be plotted", {
 })
 
 test_that("gp plot info works", {
-  for (plt in gp_unit[["available_plots"]]()) {
+  for (plt in gp_unit[["plot_types"]]()) {
     gp_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }

@@ -112,20 +112,20 @@ hospital <- R6Class("hospital",
   ),
   public = list(
     #' @description
-    #' Get character vector of available plots for hospital grp
-    available_plots = function() {
+    #' Get character vector of plot types for hospital grp
+    plot_types = function() {
       c("specialty_line")
     },
     #' @description
     #' Plot hospital unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_hospital_unit()
     #' x[["plot"]](type = "specialty_line", data_type = "annual")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "specialty_line" = private[["specialty_line"]]
       )(...)
@@ -133,13 +133,13 @@ hospital <- R6Class("hospital",
     #' @description
     #' Generate plot data for hospital unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_hospital_unit()
     #' x[["plot_data"]](type = "specialty_line", data_type = "annual")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "specialty_line" = private[["specialty_line_data"]]
       )(...)
@@ -147,13 +147,13 @@ hospital <- R6Class("hospital",
     #' @description
     #' Get plot info for hospital unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_hospital_unit()
     #' x[["plot_info"]](type = "specialty_line", data_type = "annual")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "specialty_line" = private[["specialty_line_info"]]
       )(...)

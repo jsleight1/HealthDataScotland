@@ -27,7 +27,7 @@ test_that("gp_grp class works", {
   expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
   expect_identical(output[["health_unit"]]("10002"), gp_unit)
   expect_identical(
-    output[["available_plots"]](),
+    output[["plot_types"]](),
     c(
       "national_trend", "national_pyramid", "health_board_trend",
       "health_board_bar", "gp_trend", "gp_bar"
@@ -36,7 +36,7 @@ test_that("gp_grp class works", {
 })
 
 test_that("gp_grp class can be plotted", {
-  for (plt in gp_grp_unit[["available_plots"]]()) {
+  for (plt in gp_grp_unit[["plot_types"]]()) {
     output <- gp_grp_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, "echarts4r")
@@ -44,7 +44,7 @@ test_that("gp_grp class can be plotted", {
 })
 
 test_that("gp_grp plot info works", {
-  for (plt in gp_grp_unit[["available_plots"]]()) {
+  for (plt in gp_grp_unit[["plot_types"]]()) {
     gp_grp_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }
