@@ -49,13 +49,7 @@ defaults:
         text-align: center;
       }
       // Customise button colour
-      .btn {
-        --bs-btn-bg: transparent;
-        --bs-btn-color: var(--brand-blue);
-        --bs-btn-hover-bg: var(--brand-blue);
-        --bs-btn-border-color: var(--brand-blue);
-      }
-      .btn-outline-default, .btn-default:not(.btn-primary,.btn-secondary,.btn-info,.btn-success,.btn-danger,.btn-warning,.btn-light,.btn-dark,.btn-link,[class*="btn-outline-"]) {
+      .btn, .btn-outline-default, .btn-default:not(.btn-primary,.btn-secondary,.btn-info,.btn-success,.btn-danger,.btn-warning,.btn-light,.btn-dark,.btn-link,[class*="btn-outline-"]) {
         --bs-btn-bg: transparent;
         --bs-btn-color: var(--brand-blue);
         --bs-btn-hover-bg: var(--brand-blue);

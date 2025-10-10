@@ -40,3 +40,10 @@
     Output
       [1] "This bar chart shows the total number of GP registered patients\n        (y-axis) for each individal GP practice (colour) across\n        age categories (x-axis). Settings can be used to show data for\n        different GP practices and genders."
 
+# gp_grp summary info works
+
+    Code
+      gp_grp_unit[["summary_info"]](type = smy)
+    Output
+      [1] "This lookup table presents data for all available GP practices\n      in the data set. This table can be searched, filtered and\n      the 'Plot' column allows the user to view statistics for a\n      selected GP practice."
+

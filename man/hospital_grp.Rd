@@ -50,13 +50,6 @@ x[["plot_data"]](type = "hospital_bar")
 
 x <- example_hospital_grp_unit()
 x[["plot_info"]](type = "hospital_bar")
-
-## ------------------------------------------------
-## Method `hospital_grp$summary`
-## ------------------------------------------------
-
-x <- example_hospital_grp_unit()
-x[["summary"]]()
 }
 \section{Super class}{
 \code{\link[HealthDataScotland:health_unitgrp]{HealthDataScotland::health_unitgrp}} -> \code{hospital_grp}
@@ -68,7 +61,6 @@ x[["summary"]]()
 \item \href{#method-hospital_grp-plot}{\code{hospital_grp$plot()}}
 \item \href{#method-hospital_grp-plot_data}{\code{hospital_grp$plot_data()}}
 \item \href{#method-hospital_grp-plot_info}{\code{hospital_grp$plot_info()}}
-\item \href{#method-hospital_grp-summary}{\code{hospital_grp$summary()}}
 \item \href{#method-hospital_grp-ui}{\code{hospital_grp$ui()}}
 \item \href{#method-hospital_grp-server}{\code{hospital_grp$server()}}
 \item \href{#method-hospital_grp-clone}{\code{hospital_grp$clone()}}
@@ -89,6 +81,9 @@ x[["summary"]]()
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-metadata'><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary'><code>HealthDataScotland::health_unitgrp$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_info"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary_info'><code>HealthDataScotland::health_unitgrp$summary_info()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_types"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary_types'><code>HealthDataScotland::health_unitgrp$summary_types()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-titles'><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
 </ul>
@@ -175,8 +170,7 @@ Get plot info for hospital grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot info functions.}
 }
@@ -186,32 +180,6 @@ for options.}
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_hospital_grp_unit()
 x[["plot_info"]](type = "hospital_bar")
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-hospital_grp-summary"></a>}}
-\if{latex}{\out{\hypertarget{method-hospital_grp-summary}{}}}
-\subsection{Method \code{summary()}}{
-Summarise hospital grp data.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hospital_grp$summary(...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Passed to method.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{x <- example_hospital_grp_unit()
-x[["summary"]]()
 }
 \if{html}{\out{</div>}}
 

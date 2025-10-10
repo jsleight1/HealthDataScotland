@@ -171,6 +171,23 @@ gp_grp <- R6Class("gp_grp",
         (y-axis) for each individal GP practice (colour) across
         age categories (x-axis). Settings can be used to show data for
         different GP practices and genders."
+    },
+    lookup = function(...) {
+      data.frame(
+        Title = self[["titles"]](),
+        ID = self[["IDs"]](),
+        Address = self[["addresses"]](),
+        Telephone = self[["telephones"]](),
+        `Health board` = self[["health_boards"]](),
+        check.names = FALSE,
+        ...
+      )
+    },
+    lookup_info = function(...) {
+      "This lookup table presents data for all available GP practices
+      in the data set. This table can be searched, filtered and
+      the 'Plot' column allows the user to view statistics for a
+      selected GP practice."
     }
   ),
   public = list(
@@ -190,8 +207,7 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Plot gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `plot_types`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_gp_grp_unit()
@@ -210,8 +226,7 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Get plot data for gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `plot_types`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_gp_grp_unit()
@@ -230,8 +245,7 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Get plot info for gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `plot_types`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_gp_grp_unit()
@@ -249,20 +263,17 @@ gp_grp <- R6Class("gp_grp",
     },
     #' @description
     #' Summarise gp grp data.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
     #' @param ... Passed to method.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["summary"]]()
-    summary = function(...) {
-      data.frame(
-        Title = self[["titles"]](),
-        ID = self[["IDs"]](),
-        Address = self[["addresses"]](),
-        Telephone = self[["telephones"]](),
-        `Health board` = self[["health_boards"]](),
-        check.names = FALSE,
-        ...
-      )
+    summary = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "lookup" = private[["lookup"]]
+      )(...)
     },
     #' @description
     #' Create UI for general practice group object.
@@ -434,10 +445,7 @@ gp_grp <- R6Class("gp_grp",
               card_header(
                 help_popover(
                   id = ns("dt_help"),
-                  "This lookup table presents data for all available GP practices
-                  in the data set. This table can be searched, filtered and
-                  the 'Plot' column allows the user to view statistics for a
-                  selected GP practice."
+                  self[["summary_info"]]("lookup")
                 )
               ),
               withSpinner(DTOutput(ns("summary")))
@@ -494,13 +502,13 @@ gp_grp <- R6Class("gp_grp",
             )
           })
           output[["download"]] <- self[["download_handler"]]()
-          output[["summary"]] <- renderDT(self[["datatable"]](ns))
+          output[["summary"]] <- renderDT(self[["datatable"]]("lookup", ns))
           observe({
             log_info("Rendering gp unit popup")
             obj <- self[["health_unit"]](input[["dt_button"]])
             isolate(obj[["popup_modal"]](ns))
           }) |>
-          bindEvent(input[["dt_button"]])
+            bindEvent(input[["dt_button"]])
         }
       )
     }

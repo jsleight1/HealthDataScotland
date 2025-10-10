@@ -112,15 +112,31 @@ test_that("hospital_grp combine_data works", {
 })
 
 test_that("hospital_grp summary works", {
-  output <- hosp_grp_unit[["summary"]]() |>
-    expect_no_error()
-  expect_s3_class(output, "data.frame")
-  expect_snapshot_json(output, "hospital_summary")
+  for (smy in hosp_grp_unit[["summary_types"]]()) {
+    output <- hosp_grp_unit[["summary"]](type = smy) |>
+      expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, glue("hospital_{smy}"))
+  }
 })
 
-test_that("hospital_grp datatable works", {
-  output <- hosp_grp_unit[["datatable"]]() |>
+test_that("hospital_grp summary info works", {
+  for (smy in hosp_grp_unit[["summary_types"]]()) {
+    hosp_grp_unit[["summary_info"]](type = smy) |>
+      expect_snapshot()
+  }
+})
+
+test_that("hospital_grp summary functions error if wrong type", {
+  hosp_grp_unit[["summary"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  hosp_grp_unit[["summary_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
+
+test_that("hospital_grp lookup datatable works", {
+  output <- hosp_grp_unit[["datatable"]]("lookup") |>
     expect_no_error()
   expect_s3_class(output, "datatables")
-  expect_identical(output[["x"]][["data"]], hosp_grp_unit[["summary"]]())
+  expect_identical(output[["x"]][["data"]], hosp_grp_unit[["summary"]]("lookup"))
 })

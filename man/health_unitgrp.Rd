@@ -11,6 +11,24 @@ R6 class storing health statistics for a list of health units.
 \examples{
 
 ## ------------------------------------------------
+## Method `health_unitgrp$summary`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["summary"]]()
+x <- example_hospital_grp_unit()
+x[["summary"]]()
+
+## ------------------------------------------------
+## Method `health_unitgrp$summary_info`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["summary_info"]]()
+x <- example_hospital_grp_unit()
+x[["summary_info"]]()
+
+## ------------------------------------------------
 ## Method `health_unitgrp$datatable`
 ## ------------------------------------------------
 
@@ -42,6 +60,9 @@ x[["datatable"]]()
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
 \item \href{#method-health_unitgrp-download_handler}{\code{health_unitgrp$download_handler()}}
+\item \href{#method-health_unitgrp-summary_types}{\code{health_unitgrp$summary_types()}}
+\item \href{#method-health_unitgrp-summary}{\code{health_unitgrp$summary()}}
+\item \href{#method-health_unitgrp-summary_info}{\code{health_unitgrp$summary_info()}}
 \item \href{#method-health_unitgrp-datatable}{\code{health_unitgrp$datatable()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
@@ -204,17 +225,92 @@ Get download handler function of health unit group.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-health_unitgrp-datatable"></a>}}
-\if{latex}{\out{\hypertarget{method-health_unitgrp-datatable}{}}}
-\subsection{Method \code{datatable()}}{
-Create datatable of gp grp data
+\if{html}{\out{<a id="method-health_unitgrp-summary_types"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-summary_types}{}}}
+\subsection{Method \code{summary_types()}}{
+Get character vector of summary types for grp unit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$datatable(ns = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$summary_types()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-summary}{}}}
+\subsection{Method \code{summary()}}{
+Summarise grp unit data.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$summary(type, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to method.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["summary"]]()
+x <- example_hospital_grp_unit()
+x[["summary"]]()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-summary_info"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-summary_info}{}}}
+\subsection{Method \code{summary_info()}}{
+Get summary info for grp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$summary_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to summary info functions.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["summary_info"]]()
+x <- example_hospital_grp_unit()
+x[["summary_info"]]()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-datatable"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-datatable}{}}}
+\subsection{Method \code{datatable()}}{
+Create datatable of gp grp data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$datatable(type, ns = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
 \item{\code{ns}}{Shiny Namespace. Default is NULL.}
 
 \item{\code{...}}{Passed to method.}

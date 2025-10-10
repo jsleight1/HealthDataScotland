@@ -90,6 +90,8 @@ x[["summary"]]()
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-metadata'><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_info"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary_info'><code>HealthDataScotland::health_unitgrp$summary_info()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_types"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary_types'><code>HealthDataScotland::health_unitgrp$summary_types()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-titles'><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
 </ul>
@@ -128,8 +130,7 @@ Plot gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot functions.}
 }
@@ -158,8 +159,7 @@ Get plot data for gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot data functions.}
 }
@@ -188,8 +188,7 @@ Get plot info for gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot info functions.}
 }
@@ -211,12 +210,15 @@ x[["plot_info"]](type = "gp_bar")
 \subsection{Method \code{summary()}}{
 Summarise gp grp data.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$summary(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$summary(type, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
 \item{\code{...}}{Passed to method.}
 }
 \if{html}{\out{</div>}}

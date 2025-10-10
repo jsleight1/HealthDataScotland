@@ -125,8 +125,7 @@ Plot gp unit.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot functions.}
 }
@@ -155,8 +154,7 @@ Generate plot data for gp unit.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot data functions.}
 }
@@ -185,8 +183,7 @@ Get plot info for gp unit.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{plot_types}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot info functions.}
 }

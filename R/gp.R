@@ -103,8 +103,7 @@ gp <- R6Class("gp",
     #' @description
     #' Plot gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `plot_types`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_gp_unit()
@@ -119,8 +118,7 @@ gp <- R6Class("gp",
     #' @description
     #' Generate plot data for gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `plot_types`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_gp_unit()
@@ -135,8 +133,7 @@ gp <- R6Class("gp",
     #' @description
     #' Get plot info for gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `plot_types`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_gp_unit()
