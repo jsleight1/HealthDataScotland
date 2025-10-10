@@ -66,10 +66,10 @@ gp_unit$address()
 
 Visualising data associated with a single GP practice can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-gp_unit$available_plots()
+gp_unit$plot_types()
 ```
 
 ```{r}
@@ -85,6 +85,35 @@ functionality related to the shiny application) respectively.
 ```{r}
 gp_unit$plot_data(type = "population_pyramid")
 gp_unit$plot_info(type = "population_pyramid")
+```
+
+### Summarising
+
+Summarising data associated with a single GP practice can be achieved using the
+`$summary` function with an appropriate `type` argument. To see which summary types
+are available to use, the `$summary_types` function can be used.
+
+```{r}
+gp_unit$summary_types()
+```
+
+```{r}
+gp_unit$summary(type = "population_summary")
+```
+
+This summary can also be coerced into a datatable using the `$datatable`
+function.
+
+```{r, echo = FALSE}
+gp_unit$datatable(type = "population_summary")
+```
+
+The helper function `$plot_info` can be used to create the character text
+describing each summary table (alongside functionality related to the shiny application)
+respectively.
+
+```{r}
+gp_unit$summary_info(type = "population_summary")
 ```
 
 ## Hospital
@@ -122,10 +151,10 @@ hospital_unit$address()
 
 Visualising data associated with a single hospital can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-hospital_unit$available_plots()
+hospital_unit$plot_types()
 ```
 
 ```{r}
@@ -141,6 +170,35 @@ functionality related to the shiny application) respectively.
 ```{r}
 hospital_unit$plot_data(type = "specialty_line")
 hospital_unit$plot_info(type = "specialty_line")
+```
+
+### Summarising
+
+Summarising data associated with a single hospital can be achieved using the
+`$summary` function with an appropriate `type` argument. To see which summary types
+are available to use, the `$summary_types` function can be used.
+
+```{r}
+hospital_unit$summary_types()
+```
+
+```{r}
+hospital_unit$summary(type = "specialty_summary")
+```
+
+This summary can also be coerced into a datatable using the `$datatable`
+function.
+
+```{r, echo = FALSE}
+hospital_unit$datatable(type = "specialty_summary")
+```
+
+The helper function `$plot_info` can be used to create the character text
+describing each summary table (alongside functionality related to the shiny application)
+respectively.
+
+```{r}
+hospital_unit$summary_info(type = "specialty_summary")
 ```
 
 # Health unit grps
@@ -204,10 +262,10 @@ gp_grp_unit$health_unit(id = "10017")
 
 Visualising data assciated with multiple GP practices can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-gp_grp_unit$available_plots()
+gp_grp_unit$plot_types()
 ```
 
 ```{r}
@@ -223,6 +281,35 @@ functionality related to the shiny application) respectively.
 ```{r}
 gp_grp_unit$plot_data(type = "gp_bar")
 gp_grp_unit$plot_info(type = "gp_bar")
+```
+
+### Summarising
+
+Summarising data associated with multiple GP practices can be achieved using the
+`$summary` function with an appropriate `type` argument. To see which summary
+types are available to use, the `$summary_types` function can be used.
+
+```{r}
+gp_grp_unit$summary_types()
+```
+
+```{r}
+gp_grp_unit$summary(type = "lookup")
+```
+
+This summary can also be coerced into a datatable using the `$datatable`
+function.
+
+```{r, echo = FALSE}
+gp_grp_unit$datatable(type = "lookup")
+```
+
+The helper function `$summary_info` can be used to create the character text
+describing each summary table (alongside functionality related to the shiny application)
+respectively.
+
+```{r}
+gp_grp_unit$summary_info(type = "lookup")
 ```
 
 ## Hospital
@@ -277,10 +364,10 @@ hospital_grp_unit$health_unit(id = "A201H")
 
 Visualising data assciated with multiple hospitals can be achieved using the
 `$plot` function with an appropriate `type` argument. To see which plot types
-are available to use, the `$available_plots` function can be used.
+are available to use, the `$plot_types` function can be used.
 
 ```{r}
-hospital_grp_unit$available_plots()
+hospital_grp_unit$plot_types()
 ```
 
 ```{r}
@@ -296,4 +383,33 @@ functionality related to the shiny application) respectively.
 ```{r}
 hospital_grp_unit$plot_data(type = "hospital_bar")
 hospital_grp_unit$plot_info(type = "hospital_bar")
+```
+
+### Summarising
+
+Summarising data associated with multiple hospitals can be achieved using the
+`$summary` function with an appropriate `type` argument. To see which summary
+types are available to use, the `$summary_types` function can be used.
+
+```{r}
+hospital_grp_unit$summary_types()
+```
+
+```{r}
+hospital_grp_unit$summary(type = "lookup")
+```
+
+This summary can also be coerced into a datatable using the `$datatable`
+function.
+
+```{r, echo = FALSE}
+hospital_grp_unit$datatable(type = "lookup")
+```
+
+The helper function `$summary_info` can be used to create the character text
+describing each summary table (alongside functionality related to the shiny application)
+respectively.
+
+```{r}
+hospital_grp_unit$summary_info(type = "lookup")
 ```

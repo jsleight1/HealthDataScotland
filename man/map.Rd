@@ -62,7 +62,7 @@ x[["plot_info"]](type = "interactive_map")
 \item \href{#method-map-sf}{\code{map$sf()}}
 \item \href{#method-map-id}{\code{map$id()}}
 \item \href{#method-map-title}{\code{map$title()}}
-\item \href{#method-map-available_plots}{\code{map$available_plots()}}
+\item \href{#method-map-plot_types}{\code{map$plot_types()}}
 \item \href{#method-map-plot}{\code{map$plot()}}
 \item \href{#method-map-plot_data}{\code{map$plot_data()}}
 \item \href{#method-map-plot_info}{\code{map$plot_info()}}
@@ -136,12 +136,12 @@ Get title of map object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-map-available_plots"></a>}}
-\if{latex}{\out{\hypertarget{method-map-available_plots}{}}}
-\subsection{Method \code{available_plots()}}{
-Get character vector of available plots for map object.
+\if{html}{\out{<a id="method-map-plot_types"></a>}}
+\if{latex}{\out{\hypertarget{method-map-plot_types}{}}}
+\subsection{Method \code{plot_types()}}{
+Get character vector of plot types for map object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{map$available_plots()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{map$plot_types()}\if{html}{\out{</div>}}
 }
 
 }
@@ -158,7 +158,7 @@ Plot map object.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot functions.}
@@ -188,7 +188,7 @@ Generate plot data for map object.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot data functions.}
@@ -218,7 +218,7 @@ Get plot infot for map object.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
+Character specifying plot type. See \code{plot_types}
 for options.}
 
 \item{\code{...}}{Passed to plot data functions.}

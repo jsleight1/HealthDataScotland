@@ -45,10 +45,10 @@ map$sf()
 
 Visualising spaital data can be achieved using the `$plot` function with an
 appropriate `type` argument. To see which plot types are available to use, the
-`$available_plots` function can be used.
+`$plot_types` function can be used.
 
 ```{r}
-map$available_plots()
+map$plot_types()
 ```
 
 ```{r}

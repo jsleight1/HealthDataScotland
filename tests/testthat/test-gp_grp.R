@@ -23,10 +23,11 @@ test_that("gp_grp class works", {
   expect_identical(output[["ID"]](), "gp")
   expect_identical(output[["IDs"]](), c("10002", "10017"))
   expect_identical(output[["titles"]](), c("Muirhead Medical Centre", "The Blue Practice"))
+  expect_identical(output[["telephones"]](), c("01382   580   264", "01764   652   283"))
   expect_identical(output[["data"]](), list(gp_unit, gp_unit2))
   expect_identical(output[["health_unit"]]("10002"), gp_unit)
   expect_identical(
-    output[["available_plots"]](),
+    output[["plot_types"]](),
     c(
       "national_trend", "national_pyramid", "health_board_trend",
       "health_board_bar", "gp_trend", "gp_bar"
@@ -35,7 +36,7 @@ test_that("gp_grp class works", {
 })
 
 test_that("gp_grp class can be plotted", {
-  for (plt in gp_grp_unit[["available_plots"]]()) {
+  for (plt in gp_grp_unit[["plot_types"]]()) {
     output <- gp_grp_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, "echarts4r")
@@ -43,7 +44,7 @@ test_that("gp_grp class can be plotted", {
 })
 
 test_that("gp_grp plot info works", {
-  for (plt in gp_grp_unit[["available_plots"]]()) {
+  for (plt in gp_grp_unit[["plot_types"]]()) {
     gp_grp_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }
@@ -116,4 +117,34 @@ test_that("gp_grp combine_data works", {
     expect_no_error()
   expect_s3_class(output, "data.frame")
   expect_identical(gp_grp_unit[["IDs"]](), unique(output[["ID"]]))
+})
+
+test_that("gp_grp summary works", {
+  for (smy in gp_grp_unit[["summary_types"]]()) {
+    output <- gp_grp_unit[["summary"]](type = smy) |>
+      expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, glue("gp_{smy}"))
+  }
+})
+
+test_that("gp_grp summary info works", {
+  for (smy in gp_grp_unit[["summary_types"]]()) {
+    gp_grp_unit[["summary_info"]](type = smy) |>
+      expect_snapshot()
+  }
+})
+
+test_that("gp_grp summary functions error if wrong type", {
+  gp_grp_unit[["summary"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  gp_grp_unit[["summary_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
+
+test_that("gp_grp datatable works", {
+  output <- gp_grp_unit[["datatable"]]("lookup") |>
+    expect_no_error()
+  expect_s3_class(output, "datatables")
+  expect_identical(output[["x"]][["data"]], gp_grp_unit[["summary"]]("lookup"))
 })

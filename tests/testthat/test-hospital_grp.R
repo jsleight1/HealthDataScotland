@@ -26,7 +26,7 @@ test_that("hospital_grp class works", {
   expect_identical(output[["data"]](), list(hosp_unit, hosp_unit2))
   expect_identical(output[["health_unit"]]("A101H"), hosp_unit)
   expect_identical(
-    output[["available_plots"]](),
+    output[["plot_types"]](),
     c(
       "national_trend", "health_board_trend", "health_board_bar",
       "hospital_trend", "hospital_bar"
@@ -35,7 +35,7 @@ test_that("hospital_grp class works", {
 })
 
 test_that("hospital_grp class can be plotted", {
-  for (plt in hosp_grp_unit[["available_plots"]]()) {
+  for (plt in hosp_grp_unit[["plot_types"]]()) {
     output <- hosp_grp_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, "echarts4r")
@@ -43,7 +43,7 @@ test_that("hospital_grp class can be plotted", {
 })
 
 test_that("hospital_grp plot info works", {
-  for (plt in hosp_grp_unit[["available_plots"]]()) {
+  for (plt in hosp_grp_unit[["plot_types"]]()) {
     hosp_grp_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }
@@ -109,4 +109,34 @@ test_that("hospital_grp combine_data works", {
     expect_no_error()
   expect_s3_class(output, "data.frame")
   expect_identical(hosp_grp_unit[["IDs"]](), unique(output[["ID"]]))
+})
+
+test_that("hospital_grp summary works", {
+  for (smy in hosp_grp_unit[["summary_types"]]()) {
+    output <- hosp_grp_unit[["summary"]](type = smy) |>
+      expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, glue("hospital_{smy}"))
+  }
+})
+
+test_that("hospital_grp summary info works", {
+  for (smy in hosp_grp_unit[["summary_types"]]()) {
+    hosp_grp_unit[["summary_info"]](type = smy) |>
+      expect_snapshot()
+  }
+})
+
+test_that("hospital_grp summary functions error if wrong type", {
+  hosp_grp_unit[["summary"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  hosp_grp_unit[["summary_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
+
+test_that("hospital_grp datatable works", {
+  output <- hosp_grp_unit[["datatable"]]("lookup") |>
+    expect_no_error()
+  expect_s3_class(output, "datatables")
+  expect_identical(output[["x"]][["data"]], hosp_grp_unit[["summary"]]("lookup"))
 })
