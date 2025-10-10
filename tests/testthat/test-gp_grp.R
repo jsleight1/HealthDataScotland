@@ -142,7 +142,7 @@ test_that("gp_grp summary functions error if wrong type", {
     expect_error("`type` must be one.+")
 })
 
-test_that("gp_grp lookup datatable works", {
+test_that("gp_grp datatable works", {
   output <- gp_grp_unit[["datatable"]]("lookup") |>
     expect_no_error()
   expect_s3_class(output, "datatables")

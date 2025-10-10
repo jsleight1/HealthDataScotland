@@ -33,6 +33,8 @@ x[["data"]]()
 x[["plot"]](type = "population_pyramid")
 x[["plot_data"]](type = "population_pyramid")
 x[["plot_info"]](type = "population_pyramid")
+x[["summary"]](type = "population_summary")
+x[["summary_info"]](type = "population_summary")
 \dontrun{
 x[["ui"]]()
 x[["server"]]()
@@ -58,6 +60,20 @@ x[["plot_data"]](type = "population_pyramid")
 
 x <- example_gp_unit()
 x[["plot_info"]](type = "population_pyramid")
+
+## ------------------------------------------------
+## Method `gp$summary`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["summary"]](type = "population_summary")
+
+## ------------------------------------------------
+## Method `gp$summary_info`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["summary_info"]](type = "population_summary")
 }
 \section{Super class}{
 \code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{gp}
@@ -70,6 +86,9 @@ x[["plot_info"]](type = "population_pyramid")
 \item \href{#method-gp-plot}{\code{gp$plot()}}
 \item \href{#method-gp-plot_data}{\code{gp$plot_data()}}
 \item \href{#method-gp-plot_info}{\code{gp$plot_info()}}
+\item \href{#method-gp-summary_types}{\code{gp$summary_types()}}
+\item \href{#method-gp-summary}{\code{gp$summary()}}
+\item \href{#method-gp-summary_info}{\code{gp$summary_info()}}
 \item \href{#method-gp-ui}{\code{gp$ui()}}
 \item \href{#method-gp-server}{\code{gp$server()}}
 \item \href{#method-gp-clone}{\code{gp$clone()}}
@@ -82,6 +101,7 @@ x[["plot_info"]](type = "population_pyramid")
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-combine_data'><code>HealthDataScotland::health_unit$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="datatable"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-datatable'><code>HealthDataScotland::health_unit$datatable()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-health_board'><code>HealthDataScotland::health_unit$health_board()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="metadata"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-metadata'><code>HealthDataScotland::health_unit$metadata()</code></a></span></li>
@@ -193,6 +213,74 @@ Character specifying plot type. See \code{plot_types} for options.}
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_gp_unit()
 x[["plot_info"]](type = "population_pyramid")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-summary_types"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-summary_types}{}}}
+\subsection{Method \code{summary_types()}}{
+Get character vector of summary types for gp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$summary_types()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-summary}{}}}
+\subsection{Method \code{summary()}}{
+Summarise gp data.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$summary(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to method.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["summary"]](type = "population_summary")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp-summary_info"></a>}}
+\if{latex}{\out{\hypertarget{method-gp-summary_info}{}}}
+\subsection{Method \code{summary_info()}}{
+Get summary info for gp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp$summary_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to summary info functions.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["summary_info"]](type = "population_summary")
 }
 \if{html}{\out{</div>}}
 

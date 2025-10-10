@@ -93,6 +93,32 @@ health_unit <- R6Class("health_unit",
         easyClose = TRUE
       ))
       self[["server"]]()
+    },
+    #' @description
+    #' Create datatable of health unit data
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to method.
+    #' @examples
+    #' x <- example_gp_unit()
+    #' x[["datatable"]](type = "population_summary")
+    #' x <- example_hospital_unit()
+    #' x[["datatable"]](type = "specialty_summary")
+    datatable = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      datatable(
+        self[["summary"]](type),
+        rownames = FALSE,
+        escape = FALSE,
+        filter = "top",
+        selection = "none",
+        extensions = "Buttons",
+        options = list(
+          dom = "frtipB",
+          buttons = c("csv", "excel")
+        ),
+        ...
+      )
     }
   )
 )

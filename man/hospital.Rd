@@ -31,6 +31,8 @@ x[["data"]]()
 x[["plot"]](type = "specialty_line")
 x[["plot_data"]](type = "specialty_line")
 x[["plot_info"]](type = "specialty_line")
+x[["summary"]](type = "specialty_summary")
+x[["summary_info"]](type = "specialty_summary")
 \dontrun{
 x[["ui"]]()
 x[["server"]]()
@@ -56,6 +58,20 @@ x[["plot_data"]](type = "specialty_line", data_type = "annual")
 
 x <- example_hospital_unit()
 x[["plot_info"]](type = "specialty_line", data_type = "annual")
+
+## ------------------------------------------------
+## Method `hospital$summary`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["summary"]](type = "specialty_summary")
+
+## ------------------------------------------------
+## Method `hospital$summary_info`
+## ------------------------------------------------
+
+x <- example_hospital_unit()
+x[["summary_info"]](type = "specialty_summary")
 }
 \section{Super class}{
 \code{\link[HealthDataScotland:health_unit]{HealthDataScotland::health_unit}} -> \code{hospital}
@@ -67,6 +83,9 @@ x[["plot_info"]](type = "specialty_line", data_type = "annual")
 \item \href{#method-hospital-plot}{\code{hospital$plot()}}
 \item \href{#method-hospital-plot_data}{\code{hospital$plot_data()}}
 \item \href{#method-hospital-plot_info}{\code{hospital$plot_info()}}
+\item \href{#method-hospital-summary_types}{\code{hospital$summary_types()}}
+\item \href{#method-hospital-summary}{\code{hospital$summary()}}
+\item \href{#method-hospital-summary_info}{\code{hospital$summary_info()}}
 \item \href{#method-hospital-ui}{\code{hospital$ui()}}
 \item \href{#method-hospital-server}{\code{hospital$server()}}
 \item \href{#method-hospital-clone}{\code{hospital$clone()}}
@@ -79,6 +98,7 @@ x[["plot_info"]](type = "specialty_line", data_type = "annual")
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-address'><code>HealthDataScotland::health_unit$address()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-combine_data'><code>HealthDataScotland::health_unit$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-data'><code>HealthDataScotland::health_unit$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="datatable"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-datatable'><code>HealthDataScotland::health_unit$datatable()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-health_board'><code>HealthDataScotland::health_unit$health_board()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-initialize'><code>HealthDataScotland::health_unit$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="metadata"><a href='../../HealthDataScotland/html/health_unit.html#method-health_unit-metadata'><code>HealthDataScotland::health_unit$metadata()</code></a></span></li>
@@ -179,6 +199,74 @@ Character specifying plot type. See \code{plot_types} for options.}
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_hospital_unit()
 x[["plot_info"]](type = "specialty_line", data_type = "annual")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-summary_types"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-summary_types}{}}}
+\subsection{Method \code{summary_types()}}{
+Get character vector of summary types for hospital unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$summary_types()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-summary}{}}}
+\subsection{Method \code{summary()}}{
+Summarise hospital data.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$summary(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to method.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["summary"]](type = "specialty_summary")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-hospital-summary_info"></a>}}
+\if{latex}{\out{\hypertarget{method-hospital-summary_info}{}}}
+\subsection{Method \code{summary_info()}}{
+Get summary info for hospital unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hospital$summary_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to summary info functions.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_hospital_unit()
+x[["summary_info"]](type = "specialty_summary")
 }
 \if{html}{\out{</div>}}
 

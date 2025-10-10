@@ -15,25 +15,27 @@ R6 class storing health statistics for a list of health units.
 ## ------------------------------------------------
 
 x <- example_gp_grp_unit()
-x[["summary"]]()
+x[["summary"]](type = "lookup")
 x <- example_hospital_grp_unit()
-x[["summary"]]()
+x[["summary"]](type = "lookup")
 
 ## ------------------------------------------------
 ## Method `health_unitgrp$summary_info`
 ## ------------------------------------------------
 
 x <- example_gp_grp_unit()
-x[["summary_info"]]()
+x[["summary_info"]](type = "lookup")
 x <- example_hospital_grp_unit()
-x[["summary_info"]]()
+x[["summary_info"]](type = "lookup")
 
 ## ------------------------------------------------
 ## Method `health_unitgrp$datatable`
 ## ------------------------------------------------
 
 x <- example_gp_grp_unit()
-x[["datatable"]]()
+x[["datatable"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["datatable"]](type = "lookup")
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -256,9 +258,9 @@ Character specifying summary type. See \code{summary_types} for options.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_gp_grp_unit()
-x[["summary"]]()
+x[["summary"]](type = "lookup")
 x <- example_hospital_grp_unit()
-x[["summary"]]()
+x[["summary"]](type = "lookup")
 }
 \if{html}{\out{</div>}}
 
@@ -287,9 +289,9 @@ Character specifying summary type. See \code{summary_types} for options.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_gp_grp_unit()
-x[["summary_info"]]()
+x[["summary_info"]](type = "lookup")
 x <- example_hospital_grp_unit()
-x[["summary_info"]]()
+x[["summary_info"]](type = "lookup")
 }
 \if{html}{\out{</div>}}
 
@@ -300,7 +302,7 @@ x[["summary_info"]]()
 \if{html}{\out{<a id="method-health_unitgrp-datatable"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-datatable}{}}}
 \subsection{Method \code{datatable()}}{
-Create datatable of gp grp data
+Create datatable of grp unit data
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$datatable(type, ns = NULL, ...)}\if{html}{\out{</div>}}
 }
@@ -320,7 +322,9 @@ Character specifying summary type. See \code{summary_types} for options.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_gp_grp_unit()
-x[["datatable"]]()
+x[["datatable"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["datatable"]](type = "lookup")
 }
 \if{html}{\out{</div>}}
 

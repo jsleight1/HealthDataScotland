@@ -89,3 +89,36 @@ test_that("gp ui works", {
     expect_no_error()
   expect_s3_class(output, "shiny.tag")
 })
+
+test_that("gp summary works", {
+  for (smy in gp_unit[["summary_types"]]()) {
+    output <- gp_unit[["summary"]](type = smy) |>
+      expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, glue("gp_{smy}"))
+  }
+})
+
+test_that("gp summary info works", {
+  for (smy in gp_unit[["summary_types"]]()) {
+    gp_unit[["summary_info"]](type = smy) |>
+      expect_snapshot()
+  }
+})
+
+test_that("gp summary functions error if wrong type", {
+  gp_unit[["summary"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  gp_unit[["summary_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
+
+test_that("gp datatable works", {
+  output <- gp_unit[["datatable"]]("population_summary") |>
+    expect_no_error()
+  expect_s3_class(output, "datatables")
+  expect_identical(
+    output[["x"]][["data"]],
+    as.data.frame(gp_unit[["summary"]]("population_summary"))
+  )
+})

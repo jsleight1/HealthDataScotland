@@ -25,6 +25,8 @@ x[["subset"]](id = "A201H")
 x[["plot"]](type = "hospital_bar")
 x[["plot_data"]](type = "hospital_bar")
 x[["plot_info"]](type = "hospital_bar")
+x[["summary"]](type = "lookup")
+x[["summary_info"]](type = "lookup")
 \dontrun{
 x[["ui"]]()
 x[["server"]]()

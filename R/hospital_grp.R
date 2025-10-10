@@ -16,6 +16,8 @@
 #' x[["plot"]](type = "hospital_bar")
 #' x[["plot_data"]](type = "hospital_bar")
 #' x[["plot_info"]](type = "hospital_bar")
+#' x[["summary"]](type = "lookup")
+#' x[["summary_info"]](type = "lookup")
 #' \dontrun{
 #' x[["ui"]]()
 #' x[["server"]]()
@@ -459,11 +461,11 @@ hospital_grp <- R6Class("hospital_grp",
               full_screen = TRUE,
               card_header(
                 help_popover(
-                  id = ns("dt_help"),
+                  id = ns("lookup_help"),
                   self[["summary_info"]]("lookup")
                 )
               ),
-              withSpinner(DTOutput(ns("summary")))
+              withSpinner(DTOutput(ns("lookup")))
             )
           )
         )
@@ -516,7 +518,7 @@ hospital_grp <- R6Class("hospital_grp",
             )
           })
           output[["download"]] <- self[["download_handler"]]()
-          output[["summary"]] <- renderDT(self[["datatable"]]("lookup", ns))
+          output[["lookup"]] <- renderDT(self[["datatable"]]("lookup", ns))
           observe({
             log_info("Rendering hospital unit popup")
             obj <- self[["health_unit"]](input[["dt_button"]])

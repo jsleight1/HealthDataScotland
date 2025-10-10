@@ -134,7 +134,7 @@ test_that("hospital_grp summary functions error if wrong type", {
     expect_error("`type` must be one.+")
 })
 
-test_that("hospital_grp lookup datatable works", {
+test_that("hospital_grp datatable works", {
   output <- hosp_grp_unit[["datatable"]]("lookup") |>
     expect_no_error()
   expect_s3_class(output, "datatables")

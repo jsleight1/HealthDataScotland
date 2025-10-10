@@ -159,9 +159,9 @@ health_unitgrp <- R6Class(
     #' @param ... Passed to method.
     #' @examples
     #' x <- example_gp_grp_unit()
-    #' x[["summary"]]()
+    #' x[["summary"]](type = "lookup")
     #' x <- example_hospital_grp_unit()
-    #' x[["summary"]]()
+    #' x[["summary"]](type = "lookup")
     summary = function(type, ...) {
       type <- arg_match(type, values = self[["summary_types"]]())
       switch(type,
@@ -175,9 +175,9 @@ health_unitgrp <- R6Class(
     #' @param ... Passed to summary info functions.
     #' @examples
     #' x <- example_gp_grp_unit()
-    #' x[["summary_info"]]()
+    #' x[["summary_info"]](type = "lookup")
     #' x <- example_hospital_grp_unit()
-    #' x[["summary_info"]]()
+    #' x[["summary_info"]](type = "lookup")
     summary_info = function(type, ...) {
       type <- arg_match(type, values = self[["summary_types"]]())
       switch(type,
@@ -185,14 +185,16 @@ health_unitgrp <- R6Class(
       )(...)
     },
     #' @description
-    #' Create datatable of gp grp data
+    #' Create datatable of grp unit data
     #' @param type (character(1))\cr
     #'   Character specifying summary type. See `summary_types` for options.
     #' @param ns Shiny Namespace. Default is NULL.
     #' @param ... Passed to method.
     #' @examples
     #' x <- example_gp_grp_unit()
-    #' x[["datatable"]]()
+    #' x[["datatable"]](type = "lookup")
+    #' x <- example_hospital_grp_unit()
+    #' x[["datatable"]](type = "lookup")
     datatable = function(type, ns = NULL, ...) {
       type <- arg_match(type, values = self[["summary_types"]]())
       output <- self[["summary"]](type)
