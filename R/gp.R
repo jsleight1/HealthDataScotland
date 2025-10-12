@@ -24,6 +24,8 @@
 #' x[["plot"]](type = "population_pyramid")
 #' x[["plot_data"]](type = "population_pyramid")
 #' x[["plot_info"]](type = "population_pyramid")
+#' x[["summary"]](type = "population_summary")
+#' x[["summary_info"]](type = "population_summary")
 #' \dontrun{
 #' x[["ui"]]()
 #' x[["server"]]()
@@ -80,12 +82,25 @@ gp <- R6Class("gp",
     },
     population_pyramid_info = function() {
       "This bar chart shows a population pyramid of the total number of
-            GP registered patients (x-axis) across age category
-            (y-axis) for each gender (colour)."
+        GP registered patients (x-axis) across age category
+        (y-axis) for each gender (colour)."
     },
     population_trend_info = function() {
       "This line chart shows the number of registered GP patients (y-axis)
-            across time (x-axis) for each gender (colour)."
+        across time (x-axis) for each gender (colour)."
+    },
+    population_summary = function(...) {
+      self[["plot_data"]]("population_trend") |>
+        select(-"GPPracticeName") |>
+        tidyr::pivot_wider(names_from = "Gender", values_from = "Population") |>
+        mutate(
+          Total = .data[["Male"]] + .data[["Female"]],
+          Date = as.Date(.data[["Date"]], format = "%Y%m%d")
+        )
+    },
+    population_summary_info = function() {
+      "This summary table presents the number of registered patients for the
+        selected GP practice per gender and time point."
     }
   ),
   public = list(
@@ -95,22 +110,21 @@ gp <- R6Class("gp",
       self[["metadata"]]()[["TelephoneNumber"]]
     },
     #' @description
-    #' Get character vector of available plots for gp unit. Options
+    #' Get character vector of plot types for gp unit. Options
     #'   are either "population_pyramid" plot or "population_trend" plot.
-    available_plots = function() {
+    plot_types = function() {
       c("population_pyramid", "population_trend")
     },
     #' @description
     #' Plot gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_gp_unit()
     #' x[["plot"]](type = "population_pyramid")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "population_pyramid" = private[["population_pyramid"]](...),
         "population_trend" = private[["population_trend"]](...)
@@ -119,14 +133,13 @@ gp <- R6Class("gp",
     #' @description
     #' Generate plot data for gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_gp_unit()
     #' x[["plot_data"]](type = "population_pyramid")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "population_pyramid" = private[["population_pyramid_data"]],
         "population_trend" = private[["population_trend_data"]]
@@ -135,18 +148,50 @@ gp <- R6Class("gp",
     #' @description
     #' Get plot info for gp unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_gp_unit()
     #' x[["plot_info"]](type = "population_pyramid")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "population_pyramid" = private[["population_pyramid_info"]](),
         "population_trend" = private[["population_trend_info"]]()
       )
+    },
+    #' @description
+    #' Get character vector of summary types for gp unit.
+    summary_types = function() {
+      "population_summary"
+    },
+    #' @description
+    #' Summarise gp data.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to method.
+    #' @examples
+    #' x <- example_gp_unit()
+    #' x[["summary"]](type = "population_summary")
+    summary = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "population_summary" = private[["population_summary"]]
+      )(...)
+    },
+    #' @description
+    #' Get summary info for gp unit.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to summary info functions.
+    #' @examples
+    #' x <- example_gp_unit()
+    #' x[["summary_info"]](type = "population_summary")
+    summary_info = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "population_summary" = private[["population_summary_info"]]
+      )(...)
     },
     #' @description
     #' Create UI for general practice object.
@@ -154,34 +199,52 @@ gp <- R6Class("gp",
     #'     Namespace of shiny application page.
     ui = function(ns) {
       ns <- NS(ns(self[["ID"]]()))
-      card(
-        card_header(paste(self[["title"]](), "-", self[["ID"]]())),
-        div(glue("Address: {self[['address']]()}")),
-        div(glue("Telephone: {self[['telephone']]()}")),
-        div(glue("Health Board: {self[['health_board']]()}")),
-        card(
-          full_screen = TRUE,
-          card_header(
-            "Population trend",
-            help_popover(
-              id = ns("pop_trend_help"),
-              self[["plot_info"]]("population_trend")
+      navset_tab(
+        nav_panel(
+          title = "Visualisation",
+          card(
+            card_header(paste(self[["title"]](), "-", self[["ID"]]())),
+            div(glue("Address: {self[['address']]()}")),
+            div(glue("Telephone: {self[['telephone']]()}")),
+            div(glue("Health Board: {self[['health_board']]()}")),
+            card(
+              full_screen = TRUE,
+              card_header(
+                "Population trend",
+                help_popover(
+                  id = ns("pop_trend_help"),
+                  self[["plot_info"]]("population_trend")
+                ),
+              ),
+              e_output_spinner(ns("pop_trend"))
             ),
-          ),
-          e_output_spinner(ns("pop_trend"))
+            card(
+              full_screen = TRUE,
+              card_header(
+                "Population pyramid",
+                help_popover(
+                  id = ns("pop_pyramid_help"),
+                  self[["plot_info"]]("population_pyramid")
+                )
+              ),
+              e_output_spinner(ns("pop_pyramid"))
+            ),
+            card(downloadButton(ns("download"), "Download all statistics"))
+          )
         ),
-        card(
-          full_screen = TRUE,
-          card_header(
-            "Population pyramid",
-            help_popover(
-              id = ns("pop_pyramid_help"),
-              self[["plot_info"]]("population_pyramid")
-            )
-          ),
-          e_output_spinner(ns("pop_pyramid"))
-        ),
-        card(downloadButton(ns("download")))
+        nav_panel(
+          title = "Summary",
+          card(
+            full_screen = TRUE,
+            card_header(
+              help_popover(
+                id = ns("dt_help"),
+                self[["summary_info"]]("population_summary")
+              )
+            ),
+            withSpinner(DTOutput(ns("summary")))
+          )
+        )
       )
     },
     #' @description
@@ -204,6 +267,10 @@ gp <- R6Class("gp",
               write.csv(self[["data"]](), con)
             }
           )
+          output[["summary"]] <- renderDT({
+            log_info("Creating gp population summary table")
+            self[["datatable"]]("population_summary")
+          })
         }
       )
     }

@@ -92,7 +92,7 @@ package_panel <- function() {
         being used and how they are being manipulated. It is worth emphasising, however, that this application is primarily a hobby project. Therefore any
         decisions should not be made using the data without consulting the original
         published data sets.",
-        style="color: red"
+        style = "color: red"
       )
     )
   )

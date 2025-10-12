@@ -57,8 +57,11 @@ map <- R6Class("map",
       self[["sf"]]()[self[["sf"]]()[["type"]] != "board", ][["ID"]]
     },
     interactive_map_info = function() {
-      "The interactive map below can be used to visualise individual GP
-        practice or hospital data sets"
+      "This interactive map displays the locations of all available GP practices
+        (blue pins) and hospitals (red pins) in Scotland. Pins can be selected to
+        visualise individual GP practice or hospital data sets. Please note that
+        some of the spatial data is several years old. Therefore this map
+        may contain missing health centres."
     }
   ),
   public = list(
@@ -113,21 +116,21 @@ map <- R6Class("map",
       self[[".title"]]
     },
     #' @description
-    #' Get character vector of available plots for map object.
-    available_plots = function() {
+    #' Get character vector of plot types for map object.
+    plot_types = function() {
       "interactive_map"
     },
     #' @description
     #' Plot map object.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_map_unit()
     #' x[["plot"]](type = "interactive_map")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "interactive_map" = private[["interactive_map"]](...)
       )
@@ -135,14 +138,14 @@ map <- R6Class("map",
     #' @description
     #' Generate plot data for map object.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_map_unit()
     #' x[["plot_data"]](type = "interactive_map")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "interactive_map" = private[["interactive_map_data"]]
       )(...)
@@ -150,14 +153,14 @@ map <- R6Class("map",
     #' @description
     #' Get plot infot for map object.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
+    #'     Character specifying plot type. See `plot_types`
     #'   for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_map_unit()
     #' x[["plot_info"]](type = "interactive_map")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "interactive_map" = private[["interactive_map_info"]]
       )(...)

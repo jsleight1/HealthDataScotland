@@ -1,5 +1,6 @@
 {
   "input": {
+    "ui-dt_help": false,
     "ui-pop_pyramid_help": false,
     "ui-pop_trend_help": false
   },

@@ -33,3 +33,10 @@
     Output
       [1] "This bar chart shows the average hospital bed occupancy (y-axis)\n        per hospital (x-axis) for each specialty (colour). Seetings can be\n        used to show data for different specialties (default is all\n        specialties) and hospitals."
 
+# hospital_grp summary info works
+
+    Code
+      hosp_grp_unit[["summary_info"]](type = smy)
+    Output
+      [1] "This lookup table presents data for all available hospitals\n      in the data set. This table can be searched, filtered and\n      the 'Plot' column allows the user to view statistics for a\n      selected hospital."
+

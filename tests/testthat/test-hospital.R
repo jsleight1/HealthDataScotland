@@ -32,7 +32,7 @@ test_that("hospital class works", {
     output[["address"]](),
     "Lamlash, Isle of Arran, KA278LF"
   )
-  expect_identical(output[["available_plots"]](), "specialty_line")
+  expect_identical(output[["plot_types"]](), "specialty_line")
 })
 
 test_that("hospital class can be plotted", {
@@ -80,4 +80,37 @@ test_that("hospital ui works", {
   output <- hosp_unit[["ui"]](function(i) "ns") |>
     expect_no_error()
   expect_s3_class(output, "shiny.tag")
+})
+
+test_that("hospital summary works", {
+  for (smy in hosp_unit[["summary_types"]]()) {
+    output <- hosp_unit[["summary"]](type = smy) |>
+      expect_no_error()
+    expect_s3_class(output, "data.frame")
+    expect_snapshot_json(output, glue("hospial_{smy}"))
+  }
+})
+
+test_that("hospital summary info works", {
+  for (smy in hosp_unit[["summary_types"]]()) {
+    hosp_unit[["summary_info"]](type = smy) |>
+      expect_snapshot()
+  }
+})
+
+test_that("hospital summary functions error if wrong type", {
+  hosp_unit[["summary"]](type = "p") |>
+    expect_error("`type` must be one.+")
+  hosp_unit[["summary_info"]](type = "p") |>
+    expect_error("`type` must be one.+")
+})
+
+test_that("hospital datatable works", {
+  output <- hosp_unit[["datatable"]]("specialty_summary") |>
+    expect_no_error()
+  expect_s3_class(output, "datatables")
+  expect_identical(
+    output[["x"]][["data"]],
+    as.data.frame(hosp_unit[["summary"]]("specialty_summary"))
+  )
 })

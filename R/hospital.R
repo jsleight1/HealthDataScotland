@@ -22,6 +22,8 @@
 #' x[["plot"]](type = "specialty_line")
 #' x[["plot_data"]](type = "specialty_line")
 #' x[["plot_info"]](type = "specialty_line")
+#' x[["summary"]](type = "specialty_summary")
+#' x[["summary_info"]](type = "specialty_summary")
 #' \dontrun{
 #' x[["ui"]]()
 #' x[["server"]]()
@@ -108,24 +110,39 @@ hospital <- R6Class("hospital",
                     across time (x-axis). Settings can be used to show data for
                     different specialties (default is all specialities).",
       )
+    },
+    specialty_summary = function(...) {
+      self[["plot_data"]](type = "specialty_line", data_type = "annual", ...) |>
+        pivot_wider() |>
+        rename(
+          "Financial Year" = "FinancialYear",
+          "Specialty" = "SpecialtyName",
+          "Percentage occupancy" = "PercentageOccupancy",
+        ) |>
+        select(-"ID", -"HospitalName")
+    },
+    specialty_summary_info = function() {
+      "This summary table presents the annual number of available staffed beds,
+        the number of annual beds occupied, and the percentage occupancy for
+        the selected hospital"
     }
   ),
   public = list(
     #' @description
-    #' Get character vector of available plots for hospital grp
-    available_plots = function() {
+    #' Get character vector of plot types for hospital grp
+    plot_types = function() {
       c("specialty_line")
     },
     #' @description
     #' Plot hospital unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_hospital_unit()
     #' x[["plot"]](type = "specialty_line", data_type = "annual")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "specialty_line" = private[["specialty_line"]]
       )(...)
@@ -133,13 +150,13 @@ hospital <- R6Class("hospital",
     #' @description
     #' Generate plot data for hospital unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_hospital_unit()
     #' x[["plot_data"]](type = "specialty_line", data_type = "annual")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "specialty_line" = private[["specialty_line_data"]]
       )(...)
@@ -147,15 +164,48 @@ hospital <- R6Class("hospital",
     #' @description
     #' Get plot info for hospital unit.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots` for options.
+    #'     Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_hospital_unit()
     #' x[["plot_info"]](type = "specialty_line", data_type = "annual")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "specialty_line" = private[["specialty_line_info"]]
+      )(...)
+    },
+    #' @description
+    #' Get character vector of summary types for hospital unit.
+    summary_types = function() {
+      "specialty_summary"
+    },
+    #' @description
+    #' Summarise hospital data.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to method.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["summary"]](type = "specialty_summary")
+    summary = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "specialty_summary" = private[["specialty_summary"]]
+      )(...)
+    },
+    #' @description
+    #' Get summary info for hospital unit.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to summary info functions.
+    #' @examples
+    #' x <- example_hospital_unit()
+    #' x[["summary_info"]](type = "specialty_summary")
+    summary_info = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "specialty_summary" = private[["specialty_summary_info"]]
       )(...)
     },
     #' @description
@@ -164,53 +214,71 @@ hospital <- R6Class("hospital",
     #'     Namespace of shiny application page.
     ui = function(ns) {
       ns <- NS(ns(self[["ID"]]()))
-      card(
-        card_header(paste(self[["title"]](), "-", self[["ID"]]())),
-        div(glue("Address: {self[['address']]()}")),
-        div(glue("Health Board: {self[['health_board']]()}")),
-        card(
-          full_screen = TRUE,
-          card_header(
-            "Annually Available Staffed Beds",
-            help_popover(
-              id = ns("annual_beds_help"),
-              self[["plot_info"]]("specialty_line", "annual")
+      navset_tab(
+        nav_panel(
+          title = "Visualisation",
+          card(
+            card_header(paste(self[["title"]](), "-", self[["ID"]]())),
+            div(glue("Address: {self[['address']]()}")),
+            div(glue("Health Board: {self[['health_board']]()}")),
+            card(
+              full_screen = TRUE,
+              card_header(
+                "Annually Available Staffed Beds",
+                help_popover(
+                  id = ns("annual_beds_help"),
+                  self[["plot_info"]]("specialty_line", "annual")
+                ),
+                settings_popover(
+                  id = ns("annual_beds_settings"),
+                  virtual_select_input(
+                    ns("specialty_annual_select"),
+                    label = "Select specialty",
+                    choices = private[["specialty_choices"]](),
+                    multiple = TRUE,
+                    selected = "All Specialties"
+                  )
+                )
+              ),
+              withSpinner(uiOutput(ns("annual_beds")))
             ),
-            settings_popover(
-              id = ns("annual_beds_settings"),
-              virtual_select_input(
-                ns("specialty_annual_select"),
-                label = "Select specialty",
-                choices = private[["specialty_choices"]](),
-                multiple = TRUE,
-                selected = "All Specialties"
-              )
-            )
-          ),
-          withSpinner(uiOutput(ns("annual_beds")))
-        ),
-        card(
-          full_screen = TRUE,
-          card_header(
-            "Daily Average Available Staffed Beds",
-            help_popover(
-              id = ns("daily_beds_help"),
-              self[["plot_info"]]("specialty_line", "daily")
+            card(
+              full_screen = TRUE,
+              card_header(
+                "Daily Average Available Staffed Beds",
+                help_popover(
+                  id = ns("daily_beds_help"),
+                  self[["plot_info"]]("specialty_line", "daily")
+                ),
+                settings_popover(
+                  id = ns("daily_beds_settings"),
+                  virtual_select_input(
+                    ns("specialty_daily_select"),
+                    label = "Select specialty",
+                    choices = private[["specialty_choices"]](),
+                    multiple = TRUE,
+                    selected = "All Specialties"
+                  )
+                )
+              ),
+              withSpinner(uiOutput(ns("daily_beds")))
             ),
-            settings_popover(
-              id = ns("daily_beds_settings"),
-              virtual_select_input(
-                ns("specialty_daily_select"),
-                label = "Select specialty",
-                choices = private[["specialty_choices"]](),
-                multiple = TRUE,
-                selected = "All Specialties"
-              )
-            )
-          ),
-          withSpinner(uiOutput(ns("daily_beds")))
+            card(downloadButton(ns("download"), "Download all statistics"))
+          )
         ),
-        card(downloadButton(ns("download")))
+        nav_panel(
+          title = "Summary",
+          card(
+            full_screen = TRUE,
+            card_header(
+              help_popover(
+                id = ns("dt_help"),
+                self[["summary_info"]]("specialty_summary")
+              )
+            ),
+            withSpinner(DTOutput(ns("summary")))
+          )
+        )
       )
     },
     #' @description
@@ -241,6 +309,10 @@ hospital <- R6Class("hospital",
               write.csv(self[["data"]](), con)
             }
           )
+          output[["summary"]] <- renderDT({
+            log_info("Creating hospital specialty summary table")
+            self[["datatable"]]("specialty_summary")
+          })
         }
       )
     }

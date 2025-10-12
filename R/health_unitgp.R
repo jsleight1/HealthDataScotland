@@ -37,6 +37,11 @@ health_unitgrp <- R6Class(
     },
     unit_choices = function() {
       unique(paste(self[["IDs"]](), "-", self[["titles"]]()))
+    },
+    dt_btn = function(ns) {
+      map(self[["IDs"]](), function(i) {
+        glue('<button class="btn" onclick="Shiny.onInputChange(\'{ns("dt_button")}\', \'{i}\')">Click</button>')
+      })
     }
   ),
   public = list(
@@ -94,14 +99,24 @@ health_unitgrp <- R6Class(
       self[[".id"]]
     },
     #' @description
-    #' Get IDs of stored health units
+    #' Get character vector of IDs for stored health units
     IDs = function() {
       unname(map_chr(self[["data"]](), ~ .x[["ID"]]()))
     },
     #' @description
-    #' Get names of stored health units
+    #' Get character vector of titles for stored health units
     titles = function() {
       unname(map_chr(self[["data"]](), ~ .x[["title"]]()))
+    },
+    #' @description
+    #' Get character vector of addresses for stored health units
+    addresses = function() {
+      unname(map_chr(self[["data"]](), ~ .x[["address"]]()))
+    },
+    #' @description
+    #' Get character vector of health boards for stored health units
+    health_boards = function() {
+      unname(map_chr(self[["data"]](), ~ .x[["health_board"]]()))
     },
     #' @description
     #' Get stored health unit.
@@ -131,6 +146,62 @@ health_unitgrp <- R6Class(
           write.csv(self[["combine_data"]](), con)
         }
       )
+    },
+    #' @description
+    #' Get character vector of summary types for grp unit
+    summary_types = function() {
+      c("lookup")
+    },
+    #' @description
+    #' Summarise grp unit data.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to method.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["summary"]](type = "lookup")
+    #' x <- example_hospital_grp_unit()
+    #' x[["summary"]](type = "lookup")
+    summary = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "lookup" = private[["lookup"]]
+      )(...)
+    },
+    #' @description
+    #' Get summary info for grp unit.
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ... Passed to summary info functions.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["summary_info"]](type = "lookup")
+    #' x <- example_hospital_grp_unit()
+    #' x[["summary_info"]](type = "lookup")
+    summary_info = function(type, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      switch(type,
+        "lookup" = private[["lookup_info"]]
+      )(...)
+    },
+    #' @description
+    #' Create datatable of grp unit data
+    #' @param type (character(1))\cr
+    #'   Character specifying summary type. See `summary_types` for options.
+    #' @param ns Shiny Namespace. Default is NULL.
+    #' @param ... Passed to method.
+    #' @examples
+    #' x <- example_gp_grp_unit()
+    #' x[["datatable"]](type = "lookup")
+    #' x <- example_hospital_grp_unit()
+    #' x[["datatable"]](type = "lookup")
+    datatable = function(type, ns = NULL, ...) {
+      type <- arg_match(type, values = self[["summary_types"]]())
+      output <- self[["summary"]](type)
+      if (!is.null(ns)) {
+        output[["Plot"]] <- private[["dt_btn"]](ns)
+      }
+      downloadable_datatable(output, ...)
     }
   )
 )

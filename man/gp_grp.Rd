@@ -25,6 +25,8 @@ x[["subset"]](id = "10002")
 x[["plot"]](type = "national_pyramid")
 x[["plot_data"]](type = "national_pyramid")
 x[["plot_info"]](type = "national_pyramid")
+x[["summary"]](type = "lookup")
+x[["summary_info"]](type = "lookup")
 \dontrun{
 x[["ui"]]()
 x[["server"]]()
@@ -57,7 +59,8 @@ x[["plot_info"]](type = "gp_bar")
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-gp_grp-available_plots}{\code{gp_grp$available_plots()}}
+\item \href{#method-gp_grp-telephones}{\code{gp_grp$telephones()}}
+\item \href{#method-gp_grp-plot_types}{\code{gp_grp$plot_types()}}
 \item \href{#method-gp_grp-plot}{\code{gp_grp$plot()}}
 \item \href{#method-gp_grp-plot_data}{\code{gp_grp$plot_data()}}
 \item \href{#method-gp_grp-plot_info}{\code{gp_grp$plot_info()}}
@@ -71,25 +74,41 @@ x[["plot_info"]](type = "gp_bar")
 <ul>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ID"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-ID'><code>HealthDataScotland::health_unitgrp$ID()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="IDs"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-IDs'><code>HealthDataScotland::health_unitgrp$IDs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="addresses"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-addresses'><code>HealthDataScotland::health_unitgrp$addresses()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="combine_data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-combine_data'><code>HealthDataScotland::health_unitgrp$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-data'><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="datatable"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-datatable'><code>HealthDataScotland::health_unitgrp$datatable()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-download_handler'><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_boards"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_boards'><code>HealthDataScotland::health_unitgrp$health_boards()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-health_unit'><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-initialize'><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-metadata'><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-subset'><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary'><code>HealthDataScotland::health_unitgrp$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_info"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary_info'><code>HealthDataScotland::health_unitgrp$summary_info()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_types"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-summary_types'><code>HealthDataScotland::health_unitgrp$summary_types()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-titles'><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href='../../HealthDataScotland/html/health_unitgrp.html#method-health_unitgrp-validate'><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
 </ul>
 </details>
 }}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-gp_grp-available_plots"></a>}}
-\if{latex}{\out{\hypertarget{method-gp_grp-available_plots}{}}}
-\subsection{Method \code{available_plots()}}{
-Get character vector of available plots for gp grp.
+\if{html}{\out{<a id="method-gp_grp-telephones"></a>}}
+\if{latex}{\out{\hypertarget{method-gp_grp-telephones}{}}}
+\subsection{Method \code{telephones()}}{
+Get character vector of gp unit telephone numbers.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{gp_grp$available_plots()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$telephones()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-gp_grp-plot_types"></a>}}
+\if{latex}{\out{\hypertarget{method-gp_grp-plot_types}{}}}
+\subsection{Method \code{plot_types()}}{
+Get character vector of plot types for gp grp.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{gp_grp$plot_types()}\if{html}{\out{</div>}}
 }
 
 }
@@ -106,8 +125,7 @@ Plot gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot functions.}
 }
@@ -136,8 +154,7 @@ Get plot data for gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot data functions.}
 }
@@ -166,8 +183,7 @@ Get plot info for gp grp.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{type}}{(character(1))\cr
-Character specifying plot type. See \code{available_plots}
-for options.}
+Character specifying plot type. See \code{plot_types} for options.}
 
 \item{\code{...}}{Passed to plot info functions.}
 }

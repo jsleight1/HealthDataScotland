@@ -8,6 +8,17 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 
 R6 class representing a health unit e.g. a GP practice or hospital.
 }
+\examples{
+
+## ------------------------------------------------
+## Method `health_unit$datatable`
+## ------------------------------------------------
+
+x <- example_gp_unit()
+x[["datatable"]](type = "population_summary")
+x <- example_hospital_unit()
+x[["datatable"]](type = "specialty_summary")
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -30,6 +41,7 @@ R6 class representing a health unit e.g. a GP practice or hospital.
 \item \href{#method-health_unit-address}{\code{health_unit$address()}}
 \item \href{#method-health_unit-health_board}{\code{health_unit$health_board()}}
 \item \href{#method-health_unit-popup_modal}{\code{health_unit$popup_modal()}}
+\item \href{#method-health_unit-datatable}{\code{health_unit$datatable()}}
 \item \href{#method-health_unit-clone}{\code{health_unit$clone()}}
 }
 }
@@ -151,6 +163,37 @@ Namespace to create health unit UI.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unit-datatable"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unit-datatable}{}}}
+\subsection{Method \code{datatable()}}{
+Create datatable of health unit data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unit$datatable(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to method.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_unit()
+x[["datatable"]](type = "population_summary")
+x <- example_hospital_unit()
+x[["datatable"]](type = "specialty_summary")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-health_unit-clone"></a>}}

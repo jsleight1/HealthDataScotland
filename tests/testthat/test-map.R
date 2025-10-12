@@ -18,11 +18,11 @@ test_that("map class works", {
   expect_s3_class(output[["sf"]](), c("sf", "tbl_df"))
   expect_identical(output[["id"]](), "map")
   expect_identical(output[["title"]](), "Interactive Map")
-  expect_identical(output[["available_plots"]](), "interactive_map")
+  expect_identical(output[["plot_types"]](), "interactive_map")
 })
 
 test_that("map class can be plotted", {
-  for (plt in map_unit[["available_plots"]]()) {
+  for (plt in map_unit[["plot_types"]]()) {
     output <- map_unit[["plot"]](type = plt) |>
       expect_no_error()
     expect_s3_class(output, c("leaflet", "htmlwidget"))
@@ -30,7 +30,7 @@ test_that("map class can be plotted", {
 })
 
 test_that("map plot info works", {
-  for (plt in map_unit[["available_plots"]]()) {
+  for (plt in map_unit[["plot_types"]]()) {
     map_unit[["plot_info"]](type = plt) |>
       expect_snapshot()
   }

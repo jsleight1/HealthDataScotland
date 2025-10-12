@@ -16,6 +16,8 @@
 #' x[["plot"]](type = "national_pyramid")
 #' x[["plot_data"]](type = "national_pyramid")
 #' x[["plot_info"]](type = "national_pyramid")
+#' x[["summary"]](type = "lookup")
+#' x[["summary_info"]](type = "lookup")
 #' \dontrun{
 #' x[["ui"]]()
 #' x[["server"]]()
@@ -134,14 +136,20 @@ gp_grp <- R6Class("gp_grp",
         in Scotland (y-axis) across time (x-axis) for each gender (colour).
         Specifically, this plot combines data for all available GP practices
         across Scotland and calculates the total number of GP registered
-        patients per gender."
+        patients per gender. Please note this may show a total number of patients
+        greater than the population. This may be caused by a few factors such as
+        patients being registered at multiple GP practices. Please consult the
+        original data sets for further information."
     },
     national_pyramid_info = function() {
       "This bar chart shows a population pyramid of the total number of
         GP registered patients in Scotland (x-axis) across age category
         (y-axis) for each gender (colour). Specifically, this plot combines data for all available GP practices
         across Scotland and calculates the total number of GP registered
-        patients per age and gender."
+        patients per age and gender. Please note this may show a total number of patients
+        greater than the population. This may be caused by a few factors such as
+        patients being registered at multiple GP practices. Please consult the
+        original data sets for further information."
     },
     health_board_trend_info = function() {
       "This line chart shows the total number of GP registered patients
@@ -150,7 +158,10 @@ gp_grp <- R6Class("gp_grp",
         available GP practices across the selected health boards and gender,
         and calculates the total number of GP registered patients.
         Settings can be used to show data for different health boards and
-        genders."
+        genders. Please note this may show a total number of patients
+        greater than the population of the health board. This may be caused by
+        a few factors such as patients being registered at multiple GP practices.
+        Please consult the original data sets for further information."
     },
     health_board_bar_info = function() {
       "This bar chart shows the total number of GP registered patients
@@ -158,7 +169,10 @@ gp_grp <- R6Class("gp_grp",
         (x-axis). Specifically, this plot combines data for all available
         GP practices across the selected health boards and gender, and
         calculates the total number of GP registered patients. Settings can
-        be used to show data for different health boards and genders."
+        be used to show data for different health boards and genders. Please note this may show a total number of patients
+        greater than the population of the health board. This may be caused by
+        a few factors such as patients being registered at multiple GP practices.
+        Please consult the original data sets for further information."
     },
     gp_trend_info = function() {
       "This line chart shows the total number of GP registered patients
@@ -171,12 +185,34 @@ gp_grp <- R6Class("gp_grp",
         (y-axis) for each individal GP practice (colour) across
         age categories (x-axis). Settings can be used to show data for
         different GP practices and genders."
+    },
+    lookup = function(...) {
+      data.frame(
+        Title = self[["titles"]](),
+        ID = self[["IDs"]](),
+        Address = self[["addresses"]](),
+        Telephone = self[["telephones"]](),
+        `Health board` = self[["health_boards"]](),
+        check.names = FALSE,
+        ...
+      )
+    },
+    lookup_info = function(...) {
+      "This lookup table presents data for all available GP practices
+      in the data set. This table can be searched, filtered and
+      the 'Plot' column allows the user to view statistics for a
+      selected GP practice."
     }
   ),
   public = list(
     #' @description
-    #' Get character vector of available plots for gp grp.
-    available_plots = function() {
+    #' Get character vector of gp unit telephone numbers.
+    telephones = function() {
+      unname(map_chr(self[["data"]](), ~ .x[["telephone"]]()))
+    },
+    #' @description
+    #' Get character vector of plot types for gp grp.
+    plot_types = function() {
       c(
         "national_trend", "national_pyramid", "health_board_trend",
         "health_board_bar", "gp_trend", "gp_bar"
@@ -185,14 +221,13 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Plot gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot functions.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["plot"]](type = "gp_bar")
     plot = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend"]],
         "national_pyramid" = private[["national_pyramid"]],
@@ -205,14 +240,13 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Get plot data for gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot data functions.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["plot_data"]](type = "gp_bar")
     plot_data = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend_data"]],
         "national_pyramid" = private[["national_pyramid_data"]],
@@ -225,14 +259,13 @@ gp_grp <- R6Class("gp_grp",
     #' @description
     #' Get plot info for gp grp.
     #' @param type (character(1))\cr
-    #'     Character specifying plot type. See `available_plots`
-    #'   for options.
+    #'   Character specifying plot type. See `plot_types` for options.
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_gp_grp_unit()
     #' x[["plot_info"]](type = "gp_bar")
     plot_info = function(type, ...) {
-      type <- arg_match(type, values = self[["available_plots"]]())
+      type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
         "national_trend" = private[["national_trend_info"]],
         "national_pyramid" = private[["national_pyramid_info"]],
@@ -250,156 +283,174 @@ gp_grp <- R6Class("gp_grp",
       nav_panel(
         title = "General practice",
         class = "overflow-auto",
-        div(
-          card(
-            card_header("National summary"),
-            full_screen = TRUE,
-            layout_column_wrap(
+        navset_tab(
+          nav_panel(
+            title = "Visualisation",
+            div(
               card(
+                card_header("National summary"),
                 full_screen = TRUE,
-                card_header(
-                  "National GP population trend",
-                  help_popover(
-                    id = ns("national_trend_help"),
-                    self[["plot_info"]]("national_trend")
+                layout_column_wrap(
+                  card(
+                    full_screen = TRUE,
+                    card_header(
+                      "National GP population trend",
+                      help_popover(
+                        id = ns("national_trend_help"),
+                        self[["plot_info"]]("national_trend")
+                      )
+                    ),
+                    e_output_spinner(ns("national_pop_trend"))
+                  ),
+                  card(
+                    full_screen = TRUE,
+                    card_header(
+                      "National GP population per gender and age group",
+                      help_popover(
+                        id = ns("national_pyramid_help"),
+                        self[["plot_info"]]("national_pyramid")
+                      )
+                    ),
+                    e_output_spinner(ns("national_pop_pyramid"))
                   )
-                ),
-                e_output_spinner(ns("national_pop_trend"))
+                )
               ),
               card(
                 full_screen = TRUE,
-                card_header(
-                  "National GP population per gender and age group",
-                  help_popover(
-                    id = ns("national_pyramid_help"),
-                    self[["plot_info"]]("national_pyramid")
-                  )
-                ),
-                e_output_spinner(ns("national_pop_pyramid"))
-              )
-            )
-          ),
-          card(
-            full_screen = TRUE,
-            card_header("Health board summary"),
-            layout_column_wrap(
-              card(
-                full_screen = TRUE,
-                card_header(
-                  "Health board GP population",
-                  help_popover(
-                    id = ns("hb_trend_help"),
-                    self[["plot_info"]]("health_board_trend")
-                  ),
-                  settings_popover(
-                    id = ns("hb_trend_settings"),
-                    virtual_select_input(
-                      inputId = ns("select_hb_trend_hb"),
-                      label = "Select health boards",
-                      multiple = TRUE,
-                      choices = private[["health_board_choices"]](),
-                      selected = private[["health_board_choices"]]()
+                card_header("Health board summary"),
+                layout_column_wrap(
+                  card(
+                    full_screen = TRUE,
+                    card_header(
+                      "Health board GP population",
+                      help_popover(
+                        id = ns("hb_trend_help"),
+                        self[["plot_info"]]("health_board_trend")
+                      ),
+                      settings_popover(
+                        id = ns("hb_trend_settings"),
+                        virtual_select_input(
+                          inputId = ns("select_hb_trend_hb"),
+                          label = "Select health boards",
+                          multiple = TRUE,
+                          choices = private[["health_board_choices"]](),
+                          selected = private[["health_board_choices"]]()
+                        ),
+                        virtual_select_input(
+                          inputId = ns("select_hb_trend_gender"),
+                          label = "Select gender",
+                          choices = c("All", "Male", "Female"),
+                          selected = "All"
+                        )
+                      )
                     ),
-                    virtual_select_input(
-                      inputId = ns("select_hb_trend_gender"),
-                      label = "Select gender",
-                      choices = c("All", "Male", "Female"),
-                      selected = "All"
-                    )
+                    e_output_spinner(ns("hb_pop_trend"))
+                  ),
+                  card(
+                    full_screen = TRUE,
+                    card_header(
+                      "Health board GP population per age group",
+                      help_popover(
+                        id = ns("hb_bar_help"),
+                        self[["plot_info"]]("health_board_bar")
+                      ),
+                      settings_popover(
+                        id = ns("hb_bar_settings"),
+                        virtual_select_input(
+                          inputId = ns("select_hb_bar_hb"),
+                          label = "Select health boards",
+                          multiple = TRUE,
+                          choices = private[["health_board_choices"]](),
+                          selected = private[["health_board_choices"]]()
+                        ),
+                        virtual_select_input(
+                          inputId = ns("select_hb_bar_gender"),
+                          label = "Select gender",
+                          choices = c("All", "Male", "Female"),
+                          selected = "All"
+                        )
+                      )
+                    ),
+                    e_output_spinner(ns("hb_pop_bar"))
                   )
-                ),
-                e_output_spinner(ns("hb_pop_trend"))
+                )
               ),
               card(
                 full_screen = TRUE,
-                card_header(
-                  "Health board GP population per age group",
-                  help_popover(
-                    id = ns("hb_bar_help"),
-                    self[["plot_info"]]("health_board_bar")
-                  ),
-                  settings_popover(
-                    id = ns("hb_bar_settings"),
-                    virtual_select_input(
-                      inputId = ns("select_hb_bar_hb"),
-                      label = "Select health boards",
-                      multiple = TRUE,
-                      choices = private[["health_board_choices"]](),
-                      selected = private[["health_board_choices"]]()
+                card_header("Individual practice summary"),
+                layout_column_wrap(
+                  card(
+                    full_screen = TRUE,
+                    card_header(
+                      "GP population for selected practice and gender",
+                      help_popover(
+                        id = ns("gp_trend_help"),
+                        self[["plot_info"]]("gp_trend")
+                      ),
+                      settings_popover(
+                        id = ns("gp_trend_settings"),
+                        virtual_select_input(
+                          inputId = ns("select_gp_trend_gp"),
+                          label = "Select individual GP practices",
+                          multiple = TRUE,
+                          choices = private[["unit_choices"]](),
+                          selected = private[["unit_choices"]]()[1]
+                        ),
+                        virtual_select_input(
+                          inputId = ns("select_gp_trend_gender"),
+                          label = "Select gender",
+                          choices = c("All", "Male", "Female"),
+                          selected = "All"
+                        )
+                      )
                     ),
-                    virtual_select_input(
-                      inputId = ns("select_hb_bar_gender"),
-                      label = "Select gender",
-                      choices = c("All", "Male", "Female"),
-                      selected = "All"
-                    )
-                  )
-                ),
-                e_output_spinner(ns("hb_pop_bar"))
-              )
-            )
-          ),
-          card(
-            full_screen = TRUE,
-            card_header("Individual practice summary"),
-            layout_column_wrap(
-              card(
-                full_screen = TRUE,
-                card_header(
-                  "GP population for selected practice and gender",
-                  help_popover(
-                    id = ns("gp_trend_help"),
-                    self[["plot_info"]]("gp_trend")
+                    e_output_spinner(ns("gp_pop_trend"))
                   ),
-                  settings_popover(
-                    id = ns("gp_trend_settings"),
-                    virtual_select_input(
-                      inputId = ns("select_gp_trend_gp"),
-                      label = "Select individual GP practices",
-                      multiple = TRUE,
-                      choices = private[["unit_choices"]](),
-                      selected = private[["unit_choices"]]()[1]
+                  card(
+                    full_screen = TRUE,
+                    card_header(
+                      "GP population for selected practice and gender per age group",
+                      help_popover(
+                        id = ns("gp_bar_help"),
+                        self[["plot_info"]]("gp_bar")
+                      ),
+                      settings_popover(
+                        id = ns("gp_bar_settings"),
+                        virtual_select_input(
+                          inputId = ns("select_gp_bar_gp"),
+                          label = "Select individual GP practices",
+                          multiple = TRUE,
+                          choices = private[["unit_choices"]](),
+                          selected = private[["unit_choices"]]()[1]
+                        ),
+                        virtual_select_input(
+                          inputId = ns("select_gp_bar_gender"),
+                          label = "Select gender",
+                          choices = c("All", "Male", "Female"),
+                          selected = "All"
+                        )
+                      )
                     ),
-                    virtual_select_input(
-                      inputId = ns("select_gp_trend_gender"),
-                      label = "Select gender",
-                      choices = c("All", "Male", "Female"),
-                      selected = "All"
-                    )
+                    e_output_spinner(ns("gp_pop_bar"))
                   )
-                ),
-                e_output_spinner(ns("gp_pop_trend"))
+                )
               ),
-              card(
-                full_screen = TRUE,
-                card_header(
-                  "GP population for selected practice and gender per age group",
-                  help_popover(
-                    id = ns("gp_bar_help"),
-                    self[["plot_info"]]("gp_bar")
-                  ),
-                  settings_popover(
-                    id = ns("gp_bar_settings"),
-                    virtual_select_input(
-                      inputId = ns("select_gp_bar_gp"),
-                      label = "Select individual GP practices",
-                      multiple = TRUE,
-                      choices = private[["unit_choices"]](),
-                      selected = private[["unit_choices"]]()[1]
-                    ),
-                    virtual_select_input(
-                      inputId = ns("select_gp_bar_gender"),
-                      label = "Select gender",
-                      choices = c("All", "Male", "Female"),
-                      selected = "All"
-                    )
-                  )
-                ),
-                e_output_spinner(ns("gp_pop_bar"))
-              )
+              card(downloadButton(ns("download"), "Download all statistics"))
             )
           ),
-          card(downloadButton(ns("download")))
+          nav_panel(
+            title = "Centre lookup",
+            card(
+              full_screen = TRUE,
+              card_header(
+                help_popover(
+                  id = ns("lookup_help"),
+                  self[["summary_info"]]("lookup")
+                )
+              ),
+              withSpinner(DTOutput(ns("lookup")))
+            )
+          )
         )
       )
     },
@@ -409,6 +460,7 @@ gp_grp <- R6Class("gp_grp",
       moduleServer(
         self[["ID"]](),
         function(input, output, session) {
+          ns <- session[["ns"]]
           output[["national_pop_trend"]] <- renderEcharts4r({
             log_info("Creating GP national trend plot")
             self[["plot"]](type = "national_trend")
@@ -450,6 +502,13 @@ gp_grp <- R6Class("gp_grp",
             )
           })
           output[["download"]] <- self[["download_handler"]]()
+          output[["lookup"]] <- renderDT(self[["datatable"]]("lookup", ns))
+          observe({
+            log_info("Rendering gp unit popup")
+            obj <- self[["health_unit"]](input[["dt_button"]])
+            isolate(obj[["popup_modal"]](ns))
+          }) |>
+            bindEvent(input[["dt_button"]])
         }
       )
     }

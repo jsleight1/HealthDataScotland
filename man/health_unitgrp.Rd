@@ -8,6 +8,35 @@ R6 class storing health statistics for a list of health units.
 
 R6 class storing health statistics for a list of health units.
 }
+\examples{
+
+## ------------------------------------------------
+## Method `health_unitgrp$summary`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["summary"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["summary"]](type = "lookup")
+
+## ------------------------------------------------
+## Method `health_unitgrp$summary_info`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["summary_info"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["summary_info"]](type = "lookup")
+
+## ------------------------------------------------
+## Method `health_unitgrp$datatable`
+## ------------------------------------------------
+
+x <- example_gp_grp_unit()
+x[["datatable"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["datatable"]](type = "lookup")
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -28,9 +57,15 @@ R6 class storing health statistics for a list of health units.
 \item \href{#method-health_unitgrp-ID}{\code{health_unitgrp$ID()}}
 \item \href{#method-health_unitgrp-IDs}{\code{health_unitgrp$IDs()}}
 \item \href{#method-health_unitgrp-titles}{\code{health_unitgrp$titles()}}
+\item \href{#method-health_unitgrp-addresses}{\code{health_unitgrp$addresses()}}
+\item \href{#method-health_unitgrp-health_boards}{\code{health_unitgrp$health_boards()}}
 \item \href{#method-health_unitgrp-health_unit}{\code{health_unitgrp$health_unit()}}
 \item \href{#method-health_unitgrp-subset}{\code{health_unitgrp$subset()}}
 \item \href{#method-health_unitgrp-download_handler}{\code{health_unitgrp$download_handler()}}
+\item \href{#method-health_unitgrp-summary_types}{\code{health_unitgrp$summary_types()}}
+\item \href{#method-health_unitgrp-summary}{\code{health_unitgrp$summary()}}
+\item \href{#method-health_unitgrp-summary_info}{\code{health_unitgrp$summary_info()}}
+\item \href{#method-health_unitgrp-datatable}{\code{health_unitgrp$datatable()}}
 \item \href{#method-health_unitgrp-clone}{\code{health_unitgrp$clone()}}
 }
 }
@@ -109,7 +144,7 @@ Get ID of health unit grp.
 \if{html}{\out{<a id="method-health_unitgrp-IDs"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-IDs}{}}}
 \subsection{Method \code{IDs()}}{
-Get IDs of stored health units
+Get character vector of IDs for stored health units
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$IDs()}\if{html}{\out{</div>}}
 }
@@ -119,9 +154,29 @@ Get IDs of stored health units
 \if{html}{\out{<a id="method-health_unitgrp-titles"></a>}}
 \if{latex}{\out{\hypertarget{method-health_unitgrp-titles}{}}}
 \subsection{Method \code{titles()}}{
-Get names of stored health units
+Get character vector of titles for stored health units
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$titles()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-addresses"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-addresses}{}}}
+\subsection{Method \code{addresses()}}{
+Get character vector of addresses for stored health units
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$addresses()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-health_boards"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-health_boards}{}}}
+\subsection{Method \code{health_boards()}}{
+Get character vector of health boards for stored health units
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$health_boards()}\if{html}{\out{</div>}}
 }
 
 }
@@ -168,6 +223,111 @@ Character specifying ID (or IDs) of object to obtain from group.}
 Get download handler function of health unit group.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$download_handler()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-summary_types"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-summary_types}{}}}
+\subsection{Method \code{summary_types()}}{
+Get character vector of summary types for grp unit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$summary_types()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-summary"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-summary}{}}}
+\subsection{Method \code{summary()}}{
+Summarise grp unit data.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$summary(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to method.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["summary"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["summary"]](type = "lookup")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-summary_info"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-summary_info}{}}}
+\subsection{Method \code{summary_info()}}{
+Get summary info for grp unit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$summary_info(type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{...}}{Passed to summary info functions.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["summary_info"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["summary_info"]](type = "lookup")
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-health_unitgrp-datatable"></a>}}
+\if{latex}{\out{\hypertarget{method-health_unitgrp-datatable}{}}}
+\subsection{Method \code{datatable()}}{
+Create datatable of grp unit data
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{health_unitgrp$datatable(type, ns = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{(character(1))\cr
+Character specifying summary type. See \code{summary_types} for options.}
+
+\item{\code{ns}}{Shiny Namespace. Default is NULL.}
+
+\item{\code{...}}{Passed to method.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{x <- example_gp_grp_unit()
+x[["datatable"]](type = "lookup")
+x <- example_hospital_grp_unit()
+x[["datatable"]](type = "lookup")
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
