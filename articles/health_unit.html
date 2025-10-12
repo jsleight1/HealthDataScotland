@@ -13,7 +13,14 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="health_unit_files/libs/quarto-html/popper.min.js"></script><script src="health_unit_files/libs/quarto-html/tippy.umd.min.js"></script><link href="health_unit_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="health_unit_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="health_unit_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-<script src="health_unit_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="health_unit_files/libs/echarts4r-4.8.0/echarts-en.min.js"></script><script src="health_unit_files/libs/echarts4r-4.8.0/ecStat.min.js"></script><script src="health_unit_files/libs/echarts4r-4.8.0/dataTool.min.js"></script><script src="health_unit_files/libs/echarts4r-binding-0.4.5/echarts4r.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to health units">
+<script src="health_unit_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="health_unit_files/libs/echarts4r-4.8.0/echarts-en.min.js"></script><script src="health_unit_files/libs/echarts4r-4.8.0/ecStat.min.js"></script><script src="health_unit_files/libs/echarts4r-4.8.0/dataTool.min.js"></script><script src="health_unit_files/libs/echarts4r-binding-0.4.5/echarts4r.js"></script><link href="health_unit_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="health_unit_files/libs/datatables-binding-0.33/datatables.js"></script><link href="health_unit_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="health_unit_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="health_unit_files/libs/jszip-1.13.6/jszip.min.js"></script><link href="health_unit_files/libs/dt-ext-buttons-1.13.6/css/buttons.dataTables.min.css" rel="stylesheet">
+<script src="health_unit_files/libs/dt-ext-buttons-1.13.6/js/dataTables.buttons.min.js"></script><script src="health_unit_files/libs/dt-ext-buttons-1.13.6/js/buttons.html5.min.js"></script><script src="health_unit_files/libs/dt-ext-buttons-1.13.6/js/buttons.colVis.min.js"></script><script src="health_unit_files/libs/dt-ext-buttons-1.13.6/js/buttons.print.min.js"></script><link href="health_unit_files/libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<link href="health_unit_files/libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="health_unit_files/libs/selectize-0.12.0/selectize.min.js"></script><link href="health_unit_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="health_unit_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to health units">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -23,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">HealthDataScotland</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,10 +101,10 @@
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -105,8 +112,12 @@
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     telephone: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
@@ -115,6 +126,8 @@
 <span><span class="co">#&gt;     population_pyramid: function (...) </span></span>
 <span><span class="co">#&gt;     population_pyramid_data: function () </span></span>
 <span><span class="co">#&gt;     population_pyramid_info: function () </span></span>
+<span><span class="co">#&gt;     population_summary: function (...) </span></span>
+<span><span class="co">#&gt;     population_summary_info: function () </span></span>
 <span><span class="co">#&gt;     population_trend: function (...) </span></span>
 <span><span class="co">#&gt;     population_trend_data: function () </span></span>
 <span><span class="co">#&gt;     population_trend_info: function () </span></span>
@@ -168,10 +181,10 @@
 </div>
 </section><section class="level3"><h4 id="plotting">Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
 </h4>
-<p>Visualising data associated with a single GP practice can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$available_plots</code> function can be used.</p>
+<p>Visualising data associated with a single GP practice can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$plot_types</code> function can be used.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "population_pyramid" "population_trend"</span></span></code></pre></div>
 </div>
 <div class="cell">
@@ -179,8 +192,8 @@
 <code class="sourceCode R"><span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_pyramid"</span><span class="op">)</span></span></code></pre></div>
 <div id="fig-gp_population_pyramid" class="cell-output-display quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-gp_population_pyramid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-a78c5166cb614fdcb10e" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-a78c5166cb614fdcb10e">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"xAxis":[{"show":true,"axisLabel":{"formatter":"function (value) {\n            return(Math.abs(value))\n          }"}}],"timeline":{"data":["20231001","20240101","20240401"],"axisType":"category","autoPlay":true},"yAxis":[{"data":["Ages0to4","Ages5to14","Ages15to24","Ages25to44","Ages45to64","Ages65to74","Ages75to84","Ages85plus"],"type":"category","boundaryGap":true}],"legend":{"data":["Male","Female"],"show":true,"type":"plain","top":10,"left":"center","data.1":["Female","Male"]},"series":[{"name":"Male","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d","stack":"quantity"},{"name":"Female","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d","stack":"quantity"}],"tooltip":{"trigger":"item","formatter":"\n        function(params){\n          return(\n            '<strong>' + 'Age: ' + '<\/strong>' + params.name + ' years' + '<br />' +\n            '<strong>' + 'Population: ' + '<\/strong>' + Math.abs(params.value[0])\n          )\n        }\n        "}},"options":[{"series":[{"data":[{"value":[" 186","Ages0to4"]},{"value":[" 463","Ages5to14"]},{"value":[" 419","Ages15to24"]},{"value":[" 952","Ages25to44"]},{"value":["1170","Ages45to64"]},{"value":[" 494","Ages65to74"]},{"value":[" 307","Ages75to84"]},{"value":["  94","Ages85plus"]}]},{"data":[{"value":[" -170","Ages0to4"]},{"value":[" -407","Ages5to14"]},{"value":[" -430","Ages15to24"]},{"value":[" -975","Ages25to44"]},{"value":["-1259","Ages45to64"]},{"value":[" -539","Ages65to74"]},{"value":[" -339","Ages75to84"]},{"value":["  -97","Ages85plus"]}]}]},{"series":[{"data":[{"value":[" 190","Ages0to4"]},{"value":[" 456","Ages5to14"]},{"value":[" 419","Ages15to24"]},{"value":[" 946","Ages25to44"]},{"value":["1159","Ages45to64"]},{"value":[" 496","Ages65to74"]},{"value":[" 308","Ages75to84"]},{"value":["  91","Ages85plus"]}]},{"data":[{"value":[" -171","Ages0to4"]},{"value":[" -401","Ages5to14"]},{"value":[" -429","Ages15to24"]},{"value":[" -967","Ages25to44"]},{"value":["-1258","Ages45to64"]},{"value":[" -535","Ages65to74"]},{"value":[" -345","Ages75to84"]},{"value":[" -103","Ages85plus"]}]}]},{"series":[{"data":[{"value":[" 186","Ages0to4"]},{"value":[" 456","Ages5to14"]},{"value":[" 415","Ages15to24"]},{"value":[" 945","Ages25to44"]},{"value":["1160","Ages45to64"]},{"value":[" 494","Ages65to74"]},{"value":[" 312","Ages75to84"]},{"value":["  88","Ages85plus"]}]},{"data":[{"value":[" -176","Ages0to4"]},{"value":[" -397","Ages5to14"]},{"value":[" -425","Ages15to24"]},{"value":[" -961","Ages25to44"]},{"value":["-1256","Ages45to64"]},{"value":[" -535","Ages65to74"]},{"value":[" -344","Ages75to84"]},{"value":[" -101","Ages85plus"]}]}]}],"legend":{"data":[null,null,null,null,null,null]}},"dispose":true},"evals":["opts.baseOption.xAxis.0.axisLabel.formatter","opts.baseOption.tooltip.formatter"],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-52535a05b3d45fcbda6e" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-52535a05b3d45fcbda6e">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"xAxis":[{"show":true,"axisLabel":{"formatter":"function (value) {\n            return(Math.abs(value))\n          }"}}],"timeline":{"data":["20231001","20240101","20240401"],"axisType":"category","autoPlay":true},"yAxis":[{"data":["Ages0to4","Ages5to14","Ages15to24","Ages25to44","Ages45to64","Ages65to74","Ages75to84","Ages85plus"],"type":"category","boundaryGap":true}],"legend":{"data":["Male","Female"],"show":true,"type":"plain","top":10,"left":"center","data.1":["Female","Male"]},"series":[{"name":"Male","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d","stack":"quantity"},{"name":"Female","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d","stack":"quantity"}],"tooltip":{"trigger":"item","formatter":"\n        function(params){\n          return(\n            '<strong>' + 'Age: ' + '<\/strong>' + params.name + ' years' + '<br />' +\n            '<strong>' + 'Population: ' + '<\/strong>' + Math.abs(params.value[0])\n          )\n        }\n        "}},"options":[{"series":[{"data":[{"value":[" 186","Ages0to4"]},{"value":[" 463","Ages5to14"]},{"value":[" 419","Ages15to24"]},{"value":[" 952","Ages25to44"]},{"value":["1170","Ages45to64"]},{"value":[" 494","Ages65to74"]},{"value":[" 307","Ages75to84"]},{"value":["  94","Ages85plus"]}]},{"data":[{"value":[" -170","Ages0to4"]},{"value":[" -407","Ages5to14"]},{"value":[" -430","Ages15to24"]},{"value":[" -975","Ages25to44"]},{"value":["-1259","Ages45to64"]},{"value":[" -539","Ages65to74"]},{"value":[" -339","Ages75to84"]},{"value":["  -97","Ages85plus"]}]}]},{"series":[{"data":[{"value":[" 190","Ages0to4"]},{"value":[" 456","Ages5to14"]},{"value":[" 419","Ages15to24"]},{"value":[" 946","Ages25to44"]},{"value":["1159","Ages45to64"]},{"value":[" 496","Ages65to74"]},{"value":[" 308","Ages75to84"]},{"value":["  91","Ages85plus"]}]},{"data":[{"value":[" -171","Ages0to4"]},{"value":[" -401","Ages5to14"]},{"value":[" -429","Ages15to24"]},{"value":[" -967","Ages25to44"]},{"value":["-1258","Ages45to64"]},{"value":[" -535","Ages65to74"]},{"value":[" -345","Ages75to84"]},{"value":[" -103","Ages85plus"]}]}]},{"series":[{"data":[{"value":[" 186","Ages0to4"]},{"value":[" 456","Ages5to14"]},{"value":[" 415","Ages15to24"]},{"value":[" 945","Ages25to44"]},{"value":["1160","Ages45to64"]},{"value":[" 494","Ages65to74"]},{"value":[" 312","Ages75to84"]},{"value":["  88","Ages85plus"]}]},{"data":[{"value":[" -176","Ages0to4"]},{"value":[" -397","Ages5to14"]},{"value":[" -425","Ages15to24"]},{"value":[" -961","Ages25to44"]},{"value":["-1256","Ages45to64"]},{"value":[" -535","Ages65to74"]},{"value":[" -344","Ages75to84"]},{"value":[" -101","Ages85plus"]}]}]}],"legend":{"data":[null,null,null,null,null,null]}},"dispose":true},"evals":["opts.baseOption.xAxis.0.axisLabel.formatter","opts.baseOption.tooltip.formatter"],"jsHooks":[]}</script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gp_population_pyramid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: This bar chart shows a population pyramid of the total number of GP registered patients (x-axis) across age category (y-axis) for each gender (colour).
@@ -207,20 +220,51 @@ Figure 1: This bar chart shows a population pyramid of the total number of GP r
 <span><span class="co">#&gt; 10 20240101 Ages5to14    -401   456</span></span>
 <span><span class="co">#&gt; # ℹ 14 more rows</span></span>
 <span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">plot_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_pyramid"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "This bar chart shows a population pyramid of the total number of\n            GP registered patients (x-axis) across age category\n            (y-axis) for each gender (colour)."</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "This bar chart shows a population pyramid of the total number of\n        GP registered patients (x-axis) across age category\n        (y-axis) for each gender (colour)."</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h4 id="summarising">Summarising<a class="anchor" aria-label="anchor" href="#summarising"></a>
+</h4>
+<p>Summarising data associated with a single GP practice can be achieved using the <code>$summary</code> function with an appropriate <code>type</code> argument. To see which summary types are available to use, the <code>$summary_types</code> function can be used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">summary_types</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "population_summary"</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 4</span></span>
+<span><span class="co">#&gt;   Date         Male Female Total</span></span>
+<span><span class="co">#&gt;   &lt;date&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 57386-05-03  4056   4195  8251</span></span>
+<span><span class="co">#&gt; 2 57385-07-07  4065   4209  8274</span></span>
+<span><span class="co">#&gt; 3 57360-08-07  4085   4216  8301</span></span></code></pre></div>
+</div>
+<p>This summary can also be coerced into a datatable using the <code>$datatable</code> function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-fe905ac4a22e7c3a45ae" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fe905ac4a22e7c3a45ae">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1747958486400000\" data-max=\"1748770646400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"4056\" data-max=\"4085\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"4195\" data-max=\"4216\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8251\" data-max=\"8301\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["57386-05-03","57385-07-07","57360-08-07"],[4056,4065,4085],[4195,4209,4216],[8251,8274,8301]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Date<\/th>\n      <th>Male<\/th>\n      <th>Female<\/th>\n      <th>Total<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"frtipB","buttons":["csv","excel"],"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"name":"Date","targets":0},{"name":"Male","targets":1},{"name":"Female","targets":2},{"name":"Total","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true},"selection":{"mode":"none","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>The helper function <code>$plot_info</code> can be used to create the character text describing each summary table (alongside functionality related to the shiny application) respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_unit</span><span class="op">$</span><span class="fu">summary_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This summary table presents the number of registered patients for the\n        selected GP practice per gender and time point."</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h3 id="hospital">Hospital<a class="anchor" aria-label="anchor" href="#hospital"></a>
 </h3>
 <p>Data associated with a single hospital is stored in a <code><a href="../reference/hospital.html">hospital()</a></code> health unit object. <code><a href="../reference/example_hospital_unit.html">example_hospital_unit()</a></code> can be used to render an example object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_unit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/example_hospital_unit.html">example_hospital_unit</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <section class="level3"><h4 id="data-1">Data<a class="anchor" aria-label="anchor" href="#data-1"></a>
 </h4>
 <p>Hospital health unit objects house a data.frame storing bed capacity data and a data.frame storing metadata associated with the hospital. These can be obtained using the public functions <code>$data</code> and <code>$metadata</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 21 × 23</span></span>
 <span><span class="co">#&gt;    datasetID          FinancialYear FinancialYearQF HB    HBQF  ID    LocationQF</span></span>
@@ -253,7 +297,7 @@ Figure 1: This bar chart shows a population pyramid of the total number of GP r
 </div>
 <p>In addition, to the <code>$metadata</code> function returing a data.frame there are also relevant helper functions to pull out particular metadata associated with a hospital.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">ID</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "A101H"</span></span>
 <span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">title</span><span class="op">(</span><span class="op">)</span></span>
@@ -265,21 +309,21 @@ Figure 1: This bar chart shows a population pyramid of the total number of GP r
 </div>
 </section><section class="level3"><h4 id="plotting-1">Plotting<a class="anchor" aria-label="anchor" href="#plotting-1"></a>
 </h4>
-<p>Visualising data associated with a single hospital can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$available_plots</code> function can be used.</p>
+<p>Visualising data associated with a single hospital can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$plot_types</code> function can be used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "specialty_line"</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"specialty_line"</span><span class="op">)</span></span></code></pre></div>
 <div id="fig-hosp_specialty_line_annual" class="cell-output-display quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-hosp_specialty_line_annual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="row">
 <div class="col-xs-12">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-d329588eb5cbc7bfdf33" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-d329588eb5cbc7bfdf33">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"yAxis":[{"show":true,"name":"value"}],"xAxis":[{"data":["2022/23","2023/24"],"type":"category","boundaryGap":true,"name":"FinancialYear"}],"legend":{"data":["Annual number of available staffed beds","Annual number of occupied beds"]},"series":[{"data":[{"value":["2022/23","3263"]},{"value":["2023/24","3631"]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Annual number of available staffed beds","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":["2022/23","2526"]},{"value":["2023/24","2488"]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Annual number of occupied beds","type":"line","coordinateSystem":"cartesian2d"}],"tooltip":{"trigger":"axis"},"dataZoom":[[]],"toolbox":{"show":false},"title":[{"subtext":"All Specialties"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-43f8e7aec6c62c461799" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-43f8e7aec6c62c461799">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"yAxis":[{"show":true,"name":"value"}],"xAxis":[{"data":["2022/23","2023/24"],"type":"category","boundaryGap":true,"name":"FinancialYear"}],"legend":{"data":["Annual number of available staffed beds","Annual number of occupied beds"]},"series":[{"data":[{"value":["2022/23","3263"]},{"value":["2023/24","3631"]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Annual number of available staffed beds","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":["2022/23","2526"]},{"value":["2023/24","2488"]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Annual number of occupied beds","type":"line","coordinateSystem":"cartesian2d"}],"tooltip":{"trigger":"axis"},"dataZoom":[[]],"toolbox":{"show":false},"title":[{"subtext":"All Specialties"}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -290,7 +334,7 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </div>
 <p>Helper functions <code>$plot_data</code> and <code>$plot_info</code> can be used to create the data associated with each plot and character text describing each plot (alongside functionality related to the shiny application) respectively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">plot_data</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"specialty_line"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 7</span></span>
 <span><span class="co">#&gt;   ID    FinancialYear HospitalName SpecialtyName PercentageOccupancy name  value</span></span>
@@ -302,6 +346,38 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">plot_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"specialty_line"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "This line chart shows the annual number of\n                    available staffed beds and the number occupied (y-axis)\n                    across time (x-axis). Settings can be used to show data for\n                    different specialties (default is all specialities)."</span></span></code></pre></div>
 </div>
+</section><section class="level3"><h4 id="summarising-1">Summarising<a class="anchor" aria-label="anchor" href="#summarising-1"></a>
+</h4>
+<p>Summarising data associated with a single hospital can be achieved using the <code>$summary</code> function with an appropriate <code>type</code> argument. To see which summary types are available to use, the <code>$summary_types</code> function can be used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">summary_types</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "specialty_summary"</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"specialty_summary"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span><span class="co">#&gt;   `Financial Year` Specialty       `Percentage occupancy` Annual number of ava…¹</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;                            &lt;dbl&gt;                  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2022/23          All Specialties                   77.4                   3263</span></span>
+<span><span class="co">#&gt; 2 2023/24          All Specialties                   68.5                   3631</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​`Annual number of available staffed beds`</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: `Annual number of occupied beds` &lt;dbl&gt;</span></span></code></pre></div>
+</div>
+<p>This summary can also be coerced into a datatable using the <code>$datatable</code> function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-536a53919e2f7e723859" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-536a53919e2f7e723859">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"68.5\" data-max=\"77.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3263\" data-max=\"3631\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2488\" data-max=\"2526\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["2022/23","2023/24"],["All Specialties","All Specialties"],[77.40000000000001,68.5],[3263,3631],[2526,2488]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Financial Year<\/th>\n      <th>Specialty<\/th>\n      <th>Percentage occupancy<\/th>\n      <th>Annual number of available staffed beds<\/th>\n      <th>Annual number of occupied beds<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"frtipB","buttons":["csv","excel"],"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"name":"Financial Year","targets":0},{"name":"Specialty","targets":1},{"name":"Percentage occupancy","targets":2},{"name":"Annual number of available staffed beds","targets":3},{"name":"Annual number of occupied beds","targets":4}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true},"selection":{"mode":"none","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>The helper function <code>$plot_info</code> can be used to create the character text describing each summary table (alongside functionality related to the shiny application) respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_unit</span><span class="op">$</span><span class="fu">summary_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"specialty_summary"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This summary table presents the annual number of available staffed beds,\n        the number of annual beds occupied, and the percentage occupancy for\n        the selected hospital"</span></span></code></pre></div>
+</div>
 </section></section></section><section class="section level2"><h2 id="health-unit-grps">Health unit grps<a class="anchor" aria-label="anchor" href="#health-unit-grps"></a>
 </h2>
 <p>HealthDataScotland contains functionality that combines several GP practices or hospitals to create summary visualisations. This is achieved by using <code><a href="../reference/health_unitgrp.html">health_unitgrp()</a></code> objects, which house multiple health units. Currently HealthDataScotland has two class of <code><a href="../reference/health_unitgrp.html">health_unitgrp()</a></code> implemented; <code><a href="../reference/gp_grp.html">gp_grp()</a></code> and <code><a href="../reference/hospital_grp.html">hospital_grp()</a></code>, which store data associated with a multiple GP practices or hospitals respectively.</p>
@@ -309,7 +385,7 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </h3>
 <p>Data associated with multiple GP practices is stored in <code><a href="../reference/gp_grp.html">gp_grp()</a></code> objects. <code><a href="../reference/example_gp_grp_unit.html">example_gp_grp_unit()</a></code> can be used to render an example object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/example_gp_grp_unit.html">example_gp_grp_unit</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">gp_grp_unit</span></span>
 <span><span class="co">#&gt; &lt;gp_grp&gt;</span></span>
@@ -317,11 +393,13 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;   Public:</span></span>
 <span><span class="co">#&gt;     .data: list</span></span>
 <span><span class="co">#&gt;     .id: gp</span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
+<span><span class="co">#&gt;     addresses: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ns = NULL, ...) </span></span>
 <span><span class="co">#&gt;     download_handler: function () </span></span>
+<span><span class="co">#&gt;     health_boards: function () </span></span>
 <span><span class="co">#&gt;     health_unit: function (id) </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     IDs: function () </span></span>
@@ -330,14 +408,20 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
 <span><span class="co">#&gt;     subset: function (id) </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
+<span><span class="co">#&gt;     telephones: function () </span></span>
 <span><span class="co">#&gt;     titles: function () </span></span>
 <span><span class="co">#&gt;     ui: function (...) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
 <span><span class="co">#&gt;   Private:</span></span>
 <span><span class="co">#&gt;     bar_data: function (x, col, ...) </span></span>
 <span><span class="co">#&gt;     bar_echart: function (x) </span></span>
+<span><span class="co">#&gt;     dt_btn: function (ns) </span></span>
 <span><span class="co">#&gt;     gender_choices: function () </span></span>
 <span><span class="co">#&gt;     gp_bar: function (...) </span></span>
 <span><span class="co">#&gt;     gp_bar_data: function (gp = private[["unit_choices"]](), gender = private[["gender_choices"]]()) </span></span>
@@ -356,6 +440,8 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     health_board_trend_info: function () </span></span>
 <span><span class="co">#&gt;     id_name_labels: function (x, name) </span></span>
 <span><span class="co">#&gt;     id_name_selection: function () </span></span>
+<span><span class="co">#&gt;     lookup: function (...) </span></span>
+<span><span class="co">#&gt;     lookup_info: function (...) </span></span>
 <span><span class="co">#&gt;     map_combine: function (func, nms = self[["IDs"]](), id = "ID", ...) </span></span>
 <span><span class="co">#&gt;     national_pyramid: function () </span></span>
 <span><span class="co">#&gt;     national_pyramid_data: function () </span></span>
@@ -371,7 +457,7 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </h4>
 <p><code><a href="../reference/gp_grp.html">gp_grp()</a></code> objects contain a list of <code><a href="../reference/gp.html">gp()</a></code> health units. These can be accessed using the <code>$data</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; &lt;gp&gt;</span></span>
@@ -380,10 +466,10 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -391,8 +477,12 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     telephone: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
@@ -401,6 +491,8 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     population_pyramid: function (...) </span></span>
 <span><span class="co">#&gt;     population_pyramid_data: function () </span></span>
 <span><span class="co">#&gt;     population_pyramid_info: function () </span></span>
+<span><span class="co">#&gt;     population_summary: function (...) </span></span>
+<span><span class="co">#&gt;     population_summary_info: function () </span></span>
 <span><span class="co">#&gt;     population_trend: function (...) </span></span>
 <span><span class="co">#&gt;     population_trend_data: function () </span></span>
 <span><span class="co">#&gt;     population_trend_info: function () </span></span>
@@ -416,10 +508,10 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -427,8 +519,12 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     telephone: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
@@ -437,6 +533,8 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     population_pyramid: function (...) </span></span>
 <span><span class="co">#&gt;     population_pyramid_data: function () </span></span>
 <span><span class="co">#&gt;     population_pyramid_info: function () </span></span>
+<span><span class="co">#&gt;     population_summary: function (...) </span></span>
+<span><span class="co">#&gt;     population_summary_info: function () </span></span>
 <span><span class="co">#&gt;     population_trend: function (...) </span></span>
 <span><span class="co">#&gt;     population_trend_data: function () </span></span>
 <span><span class="co">#&gt;     population_trend_info: function () </span></span>
@@ -447,7 +545,7 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </div>
 <p>Metadata for all <code><a href="../reference/gp.html">gp()</a></code> health units within the gp_grp object can be summarised using the <code>$metadata</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">metadata</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 16</span></span>
 <span><span class="co">#&gt;   datasetID      ID    GPPracticeName PracticeListSize AddressLine1 AddressLine2</span></span>
@@ -460,7 +558,7 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </div>
 <p>Additionally, selected metadata from the <code><a href="../reference/gp.html">gp()</a></code> health units can also be obtained using relevant getter functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">IDs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "10002" "10017"</span></span>
 <span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">titles</span><span class="op">(</span><span class="op">)</span></span>
@@ -468,18 +566,20 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </div>
 <p><code><a href="../reference/gp_grp.html">gp_grp()</a></code> objects can also be subset to the selected GP practices using <code>$subset</code> with a set of character IDs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">subset</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"10017"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;gp_grp&gt;</span></span>
 <span><span class="co">#&gt;   Inherits from: &lt;health_unitgrp&gt;</span></span>
 <span><span class="co">#&gt;   Public:</span></span>
 <span><span class="co">#&gt;     .data: list</span></span>
 <span><span class="co">#&gt;     .id: gp</span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
+<span><span class="co">#&gt;     addresses: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ns = NULL, ...) </span></span>
 <span><span class="co">#&gt;     download_handler: function () </span></span>
+<span><span class="co">#&gt;     health_boards: function () </span></span>
 <span><span class="co">#&gt;     health_unit: function (id) </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     IDs: function () </span></span>
@@ -488,14 +588,20 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
 <span><span class="co">#&gt;     subset: function (id) </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
+<span><span class="co">#&gt;     telephones: function () </span></span>
 <span><span class="co">#&gt;     titles: function () </span></span>
 <span><span class="co">#&gt;     ui: function (...) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
 <span><span class="co">#&gt;   Private:</span></span>
 <span><span class="co">#&gt;     bar_data: function (x, col, ...) </span></span>
 <span><span class="co">#&gt;     bar_echart: function (x) </span></span>
+<span><span class="co">#&gt;     dt_btn: function (ns) </span></span>
 <span><span class="co">#&gt;     gender_choices: function () </span></span>
 <span><span class="co">#&gt;     gp_bar: function (...) </span></span>
 <span><span class="co">#&gt;     gp_bar_data: function (gp = private[["unit_choices"]](), gender = private[["gender_choices"]]()) </span></span>
@@ -514,6 +620,8 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     health_board_trend_info: function () </span></span>
 <span><span class="co">#&gt;     id_name_labels: function (x, name) </span></span>
 <span><span class="co">#&gt;     id_name_selection: function () </span></span>
+<span><span class="co">#&gt;     lookup: function (...) </span></span>
+<span><span class="co">#&gt;     lookup_info: function (...) </span></span>
 <span><span class="co">#&gt;     map_combine: function (func, nms = self[["IDs"]](), id = "ID", ...) </span></span>
 <span><span class="co">#&gt;     national_pyramid: function () </span></span>
 <span><span class="co">#&gt;     national_pyramid_data: function () </span></span>
@@ -527,7 +635,7 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </div>
 <p>This will return a <code><a href="../reference/gp_grp.html">gp_grp()</a></code> object. However, a single gp object can be pulled out using <code>$health_unit</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">health_unit</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"10017"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;gp&gt;</span></span>
 <span><span class="co">#&gt;   Inherits from: &lt;health_unit&gt;</span></span>
@@ -535,10 +643,10 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -546,8 +654,12 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     telephone: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
@@ -556,6 +668,8 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 <span><span class="co">#&gt;     population_pyramid: function (...) </span></span>
 <span><span class="co">#&gt;     population_pyramid_data: function () </span></span>
 <span><span class="co">#&gt;     population_pyramid_info: function () </span></span>
+<span><span class="co">#&gt;     population_summary: function (...) </span></span>
+<span><span class="co">#&gt;     population_summary_info: function () </span></span>
 <span><span class="co">#&gt;     population_trend: function (...) </span></span>
 <span><span class="co">#&gt;     population_trend_data: function () </span></span>
 <span><span class="co">#&gt;     population_trend_info: function () </span></span>
@@ -566,20 +680,20 @@ Figure 2: This line chart shows the annual number of available staffed beds and
 </div>
 </section><section class="level3"><h4 id="plotting-2">Plotting<a class="anchor" aria-label="anchor" href="#plotting-2"></a>
 </h4>
-<p>Visualising data assciated with multiple GP practices can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$available_plots</code> function can be used.</p>
+<p>Visualising data assciated with multiple GP practices can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$plot_types</code> function can be used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode cell-code" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "national_trend"     "national_pyramid"   "health_board_trend"</span></span>
 <span><span class="co">#&gt; [4] "health_board_bar"   "gp_trend"           "gp_bar"</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gp_bar"</span><span class="op">)</span></span></code></pre></div>
 <div id="fig-gp_grp_bar" class="cell-output-display quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-gp_grp_bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-7fd62b4dcc454bc88d82" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-7fd62b4dcc454bc88d82">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"Population"}],"timeline":{"data":["20231001","20240101","20240401"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["Ages0to4","Ages5to14","Ages15to24","Ages25to44","Ages45to64","Ages65to74","Ages75to84","Ages85plus"],"type":"category","boundaryGap":true,"name":"Age"}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["10002 - Muirhead Medical Centre","10017 - The Blue Practice"]},"series":[{"name":"10002 - Muirhead Medical Centre","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"10017 - The Blue Practice","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["Ages0to4"," 186"]},{"value":["Ages5to14"," 463"]},{"value":["Ages15to24"," 419"]},{"value":["Ages25to44"," 952"]},{"value":["Ages45to64","1170"]},{"value":["Ages65to74"," 494"]},{"value":["Ages75to84"," 307"]},{"value":["Ages85plus","  94"]}]},{"data":[{"value":["Ages0to4","128"]},{"value":["Ages5to14","362"]},{"value":["Ages15to24","509"]},{"value":["Ages25to44","738"]},{"value":["Ages45to64","976"]},{"value":["Ages65to74","422"]},{"value":["Ages75to84","298"]},{"value":["Ages85plus","107"]}]}]},{"series":[{"data":[{"value":["Ages0to4"," 190"]},{"value":["Ages5to14"," 456"]},{"value":["Ages15to24"," 419"]},{"value":["Ages25to44"," 946"]},{"value":["Ages45to64","1159"]},{"value":["Ages65to74"," 496"]},{"value":["Ages75to84"," 308"]},{"value":["Ages85plus","  91"]}]},{"data":[{"value":["Ages0to4","126"]},{"value":["Ages5to14","385"]},{"value":["Ages15to24","505"]},{"value":["Ages25to44","765"]},{"value":["Ages45to64","982"]},{"value":["Ages65to74","420"]},{"value":["Ages75to84","307"]},{"value":["Ages85plus","106"]}]}]},{"series":[{"data":[{"value":["Ages0to4"," 186"]},{"value":["Ages5to14"," 456"]},{"value":["Ages15to24"," 415"]},{"value":["Ages25to44"," 945"]},{"value":["Ages45to64","1160"]},{"value":["Ages65to74"," 494"]},{"value":["Ages75to84"," 312"]},{"value":["Ages85plus","  88"]}]},{"data":[{"value":["Ages0to4","134"]},{"value":["Ages5to14","393"]},{"value":["Ages15to24","512"]},{"value":["Ages25to44","780"]},{"value":["Ages45to64","991"]},{"value":["Ages65to74","422"]},{"value":["Ages75to84","315"]},{"value":["Ages85plus","105"]}]}]}],"legend":{"data":[null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-abc8de4f951a09a2c5d1" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-abc8de4f951a09a2c5d1">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"Population"}],"timeline":{"data":["20231001","20240101","20240401"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["Ages0to4","Ages5to14","Ages15to24","Ages25to44","Ages45to64","Ages65to74","Ages75to84","Ages85plus"],"type":"category","boundaryGap":true,"name":"Age"}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["10002 - Muirhead Medical Centre","10017 - The Blue Practice"]},"series":[{"name":"10002 - Muirhead Medical Centre","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"10017 - The Blue Practice","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["Ages0to4"," 186"]},{"value":["Ages5to14"," 463"]},{"value":["Ages15to24"," 419"]},{"value":["Ages25to44"," 952"]},{"value":["Ages45to64","1170"]},{"value":["Ages65to74"," 494"]},{"value":["Ages75to84"," 307"]},{"value":["Ages85plus","  94"]}]},{"data":[{"value":["Ages0to4","128"]},{"value":["Ages5to14","362"]},{"value":["Ages15to24","509"]},{"value":["Ages25to44","738"]},{"value":["Ages45to64","976"]},{"value":["Ages65to74","422"]},{"value":["Ages75to84","298"]},{"value":["Ages85plus","107"]}]}]},{"series":[{"data":[{"value":["Ages0to4"," 190"]},{"value":["Ages5to14"," 456"]},{"value":["Ages15to24"," 419"]},{"value":["Ages25to44"," 946"]},{"value":["Ages45to64","1159"]},{"value":["Ages65to74"," 496"]},{"value":["Ages75to84"," 308"]},{"value":["Ages85plus","  91"]}]},{"data":[{"value":["Ages0to4","126"]},{"value":["Ages5to14","385"]},{"value":["Ages15to24","505"]},{"value":["Ages25to44","765"]},{"value":["Ages45to64","982"]},{"value":["Ages65to74","420"]},{"value":["Ages75to84","307"]},{"value":["Ages85plus","106"]}]}]},{"series":[{"data":[{"value":["Ages0to4"," 186"]},{"value":["Ages5to14"," 456"]},{"value":["Ages15to24"," 415"]},{"value":["Ages25to44"," 945"]},{"value":["Ages45to64","1160"]},{"value":["Ages65to74"," 494"]},{"value":["Ages75to84"," 312"]},{"value":["Ages85plus","  88"]}]},{"data":[{"value":["Ages0to4","134"]},{"value":["Ages5to14","393"]},{"value":["Ages15to24","512"]},{"value":["Ages25to44","780"]},{"value":["Ages45to64","991"]},{"value":["Ages65to74","422"]},{"value":["Ages75to84","315"]},{"value":["Ages85plus","105"]}]}]}],"legend":{"data":[null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gp_grp_bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: This bar chart shows the total number of GP registered patients (y-axis) for each individal GP practice (colour) across age categories (x-axis). Settings can be used to show data for different GP practices and genders.
@@ -588,7 +702,7 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 </div>
 <p>Helper functions <code>$plot_data</code> and <code>$plot_info</code> can be used to create the data associated with each plot and character text describing each plot (alongside functionality related to the shiny application) respectively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">plot_data</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gp_bar"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 24 × 4</span></span>
 <span><span class="co">#&gt; # Groups:   Date [3]</span></span>
@@ -609,11 +723,45 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">plot_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gp_bar"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "This bar chart shows the total number of GP registered patients\n        (y-axis) for each individal GP practice (colour) across\n        age categories (x-axis). Settings can be used to show data for\n        different GP practices and genders."</span></span></code></pre></div>
 </div>
+</section><section class="level3"><h4 id="summarising-2">Summarising<a class="anchor" aria-label="anchor" href="#summarising-2"></a>
+</h4>
+<p>Summarising data associated with multiple GP practices can be achieved using the <code>$summary</code> function with an appropriate <code>type</code> argument. To see which summary types are available to use, the <code>$summary_types</code> function can be used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">summary_types</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "lookup"</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                     Title    ID</span></span>
+<span><span class="co">#&gt; 1 Muirhead Medical Centre 10002</span></span>
+<span><span class="co">#&gt; 2       The Blue Practice 10017</span></span>
+<span><span class="co">#&gt;                                                                  Address</span></span>
+<span><span class="co">#&gt; 1                  Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH</span></span>
+<span><span class="co">#&gt; 2 The Blue Practice, Crieff Medical Centre, King Street, Crieff, PH7 3SA</span></span>
+<span><span class="co">#&gt;           Telephone Health board</span></span>
+<span><span class="co">#&gt; 1 01382   580   264    S08000030</span></span>
+<span><span class="co">#&gt; 2 01764   652   283    S08000030</span></span></code></pre></div>
+</div>
+<p>This summary can also be coerced into a datatable using the <code>$datatable</code> function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ce84b5582c17fdeed41c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ce84b5582c17fdeed41c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["Muirhead Medical Centre","The Blue Practice"],["10002","10017"],["Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH","The Blue Practice, Crieff Medical Centre, King Street, Crieff, PH7 3SA"],["01382   580   264","01764   652   283"],["S08000030","S08000030"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Title<\/th>\n      <th>ID<\/th>\n      <th>Address<\/th>\n      <th>Telephone<\/th>\n      <th>Health board<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"frtipB","buttons":["csv","excel"],"columnDefs":[{"name":"Title","targets":0},{"name":"ID","targets":1},{"name":"Address","targets":2},{"name":"Telephone","targets":3},{"name":"Health board","targets":4}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true},"selection":{"mode":"none","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>The helper function <code>$summary_info</code> can be used to create the character text describing each summary table (alongside functionality related to the shiny application) respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_grp_unit</span><span class="op">$</span><span class="fu">summary_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This lookup table presents data for all available GP practices\n      in the data set. This table can be searched, filtered and\n      the 'Plot' column allows the user to view statistics for a\n      selected GP practice."</span></span></code></pre></div>
+</div>
 </section></section><section class="level2"><h3 id="hospital-1">Hospital<a class="anchor" aria-label="anchor" href="#hospital-1"></a>
 </h3>
 <p>Data associated with multiple hospitals is stored in <code><a href="../reference/hospital_grp.html">hospital_grp()</a></code> objects. <code><a href="../reference/example_hospital_grp_unit.html">example_hospital_grp_unit()</a></code> can be used to render an example object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/example_hospital_grp_unit.html">example_hospital_grp_unit</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">hospital_grp_unit</span></span>
 <span><span class="co">#&gt; &lt;hospital_grp&gt;</span></span>
@@ -621,11 +769,13 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;   Public:</span></span>
 <span><span class="co">#&gt;     .data: list</span></span>
 <span><span class="co">#&gt;     .id: hospital</span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
+<span><span class="co">#&gt;     addresses: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ns = NULL, ...) </span></span>
 <span><span class="co">#&gt;     download_handler: function () </span></span>
+<span><span class="co">#&gt;     health_boards: function () </span></span>
 <span><span class="co">#&gt;     health_unit: function (id) </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     IDs: function () </span></span>
@@ -634,14 +784,19 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
 <span><span class="co">#&gt;     subset: function (id) </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     titles: function () </span></span>
 <span><span class="co">#&gt;     ui: function (...) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
 <span><span class="co">#&gt;   Private:</span></span>
 <span><span class="co">#&gt;     bar_data: function (x, ...) </span></span>
 <span><span class="co">#&gt;     bar_echart: function (x, group = "HBName", x_axis = "", y_axis = "PercentageOccupancy") </span></span>
+<span><span class="co">#&gt;     dt_btn: function (ns) </span></span>
 <span><span class="co">#&gt;     health_board_bar: function (...) </span></span>
 <span><span class="co">#&gt;     health_board_bar_data: function (specialties = "All Specialties", health_boards = private[["health_board_choices"]]()) </span></span>
 <span><span class="co">#&gt;     health_board_bar_info: function () </span></span>
@@ -659,6 +814,8 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     hospital_trend_info: function () </span></span>
 <span><span class="co">#&gt;     id_name_labels: function (x, name) </span></span>
 <span><span class="co">#&gt;     id_name_selection: function () </span></span>
+<span><span class="co">#&gt;     lookup: function (...) </span></span>
+<span><span class="co">#&gt;     lookup_info: function (...) </span></span>
 <span><span class="co">#&gt;     map_combine: function (func, nms = self[["IDs"]](), id = "ID", ...) </span></span>
 <span><span class="co">#&gt;     national_trend: function (...) </span></span>
 <span><span class="co">#&gt;     national_trend_data: function (specialties = "All Specialties") </span></span>
@@ -674,7 +831,7 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 </h4>
 <p><code><a href="../reference/hospital_grp.html">hospital_grp()</a></code> objects contain a list of <code><a href="../reference/hospital.html">hospital()</a></code> health units. These can be accessed using the <code>$data</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; &lt;hospital&gt;</span></span>
@@ -683,10 +840,10 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -694,8 +851,12 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
@@ -708,6 +869,8 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     specialty_line: function (...) </span></span>
 <span><span class="co">#&gt;     specialty_line_data: function (data_type = c("annual", "daily"), specialties = "All Specialties") </span></span>
 <span><span class="co">#&gt;     specialty_line_info: function (data_type = c("annual", "daily")) </span></span>
+<span><span class="co">#&gt;     specialty_summary: function (...) </span></span>
+<span><span class="co">#&gt;     specialty_summary_info: function () </span></span>
 <span><span class="co">#&gt;     title_col: function () </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
@@ -717,10 +880,10 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -728,8 +891,12 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
@@ -742,11 +909,13 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     specialty_line: function (...) </span></span>
 <span><span class="co">#&gt;     specialty_line_data: function (data_type = c("annual", "daily"), specialties = "All Specialties") </span></span>
 <span><span class="co">#&gt;     specialty_line_info: function (data_type = c("annual", "daily")) </span></span>
+<span><span class="co">#&gt;     specialty_summary: function (...) </span></span>
+<span><span class="co">#&gt;     specialty_summary_info: function () </span></span>
 <span><span class="co">#&gt;     title_col: function ()</span></span></code></pre></div>
 </div>
 <p>Metadata for all <code><a href="../reference/hospital.html">hospital()</a></code> health units within the hospital_grp object can be summarised using the <code>$metadata</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">metadata</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 16</span></span>
 <span><span class="co">#&gt;   datasetID          ID    HospitalName AddressLine1 AddressLine2 AddressLine2QF</span></span>
@@ -759,7 +928,7 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 </div>
 <p>Additionally, selected metadata from the <code><a href="../reference/hospital.html">hospital()</a></code> health units can also be obtained using relevant getter functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">IDs</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "A101H" "A201H"</span></span>
 <span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">titles</span><span class="op">(</span><span class="op">)</span></span>
@@ -767,18 +936,20 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 </div>
 <p><code><a href="../reference/hospital_grp.html">hospital_grp()</a></code> objects can also be subset to the selected hospitals using <code>$subset</code> with a set of character IDs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">subset</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"A201H"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;hospital_grp&gt;</span></span>
 <span><span class="co">#&gt;   Inherits from: &lt;health_unitgrp&gt;</span></span>
 <span><span class="co">#&gt;   Public:</span></span>
 <span><span class="co">#&gt;     .data: list</span></span>
 <span><span class="co">#&gt;     .id: hospital</span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
+<span><span class="co">#&gt;     addresses: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ns = NULL, ...) </span></span>
 <span><span class="co">#&gt;     download_handler: function () </span></span>
+<span><span class="co">#&gt;     health_boards: function () </span></span>
 <span><span class="co">#&gt;     health_unit: function (id) </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     IDs: function () </span></span>
@@ -787,14 +958,19 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
 <span><span class="co">#&gt;     subset: function (id) </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     titles: function () </span></span>
 <span><span class="co">#&gt;     ui: function (...) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
 <span><span class="co">#&gt;   Private:</span></span>
 <span><span class="co">#&gt;     bar_data: function (x, ...) </span></span>
 <span><span class="co">#&gt;     bar_echart: function (x, group = "HBName", x_axis = "", y_axis = "PercentageOccupancy") </span></span>
+<span><span class="co">#&gt;     dt_btn: function (ns) </span></span>
 <span><span class="co">#&gt;     health_board_bar: function (...) </span></span>
 <span><span class="co">#&gt;     health_board_bar_data: function (specialties = "All Specialties", health_boards = private[["health_board_choices"]]()) </span></span>
 <span><span class="co">#&gt;     health_board_bar_info: function () </span></span>
@@ -812,6 +988,8 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     hospital_trend_info: function () </span></span>
 <span><span class="co">#&gt;     id_name_labels: function (x, name) </span></span>
 <span><span class="co">#&gt;     id_name_selection: function () </span></span>
+<span><span class="co">#&gt;     lookup: function (...) </span></span>
+<span><span class="co">#&gt;     lookup_info: function (...) </span></span>
 <span><span class="co">#&gt;     map_combine: function (func, nms = self[["IDs"]](), id = "ID", ...) </span></span>
 <span><span class="co">#&gt;     national_trend: function (...) </span></span>
 <span><span class="co">#&gt;     national_trend_data: function (specialties = "All Specialties") </span></span>
@@ -825,7 +1003,7 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 </div>
 <p>This will return a <code><a href="../reference/hospital_grp.html">hospital_grp()</a></code> object. However, a single hospital object can be pulled out using <code>$health_unit</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">health_unit</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"A201H"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;hospital&gt;</span></span>
 <span><span class="co">#&gt;   Inherits from: &lt;health_unit&gt;</span></span>
@@ -833,10 +1011,10 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     .data: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     .metadata: tbl_df, tbl, data.frame</span></span>
 <span><span class="co">#&gt;     address: function () </span></span>
-<span><span class="co">#&gt;     available_plots: function () </span></span>
 <span><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span><span class="co">#&gt;     combine_data: function () </span></span>
 <span><span class="co">#&gt;     data: function () </span></span>
+<span><span class="co">#&gt;     datatable: function (type, ...) </span></span>
 <span><span class="co">#&gt;     health_board: function () </span></span>
 <span><span class="co">#&gt;     ID: function () </span></span>
 <span><span class="co">#&gt;     initialize: function (.metadata, .data) </span></span>
@@ -844,8 +1022,12 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     plot: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_data: function (type, ...) </span></span>
 <span><span class="co">#&gt;     plot_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     plot_types: function () </span></span>
 <span><span class="co">#&gt;     popup_modal: function (ns) </span></span>
 <span><span class="co">#&gt;     server: function () </span></span>
+<span><span class="co">#&gt;     summary: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_info: function (type, ...) </span></span>
+<span><span class="co">#&gt;     summary_types: function () </span></span>
 <span><span class="co">#&gt;     title: function () </span></span>
 <span><span class="co">#&gt;     ui: function (ns) </span></span>
 <span><span class="co">#&gt;     validate: function () </span></span>
@@ -858,24 +1040,26 @@ Figure 3: This bar chart shows the total number of GP registered patients (y-ax
 <span><span class="co">#&gt;     specialty_line: function (...) </span></span>
 <span><span class="co">#&gt;     specialty_line_data: function (data_type = c("annual", "daily"), specialties = "All Specialties") </span></span>
 <span><span class="co">#&gt;     specialty_line_info: function (data_type = c("annual", "daily")) </span></span>
+<span><span class="co">#&gt;     specialty_summary: function (...) </span></span>
+<span><span class="co">#&gt;     specialty_summary_info: function () </span></span>
 <span><span class="co">#&gt;     title_col: function ()</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h4 id="plotting-3">Plotting<a class="anchor" aria-label="anchor" href="#plotting-3"></a>
 </h4>
-<p>Visualising data assciated with multiple hospitals can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$available_plots</code> function can be used.</p>
+<p>Visualising data assciated with multiple hospitals can be achieved using the <code>$plot</code> function with an appropriate <code>type</code> argument. To see which plot types are available to use, the <code>$plot_types</code> function can be used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode cell-code" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "national_trend"     "health_board_trend" "health_board_bar"  </span></span>
 <span><span class="co">#&gt; [4] "hospital_trend"     "hospital_bar"</span></span></code></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span></code></pre></div>
 <div id="fig-hospital_grp_bar" class="cell-output-display quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-hospital_grp_bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-0a7321dd84c23c9971e7" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-0a7321dd84c23c9971e7">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"PercentageOccupancy","min":0,"max":100}],"timeline":{"data":["2022/23","2023/24"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["A101H - Arran War Memorial Hospital","A201H - Ailsa Hospital"],"type":"category","boundaryGap":true,"name":"Hospital","axisLabel":{"rotate":15}}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["FinancialYear","HBName","All Specialties","Community Grouping","GP Other than Obstetrics","Mental Health Grouping","Psychiatry of Old Age"]},"series":[{"name":"FinancialYear","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"HBName","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"All Specialties","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Community Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"GP Other than Obstetrics","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Mental Health Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Psychiatry of Old Age","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2022/23"]},{"value":["A201H - Ailsa Hospital","2022/23"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]}]},{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2023/24"]},{"value":["A201H - Ailsa Hospital","2023/24"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]}]}],"legend":{"data":[null,null,null,null,null,null,null,null,null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-bd90a2f9cf01fb0a77c2" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-bd90a2f9cf01fb0a77c2">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"PercentageOccupancy","min":0,"max":100}],"timeline":{"data":["2022/23","2023/24"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["A101H - Arran War Memorial Hospital","A201H - Ailsa Hospital"],"type":"category","boundaryGap":true,"name":"Hospital","axisLabel":{"rotate":15}}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["FinancialYear","HBName","All Specialties","Community Grouping","GP Other than Obstetrics","Mental Health Grouping","Psychiatry of Old Age"]},"series":[{"name":"FinancialYear","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"HBName","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"All Specialties","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Community Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"GP Other than Obstetrics","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Mental Health Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Psychiatry of Old Age","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2022/23"]},{"value":["A201H - Ailsa Hospital","2022/23"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]}]},{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2023/24"]},{"value":["A201H - Ailsa Hospital","2023/24"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]}]}],"legend":{"data":[null,null,null,null,null,null,null,null,null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hospital_grp_bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: This bar chart shows the average hospital bed occupancy (y-axis) per hospital (x-axis) for each specialty (colour). Seetings can be used to show data for different specialties (default is all specialties) and hospitals.
@@ -884,7 +1068,7 @@ Figure 4: This bar chart shows the average hospital bed occupancy (y-axis) per 
 </div>
 <p>Helper functions <code>$plot_data</code> and <code>$plot_info</code> can be used to create the data associated with each plot and character text describing each plot (alongside functionality related to the shiny application) respectively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">plot_data</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 8</span></span>
 <span><span class="co">#&gt; # Groups:   FinancialYear [2]</span></span>
@@ -898,6 +1082,37 @@ Figure 4: This bar chart shows the average hospital bed occupancy (y-axis) per 
 <span><span class="co">#&gt; #   `Mental Health Grouping` &lt;dbl&gt;, `Psychiatry of Old Age` &lt;dbl&gt;</span></span>
 <span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">plot_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "This bar chart shows the average hospital bed occupancy (y-axis)\n        per hospital (x-axis) for each specialty (colour). Seetings can be\n        used to show data for different specialties (default is all\n        specialties) and hospitals."</span></span></code></pre></div>
+</div>
+</section><section class="level3"><h4 id="summarising-3">Summarising<a class="anchor" aria-label="anchor" href="#summarising-3"></a>
+</h4>
+<p>Summarising data associated with multiple hospitals can be achieved using the <code>$summary</code> function with an appropriate <code>type</code> argument. To see which summary types are available to use, the <code>$summary_types</code> function can be used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">summary_types</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "lookup"</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                         Title    ID                          Address</span></span>
+<span><span class="co">#&gt; 1 Arran War Memorial Hospital A101H  Lamlash, Isle of Arran, KA278LF</span></span>
+<span><span class="co">#&gt; 2              Ailsa Hospital A201H Dalmellington Road, Ayr, KA6 6AB</span></span>
+<span><span class="co">#&gt;   Health board</span></span>
+<span><span class="co">#&gt; 1    S08000015</span></span>
+<span><span class="co">#&gt; 2    S08000015</span></span></code></pre></div>
+</div>
+<p>This summary can also be coerced into a datatable using the <code>$datatable</code> function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-06caac2a70bc17006400" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-06caac2a70bc17006400">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons"],"data":[["Arran War Memorial Hospital","Ailsa Hospital"],["A101H","A201H"],["Lamlash, Isle of Arran, KA278LF","Dalmellington Road, Ayr, KA6 6AB"],["S08000015","S08000015"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Title<\/th>\n      <th>ID<\/th>\n      <th>Address<\/th>\n      <th>Health board<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"frtipB","buttons":["csv","excel"],"columnDefs":[{"name":"Title","targets":0},{"name":"ID","targets":1},{"name":"Address","targets":2},{"name":"Health board","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true},"selection":{"mode":"none","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>The helper function <code>$summary_info</code> can be used to create the character text describing each summary table (alongside functionality related to the shiny application) respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hospital_grp_unit</span><span class="op">$</span><span class="fu">summary_info</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This lookup table presents data for all available hospitals\n      in the data set. This table can be searched, filtered and\n      the 'Plot' column allows the user to view statistics for a\n      selected hospital."</span></span></code></pre></div>
 </div>
 </section></section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

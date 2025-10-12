@@ -9,7 +9,7 @@ R6 class storing health statistics for a list of hospital health units."><!-- de
 
     <a class="navbar-brand me-2" href="../index.html">HealthDataScotland</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@ create shiny UI/server objects.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-hospital_grp-available_plots"><code>hospital_grp$available_plots()</code></a></p></li>
+<ul><li><p><a href="#method-hospital_grp-plot_types"><code>hospital_grp$plot_types()</code></a></p></li>
 <li><p><a href="#method-hospital_grp-plot"><code>hospital_grp$plot()</code></a></p></li>
 <li><p><a href="#method-hospital_grp-plot_data"><code>hospital_grp$plot_data()</code></a></p></li>
 <li><p><a href="#method-hospital_grp-plot_info"><code>hospital_grp$plot_info()</code></a></p></li>
@@ -72,20 +72,26 @@ create shiny UI/server objects.</p>
 <li><p><a href="#method-hospital_grp-clone"><code>hospital_grp$clone()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ID"><a href="health_unitgrp.html#method-ID"><code>HealthDataScotland::health_unitgrp$ID()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="IDs"><a href="health_unitgrp.html#method-IDs"><code>HealthDataScotland::health_unitgrp$IDs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="addresses"><a href="health_unitgrp.html#method-addresses"><code>HealthDataScotland::health_unitgrp$addresses()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="combine_data"><a href="health_unitgrp.html#method-combine_data"><code>HealthDataScotland::health_unitgrp$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href="health_unitgrp.html#method-data"><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="datatable"><a href="health_unitgrp.html#method-datatable"><code>HealthDataScotland::health_unitgrp$datatable()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href="health_unitgrp.html#method-download_handler"><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_boards"><a href="health_unitgrp.html#method-health_boards"><code>HealthDataScotland::health_unitgrp$health_boards()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href="health_unitgrp.html#method-health_unit"><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href="health_unitgrp.html#method-initialize"><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href="health_unitgrp.html#method-metadata"><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href="health_unitgrp.html#method-subset"><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary"><a href="health_unitgrp.html#method-summary"><code>HealthDataScotland::health_unitgrp$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_info"><a href="health_unitgrp.html#method-summary_info"><code>HealthDataScotland::health_unitgrp$summary_info()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_types"><a href="health_unitgrp.html#method-summary_types"><code>HealthDataScotland::health_unitgrp$summary_types()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href="health_unitgrp.html#method-titles"><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href="health_unitgrp.html#method-validate"><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
-</ul></details></p><hr><a id="method-hospital_grp-available_plots"></a><div class="section">
-<h3 id="method-available-plots-">Method <code>available_plots()</code><a class="anchor" aria-label="anchor" href="#method-available-plots-"></a></h3>
-<p>Get character vector of available plots for hospital grp.</p><div class="section">
+</ul></details></p><hr><a id="method-hospital_grp-plot_types"></a><div class="section">
+<h3 id="method-plot-types-">Method <code>plot_types()</code><a class="anchor" aria-label="anchor" href="#method-plot-types-"></a></h3>
+<p>Get character vector of plot types for hospital grp.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">hospital_grp</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">hospital_grp</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -100,7 +106,7 @@ create shiny UI/server objects.</p>
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code> for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -127,7 +133,7 @@ Character specifying plot type. See <code>available_plots</code> for options.</p
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code> for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -154,8 +160,7 @@ Character specifying plot type. See <code>available_plots</code> for options.</p
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -243,18 +248,22 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .metadata: tbl_df, tbl, data.frame</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     address: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     datatable: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.metadata, .data) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     plot_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     popup_modal: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate: function () </span>
@@ -267,6 +276,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_line: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_line_data: function (data_type = c("annual", "daily"), specialties = "All Specialties") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_line_info: function (data_type = c("annual", "daily")) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_summary: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_summary_info: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title_col: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
@@ -277,18 +288,22 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .metadata: tbl_df, tbl, data.frame</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     address: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     datatable: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.metadata, .data) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     plot_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     popup_modal: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate: function () </span>
@@ -301,6 +316,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_line: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_line_data: function (data_type = c("annual", "daily"), specialties = "All Specialties") </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_line_info: function (data_type = c("annual", "daily")) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_summary: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     specialty_summary_info: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title_col: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"subset"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"A201H"</span><span class="op">)</span></span></span>
@@ -311,25 +328,32 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .id: gp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     IDs: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     addresses: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     datatable: function (type, ns = NULL, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     download_handler: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     health_boards: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_unit: function (id) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.data, .id) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     plot_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subset: function (id) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titles: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bar_data: function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bar_echart: function (x, group = "HBName", x_axis = "", y_axis = "PercentageOccupancy") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     dt_btn: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board_bar: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board_bar_data: function (specialties = "All Specialties", health_boards = private[["health_board_choices"]]()) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board_bar_info: function () </span>
@@ -347,6 +371,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     hospital_trend_info: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     id_name_labels: function (x, name) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     id_name_selection: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lookup: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lookup_info: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     map_combine: function (func, nms = self[["IDs"]](), id = "ID", ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     national_trend: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     national_trend_data: function (specialties = "All Specialties") </span>
@@ -358,8 +384,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     trend_echart: function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     unit_choices: function () </span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span></span>
-<div id="htmlwidget-4018eef1a407a0df6b52" style="width:700px;height:432.632880098888px;" class="echarts4r html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4018eef1a407a0df6b52">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"PercentageOccupancy","min":0,"max":100}],"timeline":{"data":["2022/23","2023/24"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["A101H - Arran War Memorial Hospital","A201H - Ailsa Hospital"],"type":"category","boundaryGap":true,"name":"Hospital","axisLabel":{"rotate":15}}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["FinancialYear","HBName","All Specialties","Community Grouping","GP Other than Obstetrics","Mental Health Grouping","Psychiatry of Old Age"]},"series":[{"name":"FinancialYear","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"HBName","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"All Specialties","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Community Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"GP Other than Obstetrics","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Mental Health Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Psychiatry of Old Age","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2022/23"]},{"value":["A201H - Ailsa Hospital","2022/23"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]}]},{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2023/24"]},{"value":["A201H - Ailsa Hospital","2023/24"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]}]}],"legend":{"data":[null,null,null,null,null,null,null,null,null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script><span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot_data"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span></span>
+<div id="htmlwidget-416566eb193bf50d04e6" style="width:700px;height:432.632880098888px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-416566eb193bf50d04e6">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"PercentageOccupancy","min":0,"max":100}],"timeline":{"data":["2022/23","2023/24"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["A101H - Arran War Memorial Hospital","A201H - Ailsa Hospital"],"type":"category","boundaryGap":true,"name":"Hospital","axisLabel":{"rotate":15}}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["FinancialYear","HBName","All Specialties","Community Grouping","GP Other than Obstetrics","Mental Health Grouping","Psychiatry of Old Age"]},"series":[{"name":"FinancialYear","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"HBName","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"All Specialties","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Community Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"GP Other than Obstetrics","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Mental Health Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Psychiatry of Old Age","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2022/23"]},{"value":["A201H - Ailsa Hospital","2022/23"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]}]},{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2023/24"]},{"value":["A201H - Ailsa Hospital","2023/24"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]}]}],"legend":{"data":[null,null,null,null,null,null,null,null,null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script><span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot_data"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   FinancialYear [2]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   FinancialYear ID                 HBName `All Specialties` `Community Grouping`</span>
@@ -372,6 +398,15 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Mental Health Grouping` &lt;dbl&gt;, `Psychiatry of Old Age` &lt;dbl&gt;</span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows the average hospital bed occupancy (y-axis)\n        per hospital (x-axis) for each specialty (colour). Seetings can be\n        used to show data for different specialties (default is all\n        specialties) and hospitals."</span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         Title    ID                          Address</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Arran War Memorial Hospital A101H  Lamlash, Isle of Arran, KA278LF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              Ailsa Hospital A201H Dalmellington Road, Ayr, KA6 6AB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Health board</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    S08000015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    S08000015</span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This lookup table presents data for all available hospitals\n      in the data set. This table can be searched, filtered and\n      the 'Plot' column allows the user to view statistics for a\n      selected hospital."</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"ui"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"server"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -383,8 +418,8 @@ for options.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_hospital_grp_unit.html">example_hospital_grp_unit</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"hospital_bar"</span><span class="op">)</span></span></span>
-<div id="htmlwidget-5b1b2f4ad92281566982" style="width:700px;height:432.632880098888px;" class="echarts4r html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5b1b2f4ad92281566982">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"PercentageOccupancy","min":0,"max":100}],"timeline":{"data":["2022/23","2023/24"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["A101H - Arran War Memorial Hospital","A201H - Ailsa Hospital"],"type":"category","boundaryGap":true,"name":"Hospital","axisLabel":{"rotate":15}}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["FinancialYear","HBName","All Specialties","Community Grouping","GP Other than Obstetrics","Mental Health Grouping","Psychiatry of Old Age"]},"series":[{"name":"FinancialYear","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"HBName","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"All Specialties","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Community Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"GP Other than Obstetrics","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Mental Health Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Psychiatry of Old Age","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2022/23"]},{"value":["A201H - Ailsa Hospital","2022/23"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]}]},{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2023/24"]},{"value":["A201H - Ailsa Hospital","2023/24"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]}]}],"legend":{"data":[null,null,null,null,null,null,null,null,null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script><span class="r-in"><span></span></span>
+<div id="htmlwidget-72cbf064100ce560a04c" style="width:700px;height:432.632880098888px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-72cbf064100ce560a04c">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"yAxis":[{"show":true,"name":"PercentageOccupancy","min":0,"max":100}],"timeline":{"data":["2022/23","2023/24"],"axisType":"category","autoPlay":true,"top":0},"xAxis":[{"data":["A101H - Arran War Memorial Hospital","A201H - Ailsa Hospital"],"type":"category","boundaryGap":true,"name":"Hospital","axisLabel":{"rotate":15}}],"tooltip":{"trigger":"axis"},"legend":{"show":false,"type":"plain","data":["FinancialYear","HBName","All Specialties","Community Grouping","GP Other than Obstetrics","Mental Health Grouping","Psychiatry of Old Age"]},"series":[{"name":"FinancialYear","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"HBName","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"All Specialties","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Community Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"GP Other than Obstetrics","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Mental Health Grouping","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"},{"name":"Psychiatry of Old Age","type":"bar","yAxisIndex":0,"xAxisIndex":0,"coordinateSystem":"cartesian2d"}]},"options":[{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2022/23"]},{"value":["A201H - Ailsa Hospital","2022/23"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","77.4"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","77.9"]}]}]},{"series":[{"data":[{"value":["A101H - Arran War Memorial Hospital","2023/24"]},{"value":["A201H - Ailsa Hospital","2023/24"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","S08000015"]},{"value":["A201H - Ailsa Hospital","S08000015"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital","68.5"]},{"value":["A201H - Ailsa Hospital",null]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]},{"data":[{"value":["A101H - Arran War Memorial Hospital",null]},{"value":["A201H - Ailsa Hospital","72.6"]}]}]}],"legend":{"data":[null,null,null,null,null,null,null,null,null,null,null,null,null,null]}},"dispose":true},"evals":[],"jsHooks":[]}</script><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `hospital_grp$plot_data`</span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>

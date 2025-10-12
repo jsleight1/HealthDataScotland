@@ -9,7 +9,7 @@ R6 class storing health statistics for a list of gp health units."><!-- dependen
 
     <a class="navbar-brand me-2" href="../index.html">HealthDataScotland</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,8 @@ create shiny UI/server objects.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-gp_grp-available_plots"><code>gp_grp$available_plots()</code></a></p></li>
+<ul><li><p><a href="#method-gp_grp-telephones"><code>gp_grp$telephones()</code></a></p></li>
+<li><p><a href="#method-gp_grp-plot_types"><code>gp_grp$plot_types()</code></a></p></li>
 <li><p><a href="#method-gp_grp-plot"><code>gp_grp$plot()</code></a></p></li>
 <li><p><a href="#method-gp_grp-plot_data"><code>gp_grp$plot_data()</code></a></p></li>
 <li><p><a href="#method-gp_grp-plot_info"><code>gp_grp$plot_info()</code></a></p></li>
@@ -72,27 +73,41 @@ create shiny UI/server objects.</p>
 <li><p><a href="#method-gp_grp-clone"><code>gp_grp$clone()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="ID"><a href="health_unitgrp.html#method-ID"><code>HealthDataScotland::health_unitgrp$ID()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="IDs"><a href="health_unitgrp.html#method-IDs"><code>HealthDataScotland::health_unitgrp$IDs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="addresses"><a href="health_unitgrp.html#method-addresses"><code>HealthDataScotland::health_unitgrp$addresses()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="combine_data"><a href="health_unitgrp.html#method-combine_data"><code>HealthDataScotland::health_unitgrp$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="data"><a href="health_unitgrp.html#method-data"><code>HealthDataScotland::health_unitgrp$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="datatable"><a href="health_unitgrp.html#method-datatable"><code>HealthDataScotland::health_unitgrp$datatable()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="download_handler"><a href="health_unitgrp.html#method-download_handler"><code>HealthDataScotland::health_unitgrp$download_handler()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_boards"><a href="health_unitgrp.html#method-health_boards"><code>HealthDataScotland::health_unitgrp$health_boards()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="health_unit"><a href="health_unitgrp.html#method-health_unit"><code>HealthDataScotland::health_unitgrp$health_unit()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="initialize"><a href="health_unitgrp.html#method-initialize"><code>HealthDataScotland::health_unitgrp$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="metadata"><a href="health_unitgrp.html#method-metadata"><code>HealthDataScotland::health_unitgrp$metadata()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="subset"><a href="health_unitgrp.html#method-subset"><code>HealthDataScotland::health_unitgrp$subset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary"><a href="health_unitgrp.html#method-summary"><code>HealthDataScotland::health_unitgrp$summary()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_info"><a href="health_unitgrp.html#method-summary_info"><code>HealthDataScotland::health_unitgrp$summary_info()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="summary_types"><a href="health_unitgrp.html#method-summary_types"><code>HealthDataScotland::health_unitgrp$summary_types()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="titles"><a href="health_unitgrp.html#method-titles"><code>HealthDataScotland::health_unitgrp$titles()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unitgrp" data-id="validate"><a href="health_unitgrp.html#method-validate"><code>HealthDataScotland::health_unitgrp$validate()</code></a></span></li>
-</ul></details></p><hr><a id="method-gp_grp-available_plots"></a><div class="section">
-<h3 id="method-available-plots-">Method <code>available_plots()</code><a class="anchor" aria-label="anchor" href="#method-available-plots-"></a></h3>
-<p>Get character vector of available plots for gp grp.</p><div class="section">
+</ul></details></p><hr><a id="method-gp_grp-telephones"></a><div class="section">
+<h3 id="method-telephones-">Method <code>telephones()</code><a class="anchor" aria-label="anchor" href="#method-telephones-"></a></h3>
+<p>Get character vector of gp unit telephone numbers.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">telephones</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-gp_grp-plot_types"></a><div class="section">
+<h3 id="method-plot-types-">Method <code>plot_types()</code><a class="anchor" aria-label="anchor" href="#method-plot-types-"></a></h3>
+<p>Get character vector of plot types for gp grp.</p><div class="section">
+<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
 </div><p></p><hr><a id="method-gp_grp-plot"></a><div class="section">
 <h3 id="method-plot-">Method <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code><a class="anchor" aria-label="anchor" href="#method-plot-"></a></h3>
 <p>Plot gp grp.</p><div class="section">
-<h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="va">type</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -100,8 +115,7 @@ create shiny UI/server objects.</p>
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -120,7 +134,7 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp_grp-plot_data"></a><div class="section">
 <h3 id="method-plot-data-">Method <code>plot_data()</code><a class="anchor" aria-label="anchor" href="#method-plot-data-"></a></h3>
 <p>Get plot data for gp grp.</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">plot_data</span><span class="op">(</span><span class="va">type</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -128,8 +142,7 @@ for options.</p></dd>
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -148,7 +161,7 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp_grp-plot_info"></a><div class="section">
 <h3 id="method-plot-info-">Method <code>plot_info()</code><a class="anchor" aria-label="anchor" href="#method-plot-info-"></a></h3>
 <p>Get plot info for gp grp.</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">plot_info</span><span class="op">(</span><span class="va">type</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -156,8 +169,7 @@ for options.</p></dd>
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -176,7 +188,7 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp_grp-ui"></a><div class="section">
 <h3 id="method-ui-">Method <code>ui()</code><a class="anchor" aria-label="anchor" href="#method-ui-"></a></h3>
 <p>Create UI for general practice group object.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">ui</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -192,7 +204,7 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp_grp-server"></a><div class="section">
 <h3 id="method-server-">Method <code>server()</code><a class="anchor" aria-label="anchor" href="#method-server-"></a></h3>
 <p>Create server for general practice group object.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">server</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -200,7 +212,7 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp_grp-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp_grp</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -245,18 +257,22 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .metadata: tbl_df, tbl, data.frame</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     address: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     datatable: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.metadata, .data) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     plot_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     popup_modal: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     telephone: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (ns) </span>
@@ -265,6 +281,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_pyramid: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_pyramid_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_pyramid_info: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     population_summary: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     population_summary_info: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_trend: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_trend_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_trend_info: function () </span>
@@ -281,18 +299,22 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .metadata: tbl_df, tbl, data.frame</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     address: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     datatable: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.metadata, .data) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     plot_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     popup_modal: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     telephone: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     title: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (ns) </span>
@@ -301,6 +323,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_pyramid: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_pyramid_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_pyramid_info: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     population_summary: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     population_summary_info: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_trend: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_trend_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     population_trend_info: function () </span>
@@ -317,25 +341,33 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     .id: gp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ID: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     IDs: function () </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     available_plots: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     addresses: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     combine_data: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     datatable: function (type, ns = NULL, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     download_handler: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     health_boards: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_unit: function (id) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (.data, .id) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     metadata: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_data: function (type, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     plot_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     plot_types: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     server: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     subset: function (id) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_info: function (type, ...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     summary_types: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     telephones: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     titles: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ui: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     validate: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Private:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bar_data: function (x, col, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bar_echart: function (x) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     dt_btn: function (ns) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     gender_choices: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     gp_bar: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     gp_bar_data: function (gp = private[["unit_choices"]](), gender = private[["gender_choices"]]()) </span>
@@ -354,6 +386,8 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     health_board_trend_info: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     id_name_labels: function (x, name) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     id_name_selection: function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lookup: function (...) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     lookup_info: function (...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     map_combine: function (func, nms = self[["IDs"]](), id = "ID", ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     national_pyramid: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     national_pyramid_data: function () </span>
@@ -383,7 +417,19 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 20<span style="text-decoration: underline;">240</span>101 Ages5to14    -<span style="color: #BB0000;">753</span>   841</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"national_pyramid"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows a population pyramid of the total number of\n        GP registered patients in Scotland (x-axis) across age category\n        (y-axis) for each gender (colour). Specifically, this plot combines data for all available GP practices\n        across Scotland and calculates the total number of GP registered\n        patients per age and gender."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows a population pyramid of the total number of\n        GP registered patients in Scotland (x-axis) across age category\n        (y-axis) for each gender (colour). Specifically, this plot combines data for all available GP practices\n        across Scotland and calculates the total number of GP registered\n        patients per age and gender. Please note this may show a total number of patients\n        greater than the population. This may be caused by a few factors such as\n        patients being registered at multiple GP practices. Please consult the\n        original data sets for further information."</span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     Title    ID</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Muirhead Medical Centre 10002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       The Blue Practice 10017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                  Address</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  Muirhead Medical Centre, Liff Road, Muirhead, DD2 5NH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 The Blue Practice, Crieff Medical Centre, King Street, Crieff, PH7 3SA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Telephone Health board</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 01382   580   264    S08000030</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 01764   652   283    S08000030</span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lookup"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This lookup table presents data for all available GP practices\n      in the data set. This table can be searched, filtered and\n      the 'Plot' column allows the user to view statistics for a\n      selected GP practice."</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"ui"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"server"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>

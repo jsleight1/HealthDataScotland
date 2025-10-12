@@ -9,7 +9,7 @@ R6 class storing health statistics for a single GP practice."><!-- dependencies 
 
     <a class="navbar-brand me-2" href="../index.html">HealthDataScotland</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,10 +64,13 @@ create shiny UI/server objects.</p>
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-gp-telephone"><code>gp$telephone()</code></a></p></li>
-<li><p><a href="#method-gp-available_plots"><code>gp$available_plots()</code></a></p></li>
+<li><p><a href="#method-gp-plot_types"><code>gp$plot_types()</code></a></p></li>
 <li><p><a href="#method-gp-plot"><code>gp$plot()</code></a></p></li>
 <li><p><a href="#method-gp-plot_data"><code>gp$plot_data()</code></a></p></li>
 <li><p><a href="#method-gp-plot_info"><code>gp$plot_info()</code></a></p></li>
+<li><p><a href="#method-gp-summary_types"><code>gp$summary_types()</code></a></p></li>
+<li><p><a href="#method-gp-summary"><code>gp$summary()</code></a></p></li>
+<li><p><a href="#method-gp-summary_info"><code>gp$summary_info()</code></a></p></li>
 <li><p><a href="#method-gp-ui"><code>gp$ui()</code></a></p></li>
 <li><p><a href="#method-gp-server"><code>gp$server()</code></a></p></li>
 <li><p><a href="#method-gp-clone"><code>gp$clone()</code></a></p></li>
@@ -75,6 +78,7 @@ create shiny UI/server objects.</p>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="address"><a href="health_unit.html#method-address"><code>HealthDataScotland::health_unit$address()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="combine_data"><a href="health_unit.html#method-combine_data"><code>HealthDataScotland::health_unit$combine_data()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="data"><a href="health_unit.html#method-data"><code>HealthDataScotland::health_unit$data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="datatable"><a href="health_unit.html#method-datatable"><code>HealthDataScotland::health_unit$datatable()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="health_board"><a href="health_unit.html#method-health_board"><code>HealthDataScotland::health_unit$health_board()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="initialize"><a href="health_unit.html#method-initialize"><code>HealthDataScotland::health_unit$initialize()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="HealthDataScotland" data-topic="health_unit" data-id="metadata"><a href="health_unit.html#method-metadata"><code>HealthDataScotland::health_unit$metadata()</code></a></span></li>
@@ -89,12 +93,12 @@ create shiny UI/server objects.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-gp-available_plots"></a><div class="section">
-<h3 id="method-available-plots-">Method <code>available_plots()</code><a class="anchor" aria-label="anchor" href="#method-available-plots-"></a></h3>
-<p>Get character vector of available plots for gp unit. Options
+</div><p></p><hr><a id="method-gp-plot_types"></a><div class="section">
+<h3 id="method-plot-types-">Method <code>plot_types()</code><a class="anchor" aria-label="anchor" href="#method-plot-types-"></a></h3>
+<p>Get character vector of plot types for gp unit. Options
 are either "population_pyramid" plot or "population_trend" plot.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">available_plots</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">plot_types</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -109,8 +113,7 @@ are either "population_pyramid" plot or "population_trend" plot.</p><div class="
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -137,8 +140,7 @@ for options.</p></dd>
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -165,8 +167,7 @@ for options.</p></dd>
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>type</code></dt>
 <dd><p>(character(1))<br>
-Character specifying plot type. See <code>available_plots</code>
-for options.</p></dd>
+Character specifying plot type. See <code>plot_types</code> for options.</p></dd>
 
 
 <dt><code>...</code></dt>
@@ -182,15 +183,77 @@ for options.</p></dd>
 </div>
 
 
-</div><p></p><hr><a id="method-gp-ui"></a><div class="section">
-<h3 id="method-ui-">Method <code>ui()</code><a class="anchor" aria-label="anchor" href="#method-ui-"></a></h3>
-<p>Create UI for general practice object.</p><div class="section">
+</div><p></p><hr><a id="method-gp-summary_types"></a><div class="section">
+<h3 id="method-summary-types-">Method <code>summary_types()</code><a class="anchor" aria-label="anchor" href="#method-summary-types-"></a></h3>
+<p>Get character vector of summary types for gp unit.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">ui</span><span class="op">(</span><span class="va">ns</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">summary_types</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-gp-summary"></a><div class="section">
+<h3 id="method-summary-">Method <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code><a class="anchor" aria-label="anchor" href="#method-summary-"></a></h3>
+<p>Summarise gp data.</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="va">type</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>type</code></dt>
+<dd><p>(character(1))<br>
+Character specifying summary type. See <code>summary_types</code> for options.</p></dd>
+
+
+<dt><code>...</code></dt>
+<dd><p>Passed to method.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/example_gp_unit.html">example_gp_unit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">x</span><span class="op">[[</span><span class="st">"summary"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-gp-summary_info"></a><div class="section">
+<h3 id="method-summary-info-">Method <code>summary_info()</code><a class="anchor" aria-label="anchor" href="#method-summary-info-"></a></h3>
+<p>Get summary info for gp unit.</p><div class="section">
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">summary_info</span><span class="op">(</span><span class="va">type</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>type</code></dt>
+<dd><p>(character(1))<br>
+Character specifying summary type. See <code>summary_types</code> for options.</p></dd>
+
+
+<dt><code>...</code></dt>
+<dd><p>Passed to summary info functions.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/example_gp_unit.html">example_gp_unit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">x</span><span class="op">[[</span><span class="st">"summary_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-gp-ui"></a><div class="section">
+<h3 id="method-ui-">Method <code>ui()</code><a class="anchor" aria-label="anchor" href="#method-ui-"></a></h3>
+<p>Create UI for general practice object.</p><div class="section">
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">ui</span><span class="op">(</span><span class="va">ns</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>ns</code></dt>
 <dd><p>Namespace of shiny application page.</p></dd>
 
@@ -201,7 +264,7 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp-server"></a><div class="section">
 <h3 id="method-server-">Method <code>server()</code><a class="anchor" aria-label="anchor" href="#method-server-"></a></h3>
 <p>Create server for general practice object.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">server</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -209,12 +272,12 @@ for options.</p></dd>
 </div><p></p><hr><a id="method-gp-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">gp</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -299,7 +362,16 @@ for options.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 20<span style="text-decoration: underline;">240</span>101 Ages5to14    -<span style="color: #BB0000;">401</span>   456</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_pyramid"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows a population pyramid of the total number of\n            GP registered patients (x-axis) across age category\n            (y-axis) for each gender (colour)."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows a population pyramid of the total number of\n        GP registered patients (x-axis) across age category\n        (y-axis) for each gender (colour)."</span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Date         Male Female Total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 57386-05-03  <span style="text-decoration: underline;">4</span>056   <span style="text-decoration: underline;">4</span>195  <span style="text-decoration: underline;">8</span>251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 57385-07-07  <span style="text-decoration: underline;">4</span>065   <span style="text-decoration: underline;">4</span>209  <span style="text-decoration: underline;">8</span>274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 57360-08-07  <span style="text-decoration: underline;">4</span>085   <span style="text-decoration: underline;">4</span>216  <span style="text-decoration: underline;">8</span>301</span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This summary table presents the number of registered patients for the\n        selected GP practice per gender and time point."</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"ui"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"server"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -341,7 +413,28 @@ for options.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_gp_unit.html">example_gp_unit</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"plot_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_pyramid"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows a population pyramid of the total number of\n            GP registered patients (x-axis) across age category\n            (y-axis) for each gender (colour)."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This bar chart shows a population pyramid of the total number of\n        GP registered patients (x-axis) across age category\n        (y-axis) for each gender (colour)."</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `gp$summary`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_gp_unit.html">example_gp_unit</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Date         Male Female Total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 57386-05-03  <span style="text-decoration: underline;">4</span>056   <span style="text-decoration: underline;">4</span>195  <span style="text-decoration: underline;">8</span>251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 57385-07-07  <span style="text-decoration: underline;">4</span>065   <span style="text-decoration: underline;">4</span>209  <span style="text-decoration: underline;">8</span>274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 57360-08-07  <span style="text-decoration: underline;">4</span>085   <span style="text-decoration: underline;">4</span>216  <span style="text-decoration: underline;">8</span>301</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `gp$summary_info`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_gp_unit.html">example_gp_unit</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[[</span><span class="st">"summary_info"</span><span class="op">]</span><span class="op">]</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"population_summary"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "This summary table presents the number of registered patients for the\n        selected GP practice per gender and time point."</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
