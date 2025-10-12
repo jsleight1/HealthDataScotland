@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [30-add-health-unit-lookup]
+    branches: [main]
 
 name: dockerise.yaml
 
@@ -48,9 +48,7 @@ jobs:
         build-args: |
           RVERSION=${{ env.RVERSION }}
         tags: |
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:latest
           ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:development
-
-# ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:latest
-# ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:development
-# ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-latest
-# ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-${{ env.DATE }}
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-latest
+          ${{ vars.DOCKERHUB_USERNAME }}/healthdatascotland:R${{ env.RVERSION }}-v${{ env.packageVersion }}-${{ env.DATE }}

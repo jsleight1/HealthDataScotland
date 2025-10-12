@@ -100,7 +100,7 @@ gp <- R6Class("gp",
     },
     population_summary_info = function() {
       "This summary table presents the number of registered patients for the
-        selected GP practice per gender per year."
+        selected GP practice per gender and time point."
     }
   ),
   public = list(

@@ -3,7 +3,8 @@
     "ui-annual_beds_help": false,
     "ui-annual_beds_settings": false,
     "ui-daily_beds_help": false,
-    "ui-daily_beds_settings": false
+    "ui-daily_beds_settings": false,
+    "ui-dt_help": false
   },
   "output": {
 

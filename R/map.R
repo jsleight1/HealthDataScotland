@@ -57,8 +57,11 @@ map <- R6Class("map",
       self[["sf"]]()[self[["sf"]]()[["type"]] != "board", ][["ID"]]
     },
     interactive_map_info = function() {
-      "The interactive map below can be used to visualise individual GP
-        practice or hospital data sets"
+      "This interactive map displays the locations of all available GP practices
+        (blue pins) and hospitals (red pins) in Scotland. Pins can be selected to
+        visualise individual GP practice or hospital data sets. Please note that
+        some of the spatial data is several years old. Therefore this map
+        may contain missing health centres."
     }
   ),
   public = list(
