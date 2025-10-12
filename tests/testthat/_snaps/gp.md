@@ -17,5 +17,5 @@
     Code
       gp_unit[["summary_info"]](type = smy)
     Output
-      [1] "This summary table presents the number of registered patients for the\n        selected GP practice per gender per year."
+      [1] "This summary table presents the number of registered patients for the\n        selected GP practice per gender and time point."
 
