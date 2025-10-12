@@ -106,19 +106,7 @@ health_unit <- R6Class("health_unit",
     #' x[["datatable"]](type = "specialty_summary")
     datatable = function(type, ...) {
       type <- arg_match(type, values = self[["summary_types"]]())
-      datatable(
-        self[["summary"]](type),
-        rownames = FALSE,
-        escape = FALSE,
-        filter = "top",
-        selection = "none",
-        extensions = "Buttons",
-        options = list(
-          dom = "frtipB",
-          buttons = c("csv", "excel")
-        ),
-        ...
-      )
+      downloadable_datatable(self[["summary"]](type), ...)
     }
   )
 )

@@ -1,3 +1,21 @@
+virtual_select_input <- function(...) {
+  virtualSelectInput(
+    ...,
+    search = TRUE,
+    html = TRUE,
+    showSelectedOptionsFirst = TRUE,
+    updateOn = "close"
+  )
+}
+
+help_popover <- function(id, ...) {
+  popover(id = id, bs_icon("question-circle"), ...)
+}
+
+settings_popover <- function(id, ...) {
+  popover(id = id, bs_icon("gear", class = "ms-auto"), ...)
+}
+
 e_pyramid <- function(x) {
   x |>
     e_charts_("Age", timeline = TRUE, reorder = FALSE) |>
@@ -91,4 +109,20 @@ e_trend <- function(x, x_axis, y_axis) {
 
 e_output_spinner <- function(..., height = "600px") {
   withSpinner(echarts4rOutput(..., height = height))
+}
+
+downloadable_datatable <- function(x, ...) {
+  datatable(
+    x,
+    rownames = FALSE,
+    escape = FALSE,
+    filter = "top",
+    selection = "none",
+    extensions = "Buttons",
+    options = list(
+        dom = "frtipB",
+        buttons = c("csv", "excel")
+    ),
+    ...
+  )
 }

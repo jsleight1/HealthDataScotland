@@ -201,19 +201,7 @@ health_unitgrp <- R6Class(
       if (!is.null(ns)) {
         output[["Plot"]] <- private[["dt_btn"]](ns)
       }
-      datatable(
-        output,
-        rownames = FALSE,
-        escape = FALSE,
-        filter = "top",
-        selection = "none",
-        extensions = "Buttons",
-        options = list(
-          dom = "frtipB",
-          buttons = c("csv", "excel")
-        ),
-        ...
-      )
+      downloadable_datatable(output, ...)
     }
   )
 )
