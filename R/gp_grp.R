@@ -527,6 +527,7 @@ gp_grp <- R6Class("gp_grp",
           output[["download"]] <- self[["download_handler"]]()
 
           lookup_dt_task <- ExtendedTask$new(function(x, ns) {
+            log_info("Creating GP lookup table")
             mirai(x[["datatable"]]("lookup", ns), x = self, ns = ns)
           })
 
@@ -535,7 +536,6 @@ gp_grp <- R6Class("gp_grp",
           })
 
           output[["lookup"]] <- renderDT({
-            log_info("Creating gp lookup table")
             invoke_dt_task()
             lookup_dt_task[["result"]]()
           })

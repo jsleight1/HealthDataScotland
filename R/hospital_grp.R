@@ -478,6 +478,7 @@ hospital_grp <- R6Class("hospital_grp",
         self[["ID"]](),
         function(input, output, session) {
           ns <- session[["ns"]]
+
           output[["national_trend"]] <- renderEcharts4r({
             log_info("Creating hospital national trend plot")
             self[["plot"]](
@@ -485,40 +486,67 @@ hospital_grp <- R6Class("hospital_grp",
               specialties = req(input[["select_national_specialty"]])
             )
           })
-          output[["hb_trend"]] <- renderEcharts4r({
-            log_info("Creating hospital health board trend plot")
-            self[["plot"]](
-              type = "health_board_trend",
-              specialties = req(input[["select_hb_trend_specialty"]]),
-              health_boards = req(input[["select_hb_trend_hb"]])
-            )
+
+          purrr::walk(c("trend", "bar"), function(plt) {
+            task <- ExtendedTask[["new"]](function(x, type, specialties, health_boards) {
+              log_info(glue("Creating hospital health board {plt} plot"))
+              mirai({
+                x[["plot"]](type = type, specialties = specialties, health_boards = health_boards)
+              }, x = x, type = type, specialties = specialties, health_boards = health_boards)
+            })
+
+            invoke_task <- reactive({
+              task[["invoke"]](
+                x = self,
+                type = glue("health_board_{plt}"),
+                specialties = req(input[[glue("select_hb_{plt}_specialty")]]),
+                health_boards = req(input[[glue("select_hb_{plt}_hb")]])
+              )
+            })
+
+            output[[glue("hb_{plt}")]] <- renderEcharts4r({
+              invoke_task()
+              task[["result"]]()
+            })
           })
-          output[["hb_bar"]] <- renderEcharts4r({
-            log_info("Creating hospital health board bar plot")
-            self[["plot"]](
-              type = "health_board_bar",
-              specialties = req(input[["select_hb_bar_specialty"]]),
-              health_boards = req(input[["select_hb_bar_hb"]])
-            )
+
+          purrr::walk(c("trend", "bar"), function(plt) {
+            task <- ExtendedTask[["new"]](function(x, type, specialties, hospitals) {
+              log_info(glue("Creating hospital {plt} plot"))
+              mirai({
+                x[["plot"]](type = type, specialties = specialties, hospitals = hospitals)
+              }, x = x, type = type, specialties = specialties, hospitals = hospitals)
+            })
+
+            invoke_task <- reactive({
+              task[["invoke"]](
+                x = self,
+                type = glue("hospital_{plt}"),
+                specialties = req(input[[glue("select_hosp_{plt}_specialty")]]),
+                hospitals = req(input[[glue("select_hosp_{plt}_hosp")]])
+              )
+            })
+
+            output[[glue("hosp_{plt}")]] <- renderEcharts4r({
+              invoke_task()
+              task[["result"]]()
+            })
           })
-          output[["hosp_trend"]] <- renderEcharts4r({
-            log_info("Creating hospital trend plot")
-            self[["plot"]](
-              type = "hospital_trend",
-              specialties = req(input[["select_hosp_trend_specialty"]]),
-              hospitals = req(input[["select_hosp_trend_hosp"]])
-            )
-          })
-          output[["hosp_bar"]] <- renderEcharts4r({
-            log_info("Creating hospital bar plot")
-            self[["plot"]](
-              type = "hospital_bar",
-              specialties = req(input[["select_hosp_bar_specialty"]]),
-              hospitals = req(input[["select_hosp_bar_hosp"]])
-            )
-          })
+
           output[["download"]] <- self[["download_handler"]]()
-          output[["lookup"]] <- renderDT(self[["datatable"]]("lookup", ns))
+
+          lookup_dt_task <- ExtendedTask$new(function(x, ns) {
+            log_info("Creating gp lookup table")
+            mirai(x[["datatable"]]("lookup", ns), x = self, ns = ns)
+          })
+
+          invoke_dt_task <- reactive({lookup_dt_task$invoke(x = self, ns = ns)})
+
+          output[["lookup"]] <- renderDT({
+            invoke_dt_task()
+            lookup_dt_task[["result"]]()
+          })
+
           observe({
             log_info("Rendering hospital unit popup")
             obj <- self[["health_unit"]](input[["dt_button"]])
