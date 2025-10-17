@@ -16,6 +16,7 @@ NULL
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom AzureStor storage_endpoint storage_container storage_save_rds storage_load_rds
 #' @importFrom DT datatable renderDT DTOutput
+#' @importFrom mirai daemons everywhere mirai
 NULL
 
 utils::globalVariables(".")

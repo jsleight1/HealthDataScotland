@@ -461,48 +461,84 @@ gp_grp <- R6Class("gp_grp",
         self[["ID"]](),
         function(input, output, session) {
           ns <- session[["ns"]]
-          output[["national_pop_trend"]] <- renderEcharts4r({
-            log_info("Creating GP national trend plot")
-            self[["plot"]](type = "national_trend")
+
+          purrr::walk(c("trend", "pyramid"), function(plt) {
+            task <- ExtendedTask[["new"]](function(x, type) {
+              log_info(glue("Creating GP national {plt} plot"))
+              mirai(x[["plot"]](type = type), x = x, type = type)
+            })
+
+            invoke_task <- reactive({
+              task[["invoke"]](x = self, type = glue("national_{plt}"))
+            })
+
+            output[[glue("national_pop_{plt}")]] <- renderEcharts4r({
+              invoke_task()
+              task[["result"]]()
+            })
           })
-          output[["national_pop_pyramid"]] <- renderEcharts4r({
-            log_info("Creating GP national pyramid plot")
-            self[["plot"]](type = "national_pyramid")
+
+          purrr::walk(c("trend", "bar"), function(plt) {
+            task <- ExtendedTask[["new"]](function(x, type, health_board, gender) {
+              log_info(glue("Creating GP health board {plt} plot"))
+              mirai({
+                x[["plot"]](type = type, health_board = health_board, gender = gender)
+              }, x = x, type = type, health_board = health_board, gender = gender)
+            })
+
+            invoke_task <- reactive({
+              task[["invoke"]](
+                x = self,
+                type = glue("health_board_{plt}"),
+                health_board = req(input[[glue("select_hb_{plt}_hb")]]),
+                gender = req(input[[glue("select_hb_{plt}_gender")]])
+              )
+            })
+
+            output[[glue("hb_pop_{plt}")]] <- renderEcharts4r({
+              invoke_task()
+              task[["result"]]()
+            })
           })
-          output[["hb_pop_trend"]] <- renderEcharts4r({
-            log_info("Creating GP health board trend plot")
-            self[["plot"]](
-              type = "health_board_trend",
-              health_board = req(input[["select_hb_trend_hb"]]),
-              gender = req(input[["select_hb_trend_gender"]])
-            )
+
+          purrr::walk(c("trend", "bar"), function(plt) {
+            task <- ExtendedTask[["new"]](function(x, type, gp, gender) {
+              log_info("Creating GP {plt} plot")
+              mirai({
+                x[["plot"]](type = type, gp = gp, gender = gender)
+              }, x = x, type = type, gp = gp, gender = gender)
+            })
+
+            invoke_task <- reactive({
+              task[["invoke"]](
+                x = self,
+                type = glue("gp_{plt}"),
+                gp = req(input[[glue("select_gp_{plt}_gp")]]),
+                gender = req(input[[glue("select_gp_{plt}_gender")]])
+              )
+            })
+
+            output[[glue("gp_pop_{plt}")]] <- renderEcharts4r({
+              invoke_task()
+              task[["result"]]()
+            })
           })
-          output[["hb_pop_bar"]] <- renderEcharts4r({
-            log_info("Creating GP health board bar plot")
-            self[["plot"]](
-              type = "health_board_bar",
-              health_board = req(input[["select_hb_bar_hb"]]),
-              gender = req(input[["select_hb_bar_gender"]])
-            )
-          })
-          output[["gp_pop_trend"]] <- renderEcharts4r({
-            log_info("Creating GP trend plot")
-            self[["plot"]](
-              type = "gp_trend",
-              gp = req(input[["select_gp_trend_gp"]]),
-              gender = req(input[["select_gp_trend_gender"]])
-            )
-          })
-          output[["gp_pop_bar"]] <- renderEcharts4r({
-            log_info("Creating GP bar plot")
-            self[["plot"]](
-              type = "gp_bar",
-              gp = req(input[["select_gp_bar_gp"]]),
-              gender = req(input[["select_gp_bar_gender"]])
-            )
-          })
+
           output[["download"]] <- self[["download_handler"]]()
-          output[["lookup"]] <- renderDT(self[["datatable"]]("lookup", ns))
+
+          lookup_dt_task <- ExtendedTask$new(function(x, ns) {
+            mirai(x[["datatable"]]("lookup", ns), x = self, ns = ns)
+          })
+
+          invoke_dt_task <- reactive({
+            lookup_dt_task[["invoke"]](x = self, ns = ns)
+          })
+
+          output[["lookup"]] <- renderDT({
+            log_info("Creating gp lookup table")
+            invoke_dt_task()
+            lookup_dt_task[["result"]]()
+          })
           observe({
             log_info("Rendering gp unit popup")
             obj <- self[["health_unit"]](input[["dt_button"]])

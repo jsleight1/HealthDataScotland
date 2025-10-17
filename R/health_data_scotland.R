@@ -4,6 +4,8 @@
 health_data_scotland <- function(...) {
   requireNamespace("sf", quietly = TRUE)
 
+  daemons(4)
+  everywhere(devtools::load_all())
   data <- load_processed_data()
   health_unit_grps <- create_data_objects(data)
   map <- create_map_unit(data)
@@ -62,6 +64,10 @@ health_data_scotland <- function(...) {
         bs_icon("github")
       )
     ),
+    nav_item(a(
+      textOutput("current_time", inline = TRUE),
+      style = "color: var(--brand-white)"
+    )),
     footer = div(
       class = "footer",
       "Created by Jack Sleight"
@@ -73,11 +79,20 @@ health_data_scotland <- function(...) {
     log_info(
       glue("Launching HealthDataScotland v{packageVersion('HealthDataScotland')}")
     )
+    output[["current_time"]] <- renderText({
+      invalidateLater(1000)
+      format(Sys.time(), "%H:%M:%S %p")
+    })
     log_info(glue("Config type: {get_config()[['type']]}"))
     map[["server"]](health_unit_grps)
     health_unit_grps[["gp"]][["server"]]()
     health_unit_grps[["hospital"]][["server"]]()
   }
+
+  onStop(function() {
+    log_info("Reseting deamons")
+    daemons(0)
+  })
 
   shinyApp(ui, server, ...)
 }
