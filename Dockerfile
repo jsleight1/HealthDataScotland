@@ -45,8 +45,6 @@ WORKDIR /home/app
 
 # Install packages required for HealthDataScotland
 RUN git clone https://github.com/jsleight1/HealthDataScotland.git .
-RUN git config --global --add safe.directory /home/app
-RUN git checkout -b "31-investigate-use-of-async-r" "origin/31-investigate-use-of-async-r"
 RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
