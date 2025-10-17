@@ -1169,6 +1169,17 @@
       ],
       "Hash": "fec5f52652d60615fdb3957b3d74324a"
     },
+    "mirai": {
+      "Package": "mirai",
+      "Version": "2.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "nanonext"
+      ],
+      "Hash": "12245709c482c71fe4166a1919dda184"
+    },
     "mockery": {
       "Package": "mockery",
       "Version": "0.4.4",
@@ -1189,6 +1200,16 @@
         "methods"
       ],
       "Hash": "4fd8900853b746af55b81fda99da7695"
+    },
+    "nanonext": {
+      "Package": "nanonext",
+      "Version": "1.5.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "8d281fb7e6eeaf0eae4a3c57e28befb2"
     },
     "openssl": {
       "Package": "openssl",
