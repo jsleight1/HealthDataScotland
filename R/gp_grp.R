@@ -481,9 +481,15 @@ gp_grp <- R6Class("gp_grp",
           purrr::walk(c("trend", "bar"), function(plt) {
             task <- ExtendedTask[["new"]](function(x, type, health_board, gender) {
               log_info(glue("Creating GP health board {plt} plot"))
-              mirai({
-                x[["plot"]](type = type, health_board = health_board, gender = gender)
-              }, x = x, type = type, health_board = health_board, gender = gender)
+              mirai(
+                {
+                  x[["plot"]](type = type, health_board = health_board, gender = gender)
+                },
+                x = x,
+                type = type,
+                health_board = health_board,
+                gender = gender
+              )
             })
 
             invoke_task <- reactive({
@@ -504,9 +510,15 @@ gp_grp <- R6Class("gp_grp",
           purrr::walk(c("trend", "bar"), function(plt) {
             task <- ExtendedTask[["new"]](function(x, type, gp, gender) {
               log_info("Creating GP {plt} plot")
-              mirai({
-                x[["plot"]](type = type, gp = gp, gender = gender)
-              }, x = x, type = type, gp = gp, gender = gender)
+              mirai(
+                {
+                  x[["plot"]](type = type, gp = gp, gender = gender)
+                },
+                x = x,
+                type = type,
+                gp = gp,
+                gender = gender
+              )
             })
 
             invoke_task <- reactive({

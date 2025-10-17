@@ -490,9 +490,15 @@ hospital_grp <- R6Class("hospital_grp",
           purrr::walk(c("trend", "bar"), function(plt) {
             task <- ExtendedTask[["new"]](function(x, type, specialties, health_boards) {
               log_info(glue("Creating hospital health board {plt} plot"))
-              mirai({
-                x[["plot"]](type = type, specialties = specialties, health_boards = health_boards)
-              }, x = x, type = type, specialties = specialties, health_boards = health_boards)
+              mirai(
+                {
+                  x[["plot"]](type = type, specialties = specialties, health_boards = health_boards)
+                },
+                x = x,
+                type = type,
+                specialties = specialties,
+                health_boards = health_boards
+              )
             })
 
             invoke_task <- reactive({
@@ -513,9 +519,15 @@ hospital_grp <- R6Class("hospital_grp",
           purrr::walk(c("trend", "bar"), function(plt) {
             task <- ExtendedTask[["new"]](function(x, type, specialties, hospitals) {
               log_info(glue("Creating hospital {plt} plot"))
-              mirai({
-                x[["plot"]](type = type, specialties = specialties, hospitals = hospitals)
-              }, x = x, type = type, specialties = specialties, hospitals = hospitals)
+              mirai(
+                {
+                  x[["plot"]](type = type, specialties = specialties, hospitals = hospitals)
+                },
+                x = x,
+                type = type,
+                specialties = specialties,
+                hospitals = hospitals
+              )
             })
 
             invoke_task <- reactive({
@@ -540,7 +552,9 @@ hospital_grp <- R6Class("hospital_grp",
             mirai(x[["datatable"]]("lookup", ns), x = self, ns = ns)
           })
 
-          invoke_dt_task <- reactive({lookup_dt_task$invoke(x = self, ns = ns)})
+          invoke_dt_task <- reactive({
+            lookup_dt_task$invoke(x = self, ns = ns)
+          })
 
           output[["lookup"]] <- renderDT({
             invoke_dt_task()
