@@ -6,6 +6,7 @@ ARG TARGETPLATFORM
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     binutils \
     curl \
+    cmake \
     gdal-bin \
     gdebi-core \
     libfontconfig1-dev \
@@ -13,12 +14,14 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     libgdal-dev \
     libgit2-dev \
     libharfbuzz-dev \
+    libmbedtls \
     libpng-dev \
     libproj-dev \
     libudunits2-dev \
     git \
     gnupg \
     pandoc \
+    protobuf-compiler \
     qpdf \
     rsync \
     sudo \
@@ -45,6 +48,8 @@ WORKDIR /home/app
 
 # Install packages required for HealthDataScotland
 RUN git clone https://github.com/jsleight1/HealthDataScotland.git .
+RUN git config --global --add safe.directory /home/app
+RUN git checkout -b "31-investigate-use-of-async-r" "origin/31-investigate-use-of-async-r"
 RUN rm -rf .Rprofile renv
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
