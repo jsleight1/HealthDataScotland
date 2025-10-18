@@ -14,6 +14,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     libgdal-dev \
     libgit2-dev \
     libharfbuzz-dev \
+    libmbedtls \
     libpng-dev \
     libproj-dev \
     libudunits2-dev \
