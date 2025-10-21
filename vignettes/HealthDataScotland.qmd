@@ -17,11 +17,9 @@ library(HealthDataScotland)
 
 ## Introduction
 
-[HealthDataScotland](https://www.healthdatascotland.co.uk){target="_blank"} is an R shiny application
-that presents GP practice demographic and hospital bed capacity data across
-Scotland. This vignette will outline the workflow used to download, process and
-store the data used by the application, and describe the development process
-used to maintain and host the application.
+[HealthDataScotland](https://www.healthdatascotland.co.uk){target="_blank"} is
+an R shiny application that presents GP practice demographic and hospital bed
+capacity data across Scotland.
 
 ## Data workflow and storage
 

@@ -88,10 +88,13 @@ package_panel <- function() {
       ),
       h3("Disclaimer"),
       p(
-        "The workflows outlined in the documentation provide a rough guide as to which public data sets are
-        being used and how they are being manipulated. It is worth emphasising, however, that this application is primarily a hobby project. Therefore any
-        decisions should not be made using the data without consulting the original
-        published data sets.",
+        "This R package is licensed using a GNU General Public License and contains
+        data from a variety of sources licensed under the Open Government License (OGL).
+        As this application is primarily a hobby project, the author is likely to make
+        no financial gain from this application and therefore accepts no liability,
+        responsibility or guarantees as to how the package is designed or how the
+        package downloads, processes and presents the data. The original
+        published data sets should always be consulted when using this application.",
         style = "color: red"
       )
     )

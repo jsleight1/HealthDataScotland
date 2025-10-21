@@ -58,3 +58,14 @@ health_data_scotland()
 Please refer to the
 [documentation](https://jsleight1.github.io/HealthDataScotland/) for
 further details regarding the design and usage of this package.
+
+# Disclaimer
+
+This R package is licensed using a GNU General Public License and
+contains data from a variety of sources licensed under the Open
+Government License (OGL). As this application is primarily a hobby
+project, the author is likely to make no financial gain from this
+application and therefore accepts no liability, responsibility or
+guarantees as to how the package is designed or how the package
+downloads, processes and presents the data. The original published data
+sets should always be consulted when using this application.

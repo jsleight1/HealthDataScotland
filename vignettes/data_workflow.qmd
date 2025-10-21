@@ -106,11 +106,3 @@ This data workflow creates a series of data.frames which are stored as an .RDS
 file in an Azure blob. This Azure blob is accessed when the shiny application
 launches. The data set is periodically updated every 6 months using a GitHub
 action.
-
-# Disclaimer
-
-[The workflows outlined provide a rough guide as to which public data sets are
-being used and how they are being manipulated. It is worth emphasising once
-more, however, that this application is primarily a hobby project. Therefore any
-decisions should not be made using the data without consulting the original
-published data sets.]{style="color: red"}
