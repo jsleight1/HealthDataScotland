@@ -120,8 +120,8 @@ downloadable_datatable <- function(x, ...) {
     selection = "none",
     extensions = "Buttons",
     options = list(
-        dom = "frtipB",
-        buttons = c("csv", "excel")
+      dom = "frtipB",
+      buttons = c("csv", "excel")
     ),
     ...
   )

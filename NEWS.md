@@ -1,3 +1,7 @@
+# HealthDataScotland 2.1.1
+
+* Update package disclaimer
+
 # HealthDataScotland 2.1.0
 
 * Add `$summary` and associated helper functions for summarising `gp`, `hospital`, `gp_grp` and `hospital_grp` objects in table format.
