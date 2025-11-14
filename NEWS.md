@@ -1,3 +1,8 @@
+# HealthDataScotland 2.2.0
+
+* Add `data_type` and `specialties` to `hospital` object specialty summary.
+* Remove dark mode
+
 # HealthDataScotland 2.1.1
 
 * Update package disclaimer
