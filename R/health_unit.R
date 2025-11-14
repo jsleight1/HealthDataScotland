@@ -89,7 +89,7 @@ health_unit <- R6Class("health_unit",
     popup_modal = function(ns) {
       showModal(modalDialog(
         self[["ui"]](ns),
-        size = "l",
+        size = "xl",
         easyClose = TRUE
       ))
       self[["server"]]()
