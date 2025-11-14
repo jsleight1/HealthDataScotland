@@ -17,5 +17,5 @@
     Code
       hosp_unit[["summary_info"]](type = smy)
     Output
-      [1] "This summary table presents the annual number of available staffed beds,\n        the number of annual beds occupied, and the percentage occupancy for\n        the selected hospital"
+      [1] "This summary table presents the annual and daily average number of available staffed beds,\n        the number of annual and daily average beds occupied, and the percentage occupancy for\n        the selected hospital"
 

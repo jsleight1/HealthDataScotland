@@ -111,19 +111,28 @@ hospital <- R6Class("hospital",
                     different specialties (default is all specialities).",
       )
     },
-    specialty_summary = function(...) {
-      self[["plot_data"]](type = "specialty_line", data_type = "annual", ...) |>
-        pivot_wider() |>
-        rename(
-          "Financial Year" = "FinancialYear",
-          "Specialty" = "SpecialtyName",
-          "Percentage occupancy" = "PercentageOccupancy",
+    specialty_summary = function(data_type = c("annual", "daily"),
+                                 specialties = private[["specialty_choices"]]()) {
+      data_type <- arg_match(data_type, multiple = TRUE)
+      map(data_type, function(i) {
+        self[["plot_data"]](
+          type = "specialty_line",
+          data_type = i,
+          specialties = specialties
         ) |>
-        select(-"ID", -"HospitalName")
+          pivot_wider() |>
+          rename("Financial Year" = "FinancialYear", "Specialty" = "SpecialtyName") |>
+          rename_at(
+            "PercentageOccupancy",
+            ~ paste(stringr::str_to_title(i), "percentage occupancy")
+          ) |>
+          select(-"ID", -"HospitalName")
+      }) |>
+        reduce(full_join, by = c("Financial Year", "Specialty"))
     },
     specialty_summary_info = function() {
-      "This summary table presents the annual number of available staffed beds,
-        the number of annual beds occupied, and the percentage occupancy for
+      "This summary table presents the annual and daily average number of available staffed beds,
+        the number of annual and daily average beds occupied, and the percentage occupancy for
         the selected hospital"
     }
   ),
