@@ -1,10 +1,8 @@
 {
   "input": {
-    "ui-annual_beds_help": false,
-    "ui-annual_beds_settings": false,
-    "ui-daily_beds_help": false,
-    "ui-daily_beds_settings": false,
-    "ui-dt_help": false
+    "ui-dt_help": false,
+    "ui-specialty_line_help": false,
+    "ui-specialty_line_settings": false
   },
   "output": {
 

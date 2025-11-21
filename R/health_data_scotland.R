@@ -47,7 +47,6 @@ health_data_scotland <- function(...) {
       )
     ),
     nav_spacer(),
-    nav_item(input_dark_mode(id = "dark_mode", mode = "light")),
     nav_item(
       a(
         href = "https://www.linkedin.com/in/jack-sleight-461a6699/",
@@ -60,6 +59,12 @@ health_data_scotland <- function(...) {
         href = "https://github.com/jsleight1/HealthDataScotland",
         target = "_blank",
         bs_icon("github")
+      )
+    ),
+    nav_item(
+      a(
+        glue("v{as.character(packageVersion('HealthDataScotland'))}"),
+        style = "color: var(--brand-white);"
       )
     ),
     footer = div(

@@ -99,31 +99,28 @@ hospital <- R6Class("hospital",
     specialty_choices = function() {
       sort(unique(self[["data"]]()[["SpecialtyName"]]))
     },
-    specialty_line_info = function(data_type = c("annual", "daily")) {
-      switch(arg_match(data_type),
-        "annual" = "This line chart shows the annual number of
-                    available staffed beds and the number occupied (y-axis)
-                    across time (x-axis). Settings can be used to show data for
-                    different specialties (default is all specialities).",
-        "daily" = "This line chart shows the daily average number of
-                    available staffed beds and the number occupied (y-axis)
-                    across time (x-axis). Settings can be used to show data for
-                    different specialties (default is all specialities).",
-      )
-    },
-    specialty_summary = function(...) {
-      self[["plot_data"]](type = "specialty_line", data_type = "annual", ...) |>
-        pivot_wider() |>
-        rename(
-          "Financial Year" = "FinancialYear",
-          "Specialty" = "SpecialtyName",
-          "Percentage occupancy" = "PercentageOccupancy",
+    specialty_summary = function(data_type = c("annual", "daily"),
+                                 specialties = private[["specialty_choices"]]()) {
+      data_type <- arg_match(data_type, multiple = TRUE)
+      map(data_type, function(i) {
+        self[["plot_data"]](
+          type = "specialty_line",
+          data_type = i,
+          specialties = specialties
         ) |>
-        select(-"ID", -"HospitalName")
+          pivot_wider() |>
+          rename("Financial Year" = "FinancialYear", "Specialty" = "SpecialtyName") |>
+          rename_at(
+            "PercentageOccupancy",
+            ~ paste(stringr::str_to_title(i), "percentage occupancy")
+          ) |>
+          select(-"ID", -"HospitalName")
+      }) |>
+        reduce(full_join, by = c("Financial Year", "Specialty"))
     },
     specialty_summary_info = function() {
-      "This summary table presents the annual number of available staffed beds,
-        the number of annual beds occupied, and the percentage occupancy for
+      "This summary table presents the annual and daily average number of available staffed beds,
+        the number of annual and daily average beds occupied, and the percentage occupancy for
         the selected hospital"
     }
   ),
@@ -168,12 +165,17 @@ hospital <- R6Class("hospital",
     #' @param ... Passed to plot info functions.
     #' @examples
     #' x <- example_hospital_unit()
-    #' x[["plot_info"]](type = "specialty_line", data_type = "annual")
+    #' x[["plot_info"]](type = "specialty_line")
     plot_info = function(type, ...) {
       type <- arg_match(type, values = self[["plot_types"]]())
       switch(type,
-        "specialty_line" = private[["specialty_line_info"]]
-      )(...)
+        "specialty_line" = "This line chart shows the number of
+          available staffed beds and the number occupied (y-axis)
+          across time (x-axis). Settings can be used to show data for
+          different specialties (default is all specialities) and
+          for different statistics ('annual' for the annual number of
+          beds and 'daily' for the average daily number of beds)."
+      )
     },
     #' @description
     #' Get character vector of summary types for hospital unit.
@@ -224,44 +226,29 @@ hospital <- R6Class("hospital",
             card(
               full_screen = TRUE,
               card_header(
-                "Annually Available Staffed Beds",
+                "Available Staffed Beds",
                 help_popover(
-                  id = ns("annual_beds_help"),
-                  self[["plot_info"]]("specialty_line", "annual")
+                  id = ns("specialty_line_help"),
+                  self[["plot_info"]]("specialty_line")
                 ),
                 settings_popover(
-                  id = ns("annual_beds_settings"),
+                  id = ns("specialty_line_settings"),
                   virtual_select_input(
-                    ns("specialty_annual_select"),
+                    ns("specialty_line_select"),
                     label = "Select specialty",
                     choices = private[["specialty_choices"]](),
                     multiple = TRUE,
                     selected = "All Specialties"
-                  )
-                )
-              ),
-              withSpinner(uiOutput(ns("annual_beds")))
-            ),
-            card(
-              full_screen = TRUE,
-              card_header(
-                "Daily Average Available Staffed Beds",
-                help_popover(
-                  id = ns("daily_beds_help"),
-                  self[["plot_info"]]("specialty_line", "daily")
-                ),
-                settings_popover(
-                  id = ns("daily_beds_settings"),
+                  ),
                   virtual_select_input(
-                    ns("specialty_daily_select"),
-                    label = "Select specialty",
-                    choices = private[["specialty_choices"]](),
-                    multiple = TRUE,
-                    selected = "All Specialties"
+                    ns("specialty_line_data_select"),
+                    label = "Select data statistic",
+                    choices = c("annual", "daily"),
+                    selected = "annual"
                   )
                 )
               ),
-              withSpinner(uiOutput(ns("daily_beds")))
+              withSpinner(uiOutput(ns("specialty_line")))
             ),
             card(downloadButton(ns("download"), "Download all statistics"))
           )
@@ -287,20 +274,12 @@ hospital <- R6Class("hospital",
       moduleServer(
         self[["ID"]](),
         function(input, output, session) {
-          output[["annual_beds"]] <- renderUI({
-            log_info("Creating hospital annual specialty line plot")
+          output[["specialty_line"]] <- renderUI({
+            log_info("Creating hospital specialty line plot")
             self[["plot"]](
               type = "specialty_line",
-              data_type = "annual",
-              specialties = req(input[["specialty_annual_select"]])
-            )
-          })
-          output[["daily_beds"]] <- renderUI({
-            log_info("Creating hospital daily specialty line plot")
-            self[["plot"]](
-              type = "specialty_line",
-              data_type = "daily",
-              specialties = req(input[["specialty_daily_select"]])
+              data_type = req(input[["specialty_line_data_select"]]),
+              specialties = req(input[["specialty_line_select"]])
             )
           })
           output[["download"]] <- downloadHandler(
