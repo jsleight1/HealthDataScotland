@@ -57,7 +57,7 @@ x[["plot_data"]](type = "specialty_line", data_type = "annual")
 ## ------------------------------------------------
 
 x <- example_hospital_unit()
-x[["plot_info"]](type = "specialty_line", data_type = "annual")
+x[["plot_info"]](type = "specialty_line")
 
 ## ------------------------------------------------
 ## Method `hospital$summary`
@@ -198,7 +198,7 @@ Character specifying plot type. See \code{plot_types} for options.}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{x <- example_hospital_unit()
-x[["plot_info"]](type = "specialty_line", data_type = "annual")
+x[["plot_info"]](type = "specialty_line")
 }
 \if{html}{\out{</div>}}
 
