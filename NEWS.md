@@ -1,6 +1,9 @@
 # HealthDataScotland 2.2.0
 
-* Add `data_type` and `specialties` to `hospital` object specialty summary.
+* Refactor `hopsital` object UI to use have data type and specialty
+select inputs
+* Refactor `hospital` object summary to have statistics per specialty
+and data type
 * Remove dark mode
 
 # HealthDataScotland 2.1.1
