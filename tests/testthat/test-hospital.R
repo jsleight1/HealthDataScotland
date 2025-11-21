@@ -40,8 +40,7 @@ test_that("hospital class can be plotted", {
 })
 
 test_that("hospital plot info works", {
-  expect_snapshot(hosp_unit[["plot_info"]]("specialty_line", "annual"))
-  expect_snapshot(hosp_unit[["plot_info"]]("specialty_line", "daily"))
+  expect_snapshot(hosp_unit[["plot_info"]]("specialty_line"))
 })
 
 test_that("hospital plot functions error if wrong type", {
@@ -56,8 +55,8 @@ test_that("hospital plot functions error if wrong type", {
 test_that("hospital plot data works", {
   output <- hosp_unit[["plot_data"]](
     type = "specialty_line",
-    "annual",
-    c("All Specialties", "General Medicine")
+    data_type = "annual",
+    specialties  = c("All Specialties", "General Medicine")
   ) |>
     expect_no_error()
   expect_s3_class(output, "data.frame")
@@ -65,8 +64,8 @@ test_that("hospital plot data works", {
 
   output <- hosp_unit[["plot_data"]](
     type = "specialty_line",
-    "daily",
-    c("All Specialties", "General Medicine")
+    data_type = "daily",
+    specialties = c("All Specialties", "General Medicine")
   ) |>
     expect_no_error()
   expect_s3_class(output, "data.frame")
