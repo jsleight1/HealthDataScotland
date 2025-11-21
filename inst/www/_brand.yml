@@ -61,10 +61,6 @@ defaults:
         --bs-btn-hover-bg: var(--brand-blue);
         --bs-btn-border-color: var(--brand-blue);
       }
-      .modal {
-        --bs-modal-width: 100%;
-        --bs-modal-margin: 0%;
-      }
       // Customise datatable page numbers
       .pagination {
         --bs-pagination-color: var(--brand-blue);

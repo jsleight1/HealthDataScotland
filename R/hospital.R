@@ -226,7 +226,7 @@ hospital <- R6Class("hospital",
             card(
               full_screen = TRUE,
               card_header(
-                "Annually Available Staffed Beds",
+                "Available Staffed Beds",
                 help_popover(
                   id = ns("specialty_line_help"),
                   self[["plot_info"]]("specialty_line")
@@ -248,7 +248,7 @@ hospital <- R6Class("hospital",
                   )
                 )
               ),
-              # withSpinner(uiOutput(ns("specialty_line")))
+              withSpinner(uiOutput(ns("specialty_line")))
             ),
             card(downloadButton(ns("download"), "Download all statistics"))
           )

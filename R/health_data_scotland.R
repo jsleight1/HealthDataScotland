@@ -61,6 +61,12 @@ health_data_scotland <- function(...) {
         bs_icon("github")
       )
     ),
+    nav_item(
+      a(
+        glue("v{as.character(packageVersion('HealthDataScotland'))}"),
+        style = "color: var(--brand-white);"
+      )
+    ),
     footer = div(
       class = "footer",
       "Created by Jack Sleight"
