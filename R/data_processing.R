@@ -127,7 +127,20 @@ process_gp_data <- function() {
     mutate(
       Date = as.Date(as.character(.data[["Date"]]), format = "%Y%m%d"),
       ID = as.character(.data[["ID"]])
-    )
+    ) |>
+    combine_gp_age_columns()
+}
+
+combine_gp_age_columns <- function(x, age_columns = gp_age_columns()) {
+  purrr::reduce2(
+    names(age_columns),
+    age_columns,
+    .f = function(data, i, j) {
+      data[[i]] <- rowSums(select(data, any_of(j)), na.rm = TRUE)
+      select(data, -any_of(setdiff(j, i)))
+    },
+    .init = x
+  )
 }
 
 process_gp_sf <- function(x, ids, meta, ...) {

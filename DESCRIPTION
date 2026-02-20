@@ -1,7 +1,7 @@
 Package: HealthDataScotland
 Title: Shiny application for visualisation of health statistics in
     Scotland
-Version: 2.2.0
+Version: 2.2.1
 Authors@R:
     person("Jack", "Sleight", , "jacksleight@hotmail.co.uk", role = c("aut", "cre"))
 Description: This package downloads, processes and presents GP practices

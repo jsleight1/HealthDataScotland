@@ -105,6 +105,21 @@ test_that("process_gp_data works", {
   expect_snapshot_json(output, "process_gp_data")
 })
 
+test_that("combine_gp_age_columns works", {
+  output <- data.frame(
+    "Ages0to4" = c(10, NA),
+    "Ages00to04" = c(NA, 14),
+    "Ages5to14" = c(20, NA),
+    "Ages05to09" = c(NA, 15),
+    "Ages10to14" = c(NA, 15)
+  ) |>
+  combine_gp_age_columns(gp_age_columns()[c("Ages5to14", "Ages0to4")]) |>
+  expect_no_error()
+  expect_s3_class(output, "data.frame")
+  expect_identical(output[["Ages0to4"]], c(10, 14))
+  expect_identical(output[["Ages5to14"]], c(20, 30))
+})
+
 test_that("process_gp_sf works", {
   m <- mock(HealthDataScotland::example_gp_metadata)
   with_mocked_bindings(
