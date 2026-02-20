@@ -36,11 +36,11 @@ about_panel <- function() {
         img(src = "www/author_pic.jpg"),
         div(
           p(
-            "I am an R software developer with a background in bioinformatics
-            based in Glasgow, Scotland. I have always had a keen interest in
-            public health and how tools such as R shiny can help visualise
-            complex health-related data sets. The aim of HealthDataScotland
-            was to create a tool for visualising
+            "I am an R developer and data scientist with a background in
+            bioinformatics and public financial audit. I have always had a keen
+            interest in public health and how tools such as R shiny can help
+            visualise complex health-related data sets. The aim of
+            HealthDataScotland was to create a tool for visualising
             GP and hospital related statistics that may be of interest
             to a wider audience. A secondary aim was to provide a platform for
             my own personal development in creating, maintaining and
