@@ -56,7 +56,7 @@ test_that("hospital plot data works", {
   output <- hosp_unit[["plot_data"]](
     type = "specialty_line",
     data_type = "annual",
-    specialties  = c("All Specialties", "General Medicine")
+    specialties = c("All Specialties", "General Medicine")
   ) |>
     expect_no_error()
   expect_s3_class(output, "data.frame")

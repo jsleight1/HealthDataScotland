@@ -1,3 +1,7 @@
+# HealthDataScotland 2.2.2
+
+* Update package disclaimer
+
 # HealthDataScotland 2.2.1
 
 * Ensure consistent GP practice age columns across legacy data sets during processing.
