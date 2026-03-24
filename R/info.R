@@ -91,7 +91,7 @@ package_panel <- function() {
         "This R package is licensed using a GNU General Public License and contains
         data from a variety of sources licensed under the Open Government License (OGL).
         This application is primarily a hobby project, therefore the author accepts
-        no liability and provide no guarantees related to the functionality of the app and
+        no liability and provides no guarantees related to the functionality of the application and
         accuracy of the data. The original published data sets should always
         always be consulted when using this application.",
         style = "color: red"
