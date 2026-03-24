@@ -113,8 +113,8 @@ test_that("combine_gp_age_columns works", {
     "Ages05to09" = c(NA, 15),
     "Ages10to14" = c(NA, 15)
   ) |>
-  combine_gp_age_columns(gp_age_columns()[c("Ages5to14", "Ages0to4")]) |>
-  expect_no_error()
+    combine_gp_age_columns(gp_age_columns()[c("Ages5to14", "Ages0to4")]) |>
+    expect_no_error()
   expect_s3_class(output, "data.frame")
   expect_identical(output[["Ages0to4"]], c(10, 14))
   expect_identical(output[["Ages5to14"]], c(20, 30))
