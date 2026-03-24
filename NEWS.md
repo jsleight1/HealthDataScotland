@@ -1,6 +1,6 @@
 # HealthDataScotland 2.2.2
 
-* Update package disclaimer
+* Update package disclaimer.
 
 # HealthDataScotland 2.2.1
 
@@ -8,13 +8,13 @@
 
 # HealthDataScotland 2.2.0
 
-* Refactor `hopsital` object UI to use have data type and specialty select inputs
-* Refactor `hospital` object summary to have statistics per specialty and data type
-* Remove dark mode
+* Refactor `hopsital` object UI to use have data type and specialty select inputs.
+* Refactor `hospital` object summary to have statistics per specialty and data type.
+* Remove dark mode.
 
 # HealthDataScotland 2.1.1
 
-* Update package disclaimer
+* Update package disclaimer.
 
 # HealthDataScotland 2.1.0
 
