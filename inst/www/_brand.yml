@@ -81,3 +81,6 @@ defaults:
       .dropdown-menu>li>a:active {
         background-color: var(--brand-blue);
       }
+      .disclaimer {
+        color: var(--brand-red);
+      }

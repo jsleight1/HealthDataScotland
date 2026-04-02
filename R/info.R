@@ -1,6 +1,7 @@
 intro_card <- function() {
   card(
-    h3("Welcome to HealthDataScotland"),
+    min_height = "200px",
+    card_header("Welcome to HealthDataScotland"),
     p(
       "HealthDataScotland is an R shiny application that presents
       GP practice demographic and hospital bed capacity data
@@ -27,75 +28,92 @@ intro_card <- function() {
   )
 }
 
-about_panel <- function() {
-  nav_panel(
-    title = "About the author",
-    card(
-      min_height = "400px",
-      layout_columns(
-        img(src = "www/author_pic.jpg"),
-        div(
-          p(
-            "I am an R developer and data scientist with a background in
-            bioinformatics and public financial audit. I have always had a keen
-            interest in public health and how tools such as R shiny can help
-            visualise complex health-related data sets. The aim of
-            HealthDataScotland was to create a tool for visualising
-            GP and hospital related statistics that may be of interest
-            to a wider audience. A secondary aim was to provide a platform for
-            my own personal development in creating, maintaining and
-            deploying public R shiny applications."
+about_card <- function() {
+  card(
+    min_height = "350px",
+    card_header("About the author"),
+    layout_columns(
+      div(
+        img(src = "www/author_pic.jpg", width = "400px"),
+        class = "d-flex justify-content-center"
+      ),
+      div(
+        p(
+          "I am an data scientist and software developer with a background in
+          bioinformatics and public audit. I have always had a keen interest
+          in how tools such as Shiny can help visualise complex data sets. The aim of
+          HealthDataScotland was to create a tool for visualising
+          GP and hospital related statistics that may be of interest
+          to a wider audience. A secondary aim was to provide a platform for
+          my own personal development in creating, maintaining and
+          deploying public R shiny applications."
+        ),
+        p(
+          "
+          I hope you find this application useful. Please feel free to connect
+          with me on linkedin and view my
+          ",
+          a(
+            href = "https://jsleight1.github.io/jacksleight.github.io/",
+            target = "_blank",
+            " personal website "
           ),
-          p(
-            "I hope that you find this application useful. Please feel free
-            to connect with me on linkedin."
-          )
-        )
+          "
+          which has a copy of my CV and a list of other projects I have worked
+          on.
+          "
+        ),
+        class = "justify-content-center"
       )
     )
   )
 }
 
-package_panel <- function() {
-  nav_panel(
-    title = "Application structure",
-    card(
-      p(
-        "HealthDataScotland is structured as an R package, which is
-        hosted on GitHub at",
-        tags$a(href = "https://github.com/jsleight1/HealthDataScotland", target = "_blank", "HealthDataScotland"),
-        ". This application is deployed using the Azure container app platform, which uses
-          a docker container that is published on",
-        tags$a(href = "https://hub.docker.com/r/jsleight1/healthdatascotland", target = "_black", "docker.io."),
-      ),
-      p(
-        "This application contains public sector information licensed under the Open Government Licence v3.0.
-        The data is derived from a variety of NHS open
-        data API, which are maintained by Public Health Scotland. Data is sourced
-        from the following links:
-        "
-      ),
-      p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/gp-practice-contact-details-and-list-sizes", target = "_blank", "GP metadata")),
-      p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/gp-practice-populations", target = "_blank", "GP demography data")),
-      p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/hospital-codes", target = "_blank", "Hospital metadata")),
-      p("- ", tags$a(href = "https://www.opendata.nhs.scot/dataset/annual-hospital-beds-information", target = "_blank", "Hospital bed occupancy data")),
-      p("In addition, spatial data is derived from the Spatial hub at the following links:"),
-      p("- ", tags$a(href = "https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b", target = "_blank", "Hospital spatial data")),
-      p("- ", tags$a(href = "https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd", target = "_blank", "GP spatial data")),
-      p(
-        "Details of the full data workflow can be found using the HealthDataScotland",
-        tags$a(href = "https://jsleight1.github.io/HealthDataScotland/articles/data_workflow.html", target = "_blank", "documentation.")
-      ),
-      h3("Disclaimer"),
-      p(
-        "This R package is licensed using a GNU General Public License and contains
+package_card <- function() {
+  card(
+    min_height = "400px",
+    card_header("About the package"),
+    p(
+      "HealthDataScotland is structured as an R package, which is
+      hosted on GitHub at",
+      a(href = "https://github.com/jsleight1/HealthDataScotland", target = "_blank", "HealthDataScotland"),
+      ". This application is deployed using the Azure container app platform, which uses
+        a docker container that is published on",
+      a(href = "https://hub.docker.com/r/jsleight1/healthdatascotland", target = "_black", "docker.io."),
+    ),
+    p(
+      "This application contains public sector information licensed under the Open Government Licence v3.0.
+      The data is derived from a variety of NHS open
+      data API, which are maintained by Public Health Scotland. Data is obtained
+      from the following sources:
+      "
+    ),
+    p("- ", a(href = "https://www.opendata.nhs.scot/dataset/gp-practice-contact-details-and-list-sizes", target = "_blank", "GP metadata")),
+    p("- ", a(href = "https://www.opendata.nhs.scot/dataset/gp-practice-populations", target = "_blank", "GP demography data")),
+    p("- ", a(href = "https://www.opendata.nhs.scot/dataset/hospital-codes", target = "_blank", "Hospital metadata")),
+    p("- ", a(href = "https://www.opendata.nhs.scot/dataset/annual-hospital-beds-information", target = "_blank", "Hospital bed occupancy data")),
+    p("Spatial data is derived from the Spatial hub:"),
+    p("- ", a(href = "https://data.spatialhub.scot/dataset/nhs_hospitals-is/resource/b810d206-45bd-4dff-bac7-110a50b4bd3b", target = "_blank", "Hospital spatial data")),
+    p("- ", a(href = "https://data.spatialhub.scot/dataset/gp_practices-is/resource/8389fd1d-563d-4c05-9833-26d9f07fd6cd", target = "_blank", "GP spatial data")),
+    p(
+      "Details of the full data workflow can be found using the HealthDataScotland",
+      a(href = "https://jsleight1.github.io/HealthDataScotland/articles/data_workflow.html", target = "_blank", "documentation.")
+    )
+  )
+}
+
+disclaimer_card <- function() {
+  card(
+    min_height = "150px",
+    card_header("Disclaimer"),
+    p(
+      "This R package is licensed using a GNU General Public License and contains
         data from a variety of sources licensed under the Open Government License (OGL).
         This application is primarily a hobby project, therefore the author accepts
         no liability and provides no guarantees related to the functionality of the application and
         accuracy of the data. The original published data sets should always
         always be consulted when using this application.",
-        style = "color: red"
-      )
+      class = "disclaimer"
     )
   )
 }
