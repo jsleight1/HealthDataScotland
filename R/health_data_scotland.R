@@ -39,14 +39,16 @@ health_data_scotland <- function(...) {
       health_unit_grps[["gp"]][["ui"]](),
       health_unit_grps[["hospital"]][["ui"]]()
     ),
+    nav_spacer(),
     nav_panel(
       title = "About",
-      navset_card_tab(
-        about_panel(),
-        package_panel()
+      class = "overflow-auto",
+      div(
+        about_card(),
+        package_card(),
+        disclaimer_card()
       )
     ),
-    nav_spacer(),
     nav_item(
       a(
         href = "https://www.linkedin.com/in/jack-sleight-461a6699/",
