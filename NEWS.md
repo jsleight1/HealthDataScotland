@@ -1,6 +1,6 @@
 # HealthDataScotland 2.2.3
 
-* Simplift `About` section to single page.
+* Simplify `About` section to single page.
 
 # HealthDataScotland 2.2.2
 
