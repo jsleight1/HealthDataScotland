@@ -1,3 +1,7 @@
+# HealthDataScotland 2.2.4
+
+* Refactor `hospital` object UI to present list of specialty line plots rather than combined plot to prevent CSS branding mismatches.
+
 # HealthDataScotland 2.2.3
 
 * Simplify `About` section to single page.
@@ -12,7 +16,7 @@
 
 # HealthDataScotland 2.2.0
 
-* Refactor `hopsital` object UI to use have data type and specialty select inputs.
+* Refactor `hospital` object UI to use have data type and specialty select inputs.
 * Refactor `hospital` object summary to have statistics per specialty and data type.
 * Remove dark mode.
 

@@ -50,16 +50,23 @@ hospital <- R6Class("hospital",
     },
     specialty_line = function(...) {
       data <- self[["plot_data"]](type = "specialty_line", ...)
-      data |>
-        group_split(.data[["SpecialtyName"]]) |>
-        map(function(i) {
-          i |>
-            group_by(name) |>
-            e_trend("FinancialYear", "value") |>
-            e_title(subtext = unique(i[["SpecialtyName"]]))
-        }) |>
-        append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
-        do.call(e_arrange, .)
+      if (length(unique(data[["SpecialtyName"]])) == 1) {
+        data |>
+        group_by(.data[["name"]]) |>
+        e_trend("FinancialYear", "value") |>
+        e_title(subtext = unique(data[["SpecialtyName"]]))
+      } else {
+        data |>
+          group_split(.data[["SpecialtyName"]]) |>
+          map(function(i) {
+            i |>
+              group_by(name) |>
+              e_trend("FinancialYear", "value") |>
+              e_title(subtext = unique(i[["SpecialtyName"]]))
+          }) |>
+          append(c(rows = length(unique(data[["SpecialtyName"]])), cols = 1)) %>%
+          do.call(e_arrange, .)
+      }
     },
     specialty_line_data = function(data_type = c("annual", "daily"),
                                    specialties = "All Specialties") {
@@ -248,7 +255,7 @@ hospital <- R6Class("hospital",
                   )
                 )
               ),
-              withSpinner(uiOutput(ns("specialty_line")))
+              uiOutput(ns("specialty_line"))
             ),
             card(downloadButton(ns("download"), "Download all statistics"))
           )
@@ -276,11 +283,13 @@ hospital <- R6Class("hospital",
         function(input, output, session) {
           output[["specialty_line"]] <- renderUI({
             log_info("Creating hospital specialty line plot")
-            self[["plot"]](
-              type = "specialty_line",
-              data_type = req(input[["specialty_line_data_select"]]),
-              specialties = req(input[["specialty_line_select"]])
-            )
+            lapply(req(input[["specialty_line_select"]]), function(i) {
+              self[["plot"]](
+                type = "specialty_line",
+                data_type = req(input[["specialty_line_data_select"]]),
+                specialties = i
+              )
+            })
           })
           output[["download"]] <- downloadHandler(
             filename = function() "hospital_data.csv",
