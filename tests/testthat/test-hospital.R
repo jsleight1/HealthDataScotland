@@ -36,7 +36,11 @@ test_that("hospital class works", {
 })
 
 test_that("hospital class can be plotted", {
-  expect_s3_class(hosp_unit[["plot"]](type = "specialty_line"), "shiny.tag")
+  expect_s3_class(hosp_unit[["plot"]](type = "specialty_line"), "echarts4r")
+  expect_s3_class(
+    hosp_unit[["plot"]](type = "specialty_line", specialties = c("All Specialties", "General Medicine")),
+    "shiny.tag"
+  )
 })
 
 test_that("hospital plot info works", {

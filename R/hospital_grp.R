@@ -130,14 +130,14 @@ hospital_grp <- R6Class("hospital_grp",
         )
     },
     trend_echart = function(x) {
-      super$trend_echart(x, "FinancialYear", "PercentageOccupancy") |>
+      super[["trend_echart"]](x, "FinancialYear", "PercentageOccupancy") |>
         e_y_axis(min = 0, max = 100)
     },
     bar_echart = function(x,
                           group = "HBName",
                           x_axis = "",
                           y_axis = "PercentageOccupancy") {
-      super$bar_echart(x, group, x_axis, y_axis) |>
+      super[["bar_echart"]](x, group, x_axis, y_axis) |>
         e_y_axis(min = 0, max = 100)
     },
     trend_data = function(x, ...) {
